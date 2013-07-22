@@ -1,7 +1,7 @@
 ---
 title       : Course Logistics
 subtitle    : 
-author      : Jeffrey Leek
+author      : Jeffrey Leek, Assistant Professor of Biostatistics 
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
