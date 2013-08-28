@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Asymptotics</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Asymptotics">
+  <meta name="author" content="Brian Caffo, PhD">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="../../libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="../../libraries/frameworks/io2012/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="../../libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="../../libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  <script data-main="../../libraries/frameworks/io2012/js/slides" 
+    src="../../libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+    <link rel="stylesheet" href = "../../assets/css/custom.css">
+<link rel="stylesheet" href = "../../assets/css/ribbons.css">
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+    <!-- END LOGO SLIDE -->
+    
+
+    <!-- TITLE SLIDE -->
+    <!-- Should I move this to a Local Layout File? -->
+    <slide class="title-slide segue nobackground">
+      <aside class="gdbar">
+        <img src="../../assets/img/bloomberg_shield.png">
+      </aside>
+      <hgroup class="auto-fadein">
+        <h1>Asymptotics</h1>
+        <h2>Mathematical Biostatistics Boot Camp</h2>
+        <p>Brian Caffo, PhD<br/>Johns Hopkins Bloomberg School of Public Health</p>
+      </hgroup>
+          </slide>
+
+    <!-- SLIDES -->
+      <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Numerical limits</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li><p>Imagine a sequence</p>
+
+<ul>
+<li>\(a_1 = .9\),</li>
+<li>\(a_2 = .99\),</li>
+<li>\(a_3 = .999\), ...</li>
+</ul></li>
+<li><p>Clearly this sequence converges to \(1\)</p></li>
+<li><p>Definition of a limit: For any fixed distance we can find a point in the sequence so that the sequence is closer to the limit than that distance from that point on</p></li>
+<li><p>\(|a_n - 1| = 10^{-n}\)</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Limits of random variables</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>The problem is harder for random variables</li>
+<li><p>Consider \(\bar X_n\) the sample average of the first \(n\) of a collection of \(iid\) observations</p>
+
+<ul>
+<li>Example \(\bar X_n\) could be the average of the result of \(n\) coin flips (i.e. the sample proportion of heads)</li>
+</ul></li>
+<li><p>We say that \(\bar X_n\) {\bf converges in probability} to a limit if for any fixed distance the {\em probability} of \(\bar X_n\) being closer (further away) than that distance from the limit converges to one (zero)</p></li>
+<li><p>\(P(|\bar X_n - \mbox{limit}| < \epsilon) \rightarrow 1\)</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>The Law of Large Numbers</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Establishing that a random sequence converges to a limit is hard</li>
+<li>Fortunately, we have a theorem that does all the work for us, called
+the <strong>Law of Large Numbers</strong></li>
+<li>The law of large numbers states that if \(X_1,\ldots X_n\) are iid from a population with mean \(\mu\) and variance \(\sigma^2\) then \(\bar X_n\) converges in probability to \(\mu\)</li>
+<li>(There are many variations on the LLN; we are using a particularly lazy one)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Proof using Chebyshev&#39;s inequality</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Recall Chebyshev&#39;s inequality states that the probability that a random variable variable is more than \(k\) standard deviations from its mean is less than \(1/k^2\)</li>
+<li>Therefore for the sample mean
+\[
+P\left\{|\bar X_n - \mu| \geq k ~\mbox{sd}(\bar X_n)\right\} \leq 1 / k ^ 2
+\]</li>
+<li>Pick a distance \(\epsilon\) and let \(k = \epsilon / \mbox{sd}(\bar X_n)\)
+\[
+P(|\bar X_n - \mu| \geq \epsilon) \leq \frac{\mbox{sd}(\bar X_n)^2}{\epsilon^2}
+= \frac{\sigma^2}{n\epsilon^2}
+\]</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    
+  </hgroup>
+  <article>
+    <p><img src="../assets/lln.png" height=500></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Useful facts</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Functions of convergent random sequences converge to the function evaluated at the limit</li>
+<li>This includes sums, products, differences, ...</li>
+<li>Example \((\bar X_n) ^2\) converges to \(\mu^2\)</li>
+<li>Notice that this is different than \((\sum X_i^2) / n\) which converge to \(E[X_i^2] = \sigma^2 + \mu^2\)</li>
+<li>We can use this to prove that the sample variance converges to \(\sigma^2\)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>Continued</h2>
+  </hgroup>
+  <article>
+    <p>\[
+  \begin{eqnarray*}
+    \sum (X_i - \bar X_n)^2 / (n - 1) & =  & \frac{\sum X_i^2}{n - 1}  - \frac{n (\bar X_n)^2}{n - 1}  \\ \\
+    & = & \frac{n}{n-1}\times \frac{\sum X_i^2}{n} - \frac{n}{n-1} \times (\bar X_n)^ 2\\ \\
+    & \stackrel{p}{\rightarrow} & 1 \times (\sigma^2 + \mu^2) - 1 \times \mu^2 \\ \\
+    & = & \sigma^2 
+  \end{eqnarray*}
+\]</p>
+
+<p>Hence we also know that the sample standard deviation converges to
+\(\sigma\)</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>Discussion</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>An estimator is <strong>consistent</strong> if it converges to what you want to estimate</li>
+<li>The LLN basically states that the sample mean is consistent</li>
+<li>We just showed that the sample variance and the sample standard deviation are consistent as well</li>
+<li>Recall also that the sample mean and the sample variance are unbiased as well</li>
+<li>(The sample standard deviation is biased, by the way)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>The Central Limit Theorem</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>The <strong>Central Limit Theorem</strong> (CLT) is one of the most important theorems in statistics</li>
+<li>For our purposes, the CLT states that the distribution of averages of iid variables, properly normalized, becomes that of a standard normal as the sample size increases</li>
+<li>The CLT applies in an endless variety of settings</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>The CLT</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Let \(X_1,\ldots,X_n\) be a collection of iid random variables with mean \(\mu\) and variance \(\sigma^2\)</li>
+<li>Let \(\bar X_n\) be their sample average</li>
+<li>Then
+\[
+\begin{equation*}
+  P\left( \frac{\bar X_n - \mu}{\sigma / \sqrt{n}} \leq z \right) \rightarrow \Phi(z)
+\end{equation*}
+\]</li>
+<li>Notice the form of the normalized quantity
+\[
+\frac{\bar X_n - \mu}{\sigma / \sqrt{n}} = 
+\frac{\mbox{Estimate} - \mbox{Mean of estimate}}{\mbox{Std. Err. of estimate}}.
+\]</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Example</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Simulate a standard normal random variable by rolling \(n\) (six sided)</li>
+<li>Let \(X_i\) be the outcome for die \(i\)</li>
+<li>Then note that \(\mu = E[X_i] = 3.5\)</li>
+<li>\(Var(X_i) = 2.92\) </li>
+<li>SE \(\sqrt{2.92 / n} = 1.71 / \sqrt{n}\)</li>
+<li>Standardized mean
+\[
+\frac{\bar X_n - 3.5}{1.71/\sqrt{n}}
+\] </li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    
+  </hgroup>
+  <article>
+    <p><img src="../assets/die.png" height=500></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>Coin CLT</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Let \(X_i\) be the \(0\) or \(1\) result of the \(i^{th}\) flip of a possibly unfair coin
+
+<ul>
+<li>The sample proportion, say \(\hat p\), is the average of the coin flips</li>
+<li>\(E[X_i] = p\) and \(Var(X_i) = p(1-p)\)</li>
+<li>Standard error of the mean is \(\sqrt{p(1-p)/n}\)</li>
+<li>Then
+\[
+\frac{\hat p - p}{\sqrt{p(1-p)/n}}
+\]
+will be approximately normally distributed</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    
+  </hgroup>
+  <article>
+    <p><img src="../assets/coin.png" height=500></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>CLT in practice</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>In practice the CLT is mostly useful as an approximation
+\[
+P\left( \frac{\bar X_n - \mu}{\sigma / \sqrt{n}} \leq z \right) \approx \Phi(z).  
+\]</li>
+<li>Recall \(1.96\) is a good approximation to the \(.975^{th}\) quantile of the standard normal</li>
+<li>Consider
+\[
+\begin{eqnarray*}
+  .95 & \approx & P\left( -1.96 \leq \frac{\bar X_n - \mu}{\sigma / \sqrt{n}} \leq 1.96 \right)\\ \\
+  & =       & P\left(\bar X_n +1.96 \sigma/\sqrt{n} \geq \mu \geq \bar X_n - 1.96\sigma/\sqrt{n} \right),\\
+\end{eqnarray*}
+\]</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2>Confidence intervals</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Therefore, according to the CLT, the probability that the random interval \[\bar X_n \pm z_{1-\alpha/2}\sigma / \sqrt{n}\] contains \(\mu\) is approximately 95%, where \(z_{1-\alpha/2}\) is the \(1-\alpha/2\) quantile of the standard normal distribution</li>
+<li>This is called a 95% {\bf confidence interval} for \(\mu\)</li>
+<li><strong>Slutsky&#39;s theorem</strong>, allows us to replace the unknown \(\sigma\) with \(s\)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>Sample proportions</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>In the event that each \(X_i\) is \(0\) or \(1\) with common success probability \(p\) then \(\sigma^2 = p(1 - p)\)</li>
+<li>The interval takes the form
+\[
+\hat p \pm z_{1 - \alpha/2}  \sqrt{\frac{p(1 - p)}{n}}
+\]</li>
+<li>Replacing \(p\) by \(\hat p\) in the standard error results in what is called a Wald confidence interval for \(p\)</li>
+<li>Also note that \(p(1-p) \leq 1/4\) for \(0 \leq p \leq 1\)</li>
+<li>Let \(\alpha = .05\) so that \(z_{1 -\alpha/2} = 1.96 \approx 2\) then
+\[
+2  \sqrt{\frac{p(1 - p)}{n}} \leq 2 \sqrt{\frac{1}{4n}} = \frac{1}{\sqrt{n}} 
+\]</li>
+<li>Therefore \(\hat p \pm \frac{1}{\sqrt{n}}\) is a quick CI estimate for \(p\)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+
+  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+<!-- Grab CDN jQuery, fall back to local if offline -->
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+<script>window.jQuery || document.write('<script src="../../libraries/widgets/quiz/js/jquery-1.7.min.js"><\/script>')</script>
+<!-- Load Javascripts for Widgets -->
+<!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script> -->
+<script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="../../libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+<script src="../../libraries/highlighters/highlight.js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<!-- DONE LOADING HIGHLIGHTER JS FILES -->
+</html>
