@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Confidence Intervals</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Confidence Intervals">
+  <meta name="author" content="Brian Caffo, PhD">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="../../libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="../../libraries/frameworks/io2012/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="../../libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="../../libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  <script data-main="../../libraries/frameworks/io2012/js/slides" 
+    src="../../libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+    <link rel="stylesheet" href = "../../assets/css/custom.css">
+<link rel="stylesheet" href = "../../assets/css/ribbons.css">
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+    <!-- END LOGO SLIDE -->
+    
+
+    <!-- TITLE SLIDE -->
+    <!-- Should I move this to a Local Layout File? -->
+    <slide class="title-slide segue nobackground">
+      <aside class="gdbar">
+        <img src="../../assets/img/bloomberg_shield.png">
+      </aside>
+      <hgroup class="auto-fadein">
+        <h1>Confidence Intervals</h1>
+        <h2>Mathematical Biostatistics Boot Camp</h2>
+        <p>Brian Caffo, PhD<br/>Johns Hopkins Bloomberg School of Public Health</p>
+      </hgroup>
+          </slide>
+
+    <!-- SLIDES -->
+      <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Table of contents</h2>
+  </hgroup>
+  <article>
+    <ol>
+<li>Confidence intervals</li>
+<li>CI for a normal variance</li>
+<li>Student’s t distribution</li>
+<li>Confidence intervals for normal means</li>
+<li>Profile likelihoods</li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Confidence intervals</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Previously, we discussed creating a confidence interval using the CLT</li>
+<li>Now we discuss the creation of better confidence intervals for small samples using Gosset&#39;s \(t\) distribution</li>
+<li>To discuss the \(t\) distribution we must discuss the Chi-squared distribution</li>
+<li><p>Throughout we use the following general procedure for creating CIs</p>
+
+<p>a. Create a <strong>Pivot</strong> or statistic that does not depend on the parameter of interest</p>
+
+<p>b. Solve the probability that the pivot lies between bounds for the parameter</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>The Chi-squared distribution</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Suppose that \(S^2\) is the sample variance from a collection of iid \(N(\mu,\sigma^2)\) data; then 
+\[
+\frac{(n - 1) S^2}{\sigma^2} \sim \chi^2_{n-1}
+\]
+which reads: follows a Chi-squared distribution with \(n-1\) degrees of freedom</li>
+<li>The Chi-squared distribution is skewed and has support on \(0\) to \(\infty\)</li>
+<li>The mean of the Chi-squared is its degrees of freedom </li>
+<li>The variance of the Chi-squared distribution is twice the degrees of freedom</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Confidence interval for the variance</h2>
+  </hgroup>
+  <article>
+    <p>Note that if \(\chi^2_{n-1, \alpha}\) is the \(\alpha\) quantile of the
+Chi-squared distribution then</p>
+
+<p>\[
+\begin{eqnarray*}
+  1 - \alpha & = & P \left( \chi^2_{n-1, \alpha/2} \leq  \frac{(n - 1) S^2}{\sigma^2} \leq  \chi^2_{n-1,1 - \alpha/2} \right) \\ \\
+& = &  P\left(\frac{(n-1)S^2}{\chi^2_{n-1,1-\alpha/2}} \leq \sigma^2 \leq 
+\frac{(n-1)S^2}{\chi^2_{n-1,\alpha/2}} \right) \\
+\end{eqnarray*}
+\]
+So that 
+\[
+\left[\frac{(n-1)S^2}{\chi^2_{n-1,1-\alpha/2}}, \frac{(n-1)S^2}{\chi^2_{n-1,\alpha/2}}\right]
+\]
+is a \(100(1-\alpha)\%\) confidence interval for \(\sigma^2\)</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Notes about this interval</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>This interval relies heavily on the assumed normality</li>
+<li>Square-rooting the endpoints yields a CI for \(\sigma\)</li>
+<li>It turns out that<br>
+\[
+(n - 1)S^2 \sim \mbox{Gamma}\{(n-1)/2, 2\sigma^2\}
+\]
+which reads: follows a gamma distribution with shape \((n-1)/2\) and scale \(2\sigma^2\)</li>
+<li>Therefore, this can be used to plot a likelihood function for \(\sigma^2\)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Example</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>A recent study 513 of organo-lead manufacturing workers reported an average total brain volume of \(1,150.315\) \(cm^3\) with a standard deviation of \(105.977\). Assuming normality of the underlying measurements, calculate a confidence interval for the population variation in total brain volume.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>Example continued</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">##CI for the variance
+s2 &lt;- 105.977 ^ 2
+n &lt;- 513
+alpha &lt;- .05
+qtiles &lt;- qchisq(c(alpha/2, 1 - alpha/2), 
+                 n - 1)
+ival &lt;- rev((n - 1) * s2 / qtiles)
+##interval for the sd
+sqrt(ival)
+[1]  99.86484 112.89216
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>Plot the likelihood</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">sigmaVals &lt;- seq(90, 120, length = 1000)
+likeVals &lt;- dgamma((n - 1) * s2,
+                   shape = (n - 1)/2,
+                   scale = 2*sigmaVals^2)
+likeVals &lt;- likeVals / max(likeVals)
+plot(sigmaVals, likeVals, type = &quot;l&quot;)
+lines(range(sigmaVals[likeVals &gt;= 1 / 8]), 
+      c(1 / 8, 1 / 8))
+lines(range(sigmaVals[likeVals &gt;= 1 / 16]), 
+      c(1 / 16, 1 / 16))
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    
+  </hgroup>
+  <article>
+    <p><img src="../assets/varll.png" height=500></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>Gosset&#39;s \(t\) distribution</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Invented by William Gosset (under the pseudonym &quot;Student&quot;) in 1908</li>
+<li>Has thicker tails than the normal</li>
+<li>Is indexed by a degrees of freedom; gets more like a standard normal as df gets larger</li>
+<li>Is obtained as 
+\[
+\frac{Z}{\sqrt{\frac{\chi^2}{df}}}
+\]
+where \(Z\) and \(\chi^2\) are independent standard normals and
+Chi-squared distributions respectively</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Result</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li><p>Suppose that \((X_1,\ldots,X_n)\) are iid \(N(\mu,\sigma^2)\), then:</p>
+
+<p>a. \(\frac{\bar X - \mu}{\sigma / \sqrt{n}}\) is standard normal
+b. \(\sqrt{\frac{(n - 1) S^2}{\sigma^2 (n - 1)}} = S / \sigma\) is the square root of a Chi-squared divided by its df</p></li>
+<li><p>Therefore 
+\[
+\frac{\frac{\bar X - \mu}{\sigma /\sqrt{n}}}{S/\sigma}  
+= \frac{\bar X - \mu}{S/\sqrt{n}}
+\]
+follows Gosset&#39;s \(t\) distribution with \(n-1\) degrees of freedom</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>Confidence intervals for the mean</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Notice that the \(t\) statistic is a pivot, therefore we use it to create a confidence interval for \(\mu\)</li>
+<li>Let \(t_{df,\alpha}\) be the \(\alpha^{th}\) quantile of the t distribution with \(df\) degrees of freedom
+\[
+\begin{eqnarray*}
+&   & 1 - \alpha \\
+& = & P\left(-t_{n-1,1-\alpha/2} \leq \frac{\bar X - \mu}{S/\sqrt{n}} \leq t_{n-1,1-\alpha/2}\right) \\ \\
+& = & P\left(\bar X - t_{n-1,1-\alpha/2} S / \sqrt{n} \leq \mu  
+  \leq \bar X + t_{n-1,1-\alpha/2}S /\sqrt{n}\right)
+\end{eqnarray*}
+\]</li>
+<li>Interval is \(\bar X \pm t_{n-1,1-\alpha/2} S/\sqrt{n}\)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>Note&#39;s about the \(t\) interval</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>The \(t\) interval technically assumes that the data are iid normal, though it is robust to this assumption</li>
+<li>It works well whenever the distribution of the data is roughly symmetric and mound shaped</li>
+<li>Paired observations are often analyzed using the \(t\) interval by taking differences</li>
+<li>For large degrees of freedom, \(t\) quantiles become the same as standard normal quantiles; therefore this interval converges to the same interval as the CLT yielded</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    
+  </hgroup>
+  <article>
+    <ul>
+<li>For skewed distributions, the spirit of the \(t\) interval assumptions are violated</li>
+<li>Also, for skewed distributions, it doesn&#39;t make a lot of sense to center the interval at the mean</li>
+<li>In this case, consider taking logs or using a different summary like the median</li>
+<li>For highly discrete data, like binary, other intervals are available</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>Sleep data</h2>
+  </hgroup>
+  <article>
+    <p>In R typing <code>data(sleep)</code> brings up the sleep data originally
+analyzed in Gosset&#39;s Biometrika paper, which shows the increase in
+hours for 10 patients on two soporific drugs. R treats the data as two
+groups rather than paired.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    
+  </hgroup>
+  <article>
+    <pre><code class="r">Patient g1   g2  diff
+1       0.7  1.9  1.2
+2      -1.6  0.8  2.4
+3      -0.2  1.1  1.3
+4      -1.2  0.1  1.3
+5      -0.1 -0.1  0.0
+6       3.4  4.4  1.0
+7       3.7  5.5  1.8
+8       0.8  1.6  0.8
+9       0.0  4.6  4.6
+10      2.0  3.4  1.4
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    
+  </hgroup>
+  <article>
+    <pre><code class="r">data(sleep)
+g1 &lt;- sleep$extra[1 : 10]
+g2 &lt;- sleep$extra[11 : 20]
+difference &lt;- g2 - g1
+mn &lt;- mean(difference)#1.67
+s &lt;- sd(difference)#1.13
+n &lt;- 10
+mn + c(-1, 1) * qt(.975, n-1) * s / sqrt(n)
+t.test(difference)$conf.int
+[1] 0.7001142 2.4598858
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>The non-central \(t\) distribution</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>If \(X\) is \(N(\mu,\sigma^2)\) and \(\chi^2\) is a Chi-squared random variable with \(df\) degrees of freedom then \(\frac{X/\sigma}{\sqrt{\frac{\chi^2}{df}}}\) is called a <strong>non-central</strong> \(t\) random variable with non-centrality parameter \(\mu/\sigma\)</li>
+<li><p>Note that</p>
+
+<p>a. \(\bar X\) is \(N(\mu, \sigma^2/n)\)</p>
+
+<p>b. \((n-1)S^2/\sigma^2\) is Chi-squared with \(n-1\) df </p></li>
+<li><p>Then \(\sqrt{n}\bar X / S\) is non-central \(t\) with non-centrality parameter \(\sqrt{n}\mu/\sigma\)</p></li>
+<li><p>We can use this to create a likelihood for \(\mu/\sigma\), the <strong>effect size</strong></p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>Some code</h2>
+  </hgroup>
+  <article>
+    <p>Starting after the code for the \(t\) interval</p>
+
+<pre><code class="r">tStat &lt;- sqrt(n) * mn / s
+esVals &lt;- seq(0, 1, length = 1000)
+likVals &lt;- dt(tStat, n - 1, ncp = sqrt(n) * esVals)
+likVals &lt;- likVals / max(likVals)
+plot(esVals, likVals, type = &quot;l&quot;)
+lines(range(esVals[likVals&gt;1/8]), c(1/8,1/8))
+lines(range(esVals[likVals&gt;1/16]), c(1/16,1/16))
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    
+  </hgroup>
+  <article>
+    <p><img src="../assets/normll.png" height=500></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-21" style="background:;">
+  <hgroup>
+    <h2>The profile likelihood</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>To obtain a likelihood for \(\mu\) alone, the preferred method is called {\bf profiling}</li>
+<li>The profile likelihood gets its name because the result is like the shadow you would get if you were to shine a light on the two-dimensional likelihood for \(\mu\) and \(\sigma\)</li>
+<li>The profile likelihood for parameter value \(\mu_0\) is obtained by maximizing the joint likelihood for \(\sigma\) with \(\mu\) fixed at \(\mu_0\)</li>
+<li>This process is repeated for lots of values of \(\mu_0\)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-22" style="background:;">
+  <hgroup>
+    <h2>Calculating the profile likelihood</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>The joint likelihood with \(\mu\) fixed at \(\mu_0\) is
+\[
+\begin{eqnarray*}
+& \propto &\prod_{i=1}^n \left[(\sigma^2)^{-1/2}\exp\left\{-(x_i - \mu_0)^2/2\sigma^2 \right\} \right]\\
+& = &  (\sigma^2)^{-n/2}\exp\left\{-\sum_{i=1}^n(x_i - \mu_0)^2/2\sigma^2 \right\}
+\end{eqnarray*}
+\]</li>
+<li>With \(\mu_0\) fixed, the maximum likelihood estimator for \(\sigma^2\) is \(\sum_{i=1}^n(x_i - \mu_0)^2 / n\) (homework)</li>
+<li>Plugging this back into the likelihood we get
+\[
+\left(\sum_{i=1}^n(x_i - \mu_0)^2 / n \right)^{-n/2}\exp(-n/2)
+\]</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-23" style="background:;">
+  <hgroup>
+    <h2>Continued</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Therefore, removing multiplicative constants, the profile likelihood is 
+\[
+\left(\sum_{i=1}^n(x_i - \mu)^2 \right)^{-n/2}
+\]</li>
+<li>Note that this is clearly maximized at \(\mu=\bar X\), the same as the ML estimate for \(\mu\) for the complete likelihood</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-24" style="background:;">
+  <hgroup>
+    <h2>Some code</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">muVals &lt;- seq(0, 3, length = 1000)
+likVals &lt;- sapply(muVals,
+                  function(mu){
+                    (sum((difference-mu)^2) /
+                     sum((difference-mn)^2))^(-n/2) 
+                  }
+                  )
+plot(muVals, likVals, type = &quot;l&quot;)
+lines(range(muVals[likVals&gt;1/8]), c(1/8,1/8))
+lines(range(muVals[likVals&gt;1/16]), c(1/16,1/16))
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-25" style="background:;">
+  <hgroup>
+    
+  </hgroup>
+  <article>
+    <p><img src="../assets/normprof.png" height=500></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+
+  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+<!-- Grab CDN jQuery, fall back to local if offline -->
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+<script>window.jQuery || document.write('<script src="../../libraries/widgets/quiz/js/jquery-1.7.min.js"><\/script>')</script>
+<!-- Load Javascripts for Widgets -->
+<!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script> -->
+<script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="../../libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+<script src="../../libraries/highlighters/highlight.js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<!-- DONE LOADING HIGHLIGHTER JS FILES -->
+</html>

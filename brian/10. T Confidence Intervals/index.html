@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>T Confidence Intervals</title>
+  <meta charset="utf-8">
+  <meta name="description" content="T Confidence Intervals">
+  <meta name="author" content="Brian Caffo, PhD">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="../../libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="../../libraries/frameworks/io2012/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="../../libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="../../libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  <script data-main="../../libraries/frameworks/io2012/js/slides" 
+    src="../../libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+    <link rel="stylesheet" href = "../../assets/css/custom.css">
+<link rel="stylesheet" href = "../../assets/css/ribbons.css">
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+    <!-- END LOGO SLIDE -->
+    
+
+    <!-- TITLE SLIDE -->
+    <!-- Should I move this to a Local Layout File? -->
+    <slide class="title-slide segue nobackground">
+      <aside class="gdbar">
+        <img src="../../assets/img/bloomberg_shield.png">
+      </aside>
+      <hgroup class="auto-fadein">
+        <h1>T Confidence Intervals</h1>
+        <h2>Mathematical Biostatistics Boot Camp</h2>
+        <p>Brian Caffo, PhD<br/>Johns Hopkins Bloomberg School of Public Health</p>
+      </hgroup>
+          </slide>
+
+    <!-- SLIDES -->
+      <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Table of contents</h2>
+  </hgroup>
+  <article>
+    <ol>
+<li>Independent group <em>t</em> intervals</li>
+<li>Likelihood method</li>
+<li>Unequal variances</li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Independent group \(t\) confidence intervals</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Suppose that we want to compare the mean blood pressure between two groups in a randomized trial; those who received the treatment to those who received a placebo</li>
+<li>We cannot use the paired t test because the groups are independent and may have different sample sizes</li>
+<li>We now present methods for comparing independent groups</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Notation</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Let \(X_1,\ldots,X_{n_x}\) be iid \(N(\mu_x,\sigma^2)\)</li>
+<li>Let \(Y_1,\ldots,Y_{n_y}\) be iid \(N(\mu_y, \sigma^2)\)</li>
+<li>Let \(\bar X\), \(\bar Y\), \(S_x\), \(S_y\) be the means and standard deviations</li>
+<li>Using the fact that linear combinations of normals are again normal, we know that \(\bar Y - \bar X\) is also normal with mean \(\mu_y - \mu_x\) and variance \(\sigma^2 (\frac{1}{n_x} + \frac{1}{n_y})\)</li>
+<li>The pooled variance estimator \[S_p^2 = \{(n_x - 1) S_x^2 + (n_y - 1) S_y^2\}/(n_x + n_y - 2)\] is a good estimator of \(\sigma^2\)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Note</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>The pooled estimator is a mixture of the group variances, placing greater weight on whichever has a larger sample size</li>
+<li>If the sample sizes are the same the pooled variance estimate is the average of the group variances</li>
+<li>The pooled estimator is unbiased
+\[
+\begin{eqnarray*}
+E[S_p^2] & = & \frac{(n_x - 1) E[S_x^2] + (n_y - 1) E[S_y^2]}{n_x + n_y - 2}\\
+        & = & \frac{(n_x - 1)\sigma^2 + (n_y - 1)\sigma^2}{n_x + n_y - 2}
+\end{eqnarray*}
+\]</li>
+<li>The pooled variance  estimate is independent of \(\bar Y - \bar X\) since \(S_x\) is independent of \(\bar X\) and \(S_y\) is independent of \(\bar Y\) and the groups are independent</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Result</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>The sum of two independent Chi-squared random variables is Chi-squared with degrees of freedom equal to the sum of the degrees of freedom of the summands</li>
+<li>Therefore
+\[
+\begin{eqnarray*}
+  (n_x + n_y - 2) S_p^2 / \sigma^2 & = & (n_x - 1)S_x^2 /\sigma^2 + (n_y - 1)S_y^2/\sigma^2 \\ \\
+  & = & \chi^2_{n_x - 1} + \chi^2_{n_y-1} \\ \\
+  & = & \chi^2_{n_x + n_y - 2}
+\end{eqnarray*}
+\]</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Putting this all together</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>The statistic
+\[
+\frac{\frac{\bar Y - \bar X - (\mu_y - \mu_x)}{\sigma \left(\frac{1}{n_x} + \frac{1}{n_y}\right)^{1/2}}}%
+{\sqrt{\frac{(n_x + n_y - 2) S_p^2}{(n_x + n_y - 2)\sigma^2}}}
+= \frac{\bar Y - \bar X - (\mu_y - \mu_x)}{S_p \left(\frac{1}{n_x} + \frac{1}{n_y}\right)^{1/2}}
+\]
+is a standard normal divided by the square root of an independent Chi-squared divided by its degrees of freedom </li>
+<li>Therefore this statistic follows Gosset&#39;s \(t\) distribution with \(n_x + n_y - 2\) degrees of freedom</li>
+<li>Notice the form is (estimator - true value) / SE</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>Confidence interval</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Therefore a \((1 - \alpha)\times 100\%\) confidence interval for \(\mu_y - \mu_x\) is 
+\[
+\bar Y - \bar X \pm t_{n_x + n_y - 2, 1 - \alpha/2}S_p\left(\frac{1}{n_x} + \frac{1}{n_y}\right)^{1/2}
+\]</li>
+<li>Remember this interval is assuming a constant variance across the two groups</li>
+<li>If there is some doubt, assume a different variance per group, which we will discuss later</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>Likelihood method</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Exactly as before, 
+\[
+\frac{\bar Y - \bar X}{S_p \left(\frac{1}{n_x} + \frac{1}{n_y}\right)^{1/2}}
+\]
+follows a non-central \(t\) distribution with non-centrality parameter \(\frac{\mu_y - \mu_x}{\sigma  \left(\frac{1}{n_x} + \frac{1}{n_y}\right)^{1/2}}\)</li>
+<li>Therefore, we can use this statistic to create a likelihood for \((\mu_y - \mu_x) / \sigma\), a standardized measure of the change in group means</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>Example</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Comparing SBP for 8 oral contraceptive users versus 21 controls</li>
+<li>\(\bar X_{OC} = 132.86\) mmHg with \(s_{OC} = 15.34\) mmHg</li>
+<li>\(\bar X_{C} = 127.44\) mmHg with \(s_{C} = 18.23\) mmHg</li>
+<li>Pooled variance estimate
+\[
+s_p^2 = \frac{7 (15.34)^2 + 20 (18.23)^2}{8 + 21 - 2} = 307.8
+\] </li>
+<li>\(t_{27,.975} = 2.052\) (in R, <code>qt(.975, df = 27)</code>)</li>
+<li>Interval
+\[
+132.86 - 127.44 \pm 2.052 \left\{307.8 \left( \frac{1}{8} + \frac{1}{21}\right)^{1/2} \right\}
+= [-9.52, 20.36]
+\]</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>Likelihood plot for the effect size</h2>
+  </hgroup>
+  <article>
+    <p>Reasonable values for the effect size from the confidence interval
+\[
+[-9.52, 20.36] / sp = [-.54, 1.16]
+\]</p>
+
+<p><img class="center" src="../assets/lec10.png" height=350></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Unequal variances</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Note that under unequal variances
+\[
+\bar Y - \bar X \sim N\left(\mu_y - \mu_x, \frac{\sigma_x^2}{n_x} + \frac{\sigma_y^2}{n_y}\right)
+\]</li>
+<li>The statistic 
+\[
+\frac{\bar Y - \bar X - (\mu_y - \mu_x)}{\left(\frac{\sigma_x^2}{n_x} + \frac{\sigma_y^2}{n_y}\right)^{1/2}}
+\]
+approximately follows Gosset&#39;s \(t\) distribution with degrees of freedom equal to
+\[
+\frac{\left(S_x^2 / n_x + S_y^2/n_y\right)^2}
+{\left(\frac{S_x^2}{n_x}\right)^2 / (n_x - 1) +
+  \left(\frac{S_y^2}{n_y}\right)^2 / (n_y - 1)}
+\]</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>Example</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Comparing SBP for 8 oral contraceptive users versus 21 controls</li>
+<li>\(\bar X_{OC} = 132.86\) mmHg with \(s_{OC} = 15.34\) mmHg</li>
+<li>\(\bar X_{C} = 127.44\) mmHg with \(s_{C} = 18.23\) mmHg</li>
+<li>\(df=15.04\), \(t_{15.04, .975} = 2.13\)</li>
+<li>Interval
+\[
+132.86 - 127.44 \pm 2.13 \left(\frac{15.34^2}{8} + \frac{18.23^2}{21} \right)^{1/2}
+= [-8.91, 19.75]
+\]</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+
+  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+<!-- Grab CDN jQuery, fall back to local if offline -->
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+<script>window.jQuery || document.write('<script src="../../libraries/widgets/quiz/js/jquery-1.7.min.js"><\/script>')</script>
+<!-- Load Javascripts for Widgets -->
+<!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script> -->
+<script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="../../libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+<script src="../../libraries/highlighters/highlight.js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<!-- DONE LOADING HIGHLIGHTER JS FILES -->
+</html>
