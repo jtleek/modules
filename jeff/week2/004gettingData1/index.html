@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="../../libraries/frameworks/io2012/phone.css" 
     media="only screen and (max-device-width: 480px)" >
   <link rel="stylesheet" href="../../libraries/frameworks/io2012/css/slidify.css" >
-  <link rel="stylesheet" href="../../libraries/highlighters/highlight.js/css/zenburn.css" />
+  <link rel="stylesheet" href="../../libraries/highlighters/highlight.js/css/tomorrow.css" />
   <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
   <script data-main="../../libraries/frameworks/io2012/js/slides" 
     src="../../libraries/frameworks/io2012/js/require-1.0.8.min.js">
@@ -51,22 +51,11 @@
     <p>Roger&#39;s lectures <a href="http://www.youtube.com/watch?v=XBcvH1BpIBo&amp;list=PLjTlxb-wKvXNSDfcKPFH2gzHGyjpeCZmJ&amp;index=2">windows</a>, <a href="http://www.youtube.com/watch?v=8xT3hmJQskU&amp;list=PLjTlxb-wKvXNSDfcKPFH2gzHGyjpeCZmJ&amp;index=1">mac</a>
 Andrew Jaffe&#39;s <a href="https://dl.dropbox.com/u/7710864/courseraPublic/otherResources/lecture1/index.html">lecture notes</a></p>
 
-<pre><code class="r">&quot;/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data&quot;
-</code></pre>
-
-<pre><code>[1] &quot;/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data&quot;
-</code></pre>
-
-<pre><code class="r">setwd(&quot;/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data&quot;)
-</code></pre>
-
-<pre><code>Error: cannot change working directory
-</code></pre>
-
-<pre><code class="r">&quot;/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data&quot;
-</code></pre>
-
-<pre><code>[1] &quot;/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data&quot;
+<pre><code class="r">&gt; getwd()
+[1] &quot;/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1&quot;
+&gt; setwd(&quot;/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data&quot;)
+&gt; getwd()
+[1] &quot;/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data&quot;
 </code></pre>
 
 <p>Important difference with Windows: </p>
@@ -86,21 +75,21 @@ Andrew Jaffe&#39;s <a href="https://dl.dropbox.com/u/7710864/courseraPublic/othe
     <pre><code class="r">getwd()
 </code></pre>
 
-<pre><code>[1] &quot;/Users/sean/Developer/GitHub/modules/jeff/week2/004gettingData1&quot;
+<pre><code>[1] &quot;/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1&quot;
 </code></pre>
 
 <pre><code class="r">setwd(&quot;./data&quot;)
 getwd()
 </code></pre>
 
-<pre><code>[1] &quot;/Users/sean/Developer/GitHub/modules/jeff/week2/004gettingData1/data&quot;
+<pre><code>[1] &quot;/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data&quot;
 </code></pre>
 
 <pre><code class="r">setwd(&quot;../&quot;)
 getwd()
 </code></pre>
 
-<pre><code>[1] &quot;/Users/sean/Developer/GitHub/modules/jeff/week2/004gettingData1&quot;
+<pre><code>[1] &quot;/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1&quot;
 </code></pre>
 
   </article>
@@ -112,22 +101,11 @@ getwd()
     <h2>Get/set your working directory (absolute paths)</h2>
   </hgroup>
   <article>
-    <pre><code class="r">getwd()
-</code></pre>
-
-<pre><code>[1] &quot;/Users/sean/Developer/GitHub/modules/jeff/week2/004gettingData1&quot;
-</code></pre>
-
-<pre><code class="r">setwd(&quot;/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data&quot;)
-</code></pre>
-
-<pre><code>Error: cannot change working directory
-</code></pre>
-
-<pre><code class="r">getwd()
-</code></pre>
-
-<pre><code>[1] &quot;/Users/sean/Developer/GitHub/modules/jeff/week2/004gettingData1&quot;
+    <pre><code class="r">&gt; getwd()
+[1] &quot;/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1&quot;
+&gt; setwd(&quot;/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data&quot;)
+&gt; getwd()
+[1] &quot;/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data&quot;
 </code></pre>
 
   </article>
@@ -189,7 +167,7 @@ getwd()
     <h2>Example - Baltimore camera data</h2>
   </hgroup>
   <article>
-    <p><img class=center src=assets/img/cameras.png height='80%'/></p>
+    <p><img class=center src=../../assets/img/cameras.png height=500></p>
 
 <p><a href="https://data.baltimorecity.gov/Transportation/Baltimore-Fixed-Speed-Cameras/dz54-2aru">https://data.baltimorecity.gov/Transportation/Baltimore-Fixed-Speed-Cameras/dz54-2aru</a></p>
 
@@ -202,7 +180,7 @@ getwd()
     <h2>Example - Baltimore camera data,csv</h2>
   </hgroup>
   <article>
-    <p><img class=center src=assets/img/cameraslink.png height='80%'/></p>
+    <p><img class=center src=../../assets/img/cameraslink.png height=500></p>
 
 <p><a href="https://data.baltimorecity.gov/Transportation/Baltimore-Fixed-Speed-Cameras/dz54-2aru">https://data.baltimorecity.gov/Transportation/Baltimore-Fixed-Speed-Cameras/dz54-2aru</a></p>
 
@@ -228,7 +206,7 @@ list.files(&quot;./data&quot;)
 dateDownloaded
 </code></pre>
 
-<pre><code>[1] &quot;Wed Jul 24 21:38:34 2013&quot;
+<pre><code>[1] &quot;Wed Aug 28 13:27:31 2013&quot;
 </code></pre>
 
   </article>
@@ -277,7 +255,7 @@ dateDownloaded
     <pre><code class="r">getwd()
 </code></pre>
 
-<pre><code>[1] &quot;/Users/sean/Developer/GitHub/modules/jeff/week2/004gettingData1&quot;
+<pre><code>[1] &quot;/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1&quot;
 </code></pre>
 
 <pre><code class="r">cameraData &lt;- read.table(&quot;./data/cameras.csv&quot;)
@@ -289,7 +267,8 @@ dateDownloaded
 <pre><code class="r">head(cameraData)
 </code></pre>
 
-<pre><code>Error: object &#39;cameraData&#39; not found
+<pre><code>Error: error in evaluating the argument &#39;x&#39; in selecting a method for
+function &#39;head&#39;: Error: object &#39;cameraData&#39; not found
 </code></pre>
 
   </article>
@@ -304,11 +283,22 @@ dateDownloaded
     <pre><code class="r">getwd()
 </code></pre>
 
-<pre><code>[1] &quot;/Users/sean/Developer/GitHub/modules/jeff/week2/004gettingData1&quot;
+<pre><code>[1] &quot;/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1&quot;
 </code></pre>
 
 <pre><code class="r">cameraData &lt;- read.table(&quot;./data/cameras.csv&quot;,sep=&quot;,&quot;,header=TRUE)
-head(cameraData)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h2>Example: Baltimore camera data</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">head(cameraData)
 </code></pre>
 
 <pre><code>                         address direction      street  crossStreet
@@ -331,7 +321,7 @@ head(cameraData)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-14" style="background:;">
+      <slide class="" id="slide-15" style="background:;">
   <hgroup>
     <h2>Example: Baltimore camera data</h2>
   </hgroup>
@@ -362,7 +352,7 @@ head(cameraData)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-15" style="background:;">
+      <slide class="" id="slide-16" style="background:;">
   <hgroup>
     <h2>read.xlsx(), read.xlsx2() {xlsx package}</h2>
   </hgroup>
@@ -377,26 +367,29 @@ head(cameraData)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-16" style="background:;">
+      <slide class="" id="slide-17" style="background:;">
   <hgroup>
     <h2>read.xlsx() - Baltimore camera data</h2>
   </hgroup>
   <article>
-    <pre><code class="r">library(xlsx)
-</code></pre>
+    <p>You may need to run <code>install.packages(&quot;xlsx&quot;)</code> if the xlsx package is not already installed</p>
 
-<pre><code>Error: there is no package called &#39;xlsx&#39;
-</code></pre>
-
-<pre><code class="r">fileUrl &lt;- &quot;https://data.baltimorecity.gov/api/views/dz54-2aru/rows.xlsx?accessType=DOWNLOAD&quot;
+<pre><code class="r">library(xlsx)
+fileUrl &lt;- &quot;https://data.baltimorecity.gov/api/views/dz54-2aru/rows.xlsx?accessType=DOWNLOAD&quot;
 download.file(fileUrl,destfile=&quot;./data/camera.xlsx&quot;,method=&quot;curl&quot;)
 cameraData &lt;- read.xlsx2(&quot;./data/camera.xlsx&quot;,sheetIndex=1)
 </code></pre>
 
-<pre><code>Error: could not find function &quot;read.xlsx2&quot;
-</code></pre>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
 
-<pre><code class="r">head(cameraData)
+      <slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>read.xlsx() - Baltimore camera data</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">head(cameraData)
 </code></pre>
 
 <pre><code>                         address direction      street  crossStreet
@@ -419,7 +412,7 @@ cameraData &lt;- read.xlsx2(&quot;./data/camera.xlsx&quot;,sheetIndex=1)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-17" style="background:;">
+      <slide class="" id="slide-19" style="background:;">
   <hgroup>
     <h2>Picking a file - less reproducible, but useful</h2>
   </hgroup>
@@ -427,7 +420,7 @@ cameraData &lt;- read.xlsx2(&quot;./data/camera.xlsx&quot;,sheetIndex=1)
     <pre><code class="r">cameraData &lt;- read.csv(file.choose())
 </code></pre>
 
-<p><img class=center src=assets/img/filechoose.png height='80%'/></p>
+<p><img class=center src=../../assets/img/filechoose.png height=400></p>
 
   </article>
   <!-- Presenter Notes -->

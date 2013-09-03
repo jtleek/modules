@@ -58,9 +58,15 @@ download.file(fileUrl,destfile="./data/cameras.csv",method="curl")
 con <- file("./data/cameras.csv","r")
 cameraData <- read.csv(con)
 close(con)
-head(cameraData)
 ```
 
+---
+
+## readLines() - local file
+
+```{r, dependson="cachedChunk"}
+head(cameraData)
+```
 
 ---
 
@@ -68,18 +74,17 @@ head(cameraData)
 
 
 ```{r}
-
 con <- url("http://simplystatistics.org","r")
 simplyStats <- readLines(con)
 close(con)
 head(simplyStats)
-
 ```
 
 ---
 
 ## Reading JSON files {RJSONIO}
 
+You may need to run `install.packages("RJSONIO")` if the RJSONIO package is not already installed
 
 ```{r}
 library(RJSONIO)
@@ -88,9 +93,15 @@ download.file(fileUrl,destfile="./data/camera.json",method="curl")
 con = file("./data/camera.json")
 jsonCamera = fromJSON(con)
 close(con)
-head(jsonCamera)
 ```
 
+---
+
+## Reading JSON files {RJSONIO}
+
+```{r}
+head(jsonCamera)
+```
 
 ---
 
@@ -104,9 +115,15 @@ cameraData <- read.csv("./data/cameras.csv")
 tmpData <- cameraData[,-1]
 write.table(tmpData,file="./data/camerasModified.csv",sep=",")
 cameraData2 <- read.csv("./data/camerasModified.csv")
-head(cameraData2)
 ```
 
+---
+
+## Writing data - write.table()
+
+```{r}
+head(cameraData2)
+```
 
 --- 
 
@@ -168,7 +185,7 @@ for(i in 1:5){
 
 ## Getting data off webpages 
 
-<img class=center src=assets/img/googlescholar.png height='400'/>
+<img class=center src=../../assets/img/googlescholar.png height=500>
 
 [http://scholar.google.com/citations?user=HI-I6C0AAAAJ&hl=en](http://scholar.google.com/citations?user=HI-I6C0AAAAJ&hl=en)
 
@@ -192,7 +209,9 @@ htmlCode
 ## Getting data off webpages
 
 ```{r}
-html3 <- htmlTreeParse("http://scholar.google.com/citations?user=HI-I6C0AAAAJ&hl=en", useInternalNodes=T)
+url <- "http://scholar.google.com/citations?user=HI-I6C0AAAAJ&hl=en"
+html3 <- htmlTreeParse(url, useInternalNodes=T)
+
 xpathSApply(html3, "//title", xmlValue)
 xpathSApply(html3, "//td[@id='col-citedby']", xmlValue)
 ```
@@ -213,15 +232,3 @@ xpathSApply(html3, "//td[@id='col-citedby']", xmlValue)
   * [foreign](http://cran.r-project.org/web/packages/foreign/index.html) - for getting data into R from SAS, SPSS, Octave, etc. 
   
 * Reading/writing R videos [Part 1](http://www.youtube.com/watch?v=aBzAels6jPk&list=PLjTlxb-wKvXNSDfcKPFH2gzHGyjpeCZmJ&index=8), [Part 2](http://www.youtube.com/watch?v=cUUqDWttMws&list=PLjTlxb-wKvXNSDfcKPFH2gzHGyjpeCZmJ&index=9)
-
-
-
-
-
-
-
-
-
-
-
-

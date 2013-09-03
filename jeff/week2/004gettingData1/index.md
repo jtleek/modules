@@ -6,7 +6,7 @@ job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
-hitheme     : zenburn   # 
+hitheme     : tomorrow   # 
 url:
   lib: ../../libraries
   assets: ../../assets
@@ -23,31 +23,13 @@ mode        : selfcontained # {standalone, draft}
 Roger's lectures [windows](http://www.youtube.com/watch?v=XBcvH1BpIBo&list=PLjTlxb-wKvXNSDfcKPFH2gzHGyjpeCZmJ&index=2), [mac](http://www.youtube.com/watch?v=8xT3hmJQskU&list=PLjTlxb-wKvXNSDfcKPFH2gzHGyjpeCZmJ&index=1)
 Andrew Jaffe's [lecture notes](https://dl.dropbox.com/u/7710864/courseraPublic/otherResources/lecture1/index.html)
 
-
 ```r
-"/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data"
-```
-
-```
+> getwd()
+[1] "/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1"
+> setwd("/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data")
+> getwd()
 [1] "/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data"
 ```
-
-```r
-setwd("/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data")
-```
-
-```
-Error: cannot change working directory
-```
-
-```r
-"/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data"
-```
-
-```
-[1] "/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data"
-```
-
 
 Important difference with Windows: 
 
@@ -68,7 +50,7 @@ getwd()
 ```
 
 ```
-[1] "/Users/sean/Developer/GitHub/modules/jeff/week2/004gettingData1"
+[1] "/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1"
 ```
 
 ```r
@@ -77,7 +59,7 @@ getwd()
 ```
 
 ```
-[1] "/Users/sean/Developer/GitHub/modules/jeff/week2/004gettingData1/data"
+[1] "/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data"
 ```
 
 ```r
@@ -86,7 +68,7 @@ getwd()
 ```
 
 ```
-[1] "/Users/sean/Developer/GitHub/modules/jeff/week2/004gettingData1"
+[1] "/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1"
 ```
 
 
@@ -95,31 +77,13 @@ getwd()
 
 ## Get/set your working directory (absolute paths)
 
-
 ```r
-getwd()
+> getwd()
+[1] "/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1"
+> setwd("/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data")
+> getwd()
+[1] "/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data"
 ```
-
-```
-[1] "/Users/sean/Developer/GitHub/modules/jeff/week2/004gettingData1"
-```
-
-```r
-setwd("/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data")
-```
-
-```
-Error: cannot change working directory
-```
-
-```r
-getwd()
-```
-
-```
-[1] "/Users/sean/Developer/GitHub/modules/jeff/week2/004gettingData1"
-```
-
 
 
 ---
@@ -157,7 +121,7 @@ getwd()
 
 ## Example - Baltimore camera data
 
-<img class=center src=assets/img/cameras.png height='80%'/>
+<img class=center src=../../assets/img/cameras.png height=500>
 
 [https://data.baltimorecity.gov/Transportation/Baltimore-Fixed-Speed-Cameras/dz54-2aru](https://data.baltimorecity.gov/Transportation/Baltimore-Fixed-Speed-Cameras/dz54-2aru)
 
@@ -166,7 +130,7 @@ getwd()
 
 ## Example - Baltimore camera data,csv
 
-<img class=center src=assets/img/cameraslink.png height='80%'/>
+<img class=center src=../../assets/img/cameraslink.png height=500>
 
 [https://data.baltimorecity.gov/Transportation/Baltimore-Fixed-Speed-Cameras/dz54-2aru](https://data.baltimorecity.gov/Transportation/Baltimore-Fixed-Speed-Cameras/dz54-2aru)
 
@@ -194,7 +158,7 @@ dateDownloaded
 ```
 
 ```
-[1] "Wed Jul 24 21:38:34 2013"
+[1] "Wed Aug 28 13:27:31 2013"
 ```
 
 
@@ -229,7 +193,7 @@ getwd()
 ```
 
 ```
-[1] "/Users/sean/Developer/GitHub/modules/jeff/week2/004gettingData1"
+[1] "/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1"
 ```
 
 ```r
@@ -245,7 +209,8 @@ head(cameraData)
 ```
 
 ```
-Error: object 'cameraData' not found
+Error: error in evaluating the argument 'x' in selecting a method for
+function 'head': Error: object 'cameraData' not found
 ```
 
 
@@ -260,11 +225,19 @@ getwd()
 ```
 
 ```
-[1] "/Users/sean/Developer/GitHub/modules/jeff/week2/004gettingData1"
+[1] "/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1"
 ```
 
 ```r
 cameraData <- read.table("./data/cameras.csv",sep=",",header=TRUE)
+```
+
+---
+
+## Example: Baltimore camera data
+
+
+```r
 head(cameraData)
 ```
 
@@ -284,7 +257,6 @@ head(cameraData)
 5      E 33rd  & The Alameda (39.3283410623, -76.5953594625)
 6         Erdman  & Macon St (39.3068045671, -76.5593167803)
 ```
-
 
 
 ---
@@ -332,24 +304,21 @@ head(cameraData)
 
 ## read.xlsx() - Baltimore camera data
 
+You may need to run `install.packages("xlsx")` if the xlsx package is not already installed
+
 
 ```r
 library(xlsx)
-```
-
-```
-Error: there is no package called 'xlsx'
-```
-
-```r
 fileUrl <- "https://data.baltimorecity.gov/api/views/dz54-2aru/rows.xlsx?accessType=DOWNLOAD"
 download.file(fileUrl,destfile="./data/camera.xlsx",method="curl")
 cameraData <- read.xlsx2("./data/camera.xlsx",sheetIndex=1)
 ```
 
-```
-Error: could not find function "read.xlsx2"
-```
+
+---
+
+## read.xlsx() - Baltimore camera data
+
 
 ```r
 head(cameraData)
@@ -373,7 +342,6 @@ head(cameraData)
 ```
 
 
-
 ---
 
 ## Picking a file - less reproducible, but useful
@@ -384,5 +352,5 @@ cameraData <- read.csv(file.choose())
 ```
 
 
-<img class=center src=assets/img/filechoose.png height='80%'/>
+<img class=center src=../../assets/img/filechoose.png height=400>
 
