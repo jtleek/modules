@@ -6,7 +6,7 @@ job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
-hitheme     : zenburn   # 
+hitheme     : tomorrow   # 
 url:
   lib: ../../libraries
   assets: ../../assets
@@ -36,10 +36,12 @@ knit_hooks$set(plot = knitr:::hook_plot_html)
 Roger's lectures [windows](http://www.youtube.com/watch?v=XBcvH1BpIBo&list=PLjTlxb-wKvXNSDfcKPFH2gzHGyjpeCZmJ&index=2), [mac](http://www.youtube.com/watch?v=8xT3hmJQskU&list=PLjTlxb-wKvXNSDfcKPFH2gzHGyjpeCZmJ&index=1)
 Andrew Jaffe's [lecture notes](https://dl.dropbox.com/u/7710864/courseraPublic/otherResources/lecture1/index.html)
 
-```{r}
-"/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data"
-setwd("/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data")
-"/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data"
+```r
+> getwd()
+[1] "/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1"
+> setwd("/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data")
+> getwd()
+[1] "/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data"
 ```
 
 Important difference with Windows: 
@@ -66,10 +68,12 @@ getwd()
 
 ## Get/set your working directory (absolute paths)
 
-```{r}
-getwd()
-setwd("/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data")
-getwd()
+```r
+> getwd()
+[1] "/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1"
+> setwd("/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data")
+> getwd()
+[1] "/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data"
 ```
 
 
@@ -108,7 +112,7 @@ getwd()
 
 ## Example - Baltimore camera data
 
-<img class=center src=assets/img/cameras.png height='80%'/>
+<img class=center src=../../assets/img/cameras.png height=500>
 
 [https://data.baltimorecity.gov/Transportation/Baltimore-Fixed-Speed-Cameras/dz54-2aru](https://data.baltimorecity.gov/Transportation/Baltimore-Fixed-Speed-Cameras/dz54-2aru)
 
@@ -117,7 +121,7 @@ getwd()
 
 ## Example - Baltimore camera data,csv
 
-<img class=center src=assets/img/cameraslink.png height='80%'/>
+<img class=center src=../../assets/img/cameraslink.png height=500>
 
 [https://data.baltimorecity.gov/Transportation/Baltimore-Fixed-Speed-Cameras/dz54-2aru](https://data.baltimorecity.gov/Transportation/Baltimore-Fixed-Speed-Cameras/dz54-2aru)
 
@@ -175,10 +179,15 @@ head(cameraData)
 ```{r}
 getwd()
 cameraData <- read.table("./data/cameras.csv",sep=",",header=TRUE)
-head(cameraData)
 
 ```
+---
 
+## Example: Baltimore camera data
+
+```{r}
+head(cameraData)
+```
 
 ---
 
@@ -206,14 +215,22 @@ head(cameraData)
 
 ## read.xlsx() - Baltimore camera data
 
+You may need to run `install.packages("xlsx")` if the xlsx package is not already installed
+
 ```{r}
 library(xlsx)
 fileUrl <- "https://data.baltimorecity.gov/api/views/dz54-2aru/rows.xlsx?accessType=DOWNLOAD"
 download.file(fileUrl,destfile="./data/camera.xlsx",method="curl")
 cameraData <- read.xlsx2("./data/camera.xlsx",sheetIndex=1)
-head(cameraData)
 ```
 
+---
+
+## read.xlsx() - Baltimore camera data
+
+```{r}
+head(cameraData)
+```
 
 ---
 
@@ -223,5 +240,5 @@ head(cameraData)
 cameraData <- read.csv(file.choose())
 ```
 
-<img class=center src=assets/img/filechoose.png height='80%'/>
+<img class=center src=../../assets/img/filechoose.png height=400>
 

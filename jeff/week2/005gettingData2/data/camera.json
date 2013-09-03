@@ -10,7 +10,7 @@
       "createdAt" : 1334171223,
       "description" : "Motorists who drive aggressively and exceed the posted speed limit by at least 12 miles per hour will receive $40 citations in the mail. These citations are not reported to insurance companies and no license points are assigned. Notification signs will be placed at all speed enforcement locations so that motorists will be aware that they are approaching a speed check zone. The goal of the program is to make the streets of Baltimore safer for everyone by changing aggressive driving behavior. In addition to the eight portable speed enforcement units, the city has retrofitted 50 red light camera locations with the automated speed enforcement technology.",
       "displayType" : "map",
-      "downloadCount" : 14929,
+      "downloadCount" : 15138,
       "licenseId" : "CC_30_BY",
       "numberOfComments" : 1,
       "oid" : 591522,
@@ -24,7 +24,7 @@
       "signed" : false,
       "tableId" : 294502,
       "totalTimesRated" : 0,
-      "viewCount" : 20681,
+      "viewCount" : 20868,
       "viewLastModified" : 1359122185,
       "viewType" : "tabular",
       "columns" : [ {
@@ -653,10 +653,10 @@
         "emailUnsubscribed" : false,
         "privacyControl" : "login",
         "privilegesDisabled" : false,
-        "profileLastModified" : 1333638154,
+        "profileLastModified" : 1375214401,
         "roleName" : "administrator",
         "screenName" : "hchudson_bmore",
-        "rights" : [ "create_datasets", "edit_others_datasets", "edit_sdp", "edit_site_theme", "moderate_comments", "manage_users", "chown_datasets", "edit_nominations", "approve_nominations", "feature_items", "federations", "manage_stories", "manage_approval", "change_configurations", "view_domain", "view_others_datasets", "edit_pages", "create_pages" ]
+        "rights" : [ "create_datasets", "edit_others_datasets", "edit_sdp", "edit_site_theme", "moderate_comments", "manage_users", "chown_datasets", "edit_nominations", "approve_nominations", "feature_items", "federations", "manage_stories", "manage_approval", "change_configurations", "view_domain", "view_others_datasets", "edit_pages", "create_pages", "view_goals", "view_dashboards", "edit_goals", "edit_dashboards", "create_dashboards" ]
       },
       "tags" : [ "speed", "transportation", "citation" ]
     }
