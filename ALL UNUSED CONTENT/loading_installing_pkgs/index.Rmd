@@ -1,7 +1,7 @@
 ---
 title       : Installing and Loading Packages in R
 subtitle    : 
-author      : Roger Peng, Associate Professor
+author      : Roger D. Peng, Associate Professor
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -14,15 +14,46 @@ widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 ---
 
-## Using R Packages
+## R Packages
 
-- When you download R from the Comprehensive R Archive Network (CRAN), you get that ``base" R system
+- When you download R from the Comprehensive R Archive Network (CRAN),
+  you get that ``base" R system
 
-- 
+- The base R system comes with basic functionality; implements the R language
 
-- One reason R is so useful is the large collection of 
+- One reason R is so useful is the large collection of packages that
+  extend the basic functionality of R
 
+- R packages are developed and published by the larger R community
 
+--- 
+
+## Obtaining R Packages
+
+- The primary location for obtaining R packages is
+  [CRAN](http://cran.r-project.org)
+
+- For biological and biomedical applications, many packages are
+  available from the [Bioconductor Project](http://bioconductor.org)
+
+- There are over 4,000 packages on CRAN covering a wide range of topics
+
+- A list of some topics is available through the [Task
+  Views](http://cran.r-project.org/web/views/) link, which groups
+  together many R packages related to a given topic
 
 ---
 
+## Installing an R Package
+
+- Packages can be installed with the `install.packages()`
+  function in R
+
+- To install a single package, pass the name of the lecture to the
+  `install.packages()` function as the first argument
+
+- The following the code installs the **slidify** package from CRAN
+
+```{r, eval=FALSE}
+install.packages("slidify")
+```
