@@ -1,0 +1,28 @@
+---
+title       : Installing and Loading Packages in R
+subtitle    : 
+author      : Roger Peng, Associate Professor
+job         : Johns Hopkins Bloomberg School of Public Health
+logo        : bloomberg_shield.png
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+url:
+  lib: ../../libraries
+  assets: ../../assets
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+---
+
+## Using R Packages
+
+- When you download R from the Comprehensive R Archive Network (CRAN), you get that ``base" R system
+
+- 
+
+- One reason R is so useful is the large collection of 
+
+
+
+---
+
