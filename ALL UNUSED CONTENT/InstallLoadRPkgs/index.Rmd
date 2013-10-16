@@ -57,3 +57,32 @@ mode        : selfcontained # {standalone, draft}
 ```{r, eval=FALSE}
 install.packages("slidify")
 ```
+---
+
+## Installing an R Package
+
+- You can install multiple R packages at once with a single call to
+  `install.packages()`
+
+- Place the names of the R packages in a character vector
+
+```{r, eval=FALSE}
+install.packages(c("slidify", "ggplot2", "devtools"))
+```
+
+
+---
+
+## Installing an R Package in RStudio
+
+<img src="../../assets/img/InstallLoadRPkgs/InstallPackageRStudio1crop.png" alt="Open the 'Tools' Menu" height=481 width=734>
+
+--- 
+
+## Installing an R Package in RStudio
+
+<img src="../../assets/img/InstallLoadRPkgs/InstallPackageRStudio2.png" alt="Enter Package Name" height=456 width=586>
+
+---
+
+
