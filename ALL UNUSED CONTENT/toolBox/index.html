@@ -4,7 +4,7 @@
   <title>Introduction to the Data Scientist's Toolbox</title>
   <meta charset="utf-8">
   <meta name="description" content="Introduction to the Data Scientist's Toolbox">
-  <meta name="author" content="Jeffrey Leek, Assistant Professor of Biostatistics">
+  <meta name="author" content="">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -43,17 +43,30 @@
       <hgroup class="auto-fadein">
         <h1>Introduction to the Data Scientist's Toolbox</h1>
         <h2></h2>
-        <p>Jeffrey Leek, Assistant Professor of Biostatistics<br/>Johns Hopkins Bloomberg School of Public Health</p>
+        <p><br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
           </slide>
 
     <!-- SLIDES -->
       <slide class="" id="slide-1" style="background:;">
   <hgroup>
-    <h2>What is data science?</h2>
+    <h2>What do data scientists do?</h2>
   </hgroup>
   <article>
-    <iframe src="http://prezi.com/embed/fhumwa8tb3fs/?bgcolor=ffffff&amp;lock_to_path=0&amp;autoplay=no&amp;autohide_ctrls=0"></iframe>
+    <ul>
+<li>Define the question</li>
+<li>Define the ideal data set</li>
+<li>Determine what data you can access</li>
+<li>Obtain the data</li>
+<li>Clean the data</li>
+<li>Exploratory data analysis</li>
+<li>Statistical prediction/modeling</li>
+<li>Interpret results</li>
+<li>Challenge results</li>
+<li>Synthesize/write up results</li>
+<li>Create reproducible code</li>
+<li>Distribute results to other people</li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
@@ -61,10 +74,12 @@
 
       <slide class="" id="slide-2" style="background:;">
   <hgroup>
-    <h2>Pick a person and measure</h2>
+    <h2>The main workhorse of data science</h2>
   </hgroup>
   <article>
-    <p><img class=center src=../../assets/img/where/Slide02.jpg height='350'/></p>
+    <p><img class=center src=../../assets/img/toolBox/rproject.png height='500px'/></p>
+
+<p><a href="http://www.r-project.org/">http://www.r-project.org/</a></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -72,10 +87,12 @@
 
       <slide class="" id="slide-3" style="background:;">
   <hgroup>
-    <h2>Census</h2>
+    <h2>Where we will work on coding</h2>
   </hgroup>
   <article>
-    <p><img class=center src=../../assets/img/where/Slide03.jpg height='350'/></p>
+    <p><img class=center src=../../assets/img/toolBox/rstudio.png height='500px'/></p>
+
+<p><a href="http://www.rstudio.com/">http://www.rstudio.com/</a></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -83,17 +100,12 @@
 
       <slide class="" id="slide-4" style="background:;">
   <hgroup>
-    <h2>Observational study</h2>
+    <h2>Rstudio&#39;s interface</h2>
   </hgroup>
   <article>
-    <pre><code class="r">set.seed(5)
-sample(1:8,size=4,replace=FALSE)
-</code></pre>
+    <p><img class=center src=../../assets/img/toolBox/ide.png height='500px'/></p>
 
-<pre><code>[1] 2 5 6 8
-</code></pre>
-
-<p><img class=center src=../../assets/img/where/Slide04.jpg height='350'/></p>
+<p><a href="http://www.rstudio.com/">http://www.rstudio.com/</a></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -101,17 +113,12 @@ sample(1:8,size=4,replace=FALSE)
 
       <slide class="" id="slide-5" style="background:;">
   <hgroup>
-    <h2>Convenience sample</h2>
+    <h2>Primary file types - R script</h2>
   </hgroup>
   <article>
-    <pre><code class="r">probs = c(5,5,5,5,1,1,1,1)/24
-sample(1:8,size=4,replace=FALSE,prob=probs)
-</code></pre>
+    <p><img class=center src=../../assets/img/toolBox/rscript.png height='400px'/></p>
 
-<pre><code>[1] 4 1 2 5
-</code></pre>
-
-<p><img class=center src=../../assets/img/where/Slide05.jpg height='350'/></p>
+<p><a href="http://www.rstudio.com/ide/docs/using/source">http://www.rstudio.com/ide/docs/using/source</a></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -119,17 +126,12 @@ sample(1:8,size=4,replace=FALSE,prob=probs)
 
       <slide class="" id="slide-6" style="background:;">
   <hgroup>
-    <h2>Randomized trial</h2>
+    <h2>Primary file types - R markdown document</h2>
   </hgroup>
   <article>
-    <pre><code class="r">treat1 = sample(1:8,size=2,replace=FALSE); treat2 = sample(2:7,size=2,replace=FALSE)
-c(treat1,treat2)
-</code></pre>
+    <p><img class=center src=../../assets/img/toolBox/rmarkdown.png height='500px'/></p>
 
-<pre><code>[1] 8 1 3 4
-</code></pre>
-
-<p><img class=center src=../../assets/img/where/Slide06.jpg height='350'/></p>
+<p><a href="http://www.rstudio.com/ide/docs/authoring/using_markdown">http://www.rstudio.com/ide/docs/authoring/using_markdown</a></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -137,17 +139,10 @@ c(treat1,treat2)
 
       <slide class="" id="slide-7" style="background:;">
   <hgroup>
-    <h2>Prediction study: train</h2>
+    <h2>Sharing your results - Github &amp; Git</h2>
   </hgroup>
   <article>
-    <pre><code class="r">set.seed(5)
-sample(1:8,size=4,replace=FALSE)
-</code></pre>
-
-<pre><code>[1] 2 5 6 8
-</code></pre>
-
-<p><img class=center src=../../assets/img/where/Slide04.jpg height='350'/></p>
+    <p><img class=center src=../../assets/img/toolBox/github.png height='500px'/></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -155,49 +150,10 @@ sample(1:8,size=4,replace=FALSE)
 
       <slide class="" id="slide-8" style="background:;">
   <hgroup>
-    <h2>Prediction study: test</h2>
+    <h2>Where to run Git commands - the shell</h2>
   </hgroup>
   <article>
-    <pre><code class="r">sample(c(1,3,4,7),size=2,replace=FALSE)
-</code></pre>
-
-<pre><code>[1] 1 4
-</code></pre>
-
-<p><img class=center src=../../assets/img/where/Slide08.jpg height='350'/></p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-9" style="background:;">
-  <hgroup>
-    <h2>Study over time: cross-sectional</h2>
-  </hgroup>
-  <article>
-    <p><img class=center src=../../assets/img/where/Slide09.jpg height='350'/></p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-10" style="background:;">
-  <hgroup>
-    <h2>Study over time: longitudinal</h2>
-  </hgroup>
-  <article>
-    <p><img class=center src=../../assets/img/where/Slide10.jpg height='350'/></p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-11" style="background:;">
-  <hgroup>
-    <h2>Study over time: retrospective</h2>
-  </hgroup>
-  <article>
-    <p><img class=center src=../../assets/img/where/Slide11.jpg height='350'/></p>
+    <p><img class=center src=../../assets/img/toolBox/shell.png height='500px'/></p>
 
   </article>
   <!-- Presenter Notes -->

@@ -1,7 +1,7 @@
 ---
 title       : Introduction to the Data Scientist's Toolbox
 subtitle    : 
-author      : Jeffrey Leek, Assistant Professor of Biostatistics 
+author      :  
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -18,112 +18,77 @@ mode        : selfcontained # {standalone, draft}
 
 
 
-## What is data science? 
+## What do data scientists do? 
 
-<iframe src="http://prezi.com/embed/fhumwa8tb3fs/?bgcolor=ffffff&amp;lock_to_path=0&amp;autoplay=no&amp;autohide_ctrls=0"></iframe>
+* Define the question
+* Define the ideal data set
+* Determine what data you can access
+* Obtain the data
+* Clean the data
+* Exploratory data analysis
+* Statistical prediction/modeling
+* Interpret results
+* Challenge results
+* Synthesize/write up results
+* Create reproducible code
+* Distribute results to other people
+
 
 ---
 
-## Pick a person and measure
+## The main workhorse of data science
 
-<img class=center src=../../assets/img/where/Slide02.jpg height='350'/>
+<img class=center src=../../assets/img/toolBox/rproject.png height='500px'/>
 
----
-
-## Census 
-
-<img class=center src=../../assets/img/where/Slide03.jpg height='350'/>
+http://www.r-project.org/
 
 ---
 
-## Observational study 
+## Where we will work on coding
 
-```r
-set.seed(5)
-sample(1:8,size=4,replace=FALSE)
-```
+<img class=center src=../../assets/img/toolBox/rstudio.png height='500px'/>
 
-```
-[1] 2 5 6 8
-```
-
-
-<img class=center src=../../assets/img/where/Slide04.jpg height='350'/>
+http://www.rstudio.com/
 
 ---
 
-## Convenience sample 
+## Rstudio's interface
 
-```r
-probs = c(5,5,5,5,1,1,1,1)/24
-sample(1:8,size=4,replace=FALSE,prob=probs)
-```
+<img class=center src=../../assets/img/toolBox/ide.png height='500px'/>
 
-```
-[1] 4 1 2 5
-```
-
-
-<img class=center src=../../assets/img/where/Slide05.jpg height='350'/>
+http://www.rstudio.com/
 
 ---
-## Randomized trial 
 
-```r
-treat1 = sample(1:8,size=2,replace=FALSE); treat2 = sample(2:7,size=2,replace=FALSE)
-c(treat1,treat2)
-```
+## Primary file types - R script
 
-```
-[1] 8 1 3 4
-```
+<img class=center src=../../assets/img/toolBox/rscript.png height='400px'/>
 
+http://www.rstudio.com/ide/docs/using/source
 
-
-<img class=center src=../../assets/img/where/Slide06.jpg height='350'/>
 
 ---
-## Prediction study: train 
 
-```r
-set.seed(5)
-sample(1:8,size=4,replace=FALSE)
-```
-
-```
-[1] 2 5 6 8
-```
+## Primary file types - R markdown document
 
 
+<img class=center src=../../assets/img/toolBox/rmarkdown.png height='500px'/>
 
-<img class=center src=../../assets/img/where/Slide04.jpg height='350'/>
+http://www.rstudio.com/ide/docs/authoring/using_markdown
 
 ---
-## Prediction study: test 
 
-```r
-sample(c(1,3,4,7),size=2,replace=FALSE)
-```
-
-```
-[1] 1 4
-```
+## Sharing your results - Github & Git
 
 
-<img class=center src=../../assets/img/where/Slide08.jpg height='350'/>
+<img class=center src=../../assets/img/toolBox/github.png height='500px'/>
 
 ---
-## Study over time: cross-sectional 
 
-<img class=center src=../../assets/img/where/Slide09.jpg height='350'/>
+## Where to run Git commands - the shell
 
----
-## Study over time: longitudinal 
+<img class=center src=../../assets/img/toolBox/shell.png height='500px'/>
 
-<img class=center src=../../assets/img/where/Slide10.jpg height='350'/>
 
----
-## Study over time: retrospective 
-<img class=center src=../../assets/img/where/Slide11.jpg height='350'/>
 
 

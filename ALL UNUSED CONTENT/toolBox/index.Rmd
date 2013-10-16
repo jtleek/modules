@@ -1,7 +1,7 @@
 ---
 title       : Introduction to the Data Scientist's Toolbox
 subtitle    : 
-author      : Jeffrey Leek, Assistant Professor of Biostatistics 
+author      :  
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -31,17 +31,77 @@ knit_hooks$set(inline = function(x) {
 knit_hooks$set(plot = knitr:::hook_plot_html)
 ```
 
-## What is data science? 
+## What do data scientists do? 
 
-<iframe src="http://prezi.com/embed/fhumwa8tb3fs/?bgcolor=ffffff&amp;lock_to_path=0&amp;autoplay=no&amp;autohide_ctrls=0"></iframe>
+* Define the question
+* Define the ideal data set
+* Determine what data you can access
+* Obtain the data
+* Clean the data
+* Exploratory data analysis
+* Statistical prediction/modeling
+* Interpret results
+* Challenge results
+* Synthesize/write up results
+* Create reproducible code
+* Distribute results to other people
+
 
 ---
 
-## What are the components of a data science project? 
+## The main workhorse of data science
 
-<img class=center src=../../assets/img/where/Slide02.jpg height='350'/>
+<img class=center src=../../assets/img/toolBox/rproject.png height='500px'/>
+
+http://www.r-project.org/
+
+---
+
+## Where we will work on coding
+
+<img class=center src=../../assets/img/toolBox/rstudio.png height='500px'/>
+
+http://www.rstudio.com/
+
+---
+
+## Rstudio's interface
+
+<img class=center src=../../assets/img/toolBox/ide.png height='500px'/>
+
+http://www.rstudio.com/
+
+---
+
+## Primary file types - R script
+
+<img class=center src=../../assets/img/toolBox/rscript.png height='400px'/>
+
+http://www.rstudio.com/ide/docs/using/source
 
 
-<img class=center src=../../assets/img/where/Slide11.jpg height='350'/>
+---
+
+## Primary file types - R markdown document
+
+
+<img class=center src=../../assets/img/toolBox/rmarkdown.png height='500px'/>
+
+http://www.rstudio.com/ide/docs/authoring/using_markdown
+
+---
+
+## Sharing your results - Github & Git
+
+
+<img class=center src=../../assets/img/toolBox/github.png height='500px'/>
+
+---
+
+## Where to run Github commands - the shell
+
+<img class=center src=../../assets/img/toolBox/shell.png height='500px'/>
+
+
 
 
