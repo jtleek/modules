@@ -1,5 +1,5 @@
 ---
-title       : Sources of Data Sets
+title       : Introduction to the Data Scientist's Toolbox
 subtitle    : 
 author      : Jeffrey Leek, Assistant Professor of Biostatistics 
 job         : Johns Hopkins Bloomberg School of Public Health
@@ -18,26 +18,9 @@ mode        : selfcontained # {standalone, draft}
 
 
 
-## Data are defined by how they are collected
+## What is data science? 
 
-__Main types__
-* Census (descriptive)
-* Observational study (inferential)
-* Convenience sample (all types - may be biased)
-* Randomized trial (causal)
-
-__Other types__
-
-* Prediction study  (prediction)
-* Studies over time 
-  * Cross sectional (inferential)
-  * Longitudinal (inferential, predictive)
-* Retrospective (inferential)
-
----
-## A population
-
-<img class=center src=../../assets/img/where/Slide01.jpg height='350'/>
+<iframe src="http://prezi.com/embed/fhumwa8tb3fs/?bgcolor=ffffff&amp;lock_to_path=0&amp;autoplay=no&amp;autohide_ctrls=0"></iframe>
 
 ---
 

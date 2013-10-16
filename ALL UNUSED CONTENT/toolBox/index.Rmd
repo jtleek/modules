@@ -1,5 +1,5 @@
 ---
-title       : Sources of Data Sets
+title       : Introduction to the Data Scientist's Toolbox
 subtitle    : 
 author      : Jeffrey Leek, Assistant Professor of Biostatistics 
 job         : Johns Hopkins Bloomberg School of Public Health
@@ -31,100 +31,17 @@ knit_hooks$set(inline = function(x) {
 knit_hooks$set(plot = knitr:::hook_plot_html)
 ```
 
-## Data are defined by how they are collected
+## What is data science? 
 
-__Main types__
-* Census (descriptive)
-* Observational study (inferential)
-* Convenience sample (all types - may be biased)
-* Randomized trial (causal)
-
-__Other types__
-
-* Prediction study  (prediction)
-* Studies over time 
-  * Cross sectional (inferential)
-  * Longitudinal (inferential, predictive)
-* Retrospective (inferential)
-
----
-## A population
-
-<img class=center src=../../assets/img/where/Slide01.jpg height='350'/>
+<iframe src="http://prezi.com/embed/fhumwa8tb3fs/?bgcolor=ffffff&amp;lock_to_path=0&amp;autoplay=no&amp;autohide_ctrls=0"></iframe>
 
 ---
 
-## Pick a person and measure
+## What are the components of a data science project? 
 
 <img class=center src=../../assets/img/where/Slide02.jpg height='350'/>
 
----
 
-## Census 
-
-<img class=center src=../../assets/img/where/Slide03.jpg height='350'/>
-
----
-
-## Observational study 
-```{r}
-set.seed(5)
-sample(1:8,size=4,replace=FALSE)
-
-```
-
-<img class=center src=../../assets/img/where/Slide04.jpg height='350'/>
-
----
-
-## Convenience sample 
-```{r}
-probs = c(5,5,5,5,1,1,1,1)/24
-sample(1:8,size=4,replace=FALSE,prob=probs)
-```
-
-<img class=center src=../../assets/img/where/Slide05.jpg height='350'/>
-
----
-## Randomized trial 
-```{r}
-treat1 = sample(1:8,size=2,replace=FALSE); treat2 = sample(2:7,size=2,replace=FALSE)
-c(treat1,treat2)
-```
-
-
-<img class=center src=../../assets/img/where/Slide06.jpg height='350'/>
-
----
-## Prediction study: train 
-```{r}
-set.seed(5)
-sample(1:8,size=4,replace=FALSE)
-```
-
-
-<img class=center src=../../assets/img/where/Slide04.jpg height='350'/>
-
----
-## Prediction study: test 
-```{r}
-sample(c(1,3,4,7),size=2,replace=FALSE)
-```
-
-<img class=center src=../../assets/img/where/Slide08.jpg height='350'/>
-
----
-## Study over time: cross-sectional 
-
-<img class=center src=../../assets/img/where/Slide09.jpg height='350'/>
-
----
-## Study over time: longitudinal 
-
-<img class=center src=../../assets/img/where/Slide10.jpg height='350'/>
-
----
-## Study over time: retrospective 
 <img class=center src=../../assets/img/where/Slide11.jpg height='350'/>
 
 
