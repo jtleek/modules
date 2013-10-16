@@ -57,6 +57,13 @@ mode        : selfcontained # {standalone, draft}
 ```{r, eval=FALSE}
 install.packages("slidify")
 ```
+
+- This command downloads the **slidify** package from CRAN and
+  installs it on your computer
+
+- Any packages that this package depends on will also be downloaded
+  and installed
+
 ---
 
 ## Installing an R Package
@@ -69,7 +76,6 @@ install.packages("slidify")
 ```{r, eval=FALSE}
 install.packages(c("slidify", "ggplot2", "devtools"))
 ```
-
 
 ---
 
@@ -85,4 +91,33 @@ install.packages(c("slidify", "ggplot2", "devtools"))
 
 ---
 
+## Loading R Packages
 
+- The `library()` function is used to load packages into R
+
+- The following code is used to load the **ggplot2** package into R
+
+```{r,eval=FALSE}
+library(ggplot2)
+```
+
+- Any packages that need to be loaded as dependencies will be loaded
+  first, before the named package is loaded
+
+- NOTE: Do not put the package name in quotes!
+
+- Some packages produce messages when they are loaded (but some don't)
+
+---
+
+## Summary
+
+- R packages provide a powerful mechanism for extending the
+  functionality of R
+
+- R packages can be obtained from CRAN or other repositories
+
+- The `install.packages()` can be used to install packages at the R
+  console
+
+- The `library()` function loads packages that have been installed.
