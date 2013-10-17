@@ -462,7 +462,7 @@ setMethod("show", "cachemean",
 
 ---
 
-## An Object That Remembers is Mean
+## An Object That Remembers its Mean
 
 A `mean` method
 
