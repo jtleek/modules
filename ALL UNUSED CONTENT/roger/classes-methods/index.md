@@ -1,15 +1,15 @@
 ---
 title       : Classes and Methods in R
 subtitle    : 
-author      : Roger Peng, Associate Professor
+author      : Roger D. Peng, Associate Professor
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : tomorrow      # 
 url:
-  lib: ../../libraries
-  assets: ../../assets
+  lib: ../../../libraries
+  assets: ../../../assets
 widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 ---
@@ -77,22 +77,53 @@ S4 classes/methods
 
 All objects in R have a class which can be determined by the class function
 
+
 ```r
-> class(1)
-[1] "numeric"
-
-> class(TRUE)
-[1] "logical"
-
-> class(rnorm(100))
-[1] "numeric"
-
-> class(NA)
-[1] "logical"
-
-> class("foo")
-[1] "character"
+class(1)
 ```
+
+```
+## [1] "numeric"
+```
+
+```r
+class(TRUE)
+```
+
+```
+## [1] "logical"
+```
+
+
+---
+
+## Classes
+
+
+```r
+class(rnorm(100))
+```
+
+```
+## [1] "numeric"
+```
+
+```r
+class(NA)
+```
+
+```
+## [1] "logical"
+```
+
+```r
+class("foo")
+```
+
+```
+## [1] "character"
+```
+
 
 ---
 
@@ -100,14 +131,18 @@ All objects in R have a class which can be determined by the class function
 
 Data classes go beyond the atomic classes
 
-```r
-> x <- rnorm(100)
-> y <- x + rnorm(100)
-> fit <- lm(y ~ x)  ## linear regression model
-> class(fit)
 
-[1] "lm"
+```r
+x <- rnorm(100)
+y <- x + rnorm(100)
+fit <- lm(y ~ x)  ## linear regression model
+class(fit)
 ```
+
+```
+## [1] "lm"
+```
+
 
 ---
 
@@ -121,79 +156,111 @@ Data classes go beyond the atomic classes
 
 ## An S3 generic function (in the ‘base’ package)
 
-The `mean` function is generic 
-```r
-> mean
+The `mean` and `print` functions are generic 
 
-function (x, ...)
-UseMethod("mean")
-<bytecode: 0x7fc25c27afc0>
-<environment: namespace:base>
+```r
+mean
 ```
 
-So is the `print` function 
-```r
-> print
-
-function (x, ...)
-UseMethod("print")
-<bytecode: 0x7fc25bd8ee00>
-<environment: namespace:base>
 ```
+## function (x, ...) 
+## UseMethod("mean")
+## <bytecode: 0x7fd369afe978>
+## <environment: namespace:base>
+```
+
+```r
+print
+```
+
+```
+## function (x, ...) 
+## UseMethod("print")
+## <bytecode: 0x7fd3695c9b50>
+## <environment: namespace:base>
+```
+
 
 ---
 
 ## S3 methods
 
+The `mean` generic function has a number of methods associated with it.
+
+
 ```r
-> methods("mean")
-[1] mean.data.frame mean.Date
-[3] mean.default    mean.difftime
-[5] mean.POSIXct    mean.POSIXlt
+methods("mean")
 ```
+
+```
+## [1] mean.Date     mean.default  mean.difftime mean.POSIXct  mean.POSIXlt
+```
+
 
 ---
 
-## An S4 generic function (from the ‘methods’ package)
+## An S4 generic function
 
-The S4 equivalent of `print` is `show`
+The `show function is from the **methods** package and is the S4
+equivalent of `print`
+
 ```r
-> show
-standardGeneric for "show" defined from package "methods"
-
-function (object)
-standardGeneric("show")
-<bytecode: 0x7fc25b5ced08>
-<environment: 0x7fc25c51aea0>
-Methods may be defined for arguments: object
-Use  showMethods("show")  for currently available ones.
-(This generic function excludes non-simple inheritance; see ?setIs)
+library(methods)
+show
 ```
 
-The `show` function is usually not called directly (much like `print`) because objects are auto-printed
+```
+## standardGeneric for "show" defined from package "methods"
+## 
+## function (object) 
+## standardGeneric("show")
+## <bytecode: 0x7fd36a9e9098>
+## <environment: 0x7fd36a1c5d78>
+## Methods may be defined for arguments: object
+## Use  showMethods("show")  for currently available ones.
+## (This generic function excludes non-simple inheritance; see ?setIs)
+```
+
+The `show` function is usually not called directly (much like `print`)
+because objects are auto-printed.
 
 ---
 
 ## S4 methods
 
+
 ```r
-> showMethods("show")
-Function: show (package methods)
-object="ANY"
-object="classGeneratorFunction"
-object="classRepresentation"
-object="envRefClass"
-object="function"
-    (inherited from: object="ANY")
-object="genericFunction"
-object="genericFunctionWithTrace"
-object="MethodDefinition"
-object="MethodDefinitionWithTrace"
-object="MethodSelectionReport"
-object="MethodWithNext"
-object="MethodWithNextWithTrace"
-...
+showMethods("show")
 ```
+
+```
+## Function: show (package methods)
+## object="ANY"
+## object="classGeneratorFunction"
+## object="classRepresentation"
+## object="envRefClass"
+## object="function"
+##     (inherited from: object="ANY")
+## object="genericFunction"
+## object="genericFunctionWithTrace"
+## object="MethodDefinition"
+## object="MethodDefinitionWithTrace"
+## object="MethodSelectionReport"
+## object="MethodWithNext"
+## object="MethodWithNextWithTrace"
+## object="namedList"
+## object="ObjectsWithPackage"
+## object="oldClass"
+## object="refClassRepresentation"
+## object="refMethodDef"
+## object="refObjectGenerator"
+## object="signature"
+## object="sourceEnvironment"
+## object="standardGeneric"
+##     (inherited from: object="genericFunction")
+## object="traceable"
+```
+
 
 ---
 
@@ -223,12 +290,17 @@ The first argument of a generic function is an object of a particular class (the
 
 What’s happening here?
 
+
 ```r
-> set.seed(2)
-> x <- rnorm(100)
-> mean(x)
-[1] -0.03069816
+set.seed(2)
+x <- rnorm(100)
+mean(x)
 ```
+
+```
+## [1] -0.0307
+```
+
 
 1. The class of x is “numeric”
 2. But there is no mean method for “numeric” objects!
@@ -238,23 +310,41 @@ What’s happening here?
 
 ## S3 Class/Method: Example 1
 
+
 ```r
-> head(getS3method("mean", "default"))
-function (x, trim = 0, na.rm = FALSE, ...)
-{
-    if (!is.numeric(x) && !is.complex(x) && !is.logical(x)) {
-        warning("argument is not numeric or logical: returning NA")
-        return(NA_real_)
-    }
-    
-> tail(getS3method("mean", "default"))
-         lo <- floor(n * trim) + 1
-         hi <- n + 1 - lo
-         x <- sort.int(x, partial = unique(c(lo, hi)))[lo:hi]
-    }
-    .Internal(mean(x))
-}
+head(getS3method("mean", "default"))
 ```
+
+```
+##                                                                      
+## 1 function (x, trim = 0, na.rm = FALSE, ...)                         
+## 2 {                                                                  
+## 3     if (!is.numeric(x) && !is.complex(x) && !is.logical(x)) {      
+## 4         warning("argument is not numeric or logical: returning NA")
+## 5         return(NA_real_)                                           
+## 6     }
+```
+
+
+---
+
+## S3 Class/Method: Example 1
+
+
+```r
+tail(getS3method("mean", "default"))
+```
+
+```
+##                                                                
+## 19         lo <- floor(n * trim) + 1                           
+## 20         hi <- n + 1 - lo                                    
+## 21         x <- sort.int(x, partial = unique(c(lo, hi)))[lo:hi]
+## 22     }                                                       
+## 23     .Internal(mean(x))                                      
+## 24 }
+```
+
 
 ---
 
@@ -262,18 +352,27 @@ function (x, trim = 0, na.rm = FALSE, ...)
 
 What happens here?
 
+
 ```r
-> set.seed(3)
-> df <- data.frame(x = rnorm(100), y = 1:100)
-> sapply(df, mean)
-         x           y 
-0.01103557 50.50000000
+set.seed(3)
+df <- data.frame(x = rnorm(100), y = 1:100)
+sapply(df, mean)
 ```
 
-1. The class of df is “data.frame”; in a data frame each column can be an object of a different class
+```
+##        x        y 
+##  0.01104 50.50000
+```
+
+
+1. The class of df is "data.frame"; in a data frame each column can be
+an object of a different class
+
 2. We `sapply` over the columns and call the `mean` function
+
 3. In each column, `mean` checks the class of the object and dispatches the
 appropriate method.
+
 4. Here we have a `numeric` column and an `integer` column; in both cases `mean` calls the default method
 
 ---
@@ -287,13 +386,15 @@ NOTE: Some methods are visible to the user (i.e. `mean.default`), but you should
 ## S3 Class/Method: Example 3
 
 The `plot` function is generic and its behavior depends on the object being plotted. 
+
 ```r
-> set.seed(10)
-> x <- rnorm(100)
-> plot(x)
+set.seed(10)
+x <- rnorm(100)
+plot(x)
 ```
 
-<img src="../assets/img/plot1.png" height=300>
+![plot of chunk unnamed-chunk-12](figure/unnamed-chunk-12.png) 
+
 
 ---
 
@@ -301,14 +402,15 @@ The `plot` function is generic and its behavior depends on the object being plot
 
 For time series objects, `plot` connects the dots
 
+
 ```r
-> set.seed(10)
-> x <- rnorm(100)
-> x <- as.ts(x) ## Convert to a time series object 
-> plot(x)
+set.seed(10)
+x <- rnorm(100)
+x <- as.ts(x)  ## Convert to a time series object 
+plot(x)
 ```
 
-<img src="../assets/img/plot2.png" height=300>
+![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13.png) 
 
 
 ---
@@ -350,11 +452,11 @@ A new class can be defined using the `setClass` function
 
 Creating new classes/methods is usually not something done at the console; you likely want to save the code in a separate file
 
+
 ```r
-setClass("polygon",
-         representation(x = "numeric",
-                        y = "numeric"))
+setClass("polygon", representation(x = "numeric", y = "numeric"))
 ```
+
 
 The slots for this class are `x`and `y`. The slots for an S4 object can be accessed with the `@` operator.
 
@@ -366,15 +468,16 @@ A plot method can be created with the `setMethod` function.
 - For `setMethod` you need to specify a generic function (`plot`), and a _signature_.
 A signature is a character vector indicating the classes of objects that are accepted by the method. In this case, the `plot` method will take one type of object–a `polygon` object.
 
+
 ```r
-setMethod("plot", "polygon",
-          function(x, y, ...) {
-                  plot(x@x, x@y, type = "n", ...)
-                  xp <- c(x@x, x@x[1])
-                  yp <- c(x@y, x@y[1])
-                  lines(xp, yp)
+setMethod("plot", "polygon", function(x, y, ...) {
+    plot(x@x, x@y, type = "n", ...)
+    xp <- c(x@x, x@x[1])
+    yp <- c(x@y, x@y[1])
+    lines(xp, yp)
 })
 ```
+
 
 Notice that the slots of the polygon (the x- and y-coordinates) are accessed with the `@` operator.
 
@@ -384,11 +487,12 @@ Notice that the slots of the polygon (the x- and y-coordinates) are accessed wit
 
 Create a new class
 
+
 ```r
-> setClass("polygon",
-+ representation(x = "numeric", 
-+ y = "numeric"))
+library(methods)
+setClass("polygon", representation(x = "numeric", y = "numeric"), where = globalenv())
 ```
+
 
 ---
 
@@ -396,16 +500,24 @@ Create a new class
 
 Create a plot method for this class
 
+
 ```r
-> setMethod("plot", "polygon",
-+ function(x, y, ...) {
-+     plot(x@x, x@y, type = "n", ...)
-+     xp <- c(x@x, x@x[1])
-+     yp <- c(x@y, x@y[1])
-+     lines(xp, yp)
-+     })
-[1] "plot"
+setMethod("plot", "polygon", function(x, y, ...) {
+    plot(x@x, x@y, type = "n", ...)
+    xp <- c(x@x, x@x[1])
+    yp <- c(x@y, x@y[1])
+    lines(xp, yp)
+}, where = globalenv())
 ```
+
+```
+## Creating a generic function for 'plot' from package 'graphics' in the global environment
+```
+
+```
+## [1] "plot"
+```
+
 
 If things go well, you will not get any messages or errors and nothing useful will be returned by either `setClass` or `setMethod`.
 
@@ -415,12 +527,17 @@ If things go well, you will not get any messages or errors and nothing useful wi
 
 After calling `setMethod` the new `plot` method will be added to the list of methods for `plot`.
 
+
 ```r
-> showMethods("plot")
-Function: plot (package graphics)
-x="ANY"
-x="polygon"
+showMethods("plot")
 ```
+
+```
+## Function: plot (package graphics)
+## x="ANY"
+## x="polygon"
+```
+
 
 Notice that the signature for class `polygon` is listed. The method for `ANY` is the default method and it is what is called when now other signature matches
 
@@ -428,12 +545,14 @@ Notice that the signature for class `polygon` is listed. The method for `ANY` is
 
 ## S4 Class/Method: Polygon class
 
+
 ```r
-> p <- new("polygon", x = c(1, 2, 3, 4), y = c(1, 2, 3, 1))
-> plot(p)
+p <- new("polygon", x = c(1, 2, 3, 4), y = c(1, 2, 3, 1))
+plot(p)
 ```
 
-<img src="../assets/img/triangle.png" height=300>
+![plot of chunk unnamed-chunk-19](figure/unnamed-chunk-19.png) 
+
 
 ---
 
