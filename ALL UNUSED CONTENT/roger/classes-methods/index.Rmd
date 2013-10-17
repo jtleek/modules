@@ -1,7 +1,7 @@
 ---
 title       : Classes and Methods in R
 subtitle    : 
-author      : Roger D. Peng, Associate Professor
+author      : Roger D. Peng, Associate Professor of Biostatistics
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -137,7 +137,7 @@ methods("mean")
 
 ## An S4 generic function
 
-The `show function is from the **methods** package and is the S4
+The `show` function is from the **methods** package and is the S4
 equivalent of `print`
 ```{r}
 library(methods)
@@ -397,7 +397,7 @@ plot(p)
 
 ---
 
-## A Function that Remembers its Mean
+## An Object That Remembers its Mean
 
 Class definition
 ```{r,eval=FALSE,tidy=FALSE}
@@ -416,7 +416,7 @@ setClass("cachemean",
 ```
 
 ---
-## A Function that Remembers its Mean
+## An Object That Remembers its Mean
 
 A constructor function
 
@@ -438,7 +438,7 @@ makeVector <- function(x) {
 
 ---
 
-## A Function that Remembers its Mean
+## An Object That Remembers its Mean
 
 A `show` method
 
@@ -462,7 +462,7 @@ setMethod("show", "cachemean",
 
 ---
 
-## A Function that Remembers is Mean
+## An Object That Remembers is Mean
 
 A `mean` method
 
@@ -493,7 +493,7 @@ setMethod("mean", "cachemean",
 
 ---
 
-## A Function that Remembers its Mean
+## An Object That Remembers its Mean
 
 Using the new class
 
