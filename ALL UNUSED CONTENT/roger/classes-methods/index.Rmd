@@ -241,7 +241,8 @@ NOTE: Some methods are visible to the user (i.e. `mean.default`), but you should
 ## S3 Class/Method: Example 3
 
 The `plot` function is generic and its behavior depends on the object being plotted. 
-```{r}
+
+```{r,out.height=300,out.width=300}
 set.seed(10)
 x <- rnorm(100)
 plot(x)
@@ -253,7 +254,7 @@ plot(x)
 
 For time series objects, `plot` connects the dots
 
-```{r}
+```{r,out.height=300,out.width=300}
 set.seed(10)
 x <- rnorm(100)
 x <- as.ts(x) ## Convert to a time series object 
@@ -333,7 +334,13 @@ Notice that the slots of the polygon (the x- and y-coordinates) are accessed wit
 
 Create a new class
 
-```{r}
+```{r,eval=FALSE,tidy=FALSE}
+library(methods)
+setClass("polygon",
+         representation(x = "numeric",
+                        y = "numeric"))
+```
+```{r,echo=FALSE,eval=TRUE}
 library(methods)
 setClass("polygon",
          representation(x = "numeric",
@@ -346,7 +353,16 @@ setClass("polygon",
 
 Create a plot method for this class
 
-```{r}
+```{r,echo=TRUE,eval=FALSE}
+setMethod("plot", "polygon",
+          function(x, y, ...) {
+                  plot(x@x, x@y, type = "n", ...)
+                  xp <- c(x@x, x@x[1])
+                  yp <- c(x@y, x@y[1])
+                  lines(xp, yp)
+	  })
+```
+```{r,echo=FALSE,eval=TRUE}
 setMethod("plot", "polygon",
           function(x, y, ...) {
                   plot(x@x, x@y, type = "n", ...)
@@ -374,18 +390,157 @@ Notice that the signature for class `polygon` is listed. The method for `ANY` is
 
 ## S4 Class/Method: Polygon class
 
-```{r}
+```{r,out.height=400,out.width=400}
 p <- new("polygon", x = c(1, 2, 3, 4), y = c(1, 2, 3, 1))
 plot(p)
 ```
 
 ---
 
+## A Function that Remembers its Mean
+
+Class definition
+```{r,eval=FALSE,tidy=FALSE}
+setClass("cachemean",
+         representation(set = "function",
+                        get = "function",
+                        getmean = "function",
+                        setmean = "function"))
+```
+```{r,echo=FALSE}
+setClass("cachemean",
+         representation(set = "function",
+                        get = "function",
+                        getmean = "function",
+                        setmean = "function"), where = globalenv())
+```
+
+---
+## A Function that Remembers its Mean
+
+A constructor function
+
+```{r}
+makeVector <- function(x) {
+        data <- x
+        datamean <- NULL
+        get <- function() data
+        set <- function(newvalue) {
+                data <<- newvalue
+                datamean <<- NULL
+        }
+        setmean <- function(newmean) datamean <<- newmean
+        getmean <- function() datamean
+        new("cachemean", set = set, get = get, setmean = setmean,
+            getmean = getmean)
+}
+```
+
+---
+
+## A Function that Remembers its Mean
+
+A `show` method
+
+```{r,eval=FALSE}
+setMethod("show", "cachemean",
+          function(object) {
+                  x <- object@get()
+                  show(x)
+                  invisible(x)
+          })
+```
+```{r,echo=FALSE}
+setMethod("show", "cachemean",
+          function(object) {
+                  x <- object@get()
+                  show(x)
+                  invisible(x)
+          }, where = globalenv())
+```
+
+
+---
+
+## A Function that Remembers is Mean
+
+A `mean` method
+
+```{r,eval=FALSE}
+setMethod("mean", "cachemean",
+          function(x, ...) {
+                  m <- x@getmean()
+                  if(!is.null(m))
+                          return(m)
+                  data <- x@get()
+                  m <- mean(data, ...)
+                  x@setmean(m)
+                  m
+          })
+```
+```{r,echo=FALSE}
+setMethod("mean", "cachemean",
+          function(x, ...) {
+                  m <- x@getmean()
+                  if(!is.null(m))
+                          return(m)
+                  data <- x@get()
+                  m <- mean(data, ...)
+                  x@setmean(m)
+                  m
+          }, where = globalenv())
+```
+
+---
+
+## A Function that Remembers its Mean
+
+Using the new class
+
+```r
+> set.seed(1)
+> x <- makeVector(rnorm(1e7))
+> system.time(print(mean(x)))
+[1] 0.0004036753
+   user  system elapsed 
+  0.067   0.000   0.067 
+> system.time(print(mean(x)))
+[1] 0.0004036753
+   user  system elapsed 
+      0       0       0 
+```
+
+---
+
+## Summary
+
+- Developing classes and associated methods is a powerful way to
+  extend the functionality of R
+
+- **Classes** define new data types
+
+- **Methods** extend **generic functions** to specificy the behavior
+    of generic functions on new classes
+
+- As new data types and concepts are created, classes/methods provide
+  a way for you to develop an intuitive interface to those
+  data/concepts for users
+
+---
+
 ## Where to Look, Places to Start
 
-- The best way to learn this stuff is to look at examples (and try the exercises for the course)
-- There are now quite a few examples on CRAN which use S4 classes/methods.
-- Bioconductor (http://www.bioconductor.org) — a rich resource, even if you know nothing about bioinformatics
-- Some packages on CRAN (as far as I know) — SparseM, gpclib, flexmix, its, lme4, orientlib, pixmap
-- The `stats4` package (comes with R) has a bunch of classes/methods for doing maximum likelihood analysis.
-￼￼￼￼￼
+- The best way to learn this stuff is to look at examples
+
+- There are quite a few examples on CRAN which use S4
+  classes/methods. You can usually tell if they use S4 classes/methods
+  if the **methods** package is listed in the `Depends:` field
+
+- Bioconductor (http://www.bioconductor.org) — a rich resource, even
+  if you know nothing about bioinformatics
+
+- Some packages on CRAN (as far as I know) — SparseM, gpclib, flexmix,
+  its, lme4, orientlib, pixmap
+
+- The `stats4` package (comes with R) has a bunch of classes/methods
+for doing maximum likelihood analysis.  ￼￼￼￼￼
