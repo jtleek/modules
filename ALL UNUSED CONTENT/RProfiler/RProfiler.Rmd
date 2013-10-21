@@ -1,0 +1,68 @@
+---
+title       : Using the R Profiler
+subtitle    : 
+author      : Roger D. Peng, Associate Professor
+job         : Johns Hopkins Bloomberg School of Public Health
+logo        : bloomberg_shield.png
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+url:
+  lib: libraries
+  assets: assets
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+---
+
+## Why is My Code So Slow?
+
+- Profiling is a systematic way to examine how much time is spend in different parts of a program
+
+- Useful when trying to optimize your code
+
+- Often code runs fine once, but what if you have to put it in a loop for 1,000 iterations?
+
+- Profiling is better than guessing
+
+---
+
+## On Optimizing Your Code
+
+- "We should forget about small efficiencies, say about 97% of the
+  time: premature optimization is the root of all evil" --Donald Knuth
+
+- Getting biggest impact on speeding up code depends on knowing where
+  the code spends most of its time&mdash;this cannot be done without
+  performance analysis or profiling
+
+
+---
+
+## General Principles of Optimizing Code
+
+- Design first, then optimize
+
+- Remember: Premature optimization is the root of all evil
+
+- Measure (collect data), don’t guess. We’re statisticians after all!
+
+---
+
+## The R Profiler
+
+- The `Rprof()` function starts the profiler in R
+
+- NOTE: R must be compiled with profiler support (but this is usually the case)
+
+- The `summaryRprof()` summarizes the output from `Rprof()` (otherwise
+  it’s not really readable)
+
+- `Rprof()` keeps track of the function call stack at regularly
+  sampled intervals and tabulates how much time is spend in each
+  function
+
+- Default sampling interval is 0.02 seconds
+
+---
+
+## 
