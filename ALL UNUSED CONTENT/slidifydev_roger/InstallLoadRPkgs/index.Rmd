@@ -93,13 +93,13 @@ install.packages(c("slidify", "ggplot2", "devtools"))
 
 ## Installing an R Package in RStudio
 
-<img src="../../assets/img/InstallLoadRPkgs/InstallPackageRStudio1crop.png" alt="Open the 'Tools' Menu" height=481 width=734>
+<img src="../../../assets/img/InstallLoadRPkgs/InstallPackageRStudio1crop.png" alt="Open the 'Tools' Menu" height=481 width=734>
 
 --- 
 
 ## Installing an R Package in RStudio
 
-<img src="../../assets/img/InstallLoadRPkgs/InstallPackageRStudio2.png" alt="Enter Package Name" height=456 width=586>
+<img src="../../../assets/img/InstallLoadRPkgs/InstallPackageRStudio2.png" alt="Enter Package Name" height=456 width=586>
 
 ---
 
