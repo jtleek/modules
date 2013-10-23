@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Introduction to the Data Scientist's Toolbox</title>
+  <title>Math notation in R markdown</title>
   <meta charset="utf-8">
-  <meta name="description" content="Introduction to the Data Scientist's Toolbox">
+  <meta name="description" content="Math notation in R markdown">
   <meta name="author" content="">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -41,7 +41,7 @@
         <img src="../../assets/img/bloomberg_shield.png">
       </aside>
       <hgroup class="auto-fadein">
-        <h1>Introduction to the Data Scientist's Toolbox</h1>
+        <h1>Math notation in R markdown</h1>
         <h2></h2>
         <p><br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
@@ -50,22 +50,22 @@
     <!-- SLIDES -->
       <slide class="" id="slide-1" style="background:;">
   <hgroup>
-    <h2>What do data scientists do?</h2>
+    <h2>Why math notation in R markdown?</h2>
   </hgroup>
   <article>
     <ul>
-<li>Define the question</li>
-<li>Define the ideal data set</li>
-<li>Determine what data you can access</li>
-<li>Obtain the data</li>
-<li>Clean the data</li>
-<li>Exploratory data analysis</li>
-<li>Statistical prediction/modeling</li>
-<li>Interpret results</li>
-<li>Challenge results</li>
-<li>Synthesize/write up results</li>
-<li>Create reproducible code</li>
-<li>Distribute results to other people</li>
+<li>Math notation is the standard for technical descriptions of machine learning/statistical models.</li>
+<li>You may want to intersperse your technical decriptions with plain language descriptions. </li>
+<li>Math notation allows you to be precise
+
+<ul>
+<li>&quot;We fit a linear model with terms for age, sex&quot; versus \(Y_i = \alpha + \beta_a A_i + \beta_s S_i + \epsilon_i\)</li>
+</ul></li>
+<li>Math notation allows you to be concise
+
+<ul>
+<li>&quot;We estimated the intercept to be 3.3&quot; versus \(\hat{\alpha}=3.3\). </li>
+</ul></li>
 </ul>
 
   </article>
@@ -74,12 +74,20 @@
 
       <slide class="" id="slide-2" style="background:;">
   <hgroup>
-    <h2>The main workhorse of data science</h2>
+    <h2>What notation system does R markdown use?</h2>
   </hgroup>
   <article>
-    <p><img class=center src=../../assets/img/toolBox/rproject.png height='500px'/></p>
+    <ul>
+<li>R markdown uses the same system as <a href="http://en.wikipedia.org/wiki/LaTeX">Latex</a> </li>
+<li>The basic idea:
 
-<p><a href="http://www.r-project.org/">http://www.r-project.org/</a></p>
+<ul>
+<li>You write your document in R markdown</li>
+<li>You include symbols for math notation</li>
+<li>You indicate math by wrapping the symbols with certain text</li>
+</ul></li>
+<li>Often the symbols are intuitive: <em>\alpha</em> gives you \(\alpha\)</li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
@@ -87,12 +95,17 @@
 
       <slide class="" id="slide-3" style="background:;">
   <hgroup>
-    <h2>Where we will work on coding</h2>
+    <h2>How to write math inline</h2>
   </hgroup>
   <article>
-    <p><img class=center src=../../assets/img/toolBox/rstudio.png height='500px'/></p>
+    <p>Including math in a sentence involves wrapping the symbols in $ symbols. For
+example if you write this in an R markdown file:</p>
 
-<p><a href="http://www.rstudio.com/">http://www.rstudio.com/</a></p>
+<p><center> &quot;The intercept was estimated as <code>$\hat{\alpha} = 4$</code>&quot; </center></p>
+
+<p>Then you get the following text after running <em>knit2html</em> or <em>slidify</em> on your document. </p>
+
+<p><center> &quot;The intercept was estimated as \(\hat{\alpha} = 4\)&quot; </center></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -100,12 +113,25 @@
 
       <slide class="" id="slide-4" style="background:;">
   <hgroup>
-    <h2>Rstudio&#39;s interface</h2>
+    <h2>How to write math on a separate line</h2>
   </hgroup>
   <article>
-    <p><img class=center src=../../assets/img/toolBox/ide.png height='500px'/></p>
+    <p>Sometimes you have several equations you would like to line up. The
+way that you do that is with a double dollar sign $$ and the align command.</p>
 
-<p><a href="http://www.rstudio.com/">http://www.rstudio.com/</a></p>
+<p>For example if you write</p>
+
+<p><img class=center src=../../assets/img/mathNotation/aligned.png width='400px'/></p>
+
+<p>Then you get the following text after running <em>knit2html</em> or <em>slidify</em> on your document. </p>
+
+<p>\[
+  \begin{aligned}
+  y &= \beta_0 + \beta_1 + x_1 + \epsilon\\
+  x &= \gamma z \\
+  z &\sim N(0,1)
+  \end{aligned}
+\]</p>
 
   </article>
   <!-- Presenter Notes -->
@@ -113,12 +139,23 @@
 
       <slide class="" id="slide-5" style="background:;">
   <hgroup>
-    <h2>Primary file types - R script</h2>
+    <h2>Common symbols</h2>
   </hgroup>
   <article>
-    <p><img class=center src=../../assets/img/toolBox/rscript.png height='400px'/></p>
-
-<p><a href="http://www.rstudio.com/ide/docs/using/source">http://www.rstudio.com/ide/docs/using/source</a></p>
+    <ul>
+<li>Subscripts to get \(a_{b}\) write: <code>$a_{b}$</code></li>
+<li>Superscripts write \(a^{b}\) write: <code>$a^{b}$</code></li>
+<li>Greek letters like \(\alpha, \beta, \ldots\) write: <code>$\alpha, \beta, \ldots$</code></li>
+<li>Sums like \(\sum_{n=1}^N\) write: <code>$\sum_{n=1}^N$</code></li>
+<li>Multiplication like \(\times\) write: <code>$\times$</code></li>
+<li>Products like \(\prod_{n=1}^N\) write: <code>$\prod_{n=1}^N$</code></li>
+<li>Inequalities like \(<, \leq, \geq\) write: <code>$&lt;, \leq, \geq$</code></li>
+<li>Distributed like \(\sim\) write: <code>$\sim$</code></li>
+<li>Hats like \(\widehat{\alpha}\) write: <code>$\widehat{\alpha}$</code></li>
+<li>Averages like \(\bar{x}\) write: <code>$\bar{x}$</code></li>
+<li>Fractions like \(\frac{a}{b}\) write: <code>$\frac{a}{b}$</code></li>
+<li>Big parentheses like \(\left(\frac{a}{b}\right)\) write: <code>$\left(\frac{a}{b}\right)$</code></li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
@@ -126,34 +163,23 @@
 
       <slide class="" id="slide-6" style="background:;">
   <hgroup>
-    <h2>Primary file types - R markdown document</h2>
+    <h2>For more information</h2>
   </hgroup>
   <article>
-    <p><img class=center src=../../assets/img/toolBox/rmarkdown.png height='500px'/></p>
+    <ul>
+<li>Rstudio&#39;s equations page:
 
-<p><a href="http://www.rstudio.com/ide/docs/authoring/using_markdown">http://www.rstudio.com/ide/docs/authoring/using_markdown</a></p>
+<ul>
+<li><a href="http://www.rstudio.com/ide/docs/authoring/using_markdown_equations">http://www.rstudio.com/ide/docs/authoring/using_markdown_equations</a></li>
+</ul></li>
+<li>Lists of Latex symbols
 
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-7" style="background:;">
-  <hgroup>
-    <h2>Sharing your results - Github &amp; Git</h2>
-  </hgroup>
-  <article>
-    <p><img class=center src=../../assets/img/toolBox/github.png height='500px'/></p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-8" style="background:;">
-  <hgroup>
-    <h2>Where to run Github commands - the shell</h2>
-  </hgroup>
-  <article>
-    <p><img class=center src=../../assets/img/toolBox/shell.png height='500px'/></p>
+<ul>
+<li><a href="http://www.rpi.edu/dept/arc/training/latex/LaTeX_symbols.pdf">http://www.rpi.edu/dept/arc/training/latex/LaTeX_symbols.pdf</a></li>
+<li><a href="http://www.giss.nasa.gov/tools/latex/ltx-2.html">http://www.giss.nasa.gov/tools/latex/ltx-2.html</a></li>
+<li><a href="http://omega.albany.edu:8008/Symbols.html">http://omega.albany.edu:8008/Symbols.html</a></li>
+</ul></li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->

@@ -85,7 +85,7 @@ http://www.rstudio.com/ide/docs/authoring/using_markdown
 
 ---
 
-## Where to run Git commands - the shell
+## Where to run Github commands - the shell
 
 <img class=center src=../../assets/img/toolBox/shell.png height='500px'/>
 
