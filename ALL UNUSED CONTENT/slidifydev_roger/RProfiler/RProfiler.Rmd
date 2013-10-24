@@ -88,7 +88,8 @@ Reading a web page with `readLines()`
 system.time(readLines("http://simplystatistics.org"))
 ```
 
-In these situations, often elapsed time is larger than user time.
+In these situations, often elapsed time is larger than user time
+because R has to wait for the network communication to finish.
 
 ---
 
@@ -105,8 +106,11 @@ system.time(svd(x))
 
 - Note that user time is larger than elapsed time here
 
-- This computer has a multi-threaded BLAS library installed which is
-  used by the `svd()` function
+- This computer is a dual-core machine with a multi-threaded BLAS
+  library installed
+
+- The `svd()` function uses the two CPU cores and splits the
+  computation across both of them
 
 ---
 
