@@ -2,3 +2,5 @@
 .Rhistory
 .cache/
 .Rproj.user
+.RData
+modules.Rproj
