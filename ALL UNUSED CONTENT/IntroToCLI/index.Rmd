@@ -17,7 +17,7 @@ mode        : selfcontained # {standalone, draft}
 ## What is the Command Line Interface?
 
 Nearly ever computer comes with a CLI
-- Windows: Git Bash (See "Installing Git")
+- Windows: Git Bash (See "Introduction to Git")
 - Mac/Linux: Terminal
 
 ---
