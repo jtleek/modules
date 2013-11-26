@@ -39,16 +39,21 @@ mode        : selfcontained # {standalone, draft}
 - You can obtain information about the available packages on CRAN with
   the `available.packages()` function
 
-```{r,cache=TRUE}
+
+```r
 a <- available.packages()
 head(rownames(a), 3)  ## Show the names of the first few packages
 ```
 
-```{r,echo=FALSE}
-n <- signif(nrow(a), 2)
+```
+## [1] "A3"       "abc"      "abcdeFBA"
 ```
 
-- There are approximately `r n` packages on CRAN covering a wide range of topics
+
+
+
+
+- There are approximately 5000 packages on CRAN covering a wide range of topics
 
 - A list of some topics is available through the [Task
   Views](http://cran.r-project.org/web/views/) link, which groups
@@ -66,9 +71,11 @@ n <- signif(nrow(a), 2)
 
 - The following the code installs the **slidify** package from CRAN
 
-```{r, eval=FALSE}
+
+```r
 install.packages("slidify")
 ```
+
 
 - This command downloads the **slidify** package from CRAN and
   installs it on your computer
@@ -85,9 +92,11 @@ install.packages("slidify")
 
 - Place the names of the R packages in a character vector
 
-```{r, eval=FALSE}
+
+```r
 install.packages(c("slidify", "ggplot2", "devtools"))
 ```
+
 
 ---
 
@@ -112,9 +121,11 @@ install.packages(c("slidify", "ggplot2", "devtools"))
 
 - The following code is used to load the **ggplot2** package into R
 
-```{r,eval=FALSE}
+
+```r
 library(ggplot2)
 ```
+
 
 - Any packages that need to be loaded as dependencies will be loaded
   first, before the named package is loaded
@@ -130,10 +141,26 @@ library(ggplot2)
 After loading a package, the functions exported by that package will
 be attached to the top of the `search()` list (after the workspace)
 
-```{r}
+
+```r
 library(ggplot2)
+```
+
+```
+## Loading required package: methods
+```
+
+```r
 search()
 ```
+
+```
+##  [1] ".GlobalEnv"        "package:ggplot2"   "package:methods"  
+##  [4] "package:slidify"   "package:stats"     "package:graphics" 
+##  [7] "package:grDevices" "package:utils"     "package:datasets" 
+## [10] "Autoloads"         "package:base"
+```
+
 
 ---
 
