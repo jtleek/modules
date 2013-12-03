@@ -1,6 +1,6 @@
 ---
-title       : Plotting
-subtitle    : Computing for Data Analysis
+title       : The Base Plotting System in R
+subtitle    : 
 author      : Roger Peng, Associate Professor
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
