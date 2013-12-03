@@ -14,6 +14,22 @@ widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 ---
 
+## The Lattice Plotting System
+
+The lattice plotting system is implemented using the following packages:
+
+- *lattice*: contains code for producing Trellis graphics, which are
+   independent of the “base” graphics system; includes functions like
+   `xyplot`, `bwplot`, `levelplot`
+
+- *grid*: implements a different graphing system independent of the
+   “base” system; the *lattice* package builds on top of *grid*; we
+   seldom call functions from the *grid* package directly
+
+
+
+---
+
 ## Lattice Functions
 
 - `xyplot`: this is the main function for creating scatterplots 
