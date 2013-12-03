@@ -84,9 +84,20 @@ mode        : selfcontained # {standalone, draft}
 
 Reading a web page with `readLines()`
 
-```{r}
+
+```r
 system.time(readLines("http://simplystatistics.org"))
 ```
+
+```
+## Warning: incomplete final line found on 'http://simplystatistics.org'
+```
+
+```
+##    user  system elapsed 
+##   0.004   0.003   2.098
+```
+
 
 In these situations, often elapsed time is larger than user time
 because R has to wait for the network communication to finish.
@@ -95,14 +106,21 @@ because R has to wait for the network communication to finish.
 
 ## Starting with `system.time()`
 
-```{r}
-hilbert <- function(n) { 
-        i <- 1:n
-        1 / outer(i - 1, i, "+")
+
+```r
+hilbert <- function(n) {
+    i <- 1:n
+    1/outer(i - 1, i, "+")
 }
 x <- hilbert(1000)
 system.time(svd(x))
 ```
+
+```
+##    user  system elapsed 
+##   0.983   0.065   0.673
+```
+
 
 - Note that user time is larger than elapsed time here
 
@@ -116,16 +134,23 @@ system.time(svd(x))
 
 ## Timing Longer Expressions
 
-```{r}
+
+```r
 system.time({
-        n <- 1000
-        r <- numeric(n)
-        for(i in 1:n) {
-                x <- rnorm(n)
-                r[i] <- mean(x)
-        }
+    n <- 1000
+    r <- numeric(n)
+    for (i in 1:n) {
+        x <- rnorm(n)
+        r[i] <- mean(x)
+    }
 })
 ```
+
+```
+##    user  system elapsed 
+##   0.091   0.003   0.094
+```
+
 
 Here the user time and elapsed time are roughly the same.
 
