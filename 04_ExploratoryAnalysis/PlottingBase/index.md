@@ -1,7 +1,7 @@
 ---
 title       : The Base Plotting System in R
 subtitle    : 
-author      : Roger Peng, Associate Professor
+author      : Roger Peng, Associate Professor of Biostatistics
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -144,8 +144,6 @@ boxplot(Ozone ~ Month, airquality, xlab = "Month", ylab = "Ozone (ppb)")
 
 ![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3.png) 
 
-
-
 ---
 
 
@@ -219,7 +217,7 @@ par("pch")
 
 ## Some Important Base Graphics Parameters
 
-Some default values.
+Default values for global graphics parameters
 
 
 ```r
@@ -249,10 +247,15 @@ par("mfrow")
 
 ---
 
-## Some Important Base Plotting Functions
+## Base Plotting Functions
 
-- `plot`: make a scatterplot, or other type of plot depending on the class of the object being plotted
-- `lines`: add lines to a plot, given a vector x values and a corresponding vector of y values (or a 2-column matrix); this function just connects the dots
+- `plot`: make a scatterplot, or other type of plot depending on the
+  class of the object being plotted
+
+- `lines`: add lines to a plot, given a vector x values and a
+  corresponding vector of y values (or a 2-column matrix); this
+  function just connects the dots
+
 - `points`: add points to a plot
 - `text`: add text labels to a plot using specified x, y coordinates
 - `title`: add annotations to x, y axis labels, title, subtitle, outer margin 
@@ -261,46 +264,106 @@ par("mfrow")
 
 ---
 
-## Useful Graphics Devices
+## Base Plot with Annotation
 
-The list of devices is found in `?Devices`; there are also devices created by users on CRAN
 
-- `pdf`: useful for line-type graphics, vector format, resizes well, usually portable
-- `postscript`: older format, also vector format and resizes well, usually portable, can be used to create encapsulated postscript files, Windows systems often don’t have a postscript viewer
-- `xfig`: good of you use Unix and want to edit a plot by hand
+```r
+library(datasets)
+with(airquality, plot(Wind, Ozone))
+title(main = "Ozone and Wind in New York City")  ## Add a title
+```
 
----
+![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6.png) 
 
-## Useful Graphics Devices
-
-- `png`: bitmapped format, good for line drawings or images with solid colors, uses lossless compression (like the old GIF format), most web browsers can read this format natively, good for plotting many many many points, does not resize well
-- `jpeg`: good for photographs or natural scenes, uses lossy compression, good for plotting many many many points, does not resize well, can be read by almost any computer and any web browser, not great for line drawings
-- `bitmap`: needed to create bitmap files (png, jpeg) in certain situations (uses Ghostscript), also can be used to create a variety of other bitmapped formats not mentioned
-- `bmp`: a native Windows bitmapped format
 
 ---
 
-## Copying Plots
+## Base Plot with Annotation
 
-There are two basic approaches to plotting.
-1. Launch a graphics device
-2. Make a plot; annotate if needed
-3. Close graphics device
-Or
-1. Make a plot on a screen device (default); annotate if needed
-2. Copy the plot to another device if necessary (not an exact process)
+
+```r
+with(airquality, plot(Wind, Ozone, main = "Ozone and Wind in New York City"))
+with(subset(airquality, Month == 5), points(Wind, Ozone, col = "blue"))
+```
+
+![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7.png) 
+
 
 ---
 
-## Copying Plots
+## Base Plot with Annotation
 
-Copying a plot to another device can be useful because some plots require a lot of code and it can be a pain to type all that in again for a different device.
 
-- dev.copy: copy a plot from one device to another
-- dev.copy2pdf: copy a plot to a Portable Document Format (PDF) - file 
-- dev.list: show the list of open graphics devices
-- dev.next: switch control to the next graphics device on the device list 
-- dev.set: set control to a specific graphics device
-- dev.off: close the current graphics device
+```r
+with(airquality, plot(Wind, Ozone, main = "Ozone and Wind in New York City", 
+    type = "n"))
+with(subset(airquality, Month == 5), points(Wind, Ozone, col = "blue"))
+with(subset(airquality, Month != 5), points(Wind, Ozone, col = "red"))
+legend("topright", pch = 1, col = c("blue", "red"), legend = c("May", "Other Months"))
+```
 
-NOTE: Copying a plot is not an exact operation!
+![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8.png) 
+
+
+---
+
+## Base Plot with Regression Line
+
+
+```r
+with(airquality, plot(Wind, Ozone, main = "Ozone and Wind in New York City", 
+    pch = 20))
+model <- lm(Ozone ~ Wind, airquality)
+abline(model, lwd = 2)
+```
+
+![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9.png) 
+
+
+---
+
+## Multiple Base Plots
+
+
+```r
+par(mfrow = c(1, 2))
+with(airquality, {
+    plot(Wind, Ozone, main = "Ozone and Wind")
+    plot(Solar.R, Ozone, main = "Ozone and Solar Radiation")
+})
+```
+
+![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10.png) 
+
+
+---
+
+## Multiple Base Plots
+
+
+```r
+par(mfrow = c(1, 3), mar = c(4, 4, 2, 1), oma = c(0, 0, 2, 0))
+with(airquality, {
+    plot(Wind, Ozone, main = "Ozone and Wind")
+    plot(Solar.R, Ozone, main = "Ozone and Solar Radiation")
+    plot(Temp, Ozone, main = "Ozone and Temperature")
+    mtext("Ozone and Weather in New York City", outer = TRUE)
+})
+```
+
+![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11.png) 
+
+
+---
+
+## Summary
+
+* Plots in the base plotting system are created by calling successive
+  R functions to "build up" a plot
+
+* Plotting occurs in two stages:
+  - Creation of a plot
+  - Annotation of a plot (adding lines, points, text, legends)
+
+* The base plotting system is very flexible and offers a high degree
+  of control over plotting

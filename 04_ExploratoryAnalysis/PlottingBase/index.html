@@ -4,7 +4,7 @@
   <title>The Base Plotting System in R</title>
   <meta charset="utf-8">
   <meta name="description" content="The Base Plotting System in R">
-  <meta name="author" content="Roger Peng, Associate Professor">
+  <meta name="author" content="Roger Peng, Associate Professor of Biostatistics">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -43,7 +43,7 @@
       <hgroup class="auto-fadein">
         <h1>The Base Plotting System in R</h1>
         <h2></h2>
-        <p>Roger Peng, Associate Professor<br/>Johns Hopkins Bloomberg School of Public Health</p>
+        <p>Roger Peng, Associate Professor of Biostatistics<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
           </slide>
 
@@ -293,7 +293,7 @@ overridden when specified as arguments to specific plotting functions.</p>
     <h2>Some Important Base Graphics Parameters</h2>
   </hgroup>
   <article>
-    <p>Some default values.</p>
+    <p>Default values for global graphics parameters</p>
 
 <pre><code class="r">par(&quot;bg&quot;)
 </code></pre>
@@ -319,17 +319,20 @@ overridden when specified as arguments to specific plotting functions.</p>
 
       <slide class="" id="slide-12" style="background:;">
   <hgroup>
-    <h2>Some Important Base Plotting Functions</h2>
+    <h2>Base Plotting Functions</h2>
   </hgroup>
   <article>
     <ul>
-<li><code>plot</code>: make a scatterplot, or other type of plot depending on the class of the object being plotted</li>
-<li><code>lines</code>: add lines to a plot, given a vector x values and a corresponding vector of y values (or a 2-column matrix); this function just connects the dots</li>
-<li><code>points</code>: add points to a plot</li>
-<li><code>text</code>: add text labels to a plot using specified x, y coordinates</li>
-<li><code>title</code>: add annotations to x, y axis labels, title, subtitle, outer margin </li>
-<li><code>mtext</code>: add arbitrary text to the margins (inner or outer) of the plot </li>
-<li><code>axis</code>: adding axis ticks/labels</li>
+<li><p><code>plot</code>: make a scatterplot, or other type of plot depending on the
+class of the object being plotted</p></li>
+<li><p><code>lines</code>: add lines to a plot, given a vector x values and a
+corresponding vector of y values (or a 2-column matrix); this
+function just connects the dots</p></li>
+<li><p><code>points</code>: add points to a plot</p></li>
+<li><p><code>text</code>: add text labels to a plot using specified x, y coordinates</p></li>
+<li><p><code>title</code>: add annotations to x, y axis labels, title, subtitle, outer margin </p></li>
+<li><p><code>mtext</code>: add arbitrary text to the margins (inner or outer) of the plot </p></li>
+<li><p><code>axis</code>: adding axis ticks/labels</p></li>
 </ul>
 
   </article>
@@ -338,16 +341,15 @@ overridden when specified as arguments to specific plotting functions.</p>
 
       <slide class="" id="slide-13" style="background:;">
   <hgroup>
-    <h2>Useful Graphics Devices</h2>
+    <h2>Base Plot with Annotation</h2>
   </hgroup>
   <article>
-    <p>The list of devices is found in <code>?Devices</code>; there are also devices created by users on CRAN</p>
+    <pre><code class="r">library(datasets)
+with(airquality, plot(Wind, Ozone))
+title(main = &quot;Ozone and Wind in New York City&quot;)  ## Add a title
+</code></pre>
 
-<ul>
-<li><code>pdf</code>: useful for line-type graphics, vector format, resizes well, usually portable</li>
-<li><code>postscript</code>: older format, also vector format and resizes well, usually portable, can be used to create encapsulated postscript files, Windows systems often don’t have a postscript viewer</li>
-<li><code>xfig</code>: good of you use Unix and want to edit a plot by hand</li>
-</ul>
+<p><img src="figure/unnamed-chunk-6.png" alt="plot of chunk unnamed-chunk-6"> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -355,15 +357,14 @@ overridden when specified as arguments to specific plotting functions.</p>
 
       <slide class="" id="slide-14" style="background:;">
   <hgroup>
-    <h2>Useful Graphics Devices</h2>
+    <h2>Base Plot with Annotation</h2>
   </hgroup>
   <article>
-    <ul>
-<li><code>png</code>: bitmapped format, good for line drawings or images with solid colors, uses lossless compression (like the old GIF format), most web browsers can read this format natively, good for plotting many many many points, does not resize well</li>
-<li><code>jpeg</code>: good for photographs or natural scenes, uses lossy compression, good for plotting many many many points, does not resize well, can be read by almost any computer and any web browser, not great for line drawings</li>
-<li><code>bitmap</code>: needed to create bitmap files (png, jpeg) in certain situations (uses Ghostscript), also can be used to create a variety of other bitmapped formats not mentioned</li>
-<li><code>bmp</code>: a native Windows bitmapped format</li>
-</ul>
+    <pre><code class="r">with(airquality, plot(Wind, Ozone, main = &quot;Ozone and Wind in New York City&quot;))
+with(subset(airquality, Month == 5), points(Wind, Ozone, col = &quot;blue&quot;))
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-7.png" alt="plot of chunk unnamed-chunk-7"> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -371,16 +372,17 @@ overridden when specified as arguments to specific plotting functions.</p>
 
       <slide class="" id="slide-15" style="background:;">
   <hgroup>
-    <h2>Copying Plots</h2>
+    <h2>Base Plot with Annotation</h2>
   </hgroup>
   <article>
-    <p>There are two basic approaches to plotting.
-1. Launch a graphics device
-2. Make a plot; annotate if needed
-3. Close graphics device
-Or
-1. Make a plot on a screen device (default); annotate if needed
-2. Copy the plot to another device if necessary (not an exact process)</p>
+    <pre><code class="r">with(airquality, plot(Wind, Ozone, main = &quot;Ozone and Wind in New York City&quot;, 
+    type = &quot;n&quot;))
+with(subset(airquality, Month == 5), points(Wind, Ozone, col = &quot;blue&quot;))
+with(subset(airquality, Month != 5), points(Wind, Ozone, col = &quot;red&quot;))
+legend(&quot;topright&quot;, pch = 1, col = c(&quot;blue&quot;, &quot;red&quot;), legend = c(&quot;May&quot;, &quot;Other Months&quot;))
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-8.png" alt="plot of chunk unnamed-chunk-8"> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -388,21 +390,76 @@ Or
 
       <slide class="" id="slide-16" style="background:;">
   <hgroup>
-    <h2>Copying Plots</h2>
+    <h2>Base Plot with Regression Line</h2>
   </hgroup>
   <article>
-    <p>Copying a plot to another device can be useful because some plots require a lot of code and it can be a pain to type all that in again for a different device.</p>
+    <pre><code class="r">with(airquality, plot(Wind, Ozone, main = &quot;Ozone and Wind in New York City&quot;, 
+    pch = 20))
+model &lt;- lm(Ozone ~ Wind, airquality)
+abline(model, lwd = 2)
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-9.png" alt="plot of chunk unnamed-chunk-9"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>Multiple Base Plots</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">par(mfrow = c(1, 2))
+with(airquality, {
+    plot(Wind, Ozone, main = &quot;Ozone and Wind&quot;)
+    plot(Solar.R, Ozone, main = &quot;Ozone and Solar Radiation&quot;)
+})
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-10.png" alt="plot of chunk unnamed-chunk-10"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>Multiple Base Plots</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">par(mfrow = c(1, 3), mar = c(4, 4, 2, 1), oma = c(0, 0, 2, 0))
+with(airquality, {
+    plot(Wind, Ozone, main = &quot;Ozone and Wind&quot;)
+    plot(Solar.R, Ozone, main = &quot;Ozone and Solar Radiation&quot;)
+    plot(Temp, Ozone, main = &quot;Ozone and Temperature&quot;)
+    mtext(&quot;Ozone and Weather in New York City&quot;, outer = TRUE)
+})
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-11.png" alt="plot of chunk unnamed-chunk-11"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>Summary</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li><p>Plots in the base plotting system are created by calling successive
+R functions to &quot;build up&quot; a plot</p></li>
+<li><p>Plotting occurs in two stages:</p>
 
 <ul>
-<li>dev.copy: copy a plot from one device to another</li>
-<li>dev.copy2pdf: copy a plot to a Portable Document Format (PDF) - file </li>
-<li>dev.list: show the list of open graphics devices</li>
-<li>dev.next: switch control to the next graphics device on the device list </li>
-<li>dev.set: set control to a specific graphics device</li>
-<li>dev.off: close the current graphics device</li>
+<li>Creation of a plot</li>
+<li>Annotation of a plot (adding lines, points, text, legends)</li>
+</ul></li>
+<li><p>The base plotting system is very flexible and offers a high degree
+of control over plotting</p></li>
 </ul>
-
-<p>NOTE: Copying a plot is not an exact operation!</p>
 
   </article>
   <!-- Presenter Notes -->
