@@ -53,12 +53,18 @@
     <h2>Useful Graphics Devices</h2>
   </hgroup>
   <article>
-    <p>The list of devices is found in <code>?Devices</code>; there are also devices created by users on CRAN</p>
+    <p>The list of devices is found in <code>?Devices</code>; there are also devices
+created by users on CRAN</p>
+
+<p>Vector formats:</p>
 
 <ul>
-<li><code>pdf</code>: useful for line-type graphics, vector format, resizes well, usually portable</li>
-<li><code>postscript</code>: older format, also vector format and resizes well, usually portable, can be used to create encapsulated postscript files, Windows systems often don’t have a postscript viewer</li>
-<li><code>xfig</code>: good of you use Unix and want to edit a plot by hand</li>
+<li><p><code>pdf</code>: useful for line-type graphics, vector format, resizes well,
+usually portable</p></li>
+<li><p><code>postscript</code>: older format, also vector format and resizes well,
+usually portable, can be used to create encapsulated postscript
+files, Windows systems often don’t have a postscript viewer</p></li>
+<li><p><code>win.metafile</code>: Windows metafile format; specific to Windows</p></li>
 </ul>
 
   </article>
@@ -70,11 +76,21 @@
     <h2>Useful Graphics Devices</h2>
   </hgroup>
   <article>
-    <ul>
-<li><code>png</code>: bitmapped format, good for line drawings or images with solid colors, uses lossless compression (like the old GIF format), most web browsers can read this format natively, good for plotting many many many points, does not resize well</li>
-<li><code>jpeg</code>: good for photographs or natural scenes, uses lossy compression, good for plotting many many many points, does not resize well, can be read by almost any computer and any web browser, not great for line drawings</li>
-<li><code>bitmap</code>: needed to create bitmap files (png, jpeg) in certain situations (uses Ghostscript), also can be used to create a variety of other bitmapped formats not mentioned</li>
-<li><code>bmp</code>: a native Windows bitmapped format</li>
+    <p>Bitmap formats</p>
+
+<ul>
+<li><p><code>png</code>: bitmapped format, good for line drawings or images with solid
+colors, uses lossless compression (like the old GIF format), most
+web browsers can read this format natively, good for plotting many
+many many points, does not resize well</p></li>
+<li><p><code>jpeg</code>: good for photographs or natural scenes, uses lossy
+compression, good for plotting many many many points, does not
+resize well, can be read by almost any computer and any web browser,
+not great for line drawings</p></li>
+<li><p><code>bitmap</code>: needed to create bitmap files (png, jpeg) in certain
+situations (uses Ghostscript), also can be used to create a variety
+of other bitmapped formats not mentioned</p></li>
+<li><p><code>bmp</code>: a native Windows bitmapped format</p></li>
 </ul>
 
   </article>
@@ -86,13 +102,20 @@
     <h2>Copying Plots</h2>
   </hgroup>
   <article>
-    <p>There are two basic approaches to plotting.
-1. Launch a graphics device
-2. Make a plot; annotate if needed
-3. Close graphics device
-Or
-1. Make a plot on a screen device (default); annotate if needed
-2. Copy the plot to another device if necessary (not an exact process)</p>
+    <p>There are two basic approaches to plotting.</p>
+
+<ol>
+<li><p>Launch a graphics device</p></li>
+<li><p>Make a plot; annotate if needed</p></li>
+<li><p>Close graphics device</p></li>
+</ol>
+
+<p>Or</p>
+
+<ol>
+<li><p>Make a plot on a screen device (default); annotate if needed</p></li>
+<li><p>Copy the plot to another device if necessary (not an exact process)</p></li>
+</ol>
 
   </article>
   <!-- Presenter Notes -->
