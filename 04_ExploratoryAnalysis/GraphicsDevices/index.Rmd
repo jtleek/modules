@@ -16,19 +16,40 @@ mode        : selfcontained # {standalone, draft}
 
 ## Useful Graphics Devices
 
-The list of devices is found in `?Devices`; there are also devices created by users on CRAN
+The list of devices is found in `?Devices`; there are also devices
+created by users on CRAN
 
-- `pdf`: useful for line-type graphics, vector format, resizes well, usually portable
-- `postscript`: older format, also vector format and resizes well, usually portable, can be used to create encapsulated postscript files, Windows systems often don’t have a postscript viewer
-- `xfig`: good of you use Unix and want to edit a plot by hand
+Vector formats:
+
+- `pdf`: useful for line-type graphics, vector format, resizes well,
+  usually portable
+
+- `postscript`: older format, also vector format and resizes well,
+  usually portable, can be used to create encapsulated postscript
+  files, Windows systems often don’t have a postscript viewer
+
+- `win.metafile`: Windows metafile format; specific to Windows
 
 ---
 
 ## Useful Graphics Devices
 
-- `png`: bitmapped format, good for line drawings or images with solid colors, uses lossless compression (like the old GIF format), most web browsers can read this format natively, good for plotting many many many points, does not resize well
-- `jpeg`: good for photographs or natural scenes, uses lossy compression, good for plotting many many many points, does not resize well, can be read by almost any computer and any web browser, not great for line drawings
-- `bitmap`: needed to create bitmap files (png, jpeg) in certain situations (uses Ghostscript), also can be used to create a variety of other bitmapped formats not mentioned
+Bitmap formats
+
+- `png`: bitmapped format, good for line drawings or images with solid
+  colors, uses lossless compression (like the old GIF format), most
+  web browsers can read this format natively, good for plotting many
+  many many points, does not resize well
+
+- `jpeg`: good for photographs or natural scenes, uses lossy
+  compression, good for plotting many many many points, does not
+  resize well, can be read by almost any computer and any web browser,
+  not great for line drawings
+
+- `bitmap`: needed to create bitmap files (png, jpeg) in certain
+  situations (uses Ghostscript), also can be used to create a variety
+  of other bitmapped formats not mentioned
+
 - `bmp`: a native Windows bitmapped format
 
 ---
@@ -36,11 +57,17 @@ The list of devices is found in `?Devices`; there are also devices created by us
 ## Copying Plots
 
 There are two basic approaches to plotting.
-1. Launch a graphics device
+
+1.  Launch a graphics device
+
 2. Make a plot; annotate if needed
+
 3. Close graphics device
+
 Or
+
 1. Make a plot on a screen device (default); annotate if needed
+
 2. Copy the plot to another device if necessary (not an exact process)
 
 ---
