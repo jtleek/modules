@@ -109,7 +109,7 @@ one critical way.
 - Base graphics functions plot data directly to the graphics device
   (screen, PDF file, etc.)
 
-- Lattice graphics functions return an object of class `trellis`
+- Lattice graphics functions return an object of class **trellis**
 
 - The print methods for lattice functions actually do the work of
   plotting the data on the graphics device.
@@ -117,45 +117,74 @@ one critical way.
 - Lattice functions return "plot objects" that can, in principle, be
   stored (but it’s usually better to just save the code + data).
 
-- On the command line, trellis objects are `auto-printed` so that it
+- On the command line, trellis objects are *auto-printed* so that it
   appears the function is plotting the data
 
 ---
 
-## Lattice Panel Functions
-
-Lattice functions have a **panel function** which controls what
-happens inside each panel of the plot.
+## Lattice Behavior
 
 
 ```r
-set.seed(10)
-x <- rnorm(100)
-y <- x + rnorm(100, sd = 0.5)
-f <- gl(2, 50, labels = c("Group 1", "Group 2"))
-xyplot(y ~ x | f, layout = c(2, 1))
+p <- xyplot(Ozone ~ Wind, data = airquality)  ## Nothing happens!
+print(p)  ## Plot appears
 ```
 
 ![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3.png) 
 
 
+```r
+xyplot(Ozone ~ Wind, data = airquality)  ## Auto-printing
+```
+
+
+---
+
+## Lattice Panel Functions
+
+* Lattice functions have a **panel function** which controls what
+  happens inside each panel of the plot.
+
+* The *lattice* package comes with default panel functions, but you
+  can supply your own if you want to customize what happens in each
+  panel
+
+* Panel functions receive the x/y coordinates of the data points
+  in their panel (along with any optional arguments)
+
+
 ---
 
 ## Lattice Panel Functions
 
 
 ```r
+set.seed(10)
+x <- rnorm(100)
+f <- rep(0:1, each = 50)
+y <- x + f - f * x + rnorm(100, sd = 0.5)
+f <- factor(f, labels = c("Group 1", "Group 2"))
+xyplot(y ~ x | f, layout = c(2, 1))  ## Plot with 2 panels
+```
+
+![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5.png) 
+
+
+---
+
+## Lattice Panel Functions
+
+
+```r
+## Custom panel function
 xyplot(y ~ x | f, panel = function(x, y, ...) {
-    panel.xyplot(x, y, ...)
-    panel.abline(h = median(y), lty = 2)
+    panel.xyplot(x, y, ...)  ## First call the default panel function for 'xyplot'
+    panel.abline(h = median(y), lty = 2)  ## Add a horizontal line at the median
 })
 ```
 
-![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4.png) 
+![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6.png) 
 
-
-plots y vs. x conditioned on f with horizontal (dashed) line drawn at
-the median of y for each panel.
 
 ---
 
@@ -163,13 +192,36 @@ the median of y for each panel.
 
 
 ```r
+## Custom panel function
 xyplot(y ~ x | f, panel = function(x, y, ...) {
-    panel.xyplot(x, y, ...)
-    panel.lmline(x, y, col = 2)
+    panel.xyplot(x, y, ...)  ## First call default panel function
+    panel.lmline(x, y, col = 2)  ## Overlay a simple linear regression line
 })
 ```
 
-![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5.png) 
+![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7.png) 
 
 
-fits and plots a simple linear regression line to each panel of the plot.
+---
+
+## Many Panel Lattice Plot
+
+![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8.png) 
+
+
+---
+
+## Summary
+
+* Lattice plots are constructed with a single function call to a core
+  lattice function (e.g. `xyplot`)
+
+* Aspects like margins and spacing are automatically handled and
+  defaults are usually sufficient
+
+* The lattice system is ideal for creating conditioning plots where
+  you examine the same kind of plot under many different conditions
+
+* Panel functions can be specified/customized to modify what is
+  plotted in each of the plot panels
+

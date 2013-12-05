@@ -171,12 +171,12 @@ one critical way.</p>
 <ul>
 <li><p>Base graphics functions plot data directly to the graphics device
 (screen, PDF file, etc.)</p></li>
-<li><p>Lattice graphics functions return an object of class <code>trellis</code></p></li>
+<li><p>Lattice graphics functions return an object of class <strong>trellis</strong></p></li>
 <li><p>The print methods for lattice functions actually do the work of
 plotting the data on the graphics device.</p></li>
 <li><p>Lattice functions return &quot;plot objects&quot; that can, in principle, be
 stored (but it’s usually better to just save the code + data).</p></li>
-<li><p>On the command line, trellis objects are <code>auto-printed</code> so that it
+<li><p>On the command line, trellis objects are <em>auto-printed</em> so that it
 appears the function is plotting the data</p></li>
 </ul>
 
@@ -186,20 +186,17 @@ appears the function is plotting the data</p></li>
 
       <slide class="" id="slide-7" style="background:;">
   <hgroup>
-    <h2>Lattice Panel Functions</h2>
+    <h2>Lattice Behavior</h2>
   </hgroup>
   <article>
-    <p>Lattice functions have a <strong>panel function</strong> which controls what
-happens inside each panel of the plot.</p>
-
-<pre><code class="r">set.seed(10)
-x &lt;- rnorm(100)
-y &lt;- x + rnorm(100, sd = 0.5)
-f &lt;- gl(2, 50, labels = c(&quot;Group 1&quot;, &quot;Group 2&quot;))
-xyplot(y ~ x | f, layout = c(2, 1))
+    <pre><code class="r">p &lt;- xyplot(Ozone ~ Wind, data = airquality)  ## Nothing happens!
+print(p)  ## Plot appears
 </code></pre>
 
 <p><img src="figure/unnamed-chunk-3.png" alt="plot of chunk unnamed-chunk-3"> </p>
+
+<pre><code class="r">xyplot(Ozone ~ Wind, data = airquality)  ## Auto-printing
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
@@ -210,16 +207,15 @@ xyplot(y ~ x | f, layout = c(2, 1))
     <h2>Lattice Panel Functions</h2>
   </hgroup>
   <article>
-    <pre><code class="r">xyplot(y ~ x | f, panel = function(x, y, ...) {
-    panel.xyplot(x, y, ...)
-    panel.abline(h = median(y), lty = 2)
-})
-</code></pre>
-
-<p><img src="figure/unnamed-chunk-4.png" alt="plot of chunk unnamed-chunk-4"> </p>
-
-<p>plots y vs. x conditioned on f with horizontal (dashed) line drawn at
-the median of y for each panel.</p>
+    <ul>
+<li><p>Lattice functions have a <strong>panel function</strong> which controls what
+happens inside each panel of the plot.</p></li>
+<li><p>The <em>lattice</em> package comes with default panel functions, but you
+can supply your own if you want to customize what happens in each
+panel</p></li>
+<li><p>Panel functions receive the x/y coordinates of the data points
+in their panel (along with any optional arguments)</p></li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
@@ -227,18 +223,85 @@ the median of y for each panel.</p>
 
       <slide class="" id="slide-9" style="background:;">
   <hgroup>
-    <h2>Lattice Panel Functions: Regression line</h2>
+    <h2>Lattice Panel Functions</h2>
   </hgroup>
   <article>
-    <pre><code class="r">xyplot(y ~ x | f, panel = function(x, y, ...) {
-    panel.xyplot(x, y, ...)
-    panel.lmline(x, y, col = 2)
-})
+    <pre><code class="r">set.seed(10)
+x &lt;- rnorm(100)
+f &lt;- rep(0:1, each = 50)
+y &lt;- x + f - f * x + rnorm(100, sd = 0.5)
+f &lt;- factor(f, labels = c(&quot;Group 1&quot;, &quot;Group 2&quot;))
+xyplot(y ~ x | f, layout = c(2, 1))  ## Plot with 2 panels
 </code></pre>
 
 <p><img src="figure/unnamed-chunk-5.png" alt="plot of chunk unnamed-chunk-5"> </p>
 
-<p>fits and plots a simple linear regression line to each panel of the plot.</p>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>Lattice Panel Functions</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">## Custom panel function
+xyplot(y ~ x | f, panel = function(x, y, ...) {
+    panel.xyplot(x, y, ...)  ## First call the default panel function for &#39;xyplot&#39;
+    panel.abline(h = median(y), lty = 2)  ## Add a horizontal line at the median
+})
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-6.png" alt="plot of chunk unnamed-chunk-6"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Lattice Panel Functions: Regression line</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">## Custom panel function
+xyplot(y ~ x | f, panel = function(x, y, ...) {
+    panel.xyplot(x, y, ...)  ## First call default panel function
+    panel.lmline(x, y, col = 2)  ## Overlay a simple linear regression line
+})
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-7.png" alt="plot of chunk unnamed-chunk-7"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>Many Panel Lattice Plot</h2>
+  </hgroup>
+  <article>
+    <p><img src="figure/unnamed-chunk-8.png" alt="plot of chunk unnamed-chunk-8"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>Summary</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li><p>Lattice plots are constructed with a single function call to a core
+lattice function (e.g. <code>xyplot</code>)</p></li>
+<li><p>Aspects like margins and spacing are automatically handled and
+defaults are usually sufficient</p></li>
+<li><p>The lattice system is ideal for creating conditioning plots where
+you examine the same kind of plot under many different conditions</p></li>
+<li><p>Panel functions can be specified/customized to modify what is
+plotted in each of the plot panels</p></li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
