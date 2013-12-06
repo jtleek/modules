@@ -50,21 +50,27 @@
     <!-- SLIDES -->
       <slide class="" id="slide-1" style="background:;">
   <hgroup>
-    <h2>Useful Graphics Devices</h2>
+    <h2>What is a Graphics Device?</h2>
   </hgroup>
   <article>
-    <p>The list of devices is found in <code>?Devices</code>; there are also devices
-created by users on CRAN</p>
-
-<p>Vector formats:</p>
+    <ul>
+<li><p>A graphics device is something where you can make a plot appear</p>
 
 <ul>
-<li><p><code>pdf</code>: useful for line-type graphics, vector format, resizes well,
-usually portable</p></li>
-<li><p><code>postscript</code>: older format, also vector format and resizes well,
-usually portable, can be used to create encapsulated postscript
-files, Windows systems often don’t have a postscript viewer</p></li>
-<li><p><code>win.metafile</code>: Windows metafile format; specific to Windows</p></li>
+<li>A window on your computer (screen device)</li>
+<li>A PDF file (file device)</li>
+<li>A PNG or JPEG file (file device)</li>
+<li>A scalable vector graphics (SVG) file (file device)</li>
+</ul></li>
+<li><p>When you make a plot in R, it has to be &quot;sent&quot; to a specific
+graphics device</p></li>
+<li><p>The most common place for a plot to be &quot;sent&quot; is the <em>screen device</em></p>
+
+<ul>
+<li>On a Mac the screen device is launched with the <code>quartz()</code></li>
+<li>On Windows the screen device is launched with <code>windows()</code></li>
+<li>On Unix/Linux the screen device is launched with <code>x11()</code></li>
+</ul></li>
 </ul>
 
   </article>
@@ -73,7 +79,119 @@ files, Windows systems often don’t have a postscript viewer</p></li>
 
       <slide class="" id="slide-2" style="background:;">
   <hgroup>
-    <h2>Useful Graphics Devices</h2>
+    <h2>What is a Graphic Device?</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li><p>When making a plot, you need to consider how the plot will be used
+to determine what device the plot should be sent to.</p>
+
+<ul>
+<li>The list of devices is found in <code>?Devices</code>; there are also devices
+created by users on CRAN</li>
+</ul></li>
+<li><p>For quick visualizations and exploratory analysis, usually you want
+to use the screen device</p>
+
+<ul>
+<li>Functions like <code>plot</code> in base, <code>xyplot</code> in lattice, or <code>qplot</code> in
+ggplot2 will default to sending a plot to the screen device</li>
+<li>On a given platform (Mac, Windows, Unix/Linux) there is only one
+screen device</li>
+</ul></li>
+<li><p>For plots that may be printed out or be incorporated into a document
+(e.g. papers/reports, slide presentations), usually a <em>file device</em>
+is more appropriate</p>
+
+<ul>
+<li>There are many different file devices to choose from</li>
+</ul></li>
+<li><p>NOTE: Not all graphics devices are available on all platforms
+(i.e. you cannot launch the <code>windows()</code> on a Mac)</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>How Does a Plot Get Created?</h2>
+  </hgroup>
+  <article>
+    <p>There are two basic approaches to plotting. The first is most common:</p>
+
+<ol>
+<li><p>Call a plotting function like <code>plot</code>, <code>xyplot</code>, or <code>qplot</code></p></li>
+<li><p>The plot appears on the screen device</p></li>
+<li><p>Annotate plot if necessary</p></li>
+<li><p>Enjoy</p></li>
+</ol>
+
+<pre><code class="r">library(datasets)
+with(faithful, plot(eruptions, waiting))  ## Make plot appear on screen device
+title(main = &quot;Old Faithful Geyser data&quot;)  ## Annotate with a title
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>How Does a Plot Get Created?</h2>
+  </hgroup>
+  <article>
+    <p>The second approach to plotting is most commonly used for file devices:</p>
+
+<ol>
+<li><p>Explicitly launch a graphics device</p></li>
+<li><p>Call a plotting function to make a plot (Note: if you are using a file
+device, no plot will appear on the screen)</p></li>
+<li><p>Annotate plot if necessary</p></li>
+<li><p>Explicitly close graphics device with <code>dev.off()</code> (this is very important!)</p></li>
+</ol>
+
+<pre><code class="r">pdf(file = &quot;myplot.pdf&quot;)  ## Open PDF device; create &#39;myplot.pdf&#39; in my working directory
+## Create plot and send to a file (no plot appears on screen)
+with(faithful, plot(eruptions, waiting))
+title(main = &quot;Old Faithful Geyser data&quot;)  ## Annotate plot; still nothing on screen
+dev.off()  ## Close the PDF file device
+## Now you can view the file &#39;myplot.pdf&#39; on your computer
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Graphics File Devices</h2>
+  </hgroup>
+  <article>
+    <p>There are two basic types of file devices: <em>vector</em> and <em>bitmap</em>
+devices</p>
+
+<p>Vector formats:</p>
+
+<ul>
+<li><p><code>pdf</code>: useful for line-type graphics, resizes well, usually
+portable, not efficient if a plot has many objects/points</p></li>
+<li><p><code>svg</code>: XML-based scalable vector graphics; supports animation and
+interactivity, potentially useful for web-based plots</p></li>
+<li><p><code>win.metafile</code>: Windows metafile format (only on Windows)</p></li>
+<li><p><code>postscript</code>: older format, also resizes well, usually portable, can
+be used to create encapsulated postscript files; Windows systems
+often don’t have a postscript viewer</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Graphics File Devices</h2>
   </hgroup>
   <article>
     <p>Bitmap formats</p>
@@ -87,9 +205,8 @@ many many points, does not resize well</p></li>
 compression, good for plotting many many many points, does not
 resize well, can be read by almost any computer and any web browser,
 not great for line drawings</p></li>
-<li><p><code>bitmap</code>: needed to create bitmap files (png, jpeg) in certain
-situations (uses Ghostscript), also can be used to create a variety
-of other bitmapped formats not mentioned</p></li>
+<li><p><code>tiff</code>: Creates bitmap files in the TIFF format; supports lossless
+compression</p></li>
 <li><p><code>bmp</code>: a native Windows bitmapped format</p></li>
 </ul>
 
@@ -97,47 +214,75 @@ of other bitmapped formats not mentioned</p></li>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-3" style="background:;">
+      <slide class="" id="slide-7" style="background:;">
   <hgroup>
-    <h2>Copying Plots</h2>
+    <h2>Multiple Open Graphics Devices</h2>
   </hgroup>
   <article>
-    <p>There are two basic approaches to plotting.</p>
-
-<ol>
-<li><p>Launch a graphics device</p></li>
-<li><p>Make a plot; annotate if needed</p></li>
-<li><p>Close graphics device</p></li>
-</ol>
-
-<p>Or</p>
-
-<ol>
-<li><p>Make a plot on a screen device (default); annotate if needed</p></li>
-<li><p>Copy the plot to another device if necessary (not an exact process)</p></li>
-</ol>
+    <ul>
+<li><p>It is possible to open multiple graphics devices (screen, file, or
+both), for example when viewing multiple plots at once</p></li>
+<li><p>Plotting can only occur on one graphics device at a time</p></li>
+<li><p>The <strong>currently active</strong> graphics device can be found by calling
+<code>dev.cur()</code></p></li>
+<li><p>Every open graphics device is assigned an integer \(\geq 2\).</p></li>
+<li><p>You can change the active graphics device with <code>dev.set(&lt;integer&gt;)</code>
+where <code>&lt;integer&gt;</code> is the number associated with the graphics device
+you want to switch to</p></li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-4" style="background:;">
+      <slide class="" id="slide-8" style="background:;">
   <hgroup>
     <h2>Copying Plots</h2>
   </hgroup>
   <article>
-    <p>Copying a plot to another device can be useful because some plots require a lot of code and it can be a pain to type all that in again for a different device.</p>
+    <p>Copying a plot to another device can be useful because some plots
+require a lot of code and it can be a pain to type all that in again
+for a different device.</p>
 
 <ul>
-<li>dev.copy: copy a plot from one device to another</li>
-<li>dev.copy2pdf: copy a plot to a Portable Document Format (PDF) - file </li>
-<li>dev.list: show the list of open graphics devices</li>
-<li>dev.next: switch control to the next graphics device on the device list </li>
-<li>dev.set: set control to a specific graphics device</li>
-<li>dev.off: close the current graphics device</li>
+<li><p><code>dev.copy</code>: copy a plot from one device to another</p></li>
+<li><p><code>dev.copy2pdf</code>: specifically copy a plot to a PDF file </p></li>
 </ul>
 
-<p>NOTE: Copying a plot is not an exact operation!</p>
+<p>NOTE: Copying a plot is not an exact operation, so the result may not
+be identical to the original.</p>
+
+<pre><code class="r">library(datasets)
+with(faithful, plot(eruptions, waiting))  ## Create plot on screen device
+title(main = &quot;Old Faithful Geyser data&quot;)  ## Add a main title
+dev.copy(png, file = &quot;geyserplot.png&quot;)  ## Copy my plot to a PNG file
+dev.off()  ## Don&#39;t forget to close the PNG device!
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>Summary</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li><p>Plots must be created on a graphics device</p></li>
+<li><p>The default graphics device is almost always the screen device,
+which is most useful for exploratory analysis</p></li>
+<li><p>File devices are useful for creating plots that can be included in
+other documents or sent to other people</p></li>
+<li><p>For file devices, there are vector and bitmap formats</p>
+
+<ul>
+<li>Vector formats are good for line drawings and plots with solid
+colors using a modest number of points</li>
+<li>Bitmap formats are good for plots with a large number of points,
+natural scenes or web-based plots</li>
+</ul></li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
