@@ -215,4 +215,3 @@ Second line
 - [The Offical Markdown Documentation](http://daringfireball.net/projects/markdown/basics)
 - [Github's Markdown Guide](https://help.github.com/articles/github-flavored-markdown)
 - [Dillinger - Edit, Export, and Share Markdown Documents](http://www.dillinger.io/)
-- [This document on Github](https://github.com/seankross/Introduction-to-Markdown)

@@ -1,6 +1,6 @@
 ---
-title       : Introduction
-subtitle    : Mathematical Biostatistics Boot Camp
+title       : Inference
+subtitle    : 
 author      : Brian Caffo, PhD
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
@@ -13,124 +13,146 @@ url:
 widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 ---
+## Statistical inference defined
 
-## Table of contents
+Statistical inference is the process of drawing formal conclusions from
+data. 
 
-1. Biostatistics
-2. Experiments
-3. Set notation
-4. Probability
-
----
-
-## Biostatistics defined
-
-From the Johns Hopkins Department of Biostatistics 2007 self study:
-
-_Biostatistics is a theory and methodology for the acquisition and use of quantitative evidence in biomedical research. Biostatisticians develop innovative designs and analytic methods targeted at increasing available information, improving the relevance and validity of statistical analyses, making best use of available information and communicating relevant uncertainties._
+In our class, we wil define formal statistical inference as settings where one wants to infer facts about a population using noisy
+statistical data where uncertainty must be accounted for.
 
 ---
 
-## Example: hormone replacement therapy
+## Motivating example: who's going to win the election?
+
+In every major election, pollsters would like to know, ahead of the
+actual election, who's going to win. Here, the target of
+estimation (the estimand) is clear, the percentage of people in 
+a particular group (city, state, county, country or other electoral
+grouping) who will vote for each candidate.
+
+We can not poll everyone. Even if we could, some polled 
+may change their vote by the time the election occurs.
+How do we collect a reasonable subset of data and quantify the
+uncertainty in the process to produce a good guess at who will win?
+
+---
+
+## Motivating example: is hormone replacement therapy effective? 
 
 A large clinical trial (the Women’s Health Initiative) published results in 2002 that contradicted prior evidence on the efficacy of hormone replacement therapy for post menopausal women and suggested a negative impact of HRT for several key health outcomes. **Based on a statistically based protocol, the study was stopped early due an excess number of negative events.**
-<p style=font-size:40%>See WHI writing group paper JAMA 2002, Vol 288:321 - 333. for the paper and Steinkellner et al. Menopause 2012, Vol 19:616 621 for a recent discussion of the long term impacts</p>
+
+Here's there's two inferential problems. 
+
+1. Is HRT effective?
+2. How long should we continue the trial in the presence of contrary
+evidence?
+
+See WHI writing group paper JAMA 2002, Vol 288:321 - 333. for the paper and Steinkellner et al. Menopause 2012, Vol 19:616 621 for adiscussion of the long term impacts
 
 ---
 
-## Example: ECMO
+## Motivating example: ECMO
 
 In 1985 a group at a major neonatal intensive care center published the results of a trial comparing a standard treatment and a promising new extracorporeal membrane oxygenation treatment (ECMO) for newborn infants with severe respiratory failure. **Ethical considerations lead to a statistical randomization scheme whereby one infant received the control therapy, thereby opening the study to sample-size based criticisms.**
 
-<p style=font-size:40%>For a review of the statistical discussion and discussion, see Royall Statistical Science 1991, Vol 6, No. 1, 52-88</p>
+For a review and statistical discussion, see Royall Statistical Science 1991, Vol 6, No. 1, 52-88
 
 ---
 
 ## Summary
 
-- These examples illustrate the central role that biostatistics plays in public health and the importance of performing design, analysis and interpretation of statistical data correctly.
-- At the Johns Hopkins Bloomberg School of Public Health, the prevailing philosophy for conducting biostatistics includes:
-  - A tight coupling of the statistical methods with the ethical and scientific goals.
-  - Emphasizing scientific interpretation of statistical evidence to impact policy.
-  - Acknowledging and assumptions and evaluating the robustness of conclusions to
-them.
+- These examples illustrate many of the difficulties of trying
+to use data to create general conclusions about a population.
+- Paramount among our concerns are:
+  - Is the sample representative of the population that we'd like to draw inferences about?
+  - Are there known and observed, known and unobserved or unknown and unobserved variables that contaminate our conclusions?
+  - Is there systematic bias created by missing data?
+  - What randomness exists in the data and how do we use or adjust for it? Here randomness can either be explicit via randomization
+or random sampling, or implicit as the aggregation of many complex uknown processes.
+- Statistical inference requires navigating the set of tools and thinking about how to draw conclusions from data.
 
----
+--- 
+## Example goals of inference
 
-## Experiments
-
-Consider the outcome of an **experiment** such as:
-- a collection of measurements from a sampled population
-- measurements from a laboratory experiment
-- the result of a clinical trial
-- the result from a simulated (computer) experiment
-- values from hospital records sampled retrospectively
-- ...
-
----
-
-## Notation
-
-- The **sample space**, $\Omega$, is the collection of possible outcomes of an experiment
-  - Example: die roll $\Omega = \{1,2,3,4,5,6\}$
-- An **event**, say $E$, is a subset of $\Omega$ 
-  - Example: die roll is even $E = \{2,4,6\}$
-- An **elementary** or **simple** event is a particular result
-  of an experiment
-  - Example: die roll is a four, $\omega = 4$
-- $\emptyset$ is called the **null event** or the **empty set**
-
----
-
-## Interpretation of set operations
-
-Normal set operations have particular interpretations in this setting
-
-1. $\omega \in E$ implies that $E$ occurs when $\omega$ occurs
-2. $\omega \not\in E$ implies that $E$ does not occur when $\omega$ occurs
-3. $E \subset F$ implies that the occurrence of $E$ implies the occurrence of $F$
-4. $E \cap F$  implies the event that both $E$ and $F$ occur
-5. $E \cup F$ implies the event that at least one of $E$ or $F$ occur
-6. $E \cap F=\emptyset$ means that $E$ and $F$ are **mutually exclusive**, or cannot both occur
-7. $E^c$ or $\bar E$ is the event that $E$ does not occur
-
----
-
-## Set theory facts
-
-
-- DeMorgan's laws  
-  * $(A \cap B)^c = A^c \cup B^c$  
-  * $(A \cup B)^c = A^c \cap B^c$
-  * Example: If an alligator or a turtle you are not[$(A \cup B)^c$]
-    then you are not an alligator and you are also not a turtle ($A^c \cap B^c$)
-  * Example: If your car is not both hybrid and diesel [$(A \cap B)^c$]
-    then your car is either not hybrid or not diesel ($A^c \cup B^c$)
-- $(A^c)^c = A$
-- $(A \cup B) \cap C = (A \cap C) \cup (B \cap C)$
+1. Estimate a population quantity (the proportion of people who will
+  vote for a candidate).
+2. Determine whether a population quantity 
+  is a benchmark value ("is the treatment effective?").
+3. Infer a mechanistic relationship when quantities are measured with
+  noise ("What is the slope for Hooke's law?")
+4. Determine the impact of a policy? ("If we reduce polution levels,
+  will asthma rates decline?")
 
 
 ---
+## Example tools of inference 
 
-## Probability: some discussion
-
-- Useful strategy used in much of science:
-  * For a given experiment
-      * attribute all that is known or theorized to a systematic model (mathematical function)
-      * attribute everything else to randomness, _even if the process under study is known not to be “random” in any sense of the word_
-      * Use probability to quantify the uncertainty in your conclusions
-      * Evaluate the sensitivity of your conclusions to the assumptions of your model
+1. Randomization: concerned with balancing unobserved variables that may confound inferences of interest
+2. Random sampling: concerned with obtaining data that is representative 
+of the population of interest
+3. Sampling models: concerned with creating a model for the sampling
+process, the most common is so called "iid".
+4. Hypothesis testing: concerned with decision making in the presence of uncertainty
+5. Confidence intervals: concerned with quantifying uncertainty in 
+estimation
+6. Probability models: a formal connection between the data and a population of interest. Often probability models are assumed or are
+approximated.
+7. Study design: the process of designing an experiment to minimize biases and variability.
+8. Nonparametric bootstrapping: the process of using the data to,
+  with minimal probability model assumptions, create inferences.
+9. Permutation, randomization and exchangeability testing: the process 
+of using data permutations to perform inferences.
 
 ---
+## Different thinking about probability leads to different styles of inference
 
-## Probability: a useful exercise
+We won't spend too much time talking about this, but there are several different
+styles of inference. Two broad categories that get discussed a lot are:
 
-In the first few lectures, we’ll largely talk about the mathematics and basic uses of probability. However, this is only a small starting point in the use of probability in data analyses. Keep the following questions in the back of your mind as we cover using probability for data analyses.
+1. Frequency probability: is the long run proportion of
+ times an event occurs in independent, identically distributed 
+ repetitions.
+2. Frequency inference: uses frequency interpretations of probabilities
+to control error rates. Answers questions like "What should I decide
+given my data controlling the long run proportion of mistakes I make at
+a tolerable level."
+3. Bayesian probability: is the probability calculus of beliefs, given that beliefs follow certain rules.
+4. Bayesian inference: the use of Bayesian probability representation
+of beliefs to perform inference. Answers questions like "Given my subjective beliefs and the objective information from the data, what
+should I believe now?"
 
-- What is being modeled as random?
-- Where does this attributed randomness arise from?
-- Where did the systematic model components arise from?
-- How did observational units come to be in the study and is there importance to the missing data points?
-- Do the results generalize beyond the study in question?
-- Were important variables unaccounted for in the model?
-- How drastically would inferences change depending on the answers to the previous questions?
+Data scientists tend to fall within shades of gray of these and various other schools of inference. 
+
+---
+## In this class
+
+* In this class, we will primarily focus on basic sampling models, 
+basic probability models and frequency style analyses
+to create standard inferences. 
+* Being data scientists, 
+we will also consider some inferential strategies that 
+rely heavily on the observed data, such as permutation testing
+and bootstrapping.
+* As probability modeling will be our starting point, we first build
+up basic probability.
+
+---
+## Where to learn more on the inference topics less covered in the class
+
+1. Explicit use of random sampling in inferences: look in references
+on "finite population statistics". Used heavily in polling and
+sample surveys.
+2. Explicit use of randomization in inferences: look in references
+on "causal inference".
+3. Bayesian statistics: look for basic itroductory books (there are many).
+4. Missing data: well covered in biostatistics and econometric
+references; look
+for references to "multiple imputation", a popular tool for
+addressing missing data.
+5. Study design: consider looking in the subject matter area that
+  you are interested in; for examples with rich histories in design:
+  1. The epidemiological literature is very focused on using study design to investigate public health
+  2. The classical development of study design in agriculture broadly covers design and design principles.
+  3. The industrial quality control literature covers design thoroughly.
+ 
