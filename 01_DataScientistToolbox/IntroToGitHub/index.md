@@ -46,7 +46,7 @@ mode        : selfcontained # {standalone, draft}
 
 * On the next screen, select the free plan and click "Finish sign up"
 
-<img class=center src=../../assets/img/IntroToGitHub/GitHubSignup2.png height='350'/>
+<img class=center src=../../assets/img/IntroToGitHub/GitHubSignup2.png height='450'/>
 
 ---
 
