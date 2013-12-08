@@ -89,6 +89,7 @@ lm(y ~ x, mydata, 1:100, model = FALSE)
 ## Argument Matching
 
 Function arguments can also be _partially_ matched, which is useful for interactive work. The order of operations when given an argument is
+
 1. Check for exact match for a named argument
 2. Check for a partial match
 3. Check for a positional match
