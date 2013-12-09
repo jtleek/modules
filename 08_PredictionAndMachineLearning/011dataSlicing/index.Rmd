@@ -1,5 +1,5 @@
 ---
-title       : The caret package
+title       : Data slicing
 subtitle    : 
 author      : Jeffrey Leek
 job         : Johns Hopkins Bloomberg School of Public Health
@@ -31,51 +31,6 @@ knit_hooks$set(inline = function(x) {
 knit_hooks$set(plot = knitr:::hook_plot_html)
 ```
 
-## The caret R package
-
-<img class=center src=../../assets/img/08_PredictionAndMachineLearning/caret.png height=400>
-
-[http://caret.r-forge.r-project.org/](http://caret.r-forge.r-project.org/)
-
----
-
-## Caret functionality
-
-* Some preprocessing (cleaning)
-  * preProcess
-* Data splitting
-  * createDataPartition
-  * createResample
-  * createTimeSlices
-* Training/testing functions
-  * train
-  * predict
-* Model comparison
-  * confusionMatrix
-
----
-
-## Machine learning algorithms in R
-
-* Linear discriminant analysis
-* Regression
-* Naive Bayes
-* Support vector machines
-* Classification and regression trees
-* Random forests
-* Boosting
-* etc. 
-
----
-
-## Why caret? 
-
-<img class=center src=../../assets/img/08_PredictionAndMachineLearning/predicttable.png height=250>
-
-[add link](??)
-
-
---- 
 
 ## SPAM Example: Data splitting
 
@@ -88,44 +43,56 @@ testing <- spam[-inTrain,]
 dim(training)
 ```
 
+---
 
---- 
+## SPAM Example: K-fold
 
-## SPAM Example: Fit a model
-
-```{r training, dependson="loadPackage",cache=TRUE}
-set.seed(32343)
-modelFit <- train(type ~.,data=training, method="glm")
-modelFit
+```{r kfold,dependson="loadPackage"}
+set.seed(32323)
+folds <- createFolds(y=spam$type,k=10,
+                             list=TRUE,returnTrain=TRUE)
+sapply(folds,length)
+folds[[1]][1:10]
 ```
 
+---
 
---- 
+## SPAM Example: Return test
 
-## SPAM Example: Final model
-
-```{r finalModel, dependson="training",cache=TRUE}
-modelFit <- train(type ~.,data=training, method="glm")
-modelFit$finalModel
+```{r kfoldtest,dependson="loadPackage"}
+set.seed(32323)
+folds <- createFolds(y=spam$type,k=10,
+                             list=TRUE,returnTrain=FALSE)
+sapply(folds,length)
+folds[[1]][1:10]
 ```
 
+---
 
---- 
+## SPAM Example: Resampling
 
-## SPAM Example: Prediction
-
-```{r predictions, dependson="training",cache=TRUE}
-predictions <- predict(modelFit,newdata=testing)
-predictions
+```{r resample,dependson="loadPackage"}
+set.seed(32323)
+folds <- createResample(y=spam$type,times=10,
+                             list=TRUE)
+sapply(folds,length)
+folds[[1]][1:10]
 ```
 
---- 
+---
 
-## SPAM Example: Confusion Matrix
+## SPAM Example: Time Slices
 
-```{r confusion, dependson="predictions",cache=TRUE}
-confusionMatrix(predictions,testing$type)
+```{r time,dependson="loadPackage"}
+set.seed(32323)
+tme <- 1:1000
+folds <- createTimeSlices(y=tme,initialWindow=20,
+                          horizon=10)
+names(folds)
+folds$train[[1]]
+folds$test[[1]]
 ```
+
 
 ---
 
