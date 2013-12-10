@@ -1,5 +1,5 @@
 ---
-title       : Training options
+title       : Preprocessing
 subtitle    : 
 author      : Jeffrey Leek
 job         : Johns Hopkins Bloomberg School of Public Health
@@ -32,107 +32,122 @@ knit_hooks$set(plot = knitr:::hook_plot_html)
 ```
 
 
-## SPAM Example
+## Why preprocess?
 
-```{r loadPackage,cache=TRUE,fig.height=3,fig.width=3}
+```{r loadPackage,cache=TRUE,fig.height=3.5,fig.width=3.5}
 library(caret); library(kernlab); data(spam)
-spamPredictors <- spam[,-58]
-hist(spamPredictors$our,xlab="frequency of 'our'")
+inTrain <- createDataPartition(y=spam$type,
+                              p=0.75, list=FALSE)
+training <- spam[inTrain,]
+testing <- spam[-inTrain,]
+hist(training$capitalAve,main="",xlab="ave. capital run length")
 ```
 
 ---
 
-## Train options
+## Why preprocess?
 
-```{r ,dependson="loadPackage"}
-args(train.default)
+```{r ,dependson="loadPackage",cache=TRUE,fig.height=3.5,fig.width=3.5}
+mean(training$capitalAve)
+sd(training$capitalAve)
+```
+
+---
+
+## Standardizing
+
+```{r ,dependson="loadPackage",cache=TRUE,fig.height=3.5,fig.width=3.5}
+trainCapAve <- training$capitalAve
+trainCapAveS <- (trainCapAve  - mean(trainCapAve))/sd(trainCapAve) 
+mean(trainCapAveS)
+sd(trainCapAveS)
+```
+
+---
+
+## Standardizing - test set
+
+```{r ,dependson="loadPackage",cache=TRUE,fig.height=3.5,fig.width=3.5}
+testCapAve <- testing$capitalAve
+testCapAveS <- (testCapAve  - mean(trainCapAve))/sd(trainCapAve) 
+mean(testCapAveS)
+sd(testCapAveS)
 ```
 
 
 ---
 
-## Metric options
+## Standardizing - _preProcess_ function
 
-__Continous outcomes__:
-  * _RMSE_ = Root mean squared error
-  * _RSquared_ = $R^2$ from regression models
-
-__Categorical outcomes__:
-  * _Accuracy_ = Fraction correct
-  * _Kappa_ = A measure of [concordance](http://en.wikipedia.org/wiki/Cohen%27s_kappa)
-  
-  
-
---- 
-
-## trainControl
-
-```{r , dependson="loadPackage",cache=TRUE}
-args(trainControl)
+```{r preprocess,dependson="loadPackage",cache=TRUE,fig.height=3.5,fig.width=3.5}
+preObj <- preProcess(training[,-58],method=c("center","scale"))
+trainCapAveS <- predict(preObj,training[,-58])$capitalAve
+mean(trainCapAveS)
+sd(trainCapAveS)
 ```
-
---- 
-
-## trainControl resampling
-
-* _method_
-  * _boot_ = bootstrapping
-  * _boot632_ = bootstrapping with adjustment
-  * _cv_ = cross validation
-  * _repeatedcv_ = repeated cross validation
-  * _LOOCV_ = leave one out cross validation
-* _number_
-  * For boot/cross validation
-  * Number of subsamples to take
-* _repeats_
-  * Number of times to repeate subsampling
-  * If big this can _slow things down_
 
 
 ---
 
-## Setting the seed
+## Standardizing - _preProcess_ function
 
-* It is often useful to set an overall seed
-* You can also set a seed for each resample
-* Seeding each resample is useful for parallel fits
-* _seed_ must be a list with
-  * Length equal to number of resamples
-  * Length of each element equal to number of models fit
+```{r ,dependson="preprocess",cache=TRUE,fig.height=3.5,fig.width=3.5}
+testCapAveS <- predict(preObj,testing[,-58])$capitalAve
+mean(testCapAveS)
+sd(testCapAveS)
+```
 
+---
 
+## Standardizing - _preProcess_ argument
 
---- 
-
-
-
-## seed example
-
-```{r seedExample, dependson="loadPackage",cache=TRUE}
-set.seed(1235); seeds <- vector(26,mode="list")
-for(i in 1:26){seeds[[i]] <- floor(runif(1,0,1e5))}
-trControl <- trainControl(seeds=seeds)
+```{r training, dependson="loadPackage",cache=TRUE}
+set.seed(32343)
+modelFit <- train(type ~.,data=training,
+                  preProcess=c("center","scale"),method="glm")
+modelFit
 ```
 
 
+---
 
---- 
+## Standardizing - Box-Cox transforms
 
-
-## seed example
-
-```{r , dependson="seedExample",cache=TRUE}
-modelFit2 <- train(type ~.,data=training, method="glm")
-modelFit2
+```{r ,dependson="loadPackage",cache=TRUE,fig.height=3.5,fig.width=7}
+preObj <- preProcess(training[,-58],method=c("BoxCox"))
+trainCapAveS <- predict(preObj,training[,-58])$capitalAve
+par(mfrow=c(1,2)); hist(trainCapAveS); qqnorm(trainCapAveS)
 ```
 
 
---- 
+---
 
-## seed example
+## Standardizing - Imputing data
 
-```{r , dependson="seedExample",cache=TRUE}
-modelFit3 <- train(type ~.,data=training, method="glm")
-modelFit3
+```{r knn,dependson="loadPackage",cache=TRUE,fig.height=3.5,fig.width=7}
+set.seed(13343)
+
+# Make some values NA
+training$capAve <- training$capitalAve
+selectNA <- rbinom(dim(training)[1],size=1,prob=0.05)==1
+training$capAve[selectNA] <- NA
+
+# Impute and standardize
+preObj <- preProcess(training[,-58],method="knnImpute")
+capAve <- predict(preObj,training[,-58])$capAve
+
+# Standardize true values
+capAveTruth <- training$capitalAve
+capAveTruth <- (capAveTruth-mean(capAveTruth))/sd(capAveTruth)
 ```
 
+
+---
+
+## Standardizing - Imputing data
+
+```{r ,dependson="knn",cache=TRUE,fig.height=3.5,fig.width=7}
+quantile(capAve - capAveTruth)
+quantile((capAve - capAveTruth)[selectNA])
+quantile((capAve - capAveTruth)[!selectNA])
+```

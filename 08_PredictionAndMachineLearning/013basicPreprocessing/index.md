@@ -1,5 +1,5 @@
 ---
-title       : Training options
+title       : Preprocessing
 subtitle    : 
 author      : Jeffrey Leek
 job         : Johns Hopkins Bloomberg School of Public Health
@@ -19,7 +19,7 @@ mode        : selfcontained # {standalone, draft}
 
 
 
-## SPAM Example
+## Why preprocess?
 
 
 ```r
@@ -28,122 +28,141 @@ inTrain <- createDataPartition(y=spam$type,
                               p=0.75, list=FALSE)
 training <- spam[inTrain,]
 testing <- spam[-inTrain,]
-modelFit <- train(type ~.,data=training, method="glm")
+hist(training$capitalAve,main="",xlab="ave. capital run length")
+```
+
+<div class="rimage center"><img src="fig/loadPackage.png" title="plot of chunk loadPackage" alt="plot of chunk loadPackage" class="plot" /></div>
+
+
+---
+
+## Why preprocess?
+
+
+```r
+mean(training$capitalAve)
+```
+
+```
+[1] 4.709
+```
+
+```r
+sd(training$capitalAve)
+```
+
+```
+[1] 25.48
 ```
 
 
 ---
 
-## Train options
+## Standardizing
 
 
 ```r
-args(train.default)
+trainCapAve <- training$capitalAve
+trainCapAveS <- (trainCapAve  - mean(trainCapAve))/sd(trainCapAve) 
+mean(trainCapAveS)
 ```
 
 ```
-function (x, y, method = "rf", preProcess = NULL, ..., weights = NULL, 
-    metric = ifelse(is.factor(y), "Accuracy", "RMSE"), maximize = ifelse(metric == 
-        "RMSE", FALSE, TRUE), trControl = trainControl(), tuneGrid = NULL, 
-    tuneLength = 3) 
-NULL
+[1] 5.862e-18
+```
+
+```r
+sd(trainCapAveS)
+```
+
+```
+[1] 1
+```
+
+
+---
+
+## Standardizing - test set
+
+
+```r
+testCapAve <- testing$capitalAve
+testCapAveS <- (testCapAve  - mean(trainCapAve))/sd(trainCapAve) 
+mean(testCapAveS)
+```
+
+```
+[1] 0.07579
+```
+
+```r
+sd(testCapAveS)
+```
+
+```
+[1] 1.79
 ```
 
 
 
 ---
 
-## Metric options
-
-__Continous outcomes__:
-  * _RMSE_ = Root mean squared error
-  * _RSquared_ = $R^2$ from regression models
-
-__Categorical outcomes__:
-  * _Accuracy_ = Fraction correct
-  * _Kappa_ = A measure of [concordance](http://en.wikipedia.org/wiki/Cohen%27s_kappa)
-  
-  
-
---- 
-
-## trainControl
+## Standardizing - _preProcess_ function
 
 
 ```r
-args(trainControl)
+preObj <- preProcess(training[,-58],method=c("center","scale"))
+trainCapAveS <- predict(preObj,training[,-58])$capitalAve
+mean(trainCapAveS)
 ```
 
 ```
-function (method = "boot", number = ifelse(method %in% c("cv", 
-    "repeatedcv"), 10, 25), repeats = ifelse(method %in% c("cv", 
-    "repeatedcv"), 1, number), p = 0.75, initialWindow = NULL, 
-    horizon = 1, fixedWindow = TRUE, verboseIter = FALSE, returnData = TRUE, 
-    returnResamp = "final", savePredictions = FALSE, classProbs = FALSE, 
-    summaryFunction = defaultSummary, selectionFunction = "best", 
-    custom = NULL, preProcOptions = list(thresh = 0.95, ICAcomp = 3, 
-        k = 5), index = NULL, indexOut = NULL, timingSamps = 0, 
-    predictionBounds = rep(FALSE, 2), seeds = NA, allowParallel = TRUE) 
-NULL
+[1] 5.862e-18
 ```
 
+```r
+sd(trainCapAveS)
+```
 
---- 
+```
+[1] 1
+```
 
-## trainControl resampling
-
-* _method_
-  * _boot_ = bootstrapping
-  * _boot632_ = bootstrapping with adjustment
-  * _cv_ = cross validation
-  * _repeatedcv_ = repeated cross validation
-  * _LOOCV_ = leave one out cross validation
-* _number_
-  * For boot/cross validation
-  * Number of subsamples to take
-* _repeats_
-  * Number of times to repeate subsampling
-  * If big this can _slow things down_
 
 
 ---
 
-## Setting the seed
-
-* It is often useful to set an overall seed
-* You can also set a seed for each resample
-* Seeding each resample is useful for parallel fits
-* _seed_ must be a list with
-  * Length equal to number of resamples
-  * Length of each element equal to number of models fit
-
-
-
---- 
-
-
-
-## seed example
+## Standardizing - _preProcess_ function
 
 
 ```r
-set.seed(1235); seeds <- vector(26,mode="list")
-for(i in 1:26){seeds[[i]] <- floor(runif(1,0,1e5))}
-trControl <- trainControl(seeds=seeds)
+testCapAveS <- predict(preObj,testing[,-58])$capitalAve
+mean(testCapAveS)
+```
+
+```
+[1] 0.07579
+```
+
+```r
+sd(testCapAveS)
+```
+
+```
+[1] 1.79
 ```
 
 
+---
 
-
---- 
-
-
-## seed example
+## Standardizing - _preProcess_ argument
 
 
 ```r
-modelFit2 <- train(type ~.,data=training, method="glm")
-modelFit2
+set.seed(32343)
+modelFit <- train(type ~.,data=training,
+                  preProcess=c("center","scale"),method="glm")
+modelFit
 ```
 
 ```
@@ -151,7 +170,7 @@ modelFit2
   57 predictors
    2 classes: 'nonspam', 'spam' 
 
-No pre-processing
+Pre-processing: centered, scaled 
 Resampling: Bootstrap (25 reps) 
 
 Summary of sample sizes: 3451, 3451, 3451, 3451, 3451, 3451, ... 
@@ -159,39 +178,81 @@ Summary of sample sizes: 3451, 3451, 3451, 3451, 3451, 3451, ...
 Resampling results
 
   Accuracy  Kappa  Accuracy SD  Kappa SD
-  0.9       0.8    0.006        0.01    
+  0.9       0.8    0.007        0.01    
 
  
 ```
 
 
 
---- 
+---
 
-## seed example
+## Standardizing - Box-Cox transforms
 
 
 ```r
-modelFit3 <- train(type ~.,data=training, method="glm")
-modelFit3
+preObj <- preProcess(training[,-58],method=c("BoxCox"))
+trainCapAveS <- predict(preObj,training[,-58])$capitalAve
+par(mfrow=c(1,2)); hist(trainCapAveS); qqnorm(trainCapAveS)
+```
+
+<div class="rimage center"><img src="fig/unnamed-chunk-5.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" class="plot" /></div>
+
+
+
+---
+
+## Standardizing - Imputing data
+
+
+```r
+set.seed(13343)
+
+# Make some values NA
+training$capAve <- training$capitalAve
+selectNA <- rbinom(dim(training)[1],size=1,prob=0.05)==1
+training$capAve[selectNA] <- NA
+
+# Impute and standardize
+preObj <- preProcess(training[,-58],method="knnImpute")
+capAve <- predict(preObj,training[,-58])$capAve
+
+# Standardize true values
+capAveTruth <- training$capitalAve
+capAveTruth <- (capAveTruth-mean(capAveTruth))/sd(capAveTruth)
+```
+
+
+
+---
+
+## Standardizing - Imputing data
+
+
+```r
+quantile(capAve - capAveTruth)
 ```
 
 ```
-3451 samples
-  57 predictors
-   2 classes: 'nonspam', 'spam' 
-
-No pre-processing
-Resampling: Bootstrap (25 reps) 
-
-Summary of sample sizes: 3451, 3451, 3451, 3451, 3451, 3451, ... 
-
-Resampling results
-
-  Accuracy  Kappa  Accuracy SD  Kappa SD
-  0.9       0.8    0.006        0.01    
-
- 
+        0%        25%        50%        75%       100% 
+-1.1324388 -0.0030842 -0.0015074 -0.0007467  0.2155789 
 ```
 
+```r
+quantile((capAve - capAveTruth)[selectNA])
+```
+
+```
+        0%        25%        50%        75%       100% 
+-0.9243043 -0.0125489 -0.0001968  0.0194524  0.2155789 
+```
+
+```r
+quantile((capAve - capAveTruth)[!selectNA])
+```
+
+```
+        0%        25%        50%        75%       100% 
+-1.1324388 -0.0030033 -0.0015115 -0.0007938 -0.0001968 
+```
 
