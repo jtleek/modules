@@ -4,7 +4,7 @@
   <title>Exploratory graphs</title>
   <meta charset="utf-8">
   <meta name="description" content="Exploratory graphs">
-  <meta name="author" content="Jeffrey Leek, Assistant Professor of Biostatistics">
+  <meta name="author" content="Roger D. Peng, Associate Professor of Biostatistics">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -19,6 +19,11 @@
   </script>
   
     <link rel="stylesheet" href = "../../assets/css/custom.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BACKUP.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BASE.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.LOCAL.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.orig">
+<link rel="stylesheet" href = "../../assets/css/custom.css.REMOTE.546.css">
 <link rel="stylesheet" href = "../../assets/css/ribbons.css">
 
 </head>
@@ -38,7 +43,7 @@
       <hgroup class="auto-fadein">
         <h1>Exploratory graphs</h1>
         <h2></h2>
-        <p>Jeffrey Leek, Assistant Professor of Biostatistics<br/>Johns Hopkins Bloomberg School of Public Health</p>
+        <p>Roger D. Peng, Associate Professor of Biostatistics<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
           </slide>
 
@@ -182,7 +187,7 @@
 <li>Use common scales when possible</li>
 <li>When possible use position comparisons</li>
 <li>Angle comparisons are frequently hard to interpret (no piecharts!)</li>
-<li>No 3-D barcharts</li>
+<li>No 3-D barcharts. Please.</li>
 </ul>
 
   </article>
@@ -210,11 +215,9 @@
     <h2>Boxplots</h2>
   </hgroup>
   <article>
-    <ul>
-<li>Important parameters: <em>col</em>,<em>varwidth</em>,<em>names</em>,<em>horizontal</em></li>
-</ul>
+    <p>Important parameters: <em>col</em>,<em>varwidth</em>,<em>names</em>,<em>horizontal</em></p>
 
-<pre><code class="r">boxplot(pData$AGEP,col=&quot;blue&quot;)
+<pre><code class="r">boxplot(pData$AGEP, col=&quot;blue&quot;)
 </code></pre>
 
 <div class="rimage center"><img src="fig/unnamed-chunk-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div>
@@ -228,7 +231,8 @@
     <h2>Boxplots</h2>
   </hgroup>
   <article>
-    <pre><code class="r">boxplot(pData$AGEP ~ as.factor(pData$DDRS),col=&quot;blue&quot;)
+    <pre><code class="r">pData &lt;- transform(pData, DDRS = factor(DDRS))
+boxplot(AGEP ~ DDRS, data = pData, col = &quot;blue&quot;)
 </code></pre>
 
 <div class="rimage center"><img src="fig/unnamed-chunk-2.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" class="plot" /></div>
@@ -242,7 +246,8 @@
     <h2>Boxplots</h2>
   </hgroup>
   <article>
-    <pre><code class="r">boxplot(pData$AGEP ~ as.factor(pData$DDRS),col=c(&quot;blue&quot;,&quot;orange&quot;),names=c(&quot;yes&quot;,&quot;no&quot;),varwidth=TRUE)
+    <pre><code class="r">boxplot(AGEP ~ DDRS, data = pData, col = c(&quot;blue&quot;, &quot;orange&quot;), 
+        names = c(&quot;yes&quot;, &quot;no&quot;), varwidth = TRUE)
 </code></pre>
 
 <div class="rimage center"><img src="fig/unnamed-chunk-3.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" class="plot" /></div>
@@ -256,7 +261,7 @@
     <h2>Barplots</h2>
   </hgroup>
   <article>
-    <pre><code class="r">barplot(table(pData$CIT),col=&quot;blue&quot;)
+    <pre><code class="r">barplot(table(pData$CIT), col = &quot;blue&quot;)
 </code></pre>
 
 <div class="rimage center"><img src="fig/unnamed-chunk-4.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" class="plot" /></div>
@@ -270,11 +275,9 @@
     <h2>Histograms</h2>
   </hgroup>
   <article>
-    <ul>
-<li>Important parameters: <em>breaks</em>,<em>freq</em>,<em>col</em>,<em>xlab</em>,<em>ylab</em>, <em>xlim, _ylim</em> ,<em>main</em></li>
-</ul>
+    <p>Important parameters: <em>breaks</em>,<em>freq</em>,<em>col</em>,<em>xlab</em>,<em>ylab</em>, <em>xlim, _ylim</em> ,<em>main</em></p>
 
-<pre><code class="r">hist(pData$AGEP,col=&quot;blue&quot;)
+<pre><code class="r">hist(pData$AGEP, col = &quot;blue&quot;)
 </code></pre>
 
 <div class="rimage center"><img src="fig/unnamed-chunk-5.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" class="plot" /></div>
@@ -288,7 +291,7 @@
     <h2>Histograms</h2>
   </hgroup>
   <article>
-    <pre><code class="r">hist(pData$AGEP,col=&quot;blue&quot;,breaks=100,main=&quot;Age&quot;)
+    <pre><code class="r">hist(pData$AGEP, col = &quot;blue&quot;, breaks = 100, main = &quot;Age&quot;)
 </code></pre>
 
 <div class="rimage center"><img src="fig/unnamed-chunk-6.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" class="plot" /></div>
@@ -305,7 +308,7 @@
     <p>Important parameters (to plot): <em>col</em>,<em>lwd</em>,<em>xlab</em>,<em>ylab</em>,<em>xlim</em>,<em>ylim</em></p>
 
 <pre><code class="r">dens &lt;- density(pData$AGEP)
-plot(dens,lwd=3,col=&quot;blue&quot;)
+plot(dens, lwd = 3, col = &quot;blue&quot;)
 </code></pre>
 
 <div class="rimage center"><img src="fig/unnamed-chunk-7.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" class="plot" /></div>
@@ -320,9 +323,9 @@ plot(dens,lwd=3,col=&quot;blue&quot;)
   </hgroup>
   <article>
     <pre><code class="r">dens &lt;- density(pData$AGEP)
-densMales &lt;- density(pData$AGEP[which(pData$SEX==1)])
-plot(dens,lwd=3,col=&quot;blue&quot;)
-lines(densMales,lwd=3,col=&quot;orange&quot;)
+densMales &lt;- density(pData$AGEP[which(pData$SEX == 1)])
+plot(dens, lwd = 3, col = &quot;blue&quot;)
+lines(densMales, lwd = 3, col = &quot;orange&quot;)
 </code></pre>
 
 <div class="rimage center"><img src="fig/unnamed-chunk-8.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" class="plot" /></div>

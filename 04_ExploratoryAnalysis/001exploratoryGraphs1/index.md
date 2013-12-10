@@ -1,7 +1,7 @@
 ---
 title       : Exploratory graphs
 subtitle    : 
-author      : Jeffrey Leek, Assistant Professor of Biostatistics 
+author      : Roger D. Peng, Associate Professor of Biostatistics 
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -108,7 +108,7 @@ mode        : selfcontained # {standalone, draft}
 * Use common scales when possible
 * When possible use position comparisons
 * Angle comparisons are frequently hard to interpret (no piecharts!)
-* No 3-D barcharts
+* No 3-D barcharts. Please.
 
 
 ---
@@ -135,10 +135,11 @@ pData <- read.csv("./data/ss06pid.csv")
 
 ## Boxplots
 
-* Important parameters: _col_,_varwidth_,_names_,_horizontal_
+Important parameters: _col_,_varwidth_,_names_,_horizontal_
+
 
 ```r
-boxplot(pData$AGEP,col="blue")
+boxplot(pData$AGEP, col="blue")
 ```
 
 <div class="rimage center"><img src="fig/unnamed-chunk-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div>
@@ -150,7 +151,8 @@ boxplot(pData$AGEP,col="blue")
 
 
 ```r
-boxplot(pData$AGEP ~ as.factor(pData$DDRS),col="blue")
+pData <- transform(pData, DDRS = factor(DDRS))
+boxplot(AGEP ~ DDRS, data = pData, col = "blue")
 ```
 
 <div class="rimage center"><img src="fig/unnamed-chunk-2.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" class="plot" /></div>
@@ -163,7 +165,8 @@ boxplot(pData$AGEP ~ as.factor(pData$DDRS),col="blue")
 
 
 ```r
-boxplot(pData$AGEP ~ as.factor(pData$DDRS),col=c("blue","orange"),names=c("yes","no"),varwidth=TRUE)
+boxplot(AGEP ~ DDRS, data = pData, col = c("blue", "orange"), 
+        names = c("yes", "no"), varwidth = TRUE)
 ```
 
 <div class="rimage center"><img src="fig/unnamed-chunk-3.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" class="plot" /></div>
@@ -177,7 +180,7 @@ boxplot(pData$AGEP ~ as.factor(pData$DDRS),col=c("blue","orange"),names=c("yes",
 
 
 ```r
-barplot(table(pData$CIT),col="blue")
+barplot(table(pData$CIT), col = "blue")
 ```
 
 <div class="rimage center"><img src="fig/unnamed-chunk-4.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" class="plot" /></div>
@@ -189,10 +192,11 @@ barplot(table(pData$CIT),col="blue")
 
 ## Histograms
 
-* Important parameters: _breaks_,_freq_,_col_,_xlab_,_ylab_, _xlim, _ylim_ ,_main_
+Important parameters: _breaks_,_freq_,_col_,_xlab_,_ylab_, _xlim, _ylim_ ,_main_
+
 
 ```r
-hist(pData$AGEP,col="blue")
+hist(pData$AGEP, col = "blue")
 ```
 
 <div class="rimage center"><img src="fig/unnamed-chunk-5.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" class="plot" /></div>
@@ -204,7 +208,7 @@ hist(pData$AGEP,col="blue")
 
 
 ```r
-hist(pData$AGEP,col="blue",breaks=100,main="Age")
+hist(pData$AGEP, col = "blue", breaks = 100, main = "Age")
 ```
 
 <div class="rimage center"><img src="fig/unnamed-chunk-6.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" class="plot" /></div>
@@ -217,9 +221,10 @@ hist(pData$AGEP,col="blue",breaks=100,main="Age")
 
 Important parameters (to plot): _col_,_lwd_,_xlab_,_ylab_,_xlim_,_ylim_
 
+
 ```r
 dens <- density(pData$AGEP)
-plot(dens,lwd=3,col="blue")
+plot(dens, lwd = 3, col = "blue")
 ```
 
 <div class="rimage center"><img src="fig/unnamed-chunk-7.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" class="plot" /></div>
@@ -233,9 +238,9 @@ plot(dens,lwd=3,col="blue")
 
 ```r
 dens <- density(pData$AGEP)
-densMales <- density(pData$AGEP[which(pData$SEX==1)])
-plot(dens,lwd=3,col="blue")
-lines(densMales,lwd=3,col="orange")
+densMales <- density(pData$AGEP[which(pData$SEX == 1)])
+plot(dens, lwd = 3, col = "blue")
+lines(densMales, lwd = 3, col = "orange")
 ```
 
 <div class="rimage center"><img src="fig/unnamed-chunk-8.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" class="plot" /></div>

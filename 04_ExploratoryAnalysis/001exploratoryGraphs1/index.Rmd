@@ -121,7 +121,7 @@ knit_hooks$set(plot = knitr:::hook_plot_html)
 * Use common scales when possible
 * When possible use position comparisons
 * Angle comparisons are frequently hard to interpret (no piecharts!)
-* No 3-D barcharts
+* No 3-D barcharts. Please.
 
 
 ---
@@ -149,9 +149,10 @@ pData <- read.csv("./data/ss06pid.csv")
 
 ## Boxplots
 
-* Important parameters: _col_,_varwidth_,_names_,_horizontal_
+Important parameters: _col_,_varwidth_,_names_,_horizontal_
+
 ```{r , dependson="loadData",fig.height=4,fig.width=4}
-boxplot(pData$AGEP,col="blue")
+boxplot(pData$AGEP, col="blue")
 ```
 
 --- 
@@ -159,7 +160,8 @@ boxplot(pData$AGEP,col="blue")
 ## Boxplots
 
 ```{r , dependson="loadData",fig.height=5,fig.width=5}
-boxplot(pData$AGEP ~ as.factor(pData$DDRS),col="blue")
+pData <- transform(pData, DDRS = factor(DDRS))
+boxplot(AGEP ~ DDRS, data = pData, col = "blue")
 ```
 
 
@@ -168,7 +170,8 @@ boxplot(pData$AGEP ~ as.factor(pData$DDRS),col="blue")
 ## Boxplots
 
 ```{r , dependson="loadData",fig.height=5,fig.width=5}
-boxplot(pData$AGEP ~ as.factor(pData$DDRS),col=c("blue","orange"),names=c("yes","no"),varwidth=TRUE)
+boxplot(AGEP ~ DDRS, data = pData, col = c("blue", "orange"), 
+        names = c("yes", "no"), varwidth = TRUE)
 ```
 
 
@@ -178,7 +181,7 @@ boxplot(pData$AGEP ~ as.factor(pData$DDRS),col=c("blue","orange"),names=c("yes",
 ## Barplots
 
 ```{r , dependson="loadData",fig.height=5,fig.width=5}
-barplot(table(pData$CIT),col="blue")
+barplot(table(pData$CIT), col = "blue")
 ```
 
 
@@ -187,9 +190,10 @@ barplot(table(pData$CIT),col="blue")
 
 ## Histograms
 
-* Important parameters: _breaks_,_freq_,_col_,_xlab_,_ylab_, _xlim, _ylim_ ,_main_
+Important parameters: _breaks_,_freq_,_col_,_xlab_,_ylab_, _xlim, _ylim_ ,_main_
+
 ```{r , dependson="loadData",fig.height=4,fig.width=4}
-hist(pData$AGEP,col="blue")
+hist(pData$AGEP, col = "blue")
 ```
 
 --- 
@@ -197,7 +201,7 @@ hist(pData$AGEP,col="blue")
 ## Histograms
 
 ```{r , dependson="loadData",fig.height=5,fig.width=5}
-hist(pData$AGEP,col="blue",breaks=100,main="Age")
+hist(pData$AGEP, col = "blue", breaks = 100, main = "Age")
 ```
 
 
@@ -206,9 +210,10 @@ hist(pData$AGEP,col="blue",breaks=100,main="Age")
 ## Density plots
 
 Important parameters (to plot): _col_,_lwd_,_xlab_,_ylab_,_xlim_,_ylim_
+
 ```{r , dependson="loadData",fig.height=4,fig.width=4}
 dens <- density(pData$AGEP)
-plot(dens,lwd=3,col="blue")
+plot(dens, lwd = 3, col = "blue")
 ```
 
 
@@ -218,9 +223,9 @@ plot(dens,lwd=3,col="blue")
 
 ```{r , dependson="loadData",fig.height=4,fig.width=4}
 dens <- density(pData$AGEP)
-densMales <- density(pData$AGEP[which(pData$SEX==1)])
-plot(dens,lwd=3,col="blue")
-lines(densMales,lwd=3,col="orange")
+densMales <- density(pData$AGEP[which(pData$SEX == 1)])
+plot(dens, lwd = 3, col = "blue")
+lines(densMales, lwd = 3, col = "orange")
 ```
 
 
