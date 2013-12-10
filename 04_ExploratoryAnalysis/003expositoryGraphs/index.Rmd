@@ -68,8 +68,10 @@ knit_hooks$set(plot = knitr:::hook_plot_html)
 
 <br>
 
-```{r downloadData, echo=FALSE, cache=TRUE}
-download.file("https://dl.dropboxusercontent.com/u/7710864/data/csv_hid/ss06pid.csv",destfile="./data/ss06pid.csv",method="curl")
+```{r downloadData, echo=FALSE}
+if(!file.exists("data/ss06pid.csv")) {
+        download.file("https://dl.dropboxusercontent.com/u/7710864/data/csv_hid/ss06pid.csv",destfile="./data/ss06pid.csv",method="curl")
+}
 ```
 
 

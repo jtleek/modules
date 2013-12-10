@@ -1,7 +1,7 @@
 ---
 title       : Expository graphs
 subtitle    : 
-author      : Jeffrey Leek, Assistant Professor of Biostatistics 
+author      : Roger D. Peng, Assistant Professor of Biostatistics 
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -224,11 +224,9 @@ mtext(text="(b)",side=3,line=1)
 dev.off()
 ```
 
-<div class="rimage center"><img src="fig/unnamed-chunk-9.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" class="plot" /></div>
-
 ```
-RStudioGD 
-        2 
+pdf 
+  2 
 ```
 
 
@@ -250,8 +248,8 @@ dev.off()
 ```
 
 ```
-RStudioGD 
-        2 
+pdf 
+  2 
 ```
 
 
@@ -279,8 +277,8 @@ dev.copy2pdf(file="twoPanelv2.pdf")
 ```
 
 ```
-RStudioGD 
-        2 
+pdf 
+  2 
 ```
 
 
