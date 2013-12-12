@@ -261,12 +261,79 @@ manipulate(myHist(mu), mu = slider(62, 74, step = 0.5))
 <li>This is exactly using the origin as a pivot point picking the
 line that minimizes the sum of the squared vertical distances
 of the points to the line</li>
-<li>Use R studio&#39;s  manipulate function to experiment
-```</li>
+<li>Use R studio&#39;s  manipulate function to experiment</li>
+<li>Subtract the means so that the origin is the mean of the parent
+and children&#39;s heights</li>
 </ul>
 
-<pre><code>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    
+  </hgroup>
+  <article>
+    <pre><code>myPlot &lt;- function(beta){
+  y &lt;- galton$child - mean(galton$child)
+  x &lt;- galton$parent - mean(galton$parent)
+  freqData &lt;- as.data.frame(table(x, y))
+  names(freqData) &lt;- c(&quot;child&quot;, &quot;parent&quot;, &quot;freq&quot;)
+  plot(
+    as.numeric(as.vector(freqData$parent)), 
+    as.numeric(as.vector(freqData$child)),
+    pch = 21, col = &quot;black&quot;, bg = &quot;lightblue&quot;,
+    cex = .15 * freqData$freq, 
+    xlab = &quot;parent&quot;, 
+    ylab = &quot;child&quot;
+    )
+  abline(0, beta, lwd = 3)
+  points(0, 0, cex = 2, pch = 19)
+  mse &lt;- mean( (y - beta * x)^2 )
+  title(paste(&quot;beta = &quot;, beta, &quot;mse = &quot;, round(mse, 3)))
+}
+manipulate(myPlot(beta), beta = slider(0.8, 1.2, step = 0.02))
 </code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>The solution</h2>
+  </hgroup>
+  <article>
+    <h3>Next lecture we&#39;ll talk about why this is the solution</h3>
+
+<pre><code class="r">lm(child ~ parent, data = galton)
+</code></pre>
+
+<pre><code>
+Call:
+lm(formula = child ~ parent, data = galton)
+
+Coefficients:
+(Intercept)       parent  
+     23.942        0.646  
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    
+  </hgroup>
+  <article>
+    <pre><code class="r">plot(galton$parent,galton$child,pch=19,col=&quot;blue&quot;)
+lm1 &lt;- lm(galton$child ~ galton$parent)
+lines(galton$parent,lm1$fitted,col=&quot;red&quot;,lwd=3)
+</code></pre>
+
+<div class="rimage center"><img src="fig/unnamed-chunk-3.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" class="plot" /></div>
 
   </article>
   <!-- Presenter Notes -->

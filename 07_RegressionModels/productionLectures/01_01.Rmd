@@ -181,13 +181,25 @@ myPlot <- function(beta){
     xlab = "parent", 
     ylab = "child"
     )
-  abline(0, beta)
-#  mse <- mean( (galton$child - beta * galton$parent)^2)
-#  title(past("beta = ", beta, "mse = ", mse))
-#  return(NULL)
+  abline(0, beta, lwd = 3)
+  points(0, 0, cex = 2, pch = 19)
+  mse <- mean( (y - beta * x)^2 )
+  title(paste("beta = ", beta, "mse = ", round(mse, 3)))
 }
-manipulate(myPlot(beta), beta = slider(0.9, 1.1, step = 0.1))
-
+manipulate(myPlot(beta), beta = slider(0.8, 1.2, step = 0.02))
 ```
 
+---
+## The solution 
+### Next lecture we'll talk about why this is the solution
+```{r}
+lm(child ~ parent, data = galton)
+```
+
+---
+```{r, fig.height=4,fig.width=4}
+plot(galton$parent,galton$child,pch=19,col="blue")
+lm1 <- lm(galton$child ~ galton$parent)
+lines(galton$parent,lm1$fitted,col="red",lwd=3)
+```
 
