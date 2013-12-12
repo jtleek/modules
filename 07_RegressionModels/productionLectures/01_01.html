@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Introduction to regression</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Introduction to regression">
+  <meta name="author" content="Brian Caffo, PhD">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="../../libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="../../libraries/frameworks/io2012/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="../../libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="../../libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  <script data-main="../../libraries/frameworks/io2012/js/slides" 
+    src="../../libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+    <link rel="stylesheet" href = "../../assets/css/custom.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BACKUP.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BASE.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.LOCAL.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.orig">
+<link rel="stylesheet" href = "../../assets/css/custom.css.REMOTE.546.css">
+<link rel="stylesheet" href = "../../assets/css/ribbons.css">
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+    <!-- END LOGO SLIDE -->
+    
+
+    <!-- TITLE SLIDE -->
+    <!-- Should I move this to a Local Layout File? -->
+    <slide class="title-slide segue nobackground">
+      <aside class="gdbar">
+        <img src="../../assets/img/bloomberg_shield.png">
+      </aside>
+      <hgroup class="auto-fadein">
+        <h1>Introduction to regression</h1>
+        <h2>Regression</h2>
+        <p>Brian Caffo, PhD<br/>Johns Hopkins Bloomberg School of Public Health</p>
+      </hgroup>
+          </slide>
+
+    <!-- SLIDES -->
+      <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>A famous motivating example</h2>
+  </hgroup>
+  <article>
+    <p><img class=center src=../../assets/img/galton.jpg height=150></p>
+
+<h3>(Perhaps surprisingly, this example is still relevant)</h3>
+
+<p><img class=center src=../../assets/img/height.png height=150></p>
+
+<p><a href="http://www.nature.com/ejhg/journal/v17/n8/full/ejhg20095a.html">http://www.nature.com/ejhg/journal/v17/n8/full/ejhg20095a.html</a></p>
+
+<p><a href="http://www.wired.com/wiredscience/2009/03/predicting-height-the-victorian-approach-beats-modern-genomics/">Predicting height: the Victorian approach beats modern genomics</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Questions for this class</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Consider trying to answer the following kinds of questions:
+
+<ul>
+<li>To use the parents&#39; heights to predict childrens&#39; heights.</li>
+<li>To try to find a parsimonious, easily describe mean 
+relationship between parent and children&#39;s heights.</li>
+<li>To investigate the variation in childrens&#39; heights that appears 
+unrelated to parents&#39; heights (residual variation).</li>
+<li>To quantify what impact genotype information has beyond parental height in explaining child height.</li>
+<li>To figure out how/whether and what assumptions are needed to
+generalize findings beyond the data in question.<br></li>
+</ul></li>
+<li>For this lecture in specific, we&#39;ll also talk about the following
+famous question.
+
+<ul>
+<li>Why do children of very tall parents tend to be 
+tall, but a little shorter than their parents and why children of very short parents tend to be short, but a little taller than their parents?</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Galton&#39;s Data</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Let&#39;s look at the data first, used by Francis Galton in 1885. </li>
+<li>Galton was a statistician who invented the term and concepts
+of regression and correlation, founded the journal Biometrika,
+and was the cousin of Charles Darwin.</li>
+<li>You may need to run <code>install.packages(&quot;UsingR&quot;)</code> if the <code>UsingR</code> library is not installed.</li>
+<li>Let&#39;s look at the marginal (parents disregarding children and children disregarding parents) distributions first. 
+
+<ul>
+<li>Parent distribution is all heterosexual couples.</li>
+<li>Correction for gender vi multiplying female heights by 1.08.</li>
+<li>Overplotting is an issue from discretization.</li>
+<li>There&#39;s a second data set <code>father.son</code> that is similar.</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Code</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">library(UsingR); data(galton)
+par(mfrow=c(1,2))
+hist(galton$child,col=&quot;blue&quot;,breaks=100)
+hist(galton$parent,col=&quot;blue&quot;,breaks=100)
+</code></pre>
+
+<div class="rimage center"><img src="fig/galton.png" title="plot of chunk galton" alt="plot of chunk galton" class="plot" /></div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>The middle</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li><p>Consider only the children&#39;s heights. </p>
+
+<ul>
+<li>How could one describe the &quot;middle&quot;?</li>
+<li>One definition, let \(Y_i\) be the height of child \(i\) for \(i = 1, \ldots, n = 928\), then define the middle as the value of \(\mu\)
+that minimizes 
+\[
+\sum_{i=1}^n (Y_i - \mu)^2
+\]</li>
+<li>This is physical center of mass of these bars</li>
+</ul>
+
+<pre><code class="r">hist(galton$child,col=&quot;blue&quot;,breaks=100)
+meanChild &lt;- mean(galton$child)
+lines(rep(meanChild,100),seq(0,150,length=100),col=&quot;red&quot;,lwd=5)
+</code></pre>
+
+<div class="rimage center"><img src="fig/unnamed-chunk-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+
+  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+<!-- Grab CDN jQuery, fall back to local if offline -->
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+<script>window.jQuery || document.write('<script src="../../libraries/widgets/quiz/js/jquery-1.7.min.js"><\/script>')</script>
+<!-- Load Javascripts for Widgets -->
+<!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script> -->
+<script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="../../libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+<script src="../../libraries/highlighters/highlight.js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<!-- DONE LOADING HIGHLIGHTER JS FILES -->
+</html>
