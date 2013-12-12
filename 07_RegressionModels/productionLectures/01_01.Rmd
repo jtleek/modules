@@ -29,6 +29,7 @@ knit_hooks$set(inline = function(x) {
   }
 })
 knit_hooks$set(plot = knitr:::hook_plot_html)
+runif(1)
 ```
 
 <img class=center src=../../assets/img/galton.jpg height=150>
@@ -53,13 +54,10 @@ knit_hooks$set(plot = knitr:::hook_plot_html)
   * To quantify what impact genotype information has beyond parental height in explaining child height.
   * To figure out how/whether and what assumptions are needed to
     generalize findings beyond the data in question.  
-* For this lecture in specific, we'll also talk about the following
-  famous question.
   * Why do children of very tall parents tend to be 
-    tall, but a little shorter than their parents and why children of very short parents tend to be short, but a little taller than their parents?
+    tall, but a little shorter than their parents and why children of very short parents tend to be short, but a little taller than their parents? (This is a famous question called 'Regression to the mean'.)
 
 ---
-
 ## Galton's Data
 
 * Let's look at the data first, used by Francis Galton in 1885. 
@@ -69,7 +67,7 @@ knit_hooks$set(plot = knitr:::hook_plot_html)
 * You may need to run `install.packages("UsingR")` if the `UsingR` library is not installed.
 * Let's look at the marginal (parents disregarding children and children disregarding parents) distributions first. 
   * Parent distribution is all heterosexual couples.
-  * Correction for gender vi multiplying female heights by 1.08.
+  * Correction for gender via multiplying female heights by 1.08.
   * Overplotting is an issue from discretization.
 
 ---
@@ -83,21 +81,19 @@ hist(galton$parent,col="blue",breaks=100)
 ```
 
 ---
-## The middle
+## Finding the middle via least squares
 
 * Consider only the children's heights. 
   * How could one describe the "middle"?
   * One definition, let $Y_i$ be the height of child $i$ for $i = 1, \ldots, n = 928$, then define the middle as the value of $\mu$
-  that minimizes 
-  $$
-  \sum_{i=1}^n (Y_i - \mu)^2
-  $$
+  that minimizes $$ \sum_{i=1}^n (Y_i - \mu)^2$$
 * This is physical center of mass of the histrogram.
-* You probably guessed that the answer $\mu = \bar X$.
-  
+* You might have guessed that the answer $\mu = \bar X$.
+
+
 ---
-### Experiment, use R studio's manipulate to see what 
-  value of $\mu$ minimizes the sum of the squared deviations.
+## Experiment
+### Use R studio's manipulate to see what value of $\mu$ minimizes the sum of the squared deviations.
 
 ```
 library(manipulate)
@@ -111,8 +107,87 @@ myHist <- function(mu){
 manipulate(myHist(mu), mu = slider(62, 74, step = 0.5))
 ```
 
- ```{r, dependson="galton",fig.height=4,fig.width=4}
+---
+## The least squares estimate is the empirical mean
+```{r lsm, dependson="galton",fig.height=4,fig.width=4}
   hist(galton$child,col="blue",breaks=100)
   meanChild <- mean(galton$child)
   lines(rep(meanChild,100),seq(0,150,length=100),col="red",lwd=5)
 ```
+
+---
+### The math follows as:
+$$ 
+\begin{align} 
+\sum_{i=1}^n (Y_i - \mu)^2 & = \
+\sum_{i=1}^n (Y_i - \bar Y + \bar Y - \mu)^2 \\ 
+& = \sum_{i=1}^n (Y_i - \bar Y)^2 + \
+2 \sum_{i=1}^n (Y_i - \bar Y)  (\bar Y - \mu) +\
+\sum_{i=1}^n (\bar Y - \mu)^2 \\
+& = \sum_{i=1}^n (Y_i - \bar Y)^2 + \
+2 (\bar Y - \mu) \sum_{i=1}^n (Y_i - \bar Y)  +\
+\sum_{i=1}^n (\bar Y - \mu)^2 \\
+& = \sum_{i=1}^n (Y_i - \bar Y)^2 + \
+2 (\bar Y - \mu)  (\sum_{i=1}^n Y_i - n \bar Y) +\
+\sum_{i=1}^n (\bar Y - \mu)^2 \\
+& = \sum_{i=1}^n (Y_i - \bar Y)^2 + \sum_{i=1}^n (\bar Y - \mu)^2\\ 
+& \geq \sum_{i=1}^n (Y_i - \bar Y)^2 \
+\end{align} 
+$$
+
+---
+## Comparing childrens' heights and their parents' heights
+
+```{r, dependson="galton",fig.height=4,fig.width=4}
+plot(galton$parent,galton$child,pch=19,col="blue")
+```
+
+---
+Size of point represents number of points at that (X, Y) combination (See the Rmd file for the code).
+
+```{r freqGalton, dependson="galton",fig.height=6,fig.width=6,echo=FALSE}
+freqData <- as.data.frame(table(galton$child, galton$parent))
+names(freqData) <- c("child", "parent", "freq")
+plot(as.numeric(as.vector(freqData$parent)), 
+     as.numeric(as.vector(freqData$child)),
+     pch = 21, col = "black", bg = "lightblue",
+     cex = .15 * freqData$freq, 
+     xlab = "parent", ylab = "child")
+```
+
+---
+## Regression through the origin
+* Suppose that $X_i$ are the parents' heights.
+* Consider picking the line $\beta$ that minimizes $$\sum_{i=1}^n (Y_i - X_i \beta)^2$$
+* This is exactly using the origin as a pivot point picking the
+line that minimizes the sum of the squared vertical distances
+of the points to the line
+* Use R studio's  manipulate function to experiment
+* Subtract the means so that the origin is the mean of the parent
+and children's heights
+
+---
+```
+myPlot <- function(beta){
+  y <- galton$child - mean(galton$child)
+  x <- galton$parent - mean(galton$parent)
+  freqData <- as.data.frame(table(x, y))
+  names(freqData) <- c("child", "parent", "freq")
+  plot(
+    as.numeric(as.vector(freqData$parent)), 
+    as.numeric(as.vector(freqData$child)),
+    pch = 21, col = "black", bg = "lightblue",
+    cex = .15 * freqData$freq, 
+    xlab = "parent", 
+    ylab = "child"
+    )
+  abline(0, beta)
+#  mse <- mean( (galton$child - beta * galton$parent)^2)
+#  title(past("beta = ", beta, "mse = ", mse))
+#  return(NULL)
+}
+manipulate(myPlot(beta), beta = slider(0.9, 1.1, step = 0.1))
+
+```
+
+

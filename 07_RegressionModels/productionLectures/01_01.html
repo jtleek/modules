@@ -53,7 +53,10 @@
     <h2>A famous motivating example</h2>
   </hgroup>
   <article>
-    <p><img class=center src=../../assets/img/galton.jpg height=150></p>
+    <pre><code>## [1] 0.1306
+</code></pre>
+
+<p><img class=center src=../../assets/img/galton.jpg height=150></p>
 
 <h3>(Perhaps surprisingly, this example is still relevant)</h3>
 
@@ -84,13 +87,8 @@ unrelated to parents&#39; heights (residual variation).</li>
 <li>To quantify what impact genotype information has beyond parental height in explaining child height.</li>
 <li>To figure out how/whether and what assumptions are needed to
 generalize findings beyond the data in question.<br></li>
-</ul></li>
-<li>For this lecture in specific, we&#39;ll also talk about the following
-famous question.
-
-<ul>
 <li>Why do children of very tall parents tend to be 
-tall, but a little shorter than their parents and why children of very short parents tend to be short, but a little taller than their parents?</li>
+tall, but a little shorter than their parents and why children of very short parents tend to be short, but a little taller than their parents? (This is a famous question called &#39;Regression to the mean&#39;.)</li>
 </ul></li>
 </ul>
 
@@ -113,9 +111,8 @@ and was the cousin of Charles Darwin.</li>
 
 <ul>
 <li>Parent distribution is all heterosexual couples.</li>
-<li>Correction for gender vi multiplying female heights by 1.08.</li>
+<li>Correction for gender via multiplying female heights by 1.08.</li>
 <li>Overplotting is an issue from discretization.</li>
-<li>There&#39;s a second data set <code>father.son</code> that is similar.</li>
 </ul></li>
 </ul>
 
@@ -142,29 +139,134 @@ hist(galton$parent,col=&quot;blue&quot;,breaks=100)
 
       <slide class="" id="slide-5" style="background:;">
   <hgroup>
-    <h2>The middle</h2>
+    <h2>Finding the middle via least squares</h2>
   </hgroup>
   <article>
     <ul>
-<li><p>Consider only the children&#39;s heights. </p>
+<li>Consider only the children&#39;s heights. 
 
 <ul>
 <li>How could one describe the &quot;middle&quot;?</li>
 <li>One definition, let \(Y_i\) be the height of child \(i\) for \(i = 1, \ldots, n = 928\), then define the middle as the value of \(\mu\)
-that minimizes 
-\[
-\sum_{i=1}^n (Y_i - \mu)^2
-\]</li>
-<li>This is physical center of mass of these bars</li>
+that minimizes \[ \sum_{i=1}^n (Y_i - \mu)^2\]</li>
+</ul></li>
+<li>This is physical center of mass of the histrogram.</li>
+<li>You might have guessed that the answer \(\mu = \bar X\).</li>
 </ul>
 
-<pre><code class="r">hist(galton$child,col=&quot;blue&quot;,breaks=100)
-meanChild &lt;- mean(galton$child)
-lines(rep(meanChild,100),seq(0,150,length=100),col=&quot;red&quot;,lwd=5)
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Experiment</h2>
+  </hgroup>
+  <article>
+    <h3>Use R studio&#39;s manipulate to see what value of \(\mu\) minimizes the sum of the squared deviations.</h3>
+
+<pre><code>library(manipulate)
+myHist &lt;- function(mu){
+  hist(galton$child,col=&quot;blue&quot;,breaks=100)
+  lines(c(mu, mu), c(0, 150),col=&quot;red&quot;,lwd=5)
+  mse &lt;- mean((galton$child - mu)^2)
+  text(63, 150, paste(&quot;mu = &quot;, mu))
+  text(63, 140, paste(&quot;MSE = &quot;, round(mse, 2)))
+}
+manipulate(myHist(mu), mu = slider(62, 74, step = 0.5))
 </code></pre>
 
-<div class="rimage center"><img src="fig/unnamed-chunk-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div></li>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>The least squares estimate is the empirical mean</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">  hist(galton$child,col=&quot;blue&quot;,breaks=100)
+  meanChild &lt;- mean(galton$child)
+  lines(rep(meanChild,100),seq(0,150,length=100),col=&quot;red&quot;,lwd=5)
+</code></pre>
+
+<div class="rimage center"><img src="fig/lsm.png" title="plot of chunk lsm" alt="plot of chunk lsm" class="plot" /></div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h3>The math follows as:</h3>
+  </hgroup>
+  <article>
+    <p>\[ 
+\begin{align} 
+\sum_{i=1}^n (Y_i - \mu)^2 & = \
+\sum_{i=1}^n (Y_i - \bar Y + \bar Y - \mu)^2 \\ 
+& = \sum_{i=1}^n (Y_i - \bar Y)^2 + \
+2 \sum_{i=1}^n (Y_i - \bar Y)  (\bar Y - \mu) +\
+\sum_{i=1}^n (\bar Y - \mu)^2 \\
+& = \sum_{i=1}^n (Y_i - \bar Y)^2 + \
+2 (\bar Y - \mu) \sum_{i=1}^n (Y_i - \bar Y)  +\
+\sum_{i=1}^n (\bar Y - \mu)^2 \\
+& = \sum_{i=1}^n (Y_i - \bar Y)^2 + \
+2 (\bar Y - \mu)  (\sum_{i=1}^n Y_i - n \bar Y) +\
+\sum_{i=1}^n (\bar Y - \mu)^2 \\
+& = \sum_{i=1}^n (Y_i - \bar Y)^2 + \sum_{i=1}^n (\bar Y - \mu)^2\\ 
+& \geq \sum_{i=1}^n (Y_i - \bar Y)^2 \
+\end{align} 
+\]</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>Comparing childrens&#39; heights and their parents&#39; heights</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">plot(galton$parent,galton$child,pch=19,col=&quot;blue&quot;)
+</code></pre>
+
+<div class="rimage center"><img src="fig/unnamed-chunk-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    
+  </hgroup>
+  <article>
+    <p>Size of point represents number of points at that (X, Y) combination (See the Rmd file for the code).</p>
+
+<div class="rimage center"><img src="fig/freqGalton.png" title="plot of chunk freqGalton" alt="plot of chunk freqGalton" class="plot" /></div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Regression through the origin</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Suppose that \(X_i\) are the parents&#39; heights.</li>
+<li>Consider picking the line \(\beta\) that minimizes \[\sum_{i=1}^n (Y_i - X_i \beta)^2\]</li>
+<li>This is exactly using the origin as a pivot point picking the
+line that minimizes the sum of the squared vertical distances
+of the points to the line</li>
+<li>Use R studio&#39;s  manipulate function to experiment
+```</li>
 </ul>
+
+<pre><code>
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
