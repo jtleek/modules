@@ -42,7 +42,7 @@
       </aside>
       <hgroup class="auto-fadein">
         <h1>Historical side note, Regression to Mediocrity</h1>
-        <h2></h2>
+        <h2>Regression to the mean</h2>
         <p>Brian Caffo, PhD<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
           </slide>
@@ -117,7 +117,7 @@ y &lt;- (father.son$sheight - mean(father.son$sheight)) / sd(father.son$sheight)
 x &lt;- (father.son$fheight - mean(father.son$fheight)) / sd(father.son$fheight)
 rho &lt;- cor(x, y)
 myPlot &lt;- function(x, y) {
-  plot(y, x, 
+  plot(x, y, 
        xlab = &quot;Father&#39;s height, normalized&quot;,
        ylab = &quot;Son&#39;s height, normalized&quot;,
        xlim = c(-3, 3), ylim = c(-3, 3),

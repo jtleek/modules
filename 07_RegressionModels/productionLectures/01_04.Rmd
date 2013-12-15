@@ -1,6 +1,6 @@
 ---
 title       : Historical side note, Regression to Mediocrity
-subtitle    : 
+subtitle    : Regression to the mean
 author      : Brian Caffo, PhD
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
@@ -64,7 +64,7 @@ y <- (father.son$sheight - mean(father.son$sheight)) / sd(father.son$sheight)
 x <- (father.son$fheight - mean(father.son$fheight)) / sd(father.son$fheight)
 rho <- cor(x, y)
 myPlot <- function(x, y) {
-  plot(y, x, 
+  plot(x, y, 
        xlab = "Father's height, normalized",
        ylab = "Son's height, normalized",
        xlim = c(-3, 3), ylim = c(-3, 3),
