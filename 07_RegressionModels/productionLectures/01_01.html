@@ -257,7 +257,7 @@ manipulate(myHist(mu), mu = slider(62, 74, step = 0.5))
   <article>
     <ul>
 <li>Suppose that \(X_i\) are the parents&#39; heights.</li>
-<li>Consider picking the line \(\beta\) that minimizes \[\sum_{i=1}^n (Y_i - X_i \beta)^2\]</li>
+<li>Consider picking the slope \(\beta\) that minimizes \[\sum_{i=1}^n (Y_i - X_i \beta)^2\]</li>
 <li>This is exactly using the origin as a pivot point picking the
 line that minimizes the sum of the squared vertical distances
 of the points to the line</li>
@@ -305,7 +305,7 @@ manipulate(myPlot(beta), beta = slider(0.8, 1.2, step = 0.02))
     <h2>The solution</h2>
   </hgroup>
   <article>
-    <h3>Next lecture we&#39;ll talk about why this is the solution</h3>
+    <h3>In the next few lectures we&#39;ll talk about why this is the solution</h3>
 
 <pre><code class="r">lm(child ~ parent, data = galton)
 </code></pre>
@@ -325,13 +325,10 @@ Coefficients:
 
       <slide class="" id="slide-14" style="background:;">
   <hgroup>
-    
+    <h2>Visualizing the best fit line</h2>
   </hgroup>
   <article>
-    <pre><code class="r">plot(galton$parent,galton$child,pch=19,col=&quot;blue&quot;)
-lm1 &lt;- lm(galton$child ~ galton$parent)
-lines(galton$parent,lm1$fitted,col=&quot;red&quot;,lwd=3)
-</code></pre>
+    <h3>Size of points are frequencies at that X, Y combination</h3>
 
 <div class="rimage center"><img src="fig/unnamed-chunk-3.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" class="plot" /></div>
 

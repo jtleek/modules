@@ -18,7 +18,14 @@
     src="../../libraries/frameworks/io2012/js/require-1.0.8.min.js">
   </script>
   
-    
+    <link rel="stylesheet" href = "../../assets/css/custom.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BACKUP.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BASE.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.LOCAL.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.orig">
+<link rel="stylesheet" href = "../../assets/css/custom.css.REMOTE.546.css">
+<link rel="stylesheet" href = "../../assets/css/ribbons.css">
+
 </head>
 <body style="opacity: 0">
   <slides class="layout-widescreen">
@@ -74,7 +81,7 @@ Such as, \(\mu\) is a mean that we&#39;d like to estimate.</li>
 <li>We will use capital letters for conceptual values of the variables and lowercase letters for realized values.
 
 <ul>
-<li>So this way we can write \(P(X_i > x)\) </li>
+<li>So this way we can write \(P(X_i > x)\). </li>
 <li>\(X_i\) is a conceptual random variable.</li>
 <li>\(x\) is a number that we plug into.</li>
 </ul></li>
@@ -92,15 +99,20 @@ Such as, \(\mu\) is a mean that we&#39;d like to estimate.</li>
     <ul>
 <li>Define the empirical mean as
 \[
-\bar X = \frac{1}{n}\sum_{i=1}^n X_i 
+\bar X = \frac{1}{n}\sum_{i=1}^n X_i. 
 \]</li>
 <li>Notice if we subtract the mean from data points, we get data that has mean 0. That is, if we define
 \[
-\tilde X_i = X_i - \bar X
+\tilde X_i = X_i - \bar X.
 \]
 The the mean of the \(\tilde X_i\) is 0.</li>
 <li>This process is called &quot;centering&quot; the random variables.</li>
 <li>The mean is a measure of central tendancy of the data.</li>
+<li>Recall from the previous lecture that the mean is 
+the least squares solution for minimizing
+\[
+\sum_{i=1}^n (X_i - \mu)^2
+\]</li>
 </ul>
 
   </article>
