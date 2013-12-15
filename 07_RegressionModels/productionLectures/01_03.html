@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Regression through the origin</title>
+  <title>Least squares estimation of regression lines</title>
   <meta charset="utf-8">
-  <meta name="description" content="Regression through the origin">
+  <meta name="description" content="Least squares estimation of regression lines">
   <meta name="author" content="Brian Caffo, PhD">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -41,8 +41,8 @@
         <img src="../../assets/img/bloomberg_shield.png">
       </aside>
       <hgroup class="auto-fadein">
-        <h1>Regression through the origin</h1>
-        <h2>Regression</h2>
+        <h1>Least squares estimation of regression lines</h1>
+        <h2>Regression via least squares</h2>
         <p>Brian Caffo, PhD<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
           </slide>
@@ -106,6 +106,47 @@
 
       <slide class="" id="slide-4" style="background:;">
   <hgroup>
+    <h2>Mean only regression</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>So we know that if:
+\[ \sum_{i=1}^n (Y_i - \hat \mu_i) (\hat \mu_i - \mu_i) = 0\]
+where \(\mu_i = \beta_0 + \beta_1 X_i\) and \(\hat \mu_i = \hat \beta_0 + \hat \beta_1 X_i\) then the line 
+\[Y = \hat \beta_0 + \hat \beta_1 X\]
+is the least squares line.</li>
+<li>Consider forcing \(\beta_1 = 0\) and thus \(\hat \beta_1=0\); 
+that is, only considering horizontal lines</li>
+<li>The solution works out to be
+\[\hat \beta_0 = \bar Y.\]</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Let&#39;s show it</h2>
+  </hgroup>
+  <article>
+    <p>\[\begin{align} \
+\sum_{i=1}^n (Y_i - \hat \mu_i) (\hat \mu_i - \mu_i) 
+= & \sum_{i=1}^n (Y_i - \hat \beta_0) (\hat \beta_0 - \beta_0) \\
+= & (\hat \beta_0 - \beta_0) \sum_{i=1}^n (Y_i   - \hat \beta_0) \
+\end{align} \]</p>
+
+<p>Thus, this will equal 0 if \(\sum_{i=1}^n (Y_i  - \hat \beta_0)
+= n\bar Y - n \hat \beta_0=0\)</p>
+
+<p>Thus \(\hat \beta_0 = \bar Y.\)</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-6" style="background:;">
+  <hgroup>
     <h2>Regression through the origin</h2>
   </hgroup>
   <article>
@@ -125,13 +166,13 @@ that is, only considering lines through the origin</li>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-5" style="background:;">
+      <slide class="" id="slide-7" style="background:;">
   <hgroup>
     <h2>Let&#39;s show it</h2>
   </hgroup>
   <article>
     <p>\[\begin{align} \
-  & \sum_{i=1}^n (Y_i - \hat \mu_i) (\hat \mu_i - \mu_i) \\
+\sum_{i=1}^n (Y_i - \hat \mu_i) (\hat \mu_i - \mu_i) 
 = & \sum_{i=1}^n (Y_i - \hat \beta_1 X_i) (\hat \beta_1 X_i - \beta_1 X_i) \\
 = & (\hat \beta_1 - \beta_1) \sum_{i=1}^n (Y_i X_i  - \hat \beta_1 X_i ^2) \
 \end{align} \]</p>
@@ -145,7 +186,7 @@ that is, only considering lines through the origin</li>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-6" style="background:;">
+      <slide class="" id="slide-8" style="background:;">
   <hgroup>
     <h2>Recapping what we know</h2>
   </hgroup>
@@ -154,7 +195,7 @@ that is, only considering lines through the origin</li>
 <li>If we define \(\mu_i = \beta_0\) then \(\hat \beta_0 = \bar Y\).
 
 <ul>
-<li>If we only look at horizontal lines, the least squares estimate is the average of the outcomes.</li>
+<li>If we only look at horizontal lines, the least squares estimate of the intercept of that line is the average of the outcomes.</li>
 </ul></li>
 <li>If we define \(\mu_i = X_i \beta_1\) then \(\hat \beta_1 = \frac{\sum_{i=1^n} Y_i X_i}{\sum_{i=1}^n X_i^2}\)
 
@@ -168,13 +209,13 @@ that is, only considering lines through the origin</li>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-7" style="background:;">
+      <slide class="" id="slide-9" style="background:;">
   <hgroup>
     <h2>Let&#39;s figure it out</h2>
   </hgroup>
   <article>
     <p>\[\begin{align} \
-\sum_{i=1}^n (Y_i - \hat \mu_i) (\hat \mu_i - \mu_i) \\
+\sum_{i=1}^n (Y_i - \hat \mu_i) (\hat \mu_i - \mu_i) 
 = & \sum_{i=1}^n (Y_i - \hat\beta_0 - \hat\beta_1 X_i) (\hat \beta_0 + \hat \beta_1 X_i - \beta_0 - \beta_1 X_i) \\
 = & (\hat \beta_0 - \beta_0) \sum_{i=1}^n (Y_i - \hat\beta_0 - \hat \beta_1 X_i) + (\beta_1 - \beta_1)\sum_{i=1}^n (Y_i - \hat\beta_0 - \hat \beta_1 X_i)X_i\\
 \end{align} \]
@@ -189,15 +230,15 @@ Note that </p>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-8" style="background:;">
+      <slide class="" id="slide-10" style="background:;">
   <hgroup>
     <h2>Continued</h2>
   </hgroup>
   <article>
-    <p>\[=\sum_{i=1}^n \{(Y_i  - \bar Y)X_i - \hat \beta_1 (X_i - \bar X) X_i\]
+    <p>\[=\sum_{i=1}^n \{(Y_i  - \bar Y) - \hat \beta_1 (X_i - \bar X) \}X_i\]
 And thus
 \[ \sum_{i=1}^n (Y_i  - \bar Y)X_i - \hat \beta_1 \sum_{i=1}^n
-(X_i - \bar X) X_i = 0\]
+(X_i - \bar X) X_i = 0.\]
 So we arrive at
 \[
 \hat \beta_1 =
@@ -205,20 +246,20 @@ So we arrive at
 (X_i - \bar X) X_i} = 
 \frac{\sum_{i=1}^n (Y_i  - \bar Y)(X_i - \bar X)}{\sum_{i=1}^n
 (X_i - \bar X) (X_i - \bar X)}
-= Cor(Y, X) \frac{Sd(Y)}{Sd(X)}
+= Cor(Y, X) \frac{Sd(Y)}{Sd(X)}.
 \]
 And recall
 \[
-\hat \beta_0 = \bar Y - \hat \beta_1 \bar X
+\hat \beta_0 = \bar Y - \hat \beta_1 \bar X.
 \]</p>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-9" style="background:;">
+      <slide class="" id="slide-11" style="background:;">
   <hgroup>
-    <h2>Summarizing</h2>
+    <h2>Consequences</h2>
   </hgroup>
   <article>
     <ul>
@@ -236,7 +277,7 @@ And recall
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-10" style="background:;">
+      <slide class="" id="slide-12" style="background:;">
   <hgroup>
     <h2>Revisiting Galton&#39;s data</h2>
   </hgroup>
@@ -259,7 +300,7 @@ rbind(c(beta0, beta1), coef(lm(y ~ x)))
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-11" style="background:;">
+      <slide class="" id="slide-13" style="background:;">
   <hgroup>
     <h2>Revisiting Galton&#39;s data</h2>
   </hgroup>
@@ -280,7 +321,7 @@ rbind(c(beta0, beta1), coef(lm(x ~ y)))
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-12" style="background:;">
+      <slide class="" id="slide-14" style="background:;">
   <hgroup>
     <h2>Revisiting Galton&#39;s data</h2>
   </hgroup>
@@ -301,7 +342,7 @@ c(beta1, coef(lm(y ~ x))[2])
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-13" style="background:;">
+      <slide class="" id="slide-15" style="background:;">
   <hgroup>
     <h2>Revisiting Galton&#39;s data</h2>
   </hgroup>
@@ -321,7 +362,7 @@ c(cor(y, x), cor(yn, xn), coef(lm(yn ~ xn))[2])
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-14" style="background:;">
+      <slide class="" id="slide-16" style="background:;">
   <hgroup>
     <h2>Plotting the fit</h2>
   </hgroup>
@@ -338,7 +379,30 @@ c(cor(y, x), cor(yn, xn), coef(lm(yn ~ xn))[2])
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-15" style="background:;">
+      <slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    
+  </hgroup>
+  <article>
+    <p>The code to add the lines</p>
+
+<pre><code>abline(mean(y) - mean(x) * cor(y, x) * sd(y) / sd(x), 
+  sd(y) / sd(x) * cor(y, x), 
+  lwd = 3, col = &quot;red&quot;)
+abline(mean(y) - mean(x) * sd(y) / sd(x) / cor(y, x), 
+  sd(y) cor(y, x) / sd(x), 
+  lwd = 3, col = &quot;blue&quot;)
+abline(mean(y) - mean(x) * sd(y) / sd(x), 
+  sd(y) / sd(x), 
+  lwd = 2)
+points(mean(x), mean(y), cex = 2, pch = 19)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-18" style="background:;">
   <hgroup>
     
   </hgroup>
