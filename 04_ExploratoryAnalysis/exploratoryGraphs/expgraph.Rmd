@@ -1,5 +1,5 @@
 ---
-title       : Exploratory raphs
+title       : Exploratory Graphs
 subtitle    : 
 author      : Roger D. Peng, Associate Professor of Biostatistics 
 job         : Johns Hopkins Bloomberg School of Public Health
@@ -56,7 +56,7 @@ knit_hooks$set(plot = knitr:::hook_plot_html)
 * They are made quickly
 * A large number are made
 * The goal is for personal understanding
-* Axes/legends are generally cleaned up
+* Axes/legends are generally cleaned up (later)
 * Color/size are primarily used for information
 
 ---
@@ -145,7 +145,7 @@ pData <- read.csv("./data/ss06pid.csv")
 ```
 
 
---- 
+---
 
 ## Boxplots
 
@@ -230,26 +230,6 @@ lines(densMales, lwd = 3, col = "orange")
 
 ---
 
-## Housing data
-
-
-<img class=center src=../../assets/img/acs.png height=350>
-
-<br>
-
-```{r downloadData, echo=FALSE, cache=TRUE}
-if(!file.exists("data/ss06pid.csv")) {
-        download.file("https://dl.dropboxusercontent.com/u/7710864/data/csv_hid/ss06pid.csv",destfile="./data/ss06pid.csv",method="curl")
-}
-```
-
-
-```{r loadData,dependson="downloadData"}
-pData <- read.csv("./data/ss06pid.csv")
-```
-
-
---- 
 
 ## Scatterplots
 
