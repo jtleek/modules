@@ -102,6 +102,24 @@ X m \times \frac{100cm}{m} = (100 X) cm
 $$
 
 ---
+## Using regression coeficients for prediction
+* If we would like to guess the outcome at a particular
+  value of the predictor, say $X$, the regression model guesses
+  $$
+  \hat \beta_0 + \hat \beta_1 X
+  $$
+* Note that at the observed value of $X$s, we obtain the
+  predictions
+  $$
+  \hat \mu_i = \hat Y_i = \hat \beta_0 + \hat \beta_1 X_i
+  $$
+* Remember that least squares minimizes 
+$$
+\sum_{i=1}^n (Y_i - \mu_i)
+$$
+for $\mu_i$ expressed as points on a line
+
+---
 ## Example
 ### `diamond` data set from `UsingR` 
 Data is diamond prices (Signapore dollars) and diamond weight
@@ -162,3 +180,36 @@ the average sized diamond of the data (`r mean(diamond$carat)` carats).
 fit3 <- lm(price ~ I(carat * 10), data = diamond)
 coef(fit3)
 ```
+
+---
+## Predicting the price of a diamond
+```{r, echo = TRUE}
+newx <- c(0.16, 0.27, 0.34)
+coef(fit)[1] + coef(fit)[2] * newx
+predict(fit, newdata = data.frame(carat = newx))
+```
+
+---
+Predicted values at the observed Xs (red)
+and at the new Xs (lines)
+```{r, echo = FALSE, fig.height=5,fig.width=5}
+data(diamond)
+plot(diamond$carat, diamond$price,  
+     xlab = "Mass (carats)", 
+     ylab = "Price (SIN $)", 
+     bg = "lightblue", 
+     col = "black", cex = 1.1, pch = 21,frame = FALSE)
+abline(fit, lwd = 2)
+points(diamond$carat, predict(fit), pch = 19, col = "red")
+lines(c(0.16, 0.16, 0.12), 
+      c(200, coef(fit)[1] + coef(fit)[2] * 0.16,
+      coef(fit)[1] + coef(fit)[2] * 0.16))
+lines(c(0.27, 0.27, 0.12), 
+      c(200, coef(fit)[1] + coef(fit)[2] * 0.27,
+        coef(fit)[1] + coef(fit)[2] * 0.27))
+lines(c(0.34, 0.34, 0.12), 
+      c(200, coef(fit)[1] + coef(fit)[2] * 0.34,
+        coef(fit)[1] + coef(fit)[2] * 0.34))
+text(newx, rep(250, 3), labels = newx, pos = 2)
+```
+

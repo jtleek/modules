@@ -169,6 +169,33 @@ X m \times \frac{100cm}{m} = (100 X) cm
 
       <slide class="" id="slide-6" style="background:;">
   <hgroup>
+    <h2>Using regression coeficients for prediction</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>If we would like to guess the outcome at a particular
+value of the predictor, say \(X\), the regression model guesses
+\[
+\hat \beta_0 + \hat \beta_1 X
+\]</li>
+<li>Note that at the observed value of $X$s, we obtain the
+predictions
+\[
+\hat \mu_i = \hat Y_i = \hat \beta_0 + \hat \beta_1 X_i
+\]</li>
+<li>Remember that least squares minimizes 
+\[
+\sum_{i=1}^n (Y_i - \mu_i)
+\]
+for \(\mu_i\) expressed as points on a line</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-7" style="background:;">
+  <hgroup>
     <h2>Example</h2>
   </hgroup>
   <article>
@@ -192,7 +219,7 @@ abline(lm(price ~ carat, data = diamond), lwd = 2)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-7" style="background:;">
+      <slide class="" id="slide-8" style="background:;">
   <hgroup>
     <h2>The plot</h2>
   </hgroup>
@@ -203,7 +230,7 @@ abline(lm(price ~ carat, data = diamond), lwd = 2)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-8" style="background:;">
+      <slide class="" id="slide-9" style="background:;">
   <hgroup>
     <h2>Fitting the linear regression model</h2>
   </hgroup>
@@ -226,7 +253,7 @@ of a 0 carat diamond.</li>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-9" style="background:;">
+      <slide class="" id="slide-10" style="background:;">
   <hgroup>
     <h2>Getting a more interpretable intercept</h2>
   </hgroup>
@@ -246,7 +273,7 @@ the average sized diamond of the data (0.2042 carats).</p>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-10" style="background:;">
+      <slide class="" id="slide-11" style="background:;">
   <hgroup>
     <h2>Changing scale</h2>
   </hgroup>
@@ -269,6 +296,43 @@ coef(fit3)
 <pre><code>  (Intercept) I(carat * 10) 
        -259.6         372.1 
 </code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>Predicting the price of a diamond</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">newx &lt;- c(0.16, 0.27, 0.34)
+coef(fit)[1] + coef(fit)[2] * newx
+</code></pre>
+
+<pre><code>[1]  335.7  745.1 1005.5
+</code></pre>
+
+<pre><code class="r">predict(fit, newdata = data.frame(carat = newx))
+</code></pre>
+
+<pre><code>     1      2      3 
+ 335.7  745.1 1005.5 
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    
+  </hgroup>
+  <article>
+    <p>Predicted values at the observed Xs (red)
+and at the new Xs (lines)</p>
+
+<div class="rimage center"><img src="fig/unnamed-chunk-6.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" class="plot" /></div>
 
   </article>
   <!-- Presenter Notes -->
