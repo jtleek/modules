@@ -1,5 +1,5 @@
 ---
-title       : Exploratory graphs
+title       : Exploratory Graphs
 subtitle    : 
 author      : Roger D. Peng, Associate Professor of Biostatistics 
 job         : Johns Hopkins Bloomberg School of Public Health
