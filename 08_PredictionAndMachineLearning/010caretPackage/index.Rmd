@@ -42,10 +42,16 @@ knit_hooks$set(plot = knitr:::hook_plot_html)
 ## Caret functionality
 
 * Some preprocessing (cleaning)
+  * preProcess
 * Data splitting
+  * createDataPartition
+  * createResample
+  * createTimeSlices
 * Training/testing functions
+  * train
+  * predict
 * Model comparison
-* Some parallel processing
+  * confusionMatrix
 
 ---
 
@@ -64,26 +70,62 @@ knit_hooks$set(plot = knitr:::hook_plot_html)
 
 ## Why caret? 
 
-<img class=center src=../../assets/img/08_PredictionAndMachineLearning/predicttable.png height=400>
+<img class=center src=../../assets/img/08_PredictionAndMachineLearning/predicttable.png height=250>
 
 [add link](??)
 
---- 
-
-## Basic functions
-
-* preProcess
-* createMultiFolds
-* createDataPartition
-* createResample
-* train
-* predict
-* confusionMatrix
 
 --- 
 
-## Example analysis
+## SPAM Example: Data splitting
 
+```{r loadPackage}
+library(caret); library(kernlab); data(spam)
+inTrain <- createDataPartition(y=spam$type,
+                              p=0.75, list=FALSE)
+training <- spam[inTrain,]
+testing <- spam[-inTrain,]
+dim(training)
+```
+
+
+--- 
+
+## SPAM Example: Fit a model
+
+```{r training, dependson="loadPackage",cache=TRUE}
+set.seed(32343)
+modelFit <- train(type ~.,data=training, method="glm")
+modelFit
+```
+
+
+--- 
+
+## SPAM Example: Final model
+
+```{r finalModel, dependson="training",cache=TRUE}
+modelFit <- train(type ~.,data=training, method="glm")
+modelFit$finalModel
+```
+
+
+--- 
+
+## SPAM Example: Prediction
+
+```{r predictions, dependson="training",cache=TRUE}
+predictions <- predict(modelFit,newdata=testing)
+predictions
+```
+
+--- 
+
+## SPAM Example: Confusion Matrix
+
+```{r confusion, dependson="predictions",cache=TRUE}
+confusionMatrix(predictions,testing$type)
+```
 
 ---
 
@@ -93,4 +135,4 @@ knit_hooks$set(plot = knitr:::hook_plot_html)
   * [http://www.edii.uclm.es/~useR-2013/Tutorials/kuhn/user_caret_2up.pdf](http://www.edii.uclm.es/~useR-2013/Tutorials/kuhn/user_caret_2up.pdf)
   * [http://cran.r-project.org/web/packages/caret/vignettes/caret.pdf](http://cran.r-project.org/web/packages/caret/vignettes/caret.pdf)
 * A paper introducing the caret package
-  *[http://www.jstatsoft.org/v28/i05/paper](http://www.jstatsoft.org/v28/i05/paper)
+  * [http://www.jstatsoft.org/v28/i05/paper](http://www.jstatsoft.org/v28/i05/paper)

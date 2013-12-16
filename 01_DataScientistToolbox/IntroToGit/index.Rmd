@@ -83,9 +83,9 @@ mode        : selfcontained # {standalone, draft}
 ## Open Git Bash
 
 * Find a program called Git Bash, which is the command line environment for interacting with Git
-* It should be located in the directory into which Git was installed (or, for Windows users, in the Start Menu as displayed below)
+* It should be located in the directory into which Git was installed (or, for Windows users, in the Start Menu)
 
-<img class=center src=../../assets/img/IntroToGit/gitConfig1.png height='350'/>
+<img class=center src=../../assets/img/IntroToGit/gitConfig1a.png height='350'/>
 
 ---
 
@@ -94,7 +94,7 @@ mode        : selfcontained # {standalone, draft}
 * Once Git Bash opens, you'll see a short welcome message followed by the name of your computer and a dollar sign on the next line
 * The dollar sign means that it's your turn to type a command
 
-<img class=center src=../../assets/img/IntroToGit/gitOpen1.png height='350'/>
+<img class=center src=../../assets/img/IntroToGit/gitOpen1.png width='750'/>
 
 ---
 
