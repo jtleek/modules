@@ -48,77 +48,13 @@ mode        : selfcontained # {standalone, draft}
 
 ---
 
-## Background - perceptual tasks
 
-<img class=center src=../../assets/img/perceptual.png height=450>
-
-[Graphical perception: Theory, Experimentation, and Applications to the Development of Graphical Models](http://www.jstor.org/discover/10.2307/2288400?uid=3739704&uid=2&uid=4&uid=3739256&sid=21101742782357)
-
----
-
-## Position versus length
-
-<img class=center src=../../assets/img/barcharts.png height=250>
-
-[Graphical perception: Theory, Experimentation, and Applications to the Development of Graphical Models](http://www.jstor.org/discover/10.2307/2288400?uid=3739704&uid=2&uid=4&uid=3739256&sid=21101742782357)
-
-
----
-
-## Position versus length - results
-
-<img class=center src=../../assets/img/poslength.png height=250>
-
-
-[Graphical perception: Theory, Experimentation, and Applications to the Development of Graphical Models](http://www.jstor.org/discover/10.2307/2288400?uid=3739704&uid=2&uid=4&uid=3739256&sid=21101742782357)
-
----
-
-## Position versus angle
-
-<img class=center src=../../assets/img/piechart.png height=300>
-
-
-[Graphical perception: Theory, Experimentation, and Applications to the Development of Graphical Models](http://www.jstor.org/discover/10.2307/2288400?uid=3739704&uid=2&uid=4&uid=3739256&sid=21101742782357)
-
-
----
-
-## Position versus angle - results
-
-
-<img class=center src=../../assets/img/posangle.png height=200>
-
-<br><br>
-[Graphical perception: Theory, Experimentation, and Applications to the Development of Graphical Models](http://www.jstor.org/discover/10.2307/2288400?uid=3739704&uid=2&uid=4&uid=3739256&sid=21101742782357)
-
-
----
-
-## More experimental results
-
-<img class=center src=../../assets/img/bigexp.png height=450>
-
-[Graphical Perception and Graphical Methods for Analyzing Scientific Data](http://www.sciencemag.org/content/229/4716/828.refs)
-
----
-
-## Summary
-
-* Use common scales when possible
-* When possible use position comparisons
-* Angle comparisons are frequently hard to interpret (no piecharts!)
-* No 3-D barcharts. Please.
-
-
----
-
-## Housing data
+## ACS data
 
 
 <img class=center src=../../assets/img/acs.png height=350>
 
-<br>
+[Census ACS Data](http://www.census.gov/acs/www/data_documentation/pums_documentation/)
 
 
 
@@ -126,16 +62,48 @@ mode        : selfcontained # {standalone, draft}
 
 
 ```r
-pData <- read.csv("./data/ss06pid.csv")
+pData <- read.csv(gzfile("data/ss06pid.csv.gz"))
 ```
 
+
+---
+
+## Before We Start: Summarizing Data
+
+
+One dimension
+
+* Boxplots
+* Histograms
+* Barplot
+* Density plot
+* Five-number summary
+
+
+
+---
+
+## Before We Start: Summarizing Data
+
+Two dimensions
+
+* Multiple/overlayed 1-D plots (Lattice/ggplot2)
+* Scatterplots
+* Smooth scatterplots
+
+$> 2$ dimensions
+
+* Overlayed/multiple 2-D plots; coplots
+* Use color, size, shape to add dimensions
+* Spinning plots
+* Actual 3-D plots (not that useful)
 
 
 ---
 
 ## Boxplots
 
-Important parameters: _col_,_varwidth_,_names_,_horizontal_
+Important parameters: _col_, _varwidth_, _names_, _horizontal_
 
 
 ```r
@@ -248,15 +216,13 @@ lines(densMales, lwd = 3, col = "orange")
 
 ---
 
-
 ## Scatterplots
 
-* Important paramters: _x_,_y_,_type_,_xlab_,_ylab_,_xlim_,_ylim_,_cex_,_col_,_bg_
-* See ?par for more
+* Important paramters: _x_, _y_, _type_, _xlab_, _ylab_, _xlim_, _ylim_, _cex_, _col_, _bg_
 
 
 ```r
-plot(pData$JWMNP,pData$WAGP,pch=19,col="blue")
+plot(pData$JWMNP, pData$WAGP, pch = 19, col = "blue")
 ```
 
 <div class="rimage center"><img src="fig/unnamed-chunk-9.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" class="plot" /></div>
@@ -265,12 +231,12 @@ plot(pData$JWMNP,pData$WAGP,pch=19,col="blue")
 
 --- 
 
-## Scatterplots - size matters
+## Scatterplots - plotting symbol size
 
 
 
 ```r
-plot(pData$JWMNP,pData$WAGP,pch=19,col="blue",cex=0.5)
+plot(pData$JWMNP, pData$WAGP, pch = 19, col = "blue", cex = 0.5)
 ```
 
 <div class="rimage center"><img src="fig/unnamed-chunk-10.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" class="plot" /></div>
@@ -283,7 +249,7 @@ plot(pData$JWMNP,pData$WAGP,pch=19,col="blue",cex=0.5)
 
 
 ```r
-plot(pData$JWMNP,pData$WAGP,pch=19,col=pData$SEX,cex=0.5)
+plot(pData$JWMNP, pData$WAGP, pch = 19, col = pData$SEX, cex = 0.5)
 ```
 
 <div class="rimage center"><img src="fig/unnamed-chunk-11.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" class="plot" /></div>
@@ -296,7 +262,7 @@ plot(pData$JWMNP,pData$WAGP,pch=19,col=pData$SEX,cex=0.5)
 
 ```r
 percentMaxAge <- pData$AGEP/max(pData$AGEP)
-plot(pData$JWMNP,pData$WAGP,pch=19,col="blue",cex=percentMaxAge*0.5)
+plot(pData$JWMNP, pData$WAGP, pch = 19, col = "blue", cex = percentMaxAge * 0.5)
 ```
 
 <div class="rimage center"><img src="fig/unnamed-chunk-12.png" title="plot of chunk unnamed-chunk-12" alt="plot of chunk unnamed-chunk-12" class="plot" /></div>
@@ -309,9 +275,9 @@ plot(pData$JWMNP,pData$WAGP,pch=19,col="blue",cex=percentMaxAge*0.5)
 
 
 ```r
-plot(pData$JWMNP,pData$WAGP,pch=19,col="blue",cex=0.5)
-lines(rep(100,dim(pData)[1]),pData$WAGP,col="grey",lwd=5)
-points(seq(0,200,length=100),seq(0,20e5,length=100),col="red",pch=19)
+plot(pData$JWMNP, pData$WAGP, pch = 19, col = "blue", cex = 0.5)
+lines(rep(100, dim(pData)[1]), pData$WAGP, col = "grey", lwd = 5)
+points(seq(0, 200, length = 100), seq(0, 2000000, length = 100), col = "red", pch = 19)
 ```
 
 <div class="rimage center"><img src="fig/unnamed-chunk-13.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" class="plot" /></div>

@@ -62,30 +62,62 @@ knit_hooks$set(plot = knitr:::hook_plot_html)
 ---
 
 
-## Housing data
+## ACS data
 
 
 <img class=center src=../../assets/img/acs.png height=350>
 
-<br>
+[Census ACS Data](http://www.census.gov/acs/www/data_documentation/pums_documentation/)
 
-```{r downloadData, echo=FALSE, cache=TRUE}
+```{r downloadData, echo=FALSE, cache=TRUE,eval=FALSE}
 if(!file.exists("data/ss06pid.csv")) {
-        download.file("https://dl.dropboxusercontent.com/u/7710864/data/csv_hid/ss06pid.csv",destfile="./data/ss06pid.csv",method="curl")
+        download.file("https://dl.dropboxusercontent.com/u/7710864/data/csv_hid/ss06pid.csv",destfile="data/ss06pid.csv",method="curl")
 }
 ```
 
 
 ```{r loadData,dependson="downloadData"}
-pData <- read.csv("./data/ss06pid.csv")
+pData <- read.csv(gzfile("data/ss06pid.csv.gz"))
 ```
+
+---
+
+## Before We Start: Summarizing Data
+
+
+One dimension
+
+* Boxplots
+* Histograms
+* Barplot
+* Density plot
+* Five-number summary
+
+
+
+---
+
+## Before We Start: Summarizing Data
+
+Two dimensions
+
+* Multiple/overlayed 1-D plots (Lattice/ggplot2)
+* Scatterplots
+* Smooth scatterplots
+
+$> 2$ dimensions
+
+* Overlayed/multiple 2-D plots; coplots
+* Use color, size, shape to add dimensions
+* Spinning plots
+* Actual 3-D plots (not that useful)
 
 
 ---
 
 ## Boxplots
 
-Important parameters: _col_,_varwidth_,_names_,_horizontal_
+Important parameters: _col_, _varwidth_, _names_, _horizontal_
 
 ```{r , dependson="loadData",fig.height=4,fig.width=4}
 boxplot(pData$AGEP, col="blue")
@@ -166,23 +198,21 @@ lines(densMales, lwd = 3, col = "orange")
 
 ---
 
-
 ## Scatterplots
 
-* Important paramters: _x_,_y_,_type_,_xlab_,_ylab_,_xlim_,_ylim_,_cex_,_col_,_bg_
-* See ?par for more
+* Important paramters: _x_, _y_, _type_, _xlab_, _ylab_, _xlim_, _ylim_, _cex_, _col_, _bg_
 
-```{r , dependson="loadData",fig.height=4,fig.width=4}
+```{r , dependson="loadData",fig.height=4,fig.width=4,tidy=TRUE}
 plot(pData$JWMNP,pData$WAGP,pch=19,col="blue")
 ```
 
 
 --- 
 
-## Scatterplots - size matters
+## Scatterplots - plotting symbol size
 
 
-```{r , dependson="loadData",fig.height=5,fig.width=5}
+```{r , dependson="loadData",fig.height=5,fig.width=5,tidy=TRUE}
 plot(pData$JWMNP,pData$WAGP,pch=19,col="blue",cex=0.5)
 ```
 
@@ -191,7 +221,7 @@ plot(pData$JWMNP,pData$WAGP,pch=19,col="blue",cex=0.5)
 
 ## Scatterplots - using color
 
-```{r , dependson="loadData",fig.height=5,fig.width=5}
+```{r , dependson="loadData",fig.height=5,fig.width=5,tidy=TRUE}
 plot(pData$JWMNP,pData$WAGP,pch=19,col=pData$SEX,cex=0.5)
 ```
 
@@ -199,7 +229,7 @@ plot(pData$JWMNP,pData$WAGP,pch=19,col=pData$SEX,cex=0.5)
 
 ## Scatterplots - using size
 
-```{r , dependson="loadData",fig.height=4,fig.width=4}
+```{r , dependson="loadData",fig.height=5,fig.width=6,tidy=TRUE}
 percentMaxAge <- pData$AGEP/max(pData$AGEP)
 plot(pData$JWMNP,pData$WAGP,pch=19,col="blue",cex=percentMaxAge*0.5)
 ```
@@ -209,7 +239,7 @@ plot(pData$JWMNP,pData$WAGP,pch=19,col="blue",cex=percentMaxAge*0.5)
 
 ## Scatterplots - overlaying lines/points
 
-```{r , dependson="loadData",fig.height=4,fig.width=4}
+```{r , dependson="loadData",fig.height=4,fig.width=4, tidy=TRUE}
 plot(pData$JWMNP,pData$WAGP,pch=19,col="blue",cex=0.5)
 lines(rep(100,dim(pData)[1]),pData$WAGP,col="grey",lwd=5)
 points(seq(0,200,length=100),seq(0,20e5,length=100),col="red",pch=19)

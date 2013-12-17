@@ -101,12 +101,15 @@
 
       <slide class="" id="slide-4" style="background:;">
   <hgroup>
-    <h2>Background - perceptual tasks</h2>
+    <h2>ACS data</h2>
   </hgroup>
   <article>
-    <p><img class=center src=../../assets/img/perceptual.png height=450></p>
+    <p><img class=center src=../../assets/img/acs.png height=350></p>
 
-<p><a href="http://www.jstor.org/discover/10.2307/2288400?uid=3739704&amp;uid=2&amp;uid=4&amp;uid=3739256&amp;sid=21101742782357">Graphical perception: Theory, Experimentation, and Applications to the Development of Graphical Models</a></p>
+<p><a href="http://www.census.gov/acs/www/data_documentation/pums_documentation/">Census ACS Data</a></p>
+
+<pre><code class="r">pData &lt;- read.csv(gzfile(&quot;data/ss06pid.csv.gz&quot;))
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
@@ -114,12 +117,18 @@
 
       <slide class="" id="slide-5" style="background:;">
   <hgroup>
-    <h2>Position versus length</h2>
+    <h2>Before We Start: Summarizing Data</h2>
   </hgroup>
   <article>
-    <p><img class=center src=../../assets/img/barcharts.png height=250></p>
+    <p>One dimension</p>
 
-<p><a href="http://www.jstor.org/discover/10.2307/2288400?uid=3739704&amp;uid=2&amp;uid=4&amp;uid=3739256&amp;sid=21101742782357">Graphical perception: Theory, Experimentation, and Applications to the Development of Graphical Models</a></p>
+<ul>
+<li>Boxplots</li>
+<li>Histograms</li>
+<li>Barplot</li>
+<li>Density plot</li>
+<li>Five-number summary</li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
@@ -127,12 +136,25 @@
 
       <slide class="" id="slide-6" style="background:;">
   <hgroup>
-    <h2>Position versus length - results</h2>
+    <h2>Before We Start: Summarizing Data</h2>
   </hgroup>
   <article>
-    <p><img class=center src=../../assets/img/poslength.png height=250></p>
+    <p>Two dimensions</p>
 
-<p><a href="http://www.jstor.org/discover/10.2307/2288400?uid=3739704&amp;uid=2&amp;uid=4&amp;uid=3739256&amp;sid=21101742782357">Graphical perception: Theory, Experimentation, and Applications to the Development of Graphical Models</a></p>
+<ul>
+<li>Multiple/overlayed 1-D plots (Lattice/ggplot2)</li>
+<li>Scatterplots</li>
+<li>Smooth scatterplots</li>
+</ul>
+
+<p>\(> 2\) dimensions</p>
+
+<ul>
+<li>Overlayed/multiple 2-D plots; coplots</li>
+<li>Use color, size, shape to add dimensions</li>
+<li>Spinning plots</li>
+<li>Actual 3-D plots (not that useful)</li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
@@ -140,82 +162,10 @@
 
       <slide class="" id="slide-7" style="background:;">
   <hgroup>
-    <h2>Position versus angle</h2>
-  </hgroup>
-  <article>
-    <p><img class=center src=../../assets/img/piechart.png height=300></p>
-
-<p><a href="http://www.jstor.org/discover/10.2307/2288400?uid=3739704&amp;uid=2&amp;uid=4&amp;uid=3739256&amp;sid=21101742782357">Graphical perception: Theory, Experimentation, and Applications to the Development of Graphical Models</a></p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-8" style="background:;">
-  <hgroup>
-    <h2>Position versus angle - results</h2>
-  </hgroup>
-  <article>
-    <p><img class=center src=../../assets/img/posangle.png height=200></p>
-
-<p><br><br>
-<a href="http://www.jstor.org/discover/10.2307/2288400?uid=3739704&amp;uid=2&amp;uid=4&amp;uid=3739256&amp;sid=21101742782357">Graphical perception: Theory, Experimentation, and Applications to the Development of Graphical Models</a></p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-9" style="background:;">
-  <hgroup>
-    <h2>More experimental results</h2>
-  </hgroup>
-  <article>
-    <p><img class=center src=../../assets/img/bigexp.png height=450></p>
-
-<p><a href="http://www.sciencemag.org/content/229/4716/828.refs">Graphical Perception and Graphical Methods for Analyzing Scientific Data</a></p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-10" style="background:;">
-  <hgroup>
-    <h2>Summary</h2>
-  </hgroup>
-  <article>
-    <ul>
-<li>Use common scales when possible</li>
-<li>When possible use position comparisons</li>
-<li>Angle comparisons are frequently hard to interpret (no piecharts!)</li>
-<li>No 3-D barcharts. Please.</li>
-</ul>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-11" style="background:;">
-  <hgroup>
-    <h2>Housing data</h2>
-  </hgroup>
-  <article>
-    <p><img class=center src=../../assets/img/acs.png height=350></p>
-
-<p><br></p>
-
-<pre><code class="r">pData &lt;- read.csv(&quot;./data/ss06pid.csv&quot;)
-</code></pre>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-12" style="background:;">
-  <hgroup>
     <h2>Boxplots</h2>
   </hgroup>
   <article>
-    <p>Important parameters: <em>col</em>,<em>varwidth</em>,<em>names</em>,<em>horizontal</em></p>
+    <p>Important parameters: <em>col</em>, <em>varwidth</em>, <em>names</em>, <em>horizontal</em></p>
 
 <pre><code class="r">boxplot(pData$AGEP, col=&quot;blue&quot;)
 </code></pre>
@@ -226,7 +176,7 @@
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-13" style="background:;">
+      <slide class="" id="slide-8" style="background:;">
   <hgroup>
     <h2>Boxplots</h2>
   </hgroup>
@@ -241,7 +191,7 @@ boxplot(AGEP ~ DDRS, data = pData, col = &quot;blue&quot;)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-14" style="background:;">
+      <slide class="" id="slide-9" style="background:;">
   <hgroup>
     <h2>Boxplots</h2>
   </hgroup>
@@ -256,7 +206,7 @@ boxplot(AGEP ~ DDRS, data = pData, col = &quot;blue&quot;)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-15" style="background:;">
+      <slide class="" id="slide-10" style="background:;">
   <hgroup>
     <h2>Barplots</h2>
   </hgroup>
@@ -270,7 +220,7 @@ boxplot(AGEP ~ DDRS, data = pData, col = &quot;blue&quot;)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-16" style="background:;">
+      <slide class="" id="slide-11" style="background:;">
   <hgroup>
     <h2>Histograms</h2>
   </hgroup>
@@ -286,7 +236,7 @@ boxplot(AGEP ~ DDRS, data = pData, col = &quot;blue&quot;)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-17" style="background:;">
+      <slide class="" id="slide-12" style="background:;">
   <hgroup>
     <h2>Histograms</h2>
   </hgroup>
@@ -300,7 +250,7 @@ boxplot(AGEP ~ DDRS, data = pData, col = &quot;blue&quot;)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-18" style="background:;">
+      <slide class="" id="slide-13" style="background:;">
   <hgroup>
     <h2>Density plots</h2>
   </hgroup>
@@ -317,7 +267,7 @@ plot(dens, lwd = 3, col = &quot;blue&quot;)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-19" style="background:;">
+      <slide class="" id="slide-14" style="background:;">
   <hgroup>
     <h2>Density plots - multiple distributions</h2>
   </hgroup>
@@ -334,17 +284,16 @@ lines(densMales, lwd = 3, col = &quot;orange&quot;)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-20" style="background:;">
+      <slide class="" id="slide-15" style="background:;">
   <hgroup>
     <h2>Scatterplots</h2>
   </hgroup>
   <article>
     <ul>
-<li>Important paramters: <em>x</em>,<em>y</em>,<em>type</em>,<em>xlab</em>,<em>ylab</em>,<em>xlim</em>,<em>ylim</em>,<em>cex</em>,<em>col</em>,<em>bg</em></li>
-<li>See ?par for more</li>
+<li>Important paramters: <em>x</em>, <em>y</em>, <em>type</em>, <em>xlab</em>, <em>ylab</em>, <em>xlim</em>, <em>ylim</em>, <em>cex</em>, <em>col</em>, <em>bg</em></li>
 </ul>
 
-<pre><code class="r">plot(pData$JWMNP,pData$WAGP,pch=19,col=&quot;blue&quot;)
+<pre><code class="r">plot(pData$JWMNP, pData$WAGP, pch = 19, col = &quot;blue&quot;)
 </code></pre>
 
 <div class="rimage center"><img src="fig/unnamed-chunk-9.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" class="plot" /></div>
@@ -353,12 +302,12 @@ lines(densMales, lwd = 3, col = &quot;orange&quot;)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-21" style="background:;">
+      <slide class="" id="slide-16" style="background:;">
   <hgroup>
-    <h2>Scatterplots - size matters</h2>
+    <h2>Scatterplots - plotting symbol size</h2>
   </hgroup>
   <article>
-    <pre><code class="r">plot(pData$JWMNP,pData$WAGP,pch=19,col=&quot;blue&quot;,cex=0.5)
+    <pre><code class="r">plot(pData$JWMNP, pData$WAGP, pch = 19, col = &quot;blue&quot;, cex = 0.5)
 </code></pre>
 
 <div class="rimage center"><img src="fig/unnamed-chunk-10.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" class="plot" /></div>
@@ -367,12 +316,12 @@ lines(densMales, lwd = 3, col = &quot;orange&quot;)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-22" style="background:;">
+      <slide class="" id="slide-17" style="background:;">
   <hgroup>
     <h2>Scatterplots - using color</h2>
   </hgroup>
   <article>
-    <pre><code class="r">plot(pData$JWMNP,pData$WAGP,pch=19,col=pData$SEX,cex=0.5)
+    <pre><code class="r">plot(pData$JWMNP, pData$WAGP, pch = 19, col = pData$SEX, cex = 0.5)
 </code></pre>
 
 <div class="rimage center"><img src="fig/unnamed-chunk-11.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" class="plot" /></div>
@@ -381,13 +330,13 @@ lines(densMales, lwd = 3, col = &quot;orange&quot;)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-23" style="background:;">
+      <slide class="" id="slide-18" style="background:;">
   <hgroup>
     <h2>Scatterplots - using size</h2>
   </hgroup>
   <article>
     <pre><code class="r">percentMaxAge &lt;- pData$AGEP/max(pData$AGEP)
-plot(pData$JWMNP,pData$WAGP,pch=19,col=&quot;blue&quot;,cex=percentMaxAge*0.5)
+plot(pData$JWMNP, pData$WAGP, pch = 19, col = &quot;blue&quot;, cex = percentMaxAge * 0.5)
 </code></pre>
 
 <div class="rimage center"><img src="fig/unnamed-chunk-12.png" title="plot of chunk unnamed-chunk-12" alt="plot of chunk unnamed-chunk-12" class="plot" /></div>
@@ -396,14 +345,14 @@ plot(pData$JWMNP,pData$WAGP,pch=19,col=&quot;blue&quot;,cex=percentMaxAge*0.5)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-24" style="background:;">
+      <slide class="" id="slide-19" style="background:;">
   <hgroup>
     <h2>Scatterplots - overlaying lines/points</h2>
   </hgroup>
   <article>
-    <pre><code class="r">plot(pData$JWMNP,pData$WAGP,pch=19,col=&quot;blue&quot;,cex=0.5)
-lines(rep(100,dim(pData)[1]),pData$WAGP,col=&quot;grey&quot;,lwd=5)
-points(seq(0,200,length=100),seq(0,20e5,length=100),col=&quot;red&quot;,pch=19)
+    <pre><code class="r">plot(pData$JWMNP, pData$WAGP, pch = 19, col = &quot;blue&quot;, cex = 0.5)
+lines(rep(100, dim(pData)[1]), pData$WAGP, col = &quot;grey&quot;, lwd = 5)
+points(seq(0, 200, length = 100), seq(0, 2000000, length = 100), col = &quot;red&quot;, pch = 19)
 </code></pre>
 
 <div class="rimage center"><img src="fig/unnamed-chunk-13.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" class="plot" /></div>
@@ -412,7 +361,7 @@ points(seq(0,200,length=100),seq(0,20e5,length=100),col=&quot;red&quot;,pch=19)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-25" style="background:;">
+      <slide class="" id="slide-20" style="background:;">
   <hgroup>
     <h2>Scatterplots - numeric variables as factors</h2>
   </hgroup>
@@ -428,7 +377,7 @@ plot(pData$JWMNP,pData$WAGP,pch=19,col=ageGroups,cex=0.5)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-26" style="background:;">
+      <slide class="" id="slide-21" style="background:;">
   <hgroup>
     <h2>If you have a lot of points</h2>
   </hgroup>
@@ -444,7 +393,7 @@ plot(x,y,pch=19)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-27" style="background:;">
+      <slide class="" id="slide-22" style="background:;">
   <hgroup>
     <h2>If you have a lot of points - sampling</h2>
   </hgroup>
@@ -461,7 +410,7 @@ plot(x[sampledValues],y[sampledValues],pch=19)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-28" style="background:;">
+      <slide class="" id="slide-23" style="background:;">
   <hgroup>
     <h2>If you have a lot of points - smoothScatter</h2>
   </hgroup>
@@ -477,7 +426,7 @@ smoothScatter(x,y)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-29" style="background:;">
+      <slide class="" id="slide-24" style="background:;">
   <hgroup>
     <h2>If you have a lot of points - hexbin {hexbin}</h2>
   </hgroup>
@@ -495,7 +444,7 @@ plot(hbo)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-30" style="background:;">
+      <slide class="" id="slide-25" style="background:;">
   <hgroup>
     <h2>QQ-plots</h2>
   </hgroup>
@@ -515,7 +464,7 @@ abline(c(0,1))
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-31" style="background:;">
+      <slide class="" id="slide-26" style="background:;">
   <hgroup>
     <h2>Matplot and spaghetti</h2>
   </hgroup>
@@ -534,7 +483,7 @@ matplot(X,type=&quot;b&quot;)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-32" style="background:;">
+      <slide class="" id="slide-27" style="background:;">
   <hgroup>
     <h2>Heatmaps</h2>
   </hgroup>
@@ -552,7 +501,7 @@ matplot(X,type=&quot;b&quot;)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-33" style="background:;">
+      <slide class="" id="slide-28" style="background:;">
   <hgroup>
     <h2>Heatmaps - matching intuition</h2>
   </hgroup>
@@ -568,7 +517,7 @@ image(161:236, 1:10, newMatrix)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-34" style="background:;">
+      <slide class="" id="slide-29" style="background:;">
   <hgroup>
     <h2>Maps - very basics</h2>
   </hgroup>
@@ -587,7 +536,7 @@ points(lat,lon,col=&quot;blue&quot;,pch=19)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-35" style="background:;">
+      <slide class="" id="slide-30" style="background:;">
   <hgroup>
     <h2>Missing values and plots</h2>
   </hgroup>
@@ -603,7 +552,7 @@ plot(x,y,pch=19,xlim=c(0,11),ylim=c(0,11))
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-36" style="background:;">
+      <slide class="" id="slide-31" style="background:;">
   <hgroup>
     <h2>Missing values and plots</h2>
   </hgroup>
@@ -620,7 +569,7 @@ boxplot(x ~ is.na(y))
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-37" style="background:;">
+      <slide class="" id="slide-32" style="background:;">
   <hgroup>
     <h2>Further resources</h2>
   </hgroup>
