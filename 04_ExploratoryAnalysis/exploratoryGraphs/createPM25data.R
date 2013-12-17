@@ -20,7 +20,7 @@ d0 <- data.frame(pm25 = unlist(avg), year = 2008:2010)
 d0$fips <- factor(substr(row.names(d0), 1, 5))
 row.names(d0) <- NULL
 
-d <- data.frame(pm25 = with(d0, tapply(pm25, fips, mean)))
+d <- data.frame(pm25 = with(d0, tapply(pm25, fips, mean, na.rm = TRUE)))
 d$fips <- factor(row.names(d))
 row.names(d) <- NULL
 
