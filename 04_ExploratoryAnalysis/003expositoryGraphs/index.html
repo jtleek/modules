@@ -4,7 +4,7 @@
   <title>Expository graphs</title>
   <meta charset="utf-8">
   <meta name="description" content="Expository graphs">
-  <meta name="author" content="Jeffrey Leek, Assistant Professor of Biostatistics">
+  <meta name="author" content="Roger D. Peng, Assistant Professor of Biostatistics">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -19,6 +19,11 @@
   </script>
   
     <link rel="stylesheet" href = "../../assets/css/custom.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BACKUP.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BASE.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.LOCAL.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.orig">
+<link rel="stylesheet" href = "../../assets/css/custom.css.REMOTE.546.css">
 <link rel="stylesheet" href = "../../assets/css/ribbons.css">
 
 </head>
@@ -38,7 +43,7 @@
       <hgroup class="auto-fadein">
         <h1>Expository graphs</h1>
         <h2></h2>
-        <p>Jeffrey Leek, Assistant Professor of Biostatistics<br/>Johns Hopkins Bloomberg School of Public Health</p>
+        <p>Roger D. Peng, Assistant Professor of Biostatistics<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
           </slide>
 
@@ -273,95 +278,6 @@ mtext(text=&quot;(b)&quot;,side=3,line=1)
 
       <slide class="" id="slide-15" style="background:;">
   <hgroup>
-    <h2>pdf</h2>
-  </hgroup>
-  <article>
-    <ul>
-<li>Important parameters: <em>file</em>, <em>height</em>,<em>width</em></li>
-</ul>
-
-<pre><code class="r">pdf(file=&quot;twoPanel.pdf&quot;,height=4,width=8)
-par(mfrow=c(1,2))
-hist(pData$JWMNP,xlab=&quot;CT (min)&quot;,col=&quot;blue&quot;,breaks=100,main=&quot;&quot;)
-mtext(text=&quot;(a)&quot;,side=3,line=1)
-plot(pData$JWMNP,pData$WAGP,pch=19,cex=0.5,xlab=&quot;CT (min)&quot;,ylab=&quot;Wages (dollars)&quot;,col=pData$SEX)
-legend(100,200000,legend=c(&quot;men&quot;,&quot;women&quot;),col=c(&quot;black&quot;,&quot;red&quot;),pch=c(19,19),cex=c(0.5,0.5))
-mtext(text=&quot;(b)&quot;,side=3,line=1)
-
-dev.off()
-</code></pre>
-
-<div class="rimage center"><img src="fig/unnamed-chunk-9.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" class="plot" /></div>
-
-<pre><code>RStudioGD 
-        2 
-</code></pre>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-16" style="background:;">
-  <hgroup>
-    <h2>png</h2>
-  </hgroup>
-  <article>
-    <ul>
-<li>Important parameters: <em>file</em>, <em>height</em>,<em>width</em></li>
-</ul>
-
-<pre><code class="r">png(file=&quot;twoPanel.png&quot;,height=480,width=(2*480))
-par(mfrow=c(1,2))
-hist(pData$JWMNP,xlab=&quot;CT (min)&quot;,col=&quot;blue&quot;,breaks=100,main=&quot;&quot;)
-mtext(text=&quot;(a)&quot;,side=3,line=1)
-plot(pData$JWMNP,pData$WAGP,pch=19,cex=0.5,xlab=&quot;CT (min)&quot;,ylab=&quot;Wages (dollars)&quot;,col=pData$SEX)
-legend(100,200000,legend=c(&quot;men&quot;,&quot;women&quot;),col=c(&quot;black&quot;,&quot;red&quot;),pch=c(19,19),cex=c(0.5,0.5))
-mtext(text=&quot;(b)&quot;,side=3,line=1)
-dev.off()
-</code></pre>
-
-<pre><code>RStudioGD 
-        2 
-</code></pre>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-17" style="background:;">
-  <hgroup>
-    <h2>dev.copy2pdf</h2>
-  </hgroup>
-  <article>
-    <pre><code class="r">par(mfrow=c(1,2))
-hist(pData$JWMNP,xlab=&quot;CT (min)&quot;,col=&quot;blue&quot;,breaks=100,main=&quot;&quot;)
-plot(pData$JWMNP,pData$WAGP,pch=19,cex=0.5,xlab=&quot;CT (min)&quot;,ylab=&quot;Wages (dollars)&quot;,col=pData$SEX)
-</code></pre>
-
-<div class="rimage center"><img src="fig/unnamed-chunk-11.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" class="plot" /></div>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-18" style="background:;">
-  <hgroup>
-    <h2>dev.copy2pdf</h2>
-  </hgroup>
-  <article>
-    <pre><code class="r">dev.copy2pdf(file=&quot;twoPanelv2.pdf&quot;)
-</code></pre>
-
-<pre><code>RStudioGD 
-        2 
-</code></pre>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-19" style="background:;">
-  <hgroup>
     <h2>Something to avoid</h2>
   </hgroup>
   <article>
@@ -373,7 +289,7 @@ plot(pData$JWMNP,pData$WAGP,pch=19,cex=0.5,xlab=&quot;CT (min)&quot;,ylab=&quot;
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-20" style="background:;">
+      <slide class="" id="slide-16" style="background:;">
   <hgroup>
     <h2>Something to aspire to</h2>
   </hgroup>
@@ -386,7 +302,7 @@ plot(pData$JWMNP,pData$WAGP,pch=19,cex=0.5,xlab=&quot;CT (min)&quot;,ylab=&quot;
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-21" style="background:;">
+      <slide class="" id="slide-17" style="background:;">
   <hgroup>
     <h2>Further resources</h2>
   </hgroup>

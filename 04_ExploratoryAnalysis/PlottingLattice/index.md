@@ -204,6 +204,23 @@ xyplot(y ~ x | f, panel = function(x, y, ...) {
 
 ---
 
+## Many Panel Lattice Plot: Example from MAACS
+
+* Study: Mouse Allergen and Asthma Cohort Study (MAACS)
+
+* Study subjects: Children with asthma living in Baltimore City, many
+  allergic to mouse allergen
+
+* Design: Observational study, baseline home visit + every 3 months for a year.
+
+* Question: How does indoor airborne mouse allergen vary over time and
+  across subjects?
+
+
+[Ahluwalia et al., *Journal of Allergy and Clinical Immunology*, 2013](http://www.ncbi.nlm.nih.gov/pubmed/23810154)
+
+---
+
 ## Many Panel Lattice Plot
 
 ![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8.png) 

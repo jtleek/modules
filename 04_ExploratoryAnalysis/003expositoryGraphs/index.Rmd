@@ -1,7 +1,7 @@
 ---
 title       : Expository graphs
 subtitle    : 
-author      : Jeffrey Leek, Assistant Professor of Biostatistics 
+author      : Roger D. Peng, Associate Professor of Biostatistics 
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -68,8 +68,10 @@ knit_hooks$set(plot = knitr:::hook_plot_html)
 
 <br>
 
-```{r downloadData, echo=FALSE, cache=TRUE}
-download.file("https://dl.dropboxusercontent.com/u/7710864/data/csv_hid/ss06pid.csv",destfile="./data/ss06pid.csv",method="curl")
+```{r downloadData, echo=FALSE}
+if(!file.exists("data/ss06pid.csv")) {
+        download.file("https://dl.dropboxusercontent.com/u/7710864/data/csv_hid/ss06pid.csv",destfile="./data/ss06pid.csv",method="curl")
+}
 ```
 
 
@@ -195,57 +197,6 @@ __Figure 1. Distribution of commute time and relationship to wage earned by sex_
 * Include it in presentations
 
 Saving files in R is done with graphics _devices_. Use the command ?Devices to see a list. Here we will go over the most popular devices. 
-
----
-
-## pdf
-
-* Important parameters: _file_, _height_,_width_
-```{r, dependson="loadData"}
-pdf(file="twoPanel.pdf",height=4,width=8)
-par(mfrow=c(1,2))
-hist(pData$JWMNP,xlab="CT (min)",col="blue",breaks=100,main="")
-mtext(text="(a)",side=3,line=1)
-plot(pData$JWMNP,pData$WAGP,pch=19,cex=0.5,xlab="CT (min)",ylab="Wages (dollars)",col=pData$SEX)
-legend(100,200000,legend=c("men","women"),col=c("black","red"),pch=c(19,19),cex=c(0.5,0.5))
-mtext(text="(b)",side=3,line=1)
-
-dev.off()
-```
-
----
-
-## png
-
-* Important parameters: _file_, _height_,_width_
-```{r, dependson="loadData"}
-png(file="twoPanel.png",height=480,width=(2*480))
-par(mfrow=c(1,2))
-hist(pData$JWMNP,xlab="CT (min)",col="blue",breaks=100,main="")
-mtext(text="(a)",side=3,line=1)
-plot(pData$JWMNP,pData$WAGP,pch=19,cex=0.5,xlab="CT (min)",ylab="Wages (dollars)",col=pData$SEX)
-legend(100,200000,legend=c("men","women"),col=c("black","red"),pch=c(19,19),cex=c(0.5,0.5))
-mtext(text="(b)",side=3,line=1)
-dev.off()
-```
-
----
-
-## dev.copy2pdf
-
-```{r, dependson="loadData",fig.height=3,fig.width=7}
-par(mfrow=c(1,2))
-hist(pData$JWMNP,xlab="CT (min)",col="blue",breaks=100,main="")
-plot(pData$JWMNP,pData$WAGP,pch=19,cex=0.5,xlab="CT (min)",ylab="Wages (dollars)",col=pData$SEX)
-```
-
----
-
-## dev.copy2pdf
-
-```{r, dependson="loadData",fig.height=3,fig.width=7}
-dev.copy2pdf(file="twoPanelv2.pdf")
-```
 
 ---
 
