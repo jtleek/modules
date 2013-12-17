@@ -134,17 +134,17 @@ national standard for fine particle pollution?</p></li>
     <p>Annual average PM2.5 averaged over the period 2008 through 2010</p>
 
 <pre><code class="r">pollution &lt;- read.csv(&quot;data/avgpm25.csv&quot;, colClasses = c(&quot;numeric&quot;, &quot;character&quot;, 
-    &quot;character&quot;))
+    &quot;factor&quot;, &quot;numeric&quot;, &quot;numeric&quot;))
 head(pollution)
 </code></pre>
 
-<pre><code>##     pm25  fips region
-## 1  9.771 01003   east
-## 2  9.994 01027   east
-## 3 10.689 01033   east
-## 4 11.337 01049   east
-## 5 12.120 01055   east
-## 6 10.828 01069   east
+<pre><code>##     pm25  fips region longitude latitude
+## 1  9.771 01003   east    -87.75    30.59
+## 2  9.994 01027   east    -85.84    33.27
+## 3 10.689 01033   east    -87.73    34.73
+## 4 11.337 01049   east    -85.80    34.46
+## 5 12.120 01055   east    -86.03    34.02
+## 6 10.828 01069   east    -85.35    31.19
 </code></pre>
 
 <p>Do any counties exceed the standard of \(12~\mu g/m^3\)?</p>
@@ -204,6 +204,95 @@ head(pollution)
 
       <slide class="" id="slide-9" style="background:;">
   <hgroup>
+    <h2>Histogram</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">hist(pollution$pm25, col = &quot;green&quot;)
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-3.png" alt="plot of chunk unnamed-chunk-3"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>Histogram</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">hist(pollution$pm25, col = &quot;green&quot;)
+rug(pollution$pm25)
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-4.png" alt="plot of chunk unnamed-chunk-4"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Histogram</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">hist(pollution$pm25, col = &quot;green&quot;, breaks = 100)
+rug(pollution$pm25)
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-5.png" alt="plot of chunk unnamed-chunk-5"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>Overlaying Features</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">boxplot(pollution$pm25, col = &quot;blue&quot;)
+abline(h = 12)
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-6.png" alt="plot of chunk unnamed-chunk-6"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>Overlaying Features</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">hist(pollution$pm25, col = &quot;green&quot;)
+abline(v = 12, lwd = 2)
+abline(v = median(pollution$pm25), col = &quot;magenta&quot;, lwd = 4)
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-7.png" alt="plot of chunk unnamed-chunk-7"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h2>Barplot</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">barplot(table(pollution$region), col = &quot;wheat&quot;, main = &quot;Number of Counties in Each Region&quot;)
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-8.png" alt="plot of chunk unnamed-chunk-8"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-15" style="background:;">
+  <hgroup>
     <h2>Simple Summaries of Data</h2>
   </hgroup>
   <article>
@@ -228,16 +317,106 @@ head(pollution)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-10" style="background:;">
+      <slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2>Multiple Boxplots</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">boxplot(pm25 ~ region, data = pollution, col = &quot;red&quot;)
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-9.png" alt="plot of chunk unnamed-chunk-9"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>Multiple Histograms</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">par(mfrow = c(2, 1), mar = c(4, 4, 2, 1))
+hist(subset(pollution, region == &quot;east&quot;)$pm25, col = &quot;green&quot;)
+hist(subset(pollution, region == &quot;west&quot;)$pm25, col = &quot;green&quot;)
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-10.png" alt="plot of chunk unnamed-chunk-10"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>Scatterplot</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">with(pollution, plot(latitude, pm25))
+abline(h = 12, lwd = 2, lty = 2)
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-11.png" alt="plot of chunk unnamed-chunk-11"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>Scatterplot - Using Color</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">with(pollution, plot(latitude, pm25, col = region))
+abline(h = 12, lwd = 2, lty = 2)
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-12.png" alt="plot of chunk unnamed-chunk-12"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h2>Multiple Scatterplots</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">par(mfrow = c(1, 2), mar = c(5, 4, 2, 1))
+with(subset(pollution, region == &quot;west&quot;), plot(latitude, pm25, main = &quot;West&quot;))
+with(subset(pollution, region == &quot;east&quot;), plot(latitude, pm25, main = &quot;East&quot;))
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-13.png" alt="plot of chunk unnamed-chunk-13"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-21" style="background:;">
+  <hgroup>
+    <h2>Summary</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li><p>Exploratory plots are &quot;quick and dirty&quot;</p></li>
+<li><p>Let you summarize the data (usually graphically) and highly any broad features</p></li>
+<li><p>Explore basic questions and hypotheses (and perhaps rule them out)</p></li>
+<li><p>Suggest modeling strategies for the &quot;next step&quot;</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-22" style="background:;">
   <hgroup>
     <h2>Further resources</h2>
   </hgroup>
   <article>
     <ul>
 <li><a href="http://gallery.r-enthusiasts.com/">R Graph Gallery</a></li>
-<li><a href="http://cran.r-project.org/web/packages/ggplot2/index.html">ggplot2</a>,<a href="http://www.r-bloggers.com/basic-introduction-to-ggplot2/">ggplot2 basic introduction</a></li>
-<li><a href="http://cran.r-project.org/web/packages/lattice/index.html">lattice package</a>,<a href="http://lmdvr.r-forge.r-project.org/figures/figures.html">lattice introduction</a></li>
-<li><a href="http://www.r-bloggers.com/">R bloggers</a></li>
+<li><a href="http://www.r-bloggers.com/">R Bloggers</a></li>
 </ul>
 
   </article>

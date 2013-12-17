@@ -70,18 +70,18 @@ Annual average PM2.5 averaged over the period 2008 through 2010
 
 ```r
 pollution <- read.csv("data/avgpm25.csv", colClasses = c("numeric", "character", 
-    "character"))
+    "factor", "numeric", "numeric"))
 head(pollution)
 ```
 
 ```
-##     pm25  fips region
-## 1  9.771 01003   east
-## 2  9.994 01027   east
-## 3 10.689 01033   east
-## 4 11.337 01049   east
-## 5 12.120 01055   east
-## 6 10.828 01069   east
+##     pm25  fips region longitude latitude
+## 1  9.771 01003   east    -87.75    30.59
+## 2  9.994 01027   east    -85.84    33.27
+## 3 10.689 01033   east    -87.73    34.73
+## 4 11.337 01049   east    -85.80    34.46
+## 5 12.120 01055   east    -86.03    34.02
+## 6 10.828 01069   east    -85.35    31.19
 ```
 
 
@@ -127,6 +127,83 @@ boxplot(pollution$pm25, col = "blue")
 ![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2.png) 
 
 
+---
+
+## Histogram
+
+
+```r
+hist(pollution$pm25, col = "green")
+```
+
+![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3.png) 
+
+
+---
+
+## Histogram
+
+
+```r
+hist(pollution$pm25, col = "green")
+rug(pollution$pm25)
+```
+
+![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4.png) 
+
+
+---
+
+## Histogram
+
+
+```r
+hist(pollution$pm25, col = "green", breaks = 100)
+rug(pollution$pm25)
+```
+
+![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5.png) 
+
+
+---
+
+## Overlaying Features
+
+
+```r
+boxplot(pollution$pm25, col = "blue")
+abline(h = 12)
+```
+
+![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6.png) 
+
+
+
+---
+
+## Overlaying Features
+
+
+```r
+hist(pollution$pm25, col = "green")
+abline(v = 12, lwd = 2)
+abline(v = median(pollution$pm25), col = "magenta", lwd = 4)
+```
+
+![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7.png) 
+
+
+---
+
+## Barplot
+
+
+```r
+barplot(table(pollution$region), col = "wheat", main = "Number of Counties in Each Region")
+```
+
+![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8.png) 
+
 
 ---
 
@@ -148,13 +225,89 @@ $> 2$ dimensions
 
 ---
 
+## Multiple Boxplots
+
+
+```r
+boxplot(pm25 ~ region, data = pollution, col = "red")
+```
+
+![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9.png) 
+
+
+---
+
+## Multiple Histograms
+
+
+```r
+par(mfrow = c(2, 1), mar = c(4, 4, 2, 1))
+hist(subset(pollution, region == "east")$pm25, col = "green")
+hist(subset(pollution, region == "west")$pm25, col = "green")
+```
+
+![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10.png) 
+
+
+---
+
+## Scatterplot
+
+
+```r
+with(pollution, plot(latitude, pm25))
+abline(h = 12, lwd = 2, lty = 2)
+```
+
+![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11.png) 
+
+
+---
+
+## Scatterplot - Using Color
+
+
+```r
+with(pollution, plot(latitude, pm25, col = region))
+abline(h = 12, lwd = 2, lty = 2)
+```
+
+![plot of chunk unnamed-chunk-12](figure/unnamed-chunk-12.png) 
+
+
+---
+
+## Multiple Scatterplots
+
+
+```r
+par(mfrow = c(1, 2), mar = c(5, 4, 2, 1))
+with(subset(pollution, region == "west"), plot(latitude, pm25, main = "West"))
+with(subset(pollution, region == "east"), plot(latitude, pm25, main = "East"))
+```
+
+![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13.png) 
+
+
+---
+
+## Summary
+
+* Exploratory plots are "quick and dirty"
+
+* Let you summarize the data (usually graphically) and highly any broad features
+
+* Explore basic questions and hypotheses (and perhaps rule them out)
+
+* Suggest modeling strategies for the "next step"
+
+---
+
 
 ## Further resources
 
 * [R Graph Gallery](http://gallery.r-enthusiasts.com/)
-* [ggplot2](http://cran.r-project.org/web/packages/ggplot2/index.html),[ggplot2 basic introduction](http://www.r-bloggers.com/basic-introduction-to-ggplot2/)
-* [lattice package](http://cran.r-project.org/web/packages/lattice/index.html),[lattice introduction](http://lmdvr.r-forge.r-project.org/figures/figures.html)
-* [R bloggers](http://www.r-bloggers.com/)
+* [R Bloggers](http://www.r-bloggers.com/)
 
 
 

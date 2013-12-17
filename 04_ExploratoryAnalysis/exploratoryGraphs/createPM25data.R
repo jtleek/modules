@@ -1,7 +1,7 @@
 ## Create PM2.5 dataset
 
 pm25 <- readRDS("~/projects/speciationdata/PM25/pm25_monitors.rds")
-use <- (substr(names(pm25), 1, 2) < 60) & (sapply(pm25, nrow) >= 1096)
+use <- (substr(names(pm25), 1, 2) <= 60) & (sapply(pm25, nrow) >= 1096)
 pm25 <- pm25[use]
 
 r <- lapply(pm25, function(x) {
@@ -28,5 +28,7 @@ cen <- readRDS("~/projects/source/fips/countycensus.rds")
 m <- merge(d, cen, by = "fips")
 m <- transform(m, lat = lat / 1e6, long = long / 1e6)
 d$region <- factor(m$long < -100, labels = c("east", "west"))
+d$longitude <- m$long
+d$latitude <- m$lat
 
 write.csv(d, file = "data/avgpm25.csv", row.names = FALSE)

@@ -68,7 +68,7 @@ mode        : selfcontained # {standalone, draft}
 Annual average PM2.5 averaged over the period 2008 through 2010
 
 ```{r readpm25data}
-pollution <- read.csv("data/avgpm25.csv", colClasses = c("numeric", "character", "character"))
+pollution <- read.csv("data/avgpm25.csv", colClasses = c("numeric", "character", "factor", "numeric", "numeric"))
 head(pollution)
 ```
 
@@ -103,6 +103,59 @@ summary(pollution$pm25)
 boxplot(pollution$pm25, col = "blue")
 ```
 
+---
+
+## Histogram
+
+```{r,fig.height=5}
+hist(pollution$pm25, col = "green")
+```
+
+---
+
+## Histogram
+
+```{r,fig.height=5}
+hist(pollution$pm25, col = "green")
+rug(pollution$pm25)
+```
+
+---
+
+## Histogram
+
+```{r,fig.height=5}
+hist(pollution$pm25, col = "green", breaks = 100)
+rug(pollution$pm25)
+```
+
+---
+
+## Overlaying Features
+
+```{r}
+boxplot(pollution$pm25, col = "blue")
+abline(h = 12)
+```
+
+
+---
+
+## Overlaying Features
+
+```{r,fig.height=5}
+hist(pollution$pm25, col = "green")
+abline(v = 12, lwd = 2)
+abline(v = median(pollution$pm25), col = "magenta", lwd = 4)
+```
+
+---
+
+## Barplot
+
+```{r}
+barplot(table(pollution$region), col = "wheat", main = "Number of Counties in Each Region")
+```
 
 ---
 
@@ -124,13 +177,69 @@ $> 2$ dimensions
 
 ---
 
+## Multiple Boxplots
+
+```{r}
+boxplot(pm25 ~ region, data = pollution, col = "red")
+```
+
+---
+
+## Multiple Histograms
+
+```{r,fig.width=8,fig.height=5}
+par(mfrow = c(2, 1), mar = c(4, 4, 2, 1))
+hist(subset(pollution, region == "east")$pm25, col = "green")
+hist(subset(pollution, region == "west")$pm25, col = "green")
+```
+
+---
+
+## Scatterplot
+
+```{r,fig.height=6}
+with(pollution, plot(latitude, pm25))
+abline(h = 12, lwd = 2, lty = 2)
+```
+
+---
+
+## Scatterplot - Using Color
+
+```{r,fig.height=6}
+with(pollution, plot(latitude, pm25, col = region))
+abline(h = 12, lwd = 2, lty = 2)
+```
+
+---
+
+## Multiple Scatterplots
+
+```{r,fig.height=5.5,fig.width=12}
+par(mfrow = c(1, 2), mar = c(5, 4, 2, 1))
+with(subset(pollution, region == "west"), plot(latitude, pm25, main = "West"))
+with(subset(pollution, region == "east"), plot(latitude, pm25, main = "East"))
+```
+
+---
+
+## Summary
+
+* Exploratory plots are "quick and dirty"
+
+* Let you summarize the data (usually graphically) and highly any broad features
+
+* Explore basic questions and hypotheses (and perhaps rule them out)
+
+* Suggest modeling strategies for the "next step"
+
+---
+
 
 ## Further resources
 
 * [R Graph Gallery](http://gallery.r-enthusiasts.com/)
-* [ggplot2](http://cran.r-project.org/web/packages/ggplot2/index.html),[ggplot2 basic introduction](http://www.r-bloggers.com/basic-introduction-to-ggplot2/)
-* [lattice package](http://cran.r-project.org/web/packages/lattice/index.html),[lattice introduction](http://lmdvr.r-forge.r-project.org/figures/figures.html)
-* [R bloggers](http://www.r-bloggers.com/)
+* [R Bloggers](http://www.r-bloggers.com/)
 
 
 
