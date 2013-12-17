@@ -1,7 +1,7 @@
 ---
-title       : Principal components analysis and singular value decomposition
+title       : Principal Components Analysis and Singular Value Decomposition
 subtitle    : 
-author      : Jeffrey Leek, Assistant Professor of Biostatistics 
+author      : Roger D. Peng, Assistant Professor of Biostatistics 
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -15,19 +15,17 @@ mode        : selfcontained # {standalone, draft}
 ---
 
 
-
-
-
 ## Matrix data 
 
 
 ```r
-set.seed(12345); par(mar=rep(0.2,4))
-dataMatrix <- matrix(rnorm(400),nrow=40)
-image(1:10,1:40,t(dataMatrix)[,nrow(dataMatrix):1])
+set.seed(12345)
+par(mar = rep(0.2, 4))
+dataMatrix <- matrix(rnorm(400), nrow = 40)
+image(1:10, 1:40, t(dataMatrix)[, nrow(dataMatrix):1])
 ```
 
-<div class="rimage center"><img src="fig/randomData.png" title="plot of chunk randomData" alt="plot of chunk randomData" class="plot" /></div>
+![plot of chunk randomData](figure/randomData.png) 
 
 
 ---
@@ -36,11 +34,11 @@ image(1:10,1:40,t(dataMatrix)[,nrow(dataMatrix):1])
 
 
 ```r
-par(mar=rep(0.2,4))
+par(mar = rep(0.2, 4))
 heatmap(dataMatrix)
 ```
 
-<div class="rimage center"><img src="fig/unnamed-chunk-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div>
+![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1.png) 
 
 
 ---
@@ -50,13 +48,13 @@ heatmap(dataMatrix)
 
 ```r
 set.seed(678910)
-for(i in 1:40){
-  # flip a coin
-  coinFlip <- rbinom(1,size=1,prob=0.5)
-  # if coin is heads add a common pattern to that row
-  if(coinFlip){
-    dataMatrix[i,] <- dataMatrix[i,] + rep(c(0,3),each=5)
-  }
+for (i in 1:40) {
+    # flip a coin
+    coinFlip <- rbinom(1, size = 1, prob = 0.5)
+    # if coin is heads add a common pattern to that row
+    if (coinFlip) {
+        dataMatrix[i, ] <- dataMatrix[i, ] + rep(c(0, 3), each = 5)
+    }
 }
 ```
 
@@ -68,11 +66,11 @@ for(i in 1:40){
 
 
 ```r
-par(mar=rep(0.2,4))
-image(1:10,1:40,t(dataMatrix)[,nrow(dataMatrix):1])
+par(mar = rep(0.2, 4))
+image(1:10, 1:40, t(dataMatrix)[, nrow(dataMatrix):1])
 ```
 
-<div class="rimage center"><img src="fig/unnamed-chunk-2.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" class="plot" /></div>
+![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2.png) 
 
 
 
@@ -82,11 +80,11 @@ image(1:10,1:40,t(dataMatrix)[,nrow(dataMatrix):1])
 
 
 ```r
-par(mar=rep(0.2,4))
+par(mar = rep(0.2, 4))
 heatmap(dataMatrix)
 ```
 
-<div class="rimage center"><img src="fig/unnamed-chunk-3.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" class="plot" /></div>
+![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3.png) 
 
 
 
@@ -99,14 +97,15 @@ heatmap(dataMatrix)
 
 
 ```r
-hh <- hclust(dist(dataMatrix)); dataMatrixOrdered <- dataMatrix[hh$order,]
-par(mfrow=c(1,3))
-image(t(dataMatrixOrdered)[,nrow(dataMatrixOrdered):1])
-plot(rowMeans(dataMatrixOrdered),40:1,,xlab="Row",ylab="Row Mean",pch=19)
-plot(colMeans(dataMatrixOrdered),xlab="Column",ylab="Column Mean",pch=19)
+hh <- hclust(dist(dataMatrix))
+dataMatrixOrdered <- dataMatrix[hh$order, ]
+par(mfrow = c(1, 3))
+image(t(dataMatrixOrdered)[, nrow(dataMatrixOrdered):1])
+plot(rowMeans(dataMatrixOrdered), 40:1, , xlab = "Row Mean", ylab = "Row", pch = 19)
+plot(colMeans(dataMatrixOrdered), xlab = "Column", ylab = "Column Mean", pch = 19)
 ```
 
-<div class="rimage center"><img src="fig/oChunk.png" title="plot of chunk oChunk" alt="plot of chunk oChunk" class="plot" /></div>
+![plot of chunk oChunk](figure/oChunk.png) 
 
 
 ---
@@ -144,29 +143,30 @@ The principal components are equal to the right singular values if you first sca
 
 ```r
 svd1 <- svd(scale(dataMatrixOrdered))
-par(mfrow=c(1,3))
-image(t(dataMatrixOrdered)[,nrow(dataMatrixOrdered):1])
-plot(svd1$u[,1],40:1,,xlab="Row",ylab="First left singular vector",pch=19)
-plot(svd1$v[,1],xlab="Column",ylab="First right singular vector",pch=19)
+par(mfrow = c(1, 3))
+image(t(dataMatrixOrdered)[, nrow(dataMatrixOrdered):1])
+plot(svd1$u[, 1], 40:1, , xlab = "Row", ylab = "First left singular vector", 
+    pch = 19)
+plot(svd1$v[, 1], xlab = "Column", ylab = "First right singular vector", pch = 19)
 ```
 
-<div class="rimage center"><img src="fig/unnamed-chunk-4.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" class="plot" /></div>
+![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4.png) 
 
 
 
 ---
 
-## Components of the SVD - d and variance explained
+## Components of the SVD - Variance explained
 
 
 ```r
-svd1 <- svd(scale(dataMatrixOrdered))
-par(mfrow=c(1,2))
-plot(svd1$d,xlab="Column",ylab="Singluar value",pch=19)
-plot(svd1$d^2/sum(svd1$d^2),xlab="Column",ylab="Percent of variance explained",pch=19)
+par(mfrow = c(1, 2))
+plot(svd1$d, xlab = "Column", ylab = "Singluar value", pch = 19)
+plot(svd1$d^2/sum(svd1$d^2), xlab = "Column", ylab = "Prop. of variance explained", 
+    pch = 19)
 ```
 
-<div class="rimage center"><img src="fig/unnamed-chunk-5.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" class="plot" /></div>
+![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5.png) 
 
 
 
@@ -177,12 +177,13 @@ plot(svd1$d^2/sum(svd1$d^2),xlab="Column",ylab="Percent of variance explained",p
 
 ```r
 svd1 <- svd(scale(dataMatrixOrdered))
-pca1 <- prcomp(dataMatrixOrdered,scale=TRUE)
-plot(pca1$rotation[,1],svd1$v[,1],pch=19,xlab="Principal Component 1",ylab="Right Singular Vector 1")
-abline(c(0,1))
+pca1 <- prcomp(dataMatrixOrdered, scale = TRUE)
+plot(pca1$rotation[, 1], svd1$v[, 1], pch = 19, xlab = "Principal Component 1", 
+    ylab = "Right Singular Vector 1")
+abline(c(0, 1))
 ```
 
-<div class="rimage center"><img src="fig/unnamed-chunk-6.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" class="plot" /></div>
+![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6.png) 
 
 
 ---
@@ -197,10 +198,10 @@ svd1 <- svd(constantMatrix)
 par(mfrow=c(1,3))
 image(t(constantMatrix)[,nrow(constantMatrix):1])
 plot(svd1$d,xlab="Column",ylab="Singluar value",pch=19)
-plot(svd1$d^2/sum(svd1$d^2),xlab="Column",ylab="Percent of variance explained",pch=19)
+plot(svd1$d^2/sum(svd1$d^2),xlab="Column",ylab="Prop. of variance explained",pch=19)
 ```
 
-<div class="rimage center"><img src="fig/unnamed-chunk-7.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" class="plot" /></div>
+![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7.png) 
 
 
 
@@ -211,19 +212,20 @@ plot(svd1$d^2/sum(svd1$d^2),xlab="Column",ylab="Percent of variance explained",p
 
 ```r
 set.seed(678910)
-for(i in 1:40){
-  # flip a coin
-  coinFlip1 <- rbinom(1,size=1,prob=0.5)
-  coinFlip2 <- rbinom(1,size=1,prob=0.5)
-  # if coin is heads add a common pattern to that row
-  if(coinFlip1){
-    dataMatrix[i,] <- dataMatrix[i,] + rep(c(0,5),each=5)
-  }
-  if(coinFlip2){
-    dataMatrix[i,] <- dataMatrix[i,] + rep(c(0,5),5)
-  }
+for (i in 1:40) {
+    # flip a coin
+    coinFlip1 <- rbinom(1, size = 1, prob = 0.5)
+    coinFlip2 <- rbinom(1, size = 1, prob = 0.5)
+    # if coin is heads add a common pattern to that row
+    if (coinFlip1) {
+        dataMatrix[i, ] <- dataMatrix[i, ] + rep(c(0, 5), each = 5)
+    }
+    if (coinFlip2) {
+        dataMatrix[i, ] <- dataMatrix[i, ] + rep(c(0, 5), 5)
+    }
 }
-hh <- hclust(dist(dataMatrix)); dataMatrixOrdered <- dataMatrix[hh$order,]
+hh <- hclust(dist(dataMatrix))
+dataMatrixOrdered <- dataMatrix[hh$order, ]
 ```
 
 
@@ -234,13 +236,13 @@ hh <- hclust(dist(dataMatrix)); dataMatrixOrdered <- dataMatrix[hh$order,]
 
 ```r
 svd2 <- svd(scale(dataMatrixOrdered))
-par(mfrow=c(1,3))
-image(t(dataMatrixOrdered)[,nrow(dataMatrixOrdered):1])
-plot(rep(c(0,1),each=5),pch=19,xlab="Column",ylab="Pattern 1")
-plot(rep(c(0,1),5),pch=19,xlab="Column",ylab="Pattern 2")
+par(mfrow = c(1, 3))
+image(t(dataMatrixOrdered)[, nrow(dataMatrixOrdered):1])
+plot(rep(c(0, 1), each = 5), pch = 19, xlab = "Column", ylab = "Pattern 1")
+plot(rep(c(0, 1), 5), pch = 19, xlab = "Column", ylab = "Pattern 2")
 ```
 
-<div class="rimage center"><img src="fig/unnamed-chunk-8.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" class="plot" /></div>
+![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8.png) 
 
 
 ---
@@ -250,13 +252,13 @@ plot(rep(c(0,1),5),pch=19,xlab="Column",ylab="Pattern 2")
 
 ```r
 svd2 <- svd(scale(dataMatrixOrdered))
-par(mfrow=c(1,3))
-image(t(dataMatrixOrdered)[,nrow(dataMatrixOrdered):1])
-plot(svd2$v[,1],pch=19,xlab="Column",ylab="First right singluar vector")
-plot(svd2$v[,2],pch=19,xlab="Column",ylab="Second right singluar vector")
+par(mfrow = c(1, 3))
+image(t(dataMatrixOrdered)[, nrow(dataMatrixOrdered):1])
+plot(svd2$v[, 1], pch = 19, xlab = "Column", ylab = "First right singluar vector")
+plot(svd2$v[, 2], pch = 19, xlab = "Column", ylab = "Second right singluar vector")
 ```
 
-<div class="rimage center"><img src="fig/unnamed-chunk-9.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" class="plot" /></div>
+![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9.png) 
 
 
 
@@ -267,12 +269,13 @@ plot(svd2$v[,2],pch=19,xlab="Column",ylab="Second right singluar vector")
 
 ```r
 svd1 <- svd(scale(dataMatrixOrdered))
-par(mfrow=c(1,2))
-plot(svd1$d,xlab="Column",ylab="Singluar value",pch=19)
-plot(svd1$d^2/sum(svd1$d^2),xlab="Column",ylab="Percent of variance explained",pch=19)
+par(mfrow = c(1, 2))
+plot(svd1$d, xlab = "Column", ylab = "Singluar value", pch = 19)
+plot(svd1$d^2/sum(svd1$d^2), xlab = "Column", ylab = "Percent of variance explained", 
+    pch = 19)
 ```
 
-<div class="rimage center"><img src="fig/unnamed-chunk-10.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" class="plot" /></div>
+![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10.png) 
 
 
 
@@ -284,21 +287,23 @@ plot(svd1$d^2/sum(svd1$d^2),xlab="Column",ylab="Percent of variance explained",p
 Important parameters: _m_,_tol_
 
 ```r
-bigMatrix <- matrix(rnorm(1e4*40),nrow=1e4)
+bigMatrix <- matrix(rnorm(10000 * 40), nrow = 10000)
 system.time(svd(scale(bigMatrix)))
 ```
 
 ```
-   user  system elapsed 
-  0.109   0.012   0.123 
+##    user  system elapsed 
+##   0.158   0.009   0.166
 ```
 
 ```r
-system.time(fast.svd(scale(bigMatrix),tol=0))
+library(corpcor)
+system.time(fast.svd(scale(bigMatrix), tol = 0))
 ```
 
 ```
-Timing stopped at: 0 0 0 
+##    user  system elapsed 
+##   0.073   0.005   0.079
 ```
 
 
@@ -310,12 +315,13 @@ Timing stopped at: 0 0 0
 
 ```r
 dataMatrix2 <- dataMatrixOrdered
-dataMatrix2[sample(1:100,size=40,replace=F)] <- NA
+## Randomly insert some missing data
+dataMatrix2[sample(1:100, size = 40, replace = FALSE)] <- NA
 svd1 <- svd(scale(dataMatrix2))
 ```
 
 ```
-Error: infinite or missing values in 'x'
+## Error: infinite or missing values in 'x'
 ```
 
 
@@ -328,13 +334,13 @@ Error: infinite or missing values in 'x'
 ```r
 library(impute)
 dataMatrix2 <- dataMatrixOrdered
-dataMatrix2[sample(1:100,size=40,replace=F)] <- NA
+dataMatrix2[sample(1:100,size=40,replace=FALSE)] <- NA
 dataMatrix2 <- impute.knn(dataMatrix2)$data
 svd1 <- svd(scale(dataMatrixOrdered)); svd2 <- svd(scale(dataMatrix2))
 par(mfrow=c(1,2)); plot(svd1$v[,1],pch=19); plot(svd2$v[,1],pch=19)
 ```
 
-<div class="rimage center"><img src="fig/unnamed-chunk-13.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" class="plot" /></div>
+![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13.png) 
 
 
 
@@ -343,14 +349,15 @@ par(mfrow=c(1,2)); plot(svd1$v[,1],pch=19); plot(svd2$v[,1],pch=19)
 
 ## Face example
 
+<!-- ## source("http://dl.dropbox.com/u/7710864/courseraPublic/myplclust.R") -->
+
 
 ```r
-download.file("https://spark-public.s3.amazonaws.com/dataanalysis/face.rda",destfile="./data/face.rda",method="curl")
-load("./data/face.rda")
-image(t(faceData)[,nrow(faceData):1])
+load("data/face.rda")
+image(t(faceData)[, nrow(faceData):1])
 ```
 
-<div class="rimage center"><img src="fig/loadFaceData_.png" title="plot of chunk loadFaceData " alt="plot of chunk loadFaceData " class="plot" /></div>
+![plot of chunk loadFaceData ](figure/loadFaceData_.png) 
 
 
 
@@ -361,10 +368,10 @@ image(t(faceData)[,nrow(faceData):1])
 
 ```r
 svd1 <- svd(scale(faceData))
-plot(svd1$d^2/sum(svd1$d^2),pch=19,xlab="Singluar vector",ylab="Variance explained")
+plot(svd1$d^2/sum(svd1$d^2), pch = 19, xlab = "Singluar vector", ylab = "Variance explained")
 ```
 
-<div class="rimage center"><img src="fig/unnamed-chunk-14.png" title="plot of chunk unnamed-chunk-14" alt="plot of chunk unnamed-chunk-14" class="plot" /></div>
+![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14.png) 
 
 
 ---
@@ -378,11 +385,11 @@ svd1 <- svd(scale(faceData))
 # %*% is matrix multiplication
 
 # Here svd1$d[1] is a constant
-approx1 <- svd1$u[,1] %*% t(svd1$v[,1]) * svd1$d[1]
+approx1 <- svd1$u[, 1] %*% t(svd1$v[, 1]) * svd1$d[1]
 
 # In these examples we need to make the diagonal matrix out of d
-approx5 <- svd1$u[,1:5] %*% diag(svd1$d[1:5])%*% t(svd1$v[,1:5]) 
-approx10 <- svd1$u[,1:10] %*% diag(svd1$d[1:10])%*% t(svd1$v[,1:10]) 
+approx5 <- svd1$u[, 1:5] %*% diag(svd1$d[1:5]) %*% t(svd1$v[, 1:5])
+approx10 <- svd1$u[, 1:10] %*% diag(svd1$d[1:10]) %*% t(svd1$v[, 1:10])
 ```
 
 
@@ -391,14 +398,14 @@ approx10 <- svd1$u[,1:10] %*% diag(svd1$d[1:10])%*% t(svd1$v[,1:10])
 ## Face example - plot approximations
 
 ```r
-par(mfrow=c(1,4))
-image(t(faceData)[,nrow(faceData):1])
-image(t(approx10)[,nrow(approx10):1])
-image(t(approx5)[,nrow(approx5):1])
-image(t(approx1)[,nrow(approx1):1])
+par(mfrow = c(1, 4))
+image(t(faceData)[, nrow(faceData):1])  ## Original data
+image(t(approx10)[, nrow(approx10):1])
+image(t(approx5)[, nrow(approx5):1])
+image(t(approx1)[, nrow(approx1):1])
 ```
 
-<div class="rimage center"><img src="fig/unnamed-chunk-15.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" class="plot" /></div>
+![plot of chunk unnamed-chunk-15](figure/unnamed-chunk-15.png) 
 
 
 

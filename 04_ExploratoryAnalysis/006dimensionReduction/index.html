@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Principal components analysis and singular value decomposition</title>
+  <title>Principal Components Analysis and Singular Value Decomposition</title>
   <meta charset="utf-8">
-  <meta name="description" content="Principal components analysis and singular value decomposition">
-  <meta name="author" content="Jeffrey Leek, Assistant Professor of Biostatistics">
+  <meta name="description" content="Principal Components Analysis and Singular Value Decomposition">
+  <meta name="author" content="Roger D. Peng, Assistant Professor of Biostatistics">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -19,6 +19,11 @@
   </script>
   
     <link rel="stylesheet" href = "../../assets/css/custom.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BACKUP.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BASE.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.LOCAL.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.orig">
+<link rel="stylesheet" href = "../../assets/css/custom.css.REMOTE.546.css">
 <link rel="stylesheet" href = "../../assets/css/ribbons.css">
 
 </head>
@@ -36,9 +41,9 @@
         <img src="../../assets/img/bloomberg_shield.png">
       </aside>
       <hgroup class="auto-fadein">
-        <h1>Principal components analysis and singular value decomposition</h1>
+        <h1>Principal Components Analysis and Singular Value Decomposition</h1>
         <h2></h2>
-        <p>Jeffrey Leek, Assistant Professor of Biostatistics<br/>Johns Hopkins Bloomberg School of Public Health</p>
+        <p>Roger D. Peng, Assistant Professor of Biostatistics<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
           </slide>
 
@@ -48,12 +53,13 @@
     <h2>Matrix data</h2>
   </hgroup>
   <article>
-    <pre><code class="r">set.seed(12345); par(mar=rep(0.2,4))
-dataMatrix &lt;- matrix(rnorm(400),nrow=40)
-image(1:10,1:40,t(dataMatrix)[,nrow(dataMatrix):1])
+    <pre><code class="r">set.seed(12345)
+par(mar = rep(0.2, 4))
+dataMatrix &lt;- matrix(rnorm(400), nrow = 40)
+image(1:10, 1:40, t(dataMatrix)[, nrow(dataMatrix):1])
 </code></pre>
 
-<div class="rimage center"><img src="fig/randomData.png" title="plot of chunk randomData" alt="plot of chunk randomData" class="plot" /></div>
+<p><img src="figure/randomData.png" alt="plot of chunk randomData"> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -64,11 +70,11 @@ image(1:10,1:40,t(dataMatrix)[,nrow(dataMatrix):1])
     <h2>Cluster the data</h2>
   </hgroup>
   <article>
-    <pre><code class="r">par(mar=rep(0.2,4))
+    <pre><code class="r">par(mar = rep(0.2, 4))
 heatmap(dataMatrix)
 </code></pre>
 
-<div class="rimage center"><img src="fig/unnamed-chunk-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div>
+<p><img src="figure/unnamed-chunk-1.png" alt="plot of chunk unnamed-chunk-1"> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -80,13 +86,13 @@ heatmap(dataMatrix)
   </hgroup>
   <article>
     <pre><code class="r">set.seed(678910)
-for(i in 1:40){
-  # flip a coin
-  coinFlip &lt;- rbinom(1,size=1,prob=0.5)
-  # if coin is heads add a common pattern to that row
-  if(coinFlip){
-    dataMatrix[i,] &lt;- dataMatrix[i,] + rep(c(0,3),each=5)
-  }
+for (i in 1:40) {
+    # flip a coin
+    coinFlip &lt;- rbinom(1, size = 1, prob = 0.5)
+    # if coin is heads add a common pattern to that row
+    if (coinFlip) {
+        dataMatrix[i, ] &lt;- dataMatrix[i, ] + rep(c(0, 3), each = 5)
+    }
 }
 </code></pre>
 
@@ -99,11 +105,11 @@ for(i in 1:40){
     <h2>What if we add a pattern? - the data</h2>
   </hgroup>
   <article>
-    <pre><code class="r">par(mar=rep(0.2,4))
-image(1:10,1:40,t(dataMatrix)[,nrow(dataMatrix):1])
+    <pre><code class="r">par(mar = rep(0.2, 4))
+image(1:10, 1:40, t(dataMatrix)[, nrow(dataMatrix):1])
 </code></pre>
 
-<div class="rimage center"><img src="fig/unnamed-chunk-2.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" class="plot" /></div>
+<p><img src="figure/unnamed-chunk-2.png" alt="plot of chunk unnamed-chunk-2"> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -114,11 +120,11 @@ image(1:10,1:40,t(dataMatrix)[,nrow(dataMatrix):1])
     <h2>What if we add a pattern? - the clustered data</h2>
   </hgroup>
   <article>
-    <pre><code class="r">par(mar=rep(0.2,4))
+    <pre><code class="r">par(mar = rep(0.2, 4))
 heatmap(dataMatrix)
 </code></pre>
 
-<div class="rimage center"><img src="fig/unnamed-chunk-3.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" class="plot" /></div>
+<p><img src="figure/unnamed-chunk-3.png" alt="plot of chunk unnamed-chunk-3"> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -129,14 +135,15 @@ heatmap(dataMatrix)
     <h2>Patterns in rows and columns</h2>
   </hgroup>
   <article>
-    <pre><code class="r">hh &lt;- hclust(dist(dataMatrix)); dataMatrixOrdered &lt;- dataMatrix[hh$order,]
-par(mfrow=c(1,3))
-image(t(dataMatrixOrdered)[,nrow(dataMatrixOrdered):1])
-plot(rowMeans(dataMatrixOrdered),40:1,,xlab=&quot;Row&quot;,ylab=&quot;Row Mean&quot;,pch=19)
-plot(colMeans(dataMatrixOrdered),xlab=&quot;Column&quot;,ylab=&quot;Column Mean&quot;,pch=19)
+    <pre><code class="r">hh &lt;- hclust(dist(dataMatrix))
+dataMatrixOrdered &lt;- dataMatrix[hh$order, ]
+par(mfrow = c(1, 3))
+image(t(dataMatrixOrdered)[, nrow(dataMatrixOrdered):1])
+plot(rowMeans(dataMatrixOrdered), 40:1, , xlab = &quot;Row Mean&quot;, ylab = &quot;Row&quot;, pch = 19)
+plot(colMeans(dataMatrixOrdered), xlab = &quot;Column&quot;, ylab = &quot;Column Mean&quot;, pch = 19)
 </code></pre>
 
-<div class="rimage center"><img src="fig/oChunk.png" title="plot of chunk oChunk" alt="plot of chunk oChunk" class="plot" /></div>
+<p><img src="figure/oChunk.png" alt="plot of chunk oChunk"> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -187,13 +194,14 @@ plot(colMeans(dataMatrixOrdered),xlab=&quot;Column&quot;,ylab=&quot;Column Mean&
   </hgroup>
   <article>
     <pre><code class="r">svd1 &lt;- svd(scale(dataMatrixOrdered))
-par(mfrow=c(1,3))
-image(t(dataMatrixOrdered)[,nrow(dataMatrixOrdered):1])
-plot(svd1$u[,1],40:1,,xlab=&quot;Row&quot;,ylab=&quot;First left singular vector&quot;,pch=19)
-plot(svd1$v[,1],xlab=&quot;Column&quot;,ylab=&quot;First right singular vector&quot;,pch=19)
+par(mfrow = c(1, 3))
+image(t(dataMatrixOrdered)[, nrow(dataMatrixOrdered):1])
+plot(svd1$u[, 1], 40:1, , xlab = &quot;Row&quot;, ylab = &quot;First left singular vector&quot;, 
+    pch = 19)
+plot(svd1$v[, 1], xlab = &quot;Column&quot;, ylab = &quot;First right singular vector&quot;, pch = 19)
 </code></pre>
 
-<div class="rimage center"><img src="fig/unnamed-chunk-4.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" class="plot" /></div>
+<p><img src="figure/unnamed-chunk-4.png" alt="plot of chunk unnamed-chunk-4"> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -201,16 +209,16 @@ plot(svd1$v[,1],xlab=&quot;Column&quot;,ylab=&quot;First right singular vector&q
 
       <slide class="" id="slide-10" style="background:;">
   <hgroup>
-    <h2>Components of the SVD - d and variance explained</h2>
+    <h2>Components of the SVD - Variance explained</h2>
   </hgroup>
   <article>
-    <pre><code class="r">svd1 &lt;- svd(scale(dataMatrixOrdered))
-par(mfrow=c(1,2))
-plot(svd1$d,xlab=&quot;Column&quot;,ylab=&quot;Singluar value&quot;,pch=19)
-plot(svd1$d^2/sum(svd1$d^2),xlab=&quot;Column&quot;,ylab=&quot;Percent of variance explained&quot;,pch=19)
+    <pre><code class="r">par(mfrow = c(1, 2))
+plot(svd1$d, xlab = &quot;Column&quot;, ylab = &quot;Singluar value&quot;, pch = 19)
+plot(svd1$d^2/sum(svd1$d^2), xlab = &quot;Column&quot;, ylab = &quot;Prop. of variance explained&quot;, 
+    pch = 19)
 </code></pre>
 
-<div class="rimage center"><img src="fig/unnamed-chunk-5.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" class="plot" /></div>
+<p><img src="figure/unnamed-chunk-5.png" alt="plot of chunk unnamed-chunk-5"> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -222,12 +230,13 @@ plot(svd1$d^2/sum(svd1$d^2),xlab=&quot;Column&quot;,ylab=&quot;Percent of varian
   </hgroup>
   <article>
     <pre><code class="r">svd1 &lt;- svd(scale(dataMatrixOrdered))
-pca1 &lt;- prcomp(dataMatrixOrdered,scale=TRUE)
-plot(pca1$rotation[,1],svd1$v[,1],pch=19,xlab=&quot;Principal Component 1&quot;,ylab=&quot;Right Singular Vector 1&quot;)
-abline(c(0,1))
+pca1 &lt;- prcomp(dataMatrixOrdered, scale = TRUE)
+plot(pca1$rotation[, 1], svd1$v[, 1], pch = 19, xlab = &quot;Principal Component 1&quot;, 
+    ylab = &quot;Right Singular Vector 1&quot;)
+abline(c(0, 1))
 </code></pre>
 
-<div class="rimage center"><img src="fig/unnamed-chunk-6.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" class="plot" /></div>
+<p><img src="figure/unnamed-chunk-6.png" alt="plot of chunk unnamed-chunk-6"> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -244,10 +253,10 @@ svd1 &lt;- svd(constantMatrix)
 par(mfrow=c(1,3))
 image(t(constantMatrix)[,nrow(constantMatrix):1])
 plot(svd1$d,xlab=&quot;Column&quot;,ylab=&quot;Singluar value&quot;,pch=19)
-plot(svd1$d^2/sum(svd1$d^2),xlab=&quot;Column&quot;,ylab=&quot;Percent of variance explained&quot;,pch=19)
+plot(svd1$d^2/sum(svd1$d^2),xlab=&quot;Column&quot;,ylab=&quot;Prop. of variance explained&quot;,pch=19)
 </code></pre>
 
-<div class="rimage center"><img src="fig/unnamed-chunk-7.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" class="plot" /></div>
+<p><img src="figure/unnamed-chunk-7.png" alt="plot of chunk unnamed-chunk-7"> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -259,19 +268,20 @@ plot(svd1$d^2/sum(svd1$d^2),xlab=&quot;Column&quot;,ylab=&quot;Percent of varian
   </hgroup>
   <article>
     <pre><code class="r">set.seed(678910)
-for(i in 1:40){
-  # flip a coin
-  coinFlip1 &lt;- rbinom(1,size=1,prob=0.5)
-  coinFlip2 &lt;- rbinom(1,size=1,prob=0.5)
-  # if coin is heads add a common pattern to that row
-  if(coinFlip1){
-    dataMatrix[i,] &lt;- dataMatrix[i,] + rep(c(0,5),each=5)
-  }
-  if(coinFlip2){
-    dataMatrix[i,] &lt;- dataMatrix[i,] + rep(c(0,5),5)
-  }
+for (i in 1:40) {
+    # flip a coin
+    coinFlip1 &lt;- rbinom(1, size = 1, prob = 0.5)
+    coinFlip2 &lt;- rbinom(1, size = 1, prob = 0.5)
+    # if coin is heads add a common pattern to that row
+    if (coinFlip1) {
+        dataMatrix[i, ] &lt;- dataMatrix[i, ] + rep(c(0, 5), each = 5)
+    }
+    if (coinFlip2) {
+        dataMatrix[i, ] &lt;- dataMatrix[i, ] + rep(c(0, 5), 5)
+    }
 }
-hh &lt;- hclust(dist(dataMatrix)); dataMatrixOrdered &lt;- dataMatrix[hh$order,]
+hh &lt;- hclust(dist(dataMatrix))
+dataMatrixOrdered &lt;- dataMatrix[hh$order, ]
 </code></pre>
 
   </article>
@@ -284,13 +294,13 @@ hh &lt;- hclust(dist(dataMatrix)); dataMatrixOrdered &lt;- dataMatrix[hh$order,]
   </hgroup>
   <article>
     <pre><code class="r">svd2 &lt;- svd(scale(dataMatrixOrdered))
-par(mfrow=c(1,3))
-image(t(dataMatrixOrdered)[,nrow(dataMatrixOrdered):1])
-plot(rep(c(0,1),each=5),pch=19,xlab=&quot;Column&quot;,ylab=&quot;Pattern 1&quot;)
-plot(rep(c(0,1),5),pch=19,xlab=&quot;Column&quot;,ylab=&quot;Pattern 2&quot;)
+par(mfrow = c(1, 3))
+image(t(dataMatrixOrdered)[, nrow(dataMatrixOrdered):1])
+plot(rep(c(0, 1), each = 5), pch = 19, xlab = &quot;Column&quot;, ylab = &quot;Pattern 1&quot;)
+plot(rep(c(0, 1), 5), pch = 19, xlab = &quot;Column&quot;, ylab = &quot;Pattern 2&quot;)
 </code></pre>
 
-<div class="rimage center"><img src="fig/unnamed-chunk-8.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" class="plot" /></div>
+<p><img src="figure/unnamed-chunk-8.png" alt="plot of chunk unnamed-chunk-8"> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -302,13 +312,13 @@ plot(rep(c(0,1),5),pch=19,xlab=&quot;Column&quot;,ylab=&quot;Pattern 2&quot;)
   </hgroup>
   <article>
     <pre><code class="r">svd2 &lt;- svd(scale(dataMatrixOrdered))
-par(mfrow=c(1,3))
-image(t(dataMatrixOrdered)[,nrow(dataMatrixOrdered):1])
-plot(svd2$v[,1],pch=19,xlab=&quot;Column&quot;,ylab=&quot;First right singluar vector&quot;)
-plot(svd2$v[,2],pch=19,xlab=&quot;Column&quot;,ylab=&quot;Second right singluar vector&quot;)
+par(mfrow = c(1, 3))
+image(t(dataMatrixOrdered)[, nrow(dataMatrixOrdered):1])
+plot(svd2$v[, 1], pch = 19, xlab = &quot;Column&quot;, ylab = &quot;First right singluar vector&quot;)
+plot(svd2$v[, 2], pch = 19, xlab = &quot;Column&quot;, ylab = &quot;Second right singluar vector&quot;)
 </code></pre>
 
-<div class="rimage center"><img src="fig/unnamed-chunk-9.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" class="plot" /></div>
+<p><img src="figure/unnamed-chunk-9.png" alt="plot of chunk unnamed-chunk-9"> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -320,12 +330,13 @@ plot(svd2$v[,2],pch=19,xlab=&quot;Column&quot;,ylab=&quot;Second right singluar 
   </hgroup>
   <article>
     <pre><code class="r">svd1 &lt;- svd(scale(dataMatrixOrdered))
-par(mfrow=c(1,2))
-plot(svd1$d,xlab=&quot;Column&quot;,ylab=&quot;Singluar value&quot;,pch=19)
-plot(svd1$d^2/sum(svd1$d^2),xlab=&quot;Column&quot;,ylab=&quot;Percent of variance explained&quot;,pch=19)
+par(mfrow = c(1, 2))
+plot(svd1$d, xlab = &quot;Column&quot;, ylab = &quot;Singluar value&quot;, pch = 19)
+plot(svd1$d^2/sum(svd1$d^2), xlab = &quot;Column&quot;, ylab = &quot;Percent of variance explained&quot;, 
+    pch = 19)
 </code></pre>
 
-<div class="rimage center"><img src="fig/unnamed-chunk-10.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" class="plot" /></div>
+<p><img src="figure/unnamed-chunk-10.png" alt="plot of chunk unnamed-chunk-10"> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -338,18 +349,20 @@ plot(svd1$d^2/sum(svd1$d^2),xlab=&quot;Column&quot;,ylab=&quot;Percent of varian
   <article>
     <p>Important parameters: <em>m</em>,<em>tol</em></p>
 
-<pre><code class="r">bigMatrix &lt;- matrix(rnorm(1e4*40),nrow=1e4)
+<pre><code class="r">bigMatrix &lt;- matrix(rnorm(10000 * 40), nrow = 10000)
 system.time(svd(scale(bigMatrix)))
 </code></pre>
 
-<pre><code>   user  system elapsed 
-  0.109   0.012   0.123 
+<pre><code>##    user  system elapsed 
+##   0.158   0.009   0.166
 </code></pre>
 
-<pre><code class="r">system.time(fast.svd(scale(bigMatrix),tol=0))
+<pre><code class="r">library(corpcor)
+system.time(fast.svd(scale(bigMatrix), tol = 0))
 </code></pre>
 
-<pre><code>Timing stopped at: 0 0 0 
+<pre><code>##    user  system elapsed 
+##   0.073   0.005   0.079
 </code></pre>
 
   </article>
@@ -362,11 +375,12 @@ system.time(svd(scale(bigMatrix)))
   </hgroup>
   <article>
     <pre><code class="r">dataMatrix2 &lt;- dataMatrixOrdered
-dataMatrix2[sample(1:100,size=40,replace=F)] &lt;- NA
+## Randomly insert some missing data
+dataMatrix2[sample(1:100, size = 40, replace = FALSE)] &lt;- NA
 svd1 &lt;- svd(scale(dataMatrix2))
 </code></pre>
 
-<pre><code>Error: infinite or missing values in &#39;x&#39;
+<pre><code>## Error: infinite or missing values in &#39;x&#39;
 </code></pre>
 
   </article>
@@ -380,13 +394,13 @@ svd1 &lt;- svd(scale(dataMatrix2))
   <article>
     <pre><code class="r">library(impute)
 dataMatrix2 &lt;- dataMatrixOrdered
-dataMatrix2[sample(1:100,size=40,replace=F)] &lt;- NA
+dataMatrix2[sample(1:100,size=40,replace=FALSE)] &lt;- NA
 dataMatrix2 &lt;- impute.knn(dataMatrix2)$data
 svd1 &lt;- svd(scale(dataMatrixOrdered)); svd2 &lt;- svd(scale(dataMatrix2))
 par(mfrow=c(1,2)); plot(svd1$v[,1],pch=19); plot(svd2$v[,1],pch=19)
 </code></pre>
 
-<div class="rimage center"><img src="fig/unnamed-chunk-13.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" class="plot" /></div>
+<p><img src="figure/unnamed-chunk-13.png" alt="plot of chunk unnamed-chunk-13"> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -397,12 +411,13 @@ par(mfrow=c(1,2)); plot(svd1$v[,1],pch=19); plot(svd2$v[,1],pch=19)
     <h2>Face example</h2>
   </hgroup>
   <article>
-    <pre><code class="r">download.file(&quot;https://spark-public.s3.amazonaws.com/dataanalysis/face.rda&quot;,destfile=&quot;./data/face.rda&quot;,method=&quot;curl&quot;)
-load(&quot;./data/face.rda&quot;)
-image(t(faceData)[,nrow(faceData):1])
+    <!-- ## source("http://dl.dropbox.com/u/7710864/courseraPublic/myplclust.R") -->
+
+<pre><code class="r">load(&quot;data/face.rda&quot;)
+image(t(faceData)[, nrow(faceData):1])
 </code></pre>
 
-<div class="rimage center"><img src="fig/loadFaceData_.png" title="plot of chunk loadFaceData " alt="plot of chunk loadFaceData " class="plot" /></div>
+<p><img src="figure/loadFaceData_.png" alt="plot of chunk loadFaceData "> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -414,10 +429,10 @@ image(t(faceData)[,nrow(faceData):1])
   </hgroup>
   <article>
     <pre><code class="r">svd1 &lt;- svd(scale(faceData))
-plot(svd1$d^2/sum(svd1$d^2),pch=19,xlab=&quot;Singluar vector&quot;,ylab=&quot;Variance explained&quot;)
+plot(svd1$d^2/sum(svd1$d^2), pch = 19, xlab = &quot;Singluar vector&quot;, ylab = &quot;Variance explained&quot;)
 </code></pre>
 
-<div class="rimage center"><img src="fig/unnamed-chunk-14.png" title="plot of chunk unnamed-chunk-14" alt="plot of chunk unnamed-chunk-14" class="plot" /></div>
+<p><img src="figure/unnamed-chunk-14.png" alt="plot of chunk unnamed-chunk-14"> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -433,11 +448,11 @@ svd1 &lt;- svd(scale(faceData))
 # %*% is matrix multiplication
 
 # Here svd1$d[1] is a constant
-approx1 &lt;- svd1$u[,1] %*% t(svd1$v[,1]) * svd1$d[1]
+approx1 &lt;- svd1$u[, 1] %*% t(svd1$v[, 1]) * svd1$d[1]
 
 # In these examples we need to make the diagonal matrix out of d
-approx5 &lt;- svd1$u[,1:5] %*% diag(svd1$d[1:5])%*% t(svd1$v[,1:5]) 
-approx10 &lt;- svd1$u[,1:10] %*% diag(svd1$d[1:10])%*% t(svd1$v[,1:10]) 
+approx5 &lt;- svd1$u[, 1:5] %*% diag(svd1$d[1:5]) %*% t(svd1$v[, 1:5])
+approx10 &lt;- svd1$u[, 1:10] %*% diag(svd1$d[1:10]) %*% t(svd1$v[, 1:10])
 </code></pre>
 
   </article>
@@ -449,14 +464,14 @@ approx10 &lt;- svd1$u[,1:10] %*% diag(svd1$d[1:10])%*% t(svd1$v[,1:10])
     <h2>Face example - plot approximations</h2>
   </hgroup>
   <article>
-    <pre><code class="r">par(mfrow=c(1,4))
-image(t(faceData)[,nrow(faceData):1])
-image(t(approx10)[,nrow(approx10):1])
-image(t(approx5)[,nrow(approx5):1])
-image(t(approx1)[,nrow(approx1):1])
+    <pre><code class="r">par(mfrow = c(1, 4))
+image(t(faceData)[, nrow(faceData):1])  ## Original data
+image(t(approx10)[, nrow(approx10):1])
+image(t(approx5)[, nrow(approx5):1])
+image(t(approx1)[, nrow(approx1):1])
 </code></pre>
 
-<div class="rimage center"><img src="fig/unnamed-chunk-15.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" class="plot" /></div>
+<p><img src="figure/unnamed-chunk-15.png" alt="plot of chunk unnamed-chunk-15"> </p>
 
   </article>
   <!-- Presenter Notes -->
