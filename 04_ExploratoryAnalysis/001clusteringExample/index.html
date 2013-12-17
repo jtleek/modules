@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Clustering example</title>
+  <title>Clustering Example</title>
   <meta charset="utf-8">
-  <meta name="description" content="Clustering example">
-  <meta name="author" content="Jeffrey Leek, Assistant Professor of Biostatistics">
+  <meta name="description" content="Clustering Example">
+  <meta name="author" content="Roger D. Peng, Associate Professor of Biostatistics">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -19,6 +19,11 @@
   </script>
   
     <link rel="stylesheet" href = "../../assets/css/custom.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BACKUP.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BASE.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.LOCAL.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.orig">
+<link rel="stylesheet" href = "../../assets/css/custom.css.REMOTE.546.css">
 <link rel="stylesheet" href = "../../assets/css/ribbons.css">
 
 </head>
@@ -36,9 +41,9 @@
         <img src="../../assets/img/bloomberg_shield.png">
       </aside>
       <hgroup class="auto-fadein">
-        <h1>Clustering example</h1>
+        <h1>Clustering Example</h1>
         <h2></h2>
-        <p>Jeffrey Leek, Assistant Professor of Biostatistics<br/>Johns Hopkins Bloomberg School of Public Health</p>
+        <p>Roger D. Peng, Associate Professor of Biostatistics<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
           </slide>
 
@@ -74,23 +79,24 @@
     <h2>Slightly processed data</h2>
   </hgroup>
   <article>
-    <pre><code class="r">download.file(&quot;https://dl.dropboxusercontent.com/u/7710864/courseraPublic/samsungData.rda&quot;
-              ,destfile=&quot;./data/samsungData.rda&quot;,method=&quot;curl&quot;)
-load(&quot;./data/samsungData.rda&quot;)
+    <p><a href="%22https://dl.dropboxusercontent.com/u/7710864/courseraPublic/samsungData.rda%22">Samsung data file</a></p>
+
+<pre><code class="r">load(&quot;data/samsungData.rda&quot;)
 names(samsungData)[1:12]
 </code></pre>
 
-<pre><code> [1] &quot;tBodyAcc-mean()-X&quot; &quot;tBodyAcc-mean()-Y&quot; &quot;tBodyAcc-mean()-Z&quot; &quot;tBodyAcc-std()-X&quot; 
- [5] &quot;tBodyAcc-std()-Y&quot;  &quot;tBodyAcc-std()-Z&quot;  &quot;tBodyAcc-mad()-X&quot;  &quot;tBodyAcc-mad()-Y&quot; 
- [9] &quot;tBodyAcc-mad()-Z&quot;  &quot;tBodyAcc-max()-X&quot;  &quot;tBodyAcc-max()-Y&quot;  &quot;tBodyAcc-max()-Z&quot; 
+<pre><code>##  [1] &quot;tBodyAcc-mean()-X&quot; &quot;tBodyAcc-mean()-Y&quot; &quot;tBodyAcc-mean()-Z&quot;
+##  [4] &quot;tBodyAcc-std()-X&quot;  &quot;tBodyAcc-std()-Y&quot;  &quot;tBodyAcc-std()-Z&quot; 
+##  [7] &quot;tBodyAcc-mad()-X&quot;  &quot;tBodyAcc-mad()-Y&quot;  &quot;tBodyAcc-mad()-Z&quot; 
+## [10] &quot;tBodyAcc-max()-X&quot;  &quot;tBodyAcc-max()-Y&quot;  &quot;tBodyAcc-max()-Z&quot;
 </code></pre>
 
 <pre><code class="r">table(samsungData$activity)
 </code></pre>
 
-<pre><code>
-  laying  sitting standing     walk walkdown   walkup 
-    1407     1286     1374     1226      986     1073 
+<pre><code>## 
+##   laying  sitting standing     walk walkdown   walkup 
+##     1407     1286     1374     1226      986     1073
 </code></pre>
 
   </article>
@@ -102,14 +108,16 @@ names(samsungData)[1:12]
     <h2>Plotting average acceleration for first subject</h2>
   </hgroup>
   <article>
-    <pre><code class="r">par(mfrow=c(1,2))
-numericActivity &lt;- as.numeric(as.factor(samsungData$activity))[samsungData$subject==1]
-plot(samsungData[samsungData$subject==1,1],pch=19,col=numericActivity,ylab=names(samsungData)[1])
-plot(samsungData[samsungData$subject==1,2],pch=19,col=numericActivity,ylab=names(samsungData)[2])
-legend(150,-0.1,legend=unique(samsungData$activity),col=unique(numericActivity),pch=19)
+    <pre><code class="r">par(mfrow = c(1, 2), mar = c(5, 4, 1, 1))
+samsungData &lt;- transform(samsungData, activity = factor(activity))
+sub1 &lt;- subset(samsungData, subject == 1)
+plot(sub1[, 1], col = sub1$activity, ylab = names(sub1)[1])
+plot(sub1[, 2], col = sub1$activity, ylab = names(sub1)[2])
+legend(&quot;bottomright&quot;, legend = unique(sub1$activity), col = unique(sub1$activity), 
+    pch = 1)
 </code></pre>
 
-<div class="rimage center"><img src="fig/processData.png" title="plot of chunk processData" alt="plot of chunk processData" class="plot" /></div>
+<p><img src="figure/processData.png" alt="plot of chunk processData"> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -120,13 +128,15 @@ legend(150,-0.1,legend=unique(samsungData$activity),col=unique(numericActivity),
     <h2>Clustering based just on average acceleration</h2>
   </hgroup>
   <article>
-    <pre><code class="r">source(&quot;http://dl.dropbox.com/u/7710864/courseraPublic/myplclust.R&quot;)
-distanceMatrix &lt;- dist(samsungData[samsungData$subject==1,1:3])
+    <!-- ## source("http://dl.dropbox.com/u/7710864/courseraPublic/myplclust.R")  -->
+
+<pre><code class="r">source(&quot;myplclust.R&quot;)
+distanceMatrix &lt;- dist(sub1[, 1:3])
 hclustering &lt;- hclust(distanceMatrix)
-myplclust(hclustering,lab.col=numericActivity)
+myplclust(hclustering, lab.col = unclass(sub1$activity))
 </code></pre>
 
-<div class="rimage center"><img src="fig/unnamed-chunk-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div>
+<p><img src="figure/unnamed-chunk-1.png" alt="plot of chunk unnamed-chunk-1"> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -137,12 +147,12 @@ myplclust(hclustering,lab.col=numericActivity)
     <h2>Plotting max acceleration for the first subject</h2>
   </hgroup>
   <article>
-    <pre><code class="r">par(mfrow=c(1,2))
-plot(samsungData[samsungData$subject==1,10],pch=19,col=numericActivity,ylab=names(samsungData)[10])
-plot(samsungData[samsungData$subject==1,11],pch=19,col=numericActivity,ylab=names(samsungData)[11])
+    <pre><code class="r">par(mfrow = c(1, 2))
+plot(sub1[, 10], pch = 19, col = sub1$activity, ylab = names(sub1)[10])
+plot(sub1[, 11], pch = 19, col = sub1$activity, ylab = names(sub1)[11])
 </code></pre>
 
-<div class="rimage center"><img src="fig/unnamed-chunk-2.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" class="plot" /></div>
+<p><img src="figure/unnamed-chunk-2.png" alt="plot of chunk unnamed-chunk-2"> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -153,13 +163,13 @@ plot(samsungData[samsungData$subject==1,11],pch=19,col=numericActivity,ylab=name
     <h2>Clustering based on maximum acceleration</h2>
   </hgroup>
   <article>
-    <pre><code class="r">source(&quot;http://dl.dropbox.com/u/7710864/courseraPublic/myplclust.R&quot;)
-distanceMatrix &lt;- dist(samsungData[samsungData$subject==1,10:12])
+    <pre><code class="r">source(&quot;myplclust.R&quot;)
+distanceMatrix &lt;- dist(sub1[, 10:12])
 hclustering &lt;- hclust(distanceMatrix)
-myplclust(hclustering,lab.col=numericActivity)
+myplclust(hclustering, lab.col = unclass(sub1$activity))
 </code></pre>
 
-<div class="rimage center"><img src="fig/unnamed-chunk-3.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" class="plot" /></div>
+<p><img src="figure/unnamed-chunk-3.png" alt="plot of chunk unnamed-chunk-3"> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -167,16 +177,16 @@ myplclust(hclustering,lab.col=numericActivity)
 
       <slide class="" id="slide-8" style="background:;">
   <hgroup>
-    <h2>Singular value decomposition</h2>
+    <h2>Singular Value Decomposition</h2>
   </hgroup>
   <article>
-    <pre><code class="r">svd1 = svd(scale(samsungData[samsungData$subject==1,-c(562,563)]))
-par(mfrow=c(1,2))
-plot(svd1$u[,1],col=numericActivity,pch=19)
-plot(svd1$u[,2],col=numericActivity,pch=19)
+    <pre><code class="r">svd1 = svd(scale(sub1[, -c(562, 563)]))
+par(mfrow = c(1, 2))
+plot(svd1$u[, 1], col = sub1$activity, pch = 19)
+plot(svd1$u[, 2], col = sub1$activity, pch = 19)
 </code></pre>
 
-<div class="rimage center"><img src="fig/svdChunk.png" title="plot of chunk svdChunk" alt="plot of chunk svdChunk" class="plot" /></div>
+<p><img src="figure/svdChunk.png" alt="plot of chunk svdChunk"> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -187,10 +197,10 @@ plot(svd1$u[,2],col=numericActivity,pch=19)
     <h2>Find maximum contributor</h2>
   </hgroup>
   <article>
-    <pre><code class="r">plot(svd1$v[,2],pch=19)
+    <pre><code class="r">plot(svd1$v[, 2], pch = 19)
 </code></pre>
 
-<div class="rimage center"><img src="fig/unnamed-chunk-4.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" class="plot" /></div>
+<p><img src="figure/unnamed-chunk-4.png" alt="plot of chunk unnamed-chunk-4"> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -201,13 +211,13 @@ plot(svd1$u[,2],col=numericActivity,pch=19)
     <h2>New clustering with maximum contributer</h2>
   </hgroup>
   <article>
-    <pre><code class="r">maxContrib &lt;- which.max(svd1$v[,2])
-distanceMatrix &lt;- dist(samsungData[samsungData$subject==1,c(10:12,maxContrib)])
+    <pre><code class="r">maxContrib &lt;- which.max(svd1$v[, 2])
+distanceMatrix &lt;- dist(sub1[, c(10:12, maxContrib)])
 hclustering &lt;- hclust(distanceMatrix)
-myplclust(hclustering,lab.col=numericActivity)                             
+myplclust(hclustering, lab.col = unclass(sub1$activity))
 </code></pre>
 
-<div class="rimage center"><img src="fig/unnamed-chunk-5.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" class="plot" /></div>
+<p><img src="figure/unnamed-chunk-5.png" alt="plot of chunk unnamed-chunk-5"> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -218,10 +228,10 @@ myplclust(hclustering,lab.col=numericActivity)
     <h2>New clustering with maximum contributer</h2>
   </hgroup>
   <article>
-    <pre><code class="r">names(samsungData)[maxContrib]                          
+    <pre><code class="r">names(samsungData)[maxContrib]
 </code></pre>
 
-<pre><code>[1] &quot;fBodyAcc-meanFreq()-Z&quot;
+<pre><code>## [1] &quot;fBodyAcc.meanFreq...Z&quot;
 </code></pre>
 
   </article>
@@ -233,18 +243,18 @@ myplclust(hclustering,lab.col=numericActivity)
     <h2>K-means clustering (nstart=1, first try)</h2>
   </hgroup>
   <article>
-    <pre><code class="r">kClust &lt;- kmeans(samsungData[samsungData$subject==1,-c(562,563)],centers=6)
-table(kClust$cluster,samsungData$activity[samsungData$subject==1])
+    <pre><code class="r">kClust &lt;- kmeans(sub1[, -c(562, 563)], centers = 6)
+table(kClust$cluster, sub1$activity)
 </code></pre>
 
-<pre><code>
-    laying sitting standing walk walkdown walkup
-  1      0      34       50    0        0      0
-  2     27       0        0    0        0      0
-  3      0       0        0    0        0     53
-  4      9       2        0    0        0      0
-  5     14      11        3    0        0      0
-  6      0       0        0   95       49      0
+<pre><code>##    
+##     laying sitting standing walk walkdown walkup
+##   1      0       0        0   95        0      0
+##   2      5       0        0    0        0     53
+##   3      0       0        0    0       23      0
+##   4     19      13        5    0        0      0
+##   5     26      34       48    0        0      0
+##   6      0       0        0    0       26      0
 </code></pre>
 
   </article>
@@ -256,18 +266,18 @@ table(kClust$cluster,samsungData$activity[samsungData$subject==1])
     <h2>K-means clustering (nstart=1, second try)</h2>
   </hgroup>
   <article>
-    <pre><code class="r">kClust &lt;- kmeans(samsungData[samsungData$subject==1,-c(562,563)],centers=6,nstart=1)
-table(kClust$cluster,samsungData$activity[samsungData$subject==1])
+    <pre><code class="r">kClust &lt;- kmeans(sub1[, -c(562, 563)], centers = 6, nstart = 1)
+table(kClust$cluster, sub1$activity)
 </code></pre>
 
-<pre><code>
-    laying sitting standing walk walkdown walkup
-  1      0       0        0   35        0      0
-  2      5       0        0    0        0     53
-  3     19      13        5    0        0      0
-  4     26      34       48    0        0      0
-  5      0       0        0    0       48      0
-  6      0       0        0   60        1      0
+<pre><code>##    
+##     laying sitting standing walk walkdown walkup
+##   1      0       0        0    0       49      0
+##   2     18      10        2    0        0      0
+##   3      0       0        0   95        0      0
+##   4     29       0        0    0        0      0
+##   5      0      37       51    0        0      0
+##   6      3       0        0    0        0     53
 </code></pre>
 
   </article>
@@ -279,18 +289,18 @@ table(kClust$cluster,samsungData$activity[samsungData$subject==1])
     <h2>K-means clustering (nstart=100, first try)</h2>
   </hgroup>
   <article>
-    <pre><code class="r">kClust &lt;- kmeans(samsungData[samsungData$subject==1,-c(562,563)],centers=6,nstart=100)
-table(kClust$cluster,samsungData$activity[samsungData$subject==1])
+    <pre><code class="r">kClust &lt;- kmeans(sub1[, -c(562, 563)], centers = 6, nstart = 100)
+table(kClust$cluster, sub1$activity)
 </code></pre>
 
-<pre><code>
-    laying sitting standing walk walkdown walkup
-  1     29       0        0    0        0      0
-  2      0       0        0   95        0      0
-  3      0       0        0    0       49      0
-  4      3       0        0    0        0     53
-  5     18      10        2    0        0      0
-  6      0      37       51    0        0      0
+<pre><code>##    
+##     laying sitting standing walk walkdown walkup
+##   1     18      10        2    0        0      0
+##   2     29       0        0    0        0      0
+##   3      0       0        0   95        0      0
+##   4      0       0        0    0       49      0
+##   5      3       0        0    0        0     53
+##   6      0      37       51    0        0      0
 </code></pre>
 
   </article>
@@ -302,18 +312,18 @@ table(kClust$cluster,samsungData$activity[samsungData$subject==1])
     <h2>K-means clustering (nstart=100, second try)</h2>
   </hgroup>
   <article>
-    <pre><code class="r">kClust &lt;- kmeans(samsungData[samsungData$subject==1,-c(562,563)],centers=6,nstart=100)
-table(kClust$cluster,samsungData$activity[samsungData$subject==1])
+    <pre><code class="r">kClust &lt;- kmeans(sub1[, -c(562, 563)], centers = 6, nstart = 100)
+table(kClust$cluster, sub1$activity)
 </code></pre>
 
-<pre><code>
-    laying sitting standing walk walkdown walkup
-  1      0      37       51    0        0      0
-  2      0       0        0    0       49      0
-  3      0       0        0   95        0      0
-  4     29       0        0    0        0      0
-  5      3       0        0    0        0     53
-  6     18      10        2    0        0      0
+<pre><code>##    
+##     laying sitting standing walk walkdown walkup
+##   1     29       0        0    0        0      0
+##   2      3       0        0    0        0     53
+##   3      0       0        0    0       49      0
+##   4      0       0        0   95        0      0
+##   5      0      37       51    0        0      0
+##   6     18      10        2    0        0      0
 </code></pre>
 
   </article>
@@ -325,10 +335,10 @@ table(kClust$cluster,samsungData$activity[samsungData$subject==1])
     <h2>Cluster 1 Variable Centers (Laying)</h2>
   </hgroup>
   <article>
-    <pre><code class="r">plot(kClust$center[1,1:10],pch=19,ylab=&quot;Cluster Center&quot;,xlab=&quot;&quot;)
+    <pre><code class="r">plot(kClust$center[1, 1:10], pch = 19, ylab = &quot;Cluster Center&quot;, xlab = &quot;&quot;)
 </code></pre>
 
-<div class="rimage center"><img src="fig/unnamed-chunk-9.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" class="plot" /></div>
+<p><img src="figure/unnamed-chunk-9.png" alt="plot of chunk unnamed-chunk-9"> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -339,10 +349,10 @@ table(kClust$cluster,samsungData$activity[samsungData$subject==1])
     <h2>Cluster 2 Variable Centers (Walking)</h2>
   </hgroup>
   <article>
-    <pre><code class="r">plot(kClust$center[6,1:10],pch=19,ylab=&quot;Cluster Center&quot;,xlab=&quot;&quot;)
+    <pre><code class="r">plot(kClust$center[6, 1:10], pch = 19, ylab = &quot;Cluster Center&quot;, xlab = &quot;&quot;)
 </code></pre>
 
-<div class="rimage center"><img src="fig/unnamed-chunk-10.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" class="plot" /></div>
+<p><img src="figure/unnamed-chunk-10.png" alt="plot of chunk unnamed-chunk-10"> </p>
 
   </article>
   <!-- Presenter Notes -->

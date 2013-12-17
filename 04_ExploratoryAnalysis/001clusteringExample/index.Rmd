@@ -1,5 +1,5 @@
 ---
-title       : Clustering example
+title       : Clustering Example
 subtitle    : 
 author      : Roger D. Peng, Associate Professor of Biostatistics 
 job         : Johns Hopkins Bloomberg School of Public Health
@@ -14,22 +14,6 @@ widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 ---
 
-
-```{r setup, cache = F, echo = F, message = F, warning = F, tidy = F}
-# make this an external chunk that can be included in any file
-options(width = 100)
-opts_chunk$set(message = F, error = F, warning = F, comment = NA, fig.align = 'center', dpi = 100, tidy = F, cache = T, cache.path = '.cache/', fig.path = 'fig/')
-
-options(xtable.type = 'html')
-knit_hooks$set(inline = function(x) {
-  if(is.numeric(x)) {
-    round(x, getOption('digits'))
-  } else {
-    paste(as.character(x), collapse = ', ')
-  }
-})
-knit_hooks$set(plot = knitr:::hook_plot_html)
-```
 
 ## Samsung Galaxy S3
 
@@ -51,10 +35,10 @@ knit_hooks$set(plot = knitr:::hook_plot_html)
 
 ## Slightly processed data
 
-```{r loadData, cache=FALSE}
-download.file("https://dl.dropboxusercontent.com/u/7710864/courseraPublic/samsungData.rda"
-              ,destfile="./data/samsungData.rda",method="curl")
-load("./data/samsungData.rda")
+[Samsung data file]("https://dl.dropboxusercontent.com/u/7710864/courseraPublic/samsungData.rda")
+
+```{r loaddata,tidy=TRUE}
+load("data/samsungData.rda")
 names(samsungData)[1:12]
 table(samsungData$activity)
 ```
@@ -63,24 +47,27 @@ table(samsungData$activity)
 
 ## Plotting average acceleration for first subject
 
-```{r processData,fig.height=4,fig.width=8}
-par(mfrow=c(1,2))
-numericActivity <- as.numeric(as.factor(samsungData$activity))[samsungData$subject==1]
-plot(samsungData[samsungData$subject==1,1],pch=19,col=numericActivity,ylab=names(samsungData)[1])
-plot(samsungData[samsungData$subject==1,2],pch=19,col=numericActivity,ylab=names(samsungData)[2])
-legend(150,-0.1,legend=unique(samsungData$activity),col=unique(numericActivity),pch=19)
+```{r processData,fig.height=4,fig.width=8,tidy=TRUE}
+par(mfrow=c(1, 2), mar = c(5, 4, 1, 1))
+samsungData <- transform(samsungData, activity = factor(activity))
+sub1 <- subset(samsungData, subject == 1)
+plot(sub1[, 1], col = sub1$activity, ylab = names(sub1)[1])
+plot(sub1[, 2], col = sub1$activity, ylab = names(sub1)[2])
+legend("bottomright",legend=unique(sub1$activity),col=unique(sub1$activity), pch = 1)
 ```
 
 ---
 
 ## Clustering based just on average acceleration
 
+<!-- ## source("http://dl.dropbox.com/u/7710864/courseraPublic/myplclust.R")  -->
 
-```{r dependson="processData",fig.height=4,fig.width=4,cache=TRUE}
-source("http://dl.dropbox.com/u/7710864/courseraPublic/myplclust.R")
-distanceMatrix <- dist(samsungData[samsungData$subject==1,1:3])
+
+```{r dependson="processData",fig.height=5,fig.width=8}
+source("myplclust.R")
+distanceMatrix <- dist(sub1[,1:3])
 hclustering <- hclust(distanceMatrix)
-myplclust(hclustering,lab.col=numericActivity)
+myplclust(hclustering, lab.col = unclass(sub1$activity))
 ```
 
 
@@ -88,43 +75,42 @@ myplclust(hclustering,lab.col=numericActivity)
 
 ## Plotting max acceleration for the first subject
 
-```{r ,dependson="processData",fig.height=4,fig.width=8}
+```{r ,dependson="processData",fig.height=5,fig.width=10}
 par(mfrow=c(1,2))
-plot(samsungData[samsungData$subject==1,10],pch=19,col=numericActivity,ylab=names(samsungData)[10])
-plot(samsungData[samsungData$subject==1,11],pch=19,col=numericActivity,ylab=names(samsungData)[11])
+plot(sub1[,10],pch=19,col=sub1$activity,ylab=names(sub1)[10])
+plot(sub1[,11],pch=19,col = sub1$activity,ylab=names(sub1)[11])
 ```
 
 ---
 
 ## Clustering based on maximum acceleration
 
-```{r dependson="processData",fig.height=4,fig.width=4,cache=TRUE}
-source("http://dl.dropbox.com/u/7710864/courseraPublic/myplclust.R")
-distanceMatrix <- dist(samsungData[samsungData$subject==1,10:12])
+```{r dependson="processData",fig.height=5,fig.width=10}
+source("myplclust.R")
+distanceMatrix <- dist(sub1[,10:12])
 hclustering <- hclust(distanceMatrix)
-myplclust(hclustering,lab.col=numericActivity)
+myplclust(hclustering,lab.col=unclass(sub1$activity))
 ```
 
 
 
 ---
 
-## Singular value decomposition
+## Singular Value Decomposition
 
-```{r svdChunk,dependson="processData",fig.height=4,fig.width=8,cache=TRUE}
-svd1 = svd(scale(samsungData[samsungData$subject==1,-c(562,563)]))
+```{r svdChunk,dependson="processData",fig.height=5,fig.width=10,cache=TRUE,tidy=TRUE}
+svd1 = svd(scale(sub1[,-c(562,563)]))
 par(mfrow=c(1,2))
-plot(svd1$u[,1],col=numericActivity,pch=19)
-plot(svd1$u[,2],col=numericActivity,pch=19)
+plot(svd1$u[,1],col=sub1$activity,pch=19)
+plot(svd1$u[,2],col=sub1$activity,pch=19)
 ```
 
 ---
 
 ## Find maximum contributor
 
-```{r dependson="svdChunk",fig.height=4,fig.width=4,cache=TRUE}
+```{r dependson="svdChunk",fig.height=5,fig.width=6,cache=TRUE,tidy=TRUE}
 plot(svd1$v[,2],pch=19)
-
 ```
 
 
@@ -132,11 +118,11 @@ plot(svd1$v[,2],pch=19)
 
 ##  New clustering with maximum contributer
 
-```{r dependson="svdChunk",fig.height=4.5,fig.width=4.5,cache=TRUE}
+```{r dependson="svdChunk",fig.height=5,fig.width=8,cache=TRUE,tidy=TRUE}
 maxContrib <- which.max(svd1$v[,2])
-distanceMatrix <- dist(samsungData[samsungData$subject==1,c(10:12,maxContrib)])
+distanceMatrix <- dist(sub1[, c(10:12,maxContrib)])
 hclustering <- hclust(distanceMatrix)
-myplclust(hclustering,lab.col=numericActivity)                             
+myplclust(hclustering,lab.col=unclass(sub1$activity))                             
 ```
 
 
@@ -153,8 +139,8 @@ names(samsungData)[maxContrib]
 ##  K-means clustering (nstart=1, first try)
 
 ```{r kmeans1,dependson="processData",fig.height=4,fig.width=4}
-kClust <- kmeans(samsungData[samsungData$subject==1,-c(562,563)],centers=6)
-table(kClust$cluster,samsungData$activity[samsungData$subject==1])
+kClust <- kmeans(sub1[,-c(562,563)],centers=6)
+table(kClust$cluster,sub1$activity)
 ```
 
 
@@ -163,9 +149,9 @@ table(kClust$cluster,samsungData$activity[samsungData$subject==1])
 
 ##  K-means clustering (nstart=1, second try)
 
-```{r dependson="kmeans1",fig.height=4,fig.width=4,cache=TRUE}
-kClust <- kmeans(samsungData[samsungData$subject==1,-c(562,563)],centers=6,nstart=1)
-table(kClust$cluster,samsungData$activity[samsungData$subject==1])
+```{r dependson="kmeans1",fig.height=4,fig.width=4,cache=TRUE,tidy=TRUE}
+kClust <- kmeans(sub1[,-c(562,563)],centers=6,nstart=1)
+table(kClust$cluster,sub1$activity)
 ```
 
 
@@ -174,8 +160,8 @@ table(kClust$cluster,samsungData$activity[samsungData$subject==1])
 ##  K-means clustering (nstart=100, first try)
 
 ```{r dependson="kmeans1",fig.height=4,fig.width=4,cache=TRUE}
-kClust <- kmeans(samsungData[samsungData$subject==1,-c(562,563)],centers=6,nstart=100)
-table(kClust$cluster,samsungData$activity[samsungData$subject==1])
+kClust <- kmeans(sub1[,-c(562,563)],centers=6,nstart=100)
+table(kClust$cluster,sub1$activity)
 ```
 
 
@@ -184,16 +170,16 @@ table(kClust$cluster,samsungData$activity[samsungData$subject==1])
 
 ##  K-means clustering (nstart=100, second try)
 
-```{r kmeans100,dependson="kmeans1",fig.height=4,fig.width=4,cache=TRUE}
-kClust <- kmeans(samsungData[samsungData$subject==1,-c(562,563)],centers=6,nstart=100)
-table(kClust$cluster,samsungData$activity[samsungData$subject==1])
+```{r kmeans100,dependson="kmeans1",fig.height=4,fig.width=4,cache=TRUE,tidy=TRUE}
+kClust <- kmeans(sub1[,-c(562,563)],centers=6,nstart=100)
+table(kClust$cluster,sub1$activity)
 ```
 
 ---
 
 ##  Cluster 1 Variable Centers (Laying)
 
-```{r dependson="kmeans100",fig.height=4,fig.width=8,cache=FALSE}
+```{r dependson="kmeans100",fig.height=4,fig.width=8,cache=FALSE,tidy=TRUE}
 plot(kClust$center[1,1:10],pch=19,ylab="Cluster Center",xlab="")
 ```
 
