@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>K-means clustering</title>
+  <title>K-means Clustering</title>
   <meta charset="utf-8">
-  <meta name="description" content="K-means clustering">
-  <meta name="author" content="Jeffrey Leek, Assistant Professor of Biostatistics">
+  <meta name="description" content="K-means Clustering">
+  <meta name="author" content="Roger D. Peng, Associate Professor of Biostatistics">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -19,6 +19,11 @@
   </script>
   
     <link rel="stylesheet" href = "../../assets/css/custom.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BACKUP.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BASE.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.LOCAL.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.orig">
+<link rel="stylesheet" href = "../../assets/css/custom.css.REMOTE.546.css">
 <link rel="stylesheet" href = "../../assets/css/ribbons.css">
 
 </head>
@@ -36,9 +41,9 @@
         <img src="../../assets/img/bloomberg_shield.png">
       </aside>
       <hgroup class="auto-fadein">
-        <h1>K-means clustering</h1>
+        <h1>K-means Clustering</h1>
         <h2></h2>
-        <p>Jeffrey Leek, Assistant Professor of Biostatistics<br/>Johns Hopkins Bloomberg School of Public Health</p>
+        <p>Roger D. Peng, Associate Professor of Biostatistics<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
           </slide>
 
@@ -68,7 +73,7 @@
 <li>Most important step
 
 <ul>
-<li>Garbage in -&gt; garbage out</li>
+<li>Garbage in \(\longrightarrow\) garbage out</li>
 </ul></li>
 <li>Distance or similarity
 
@@ -122,14 +127,15 @@
     <h2>K-means clustering -  example</h2>
   </hgroup>
   <article>
-    <pre><code class="r">set.seed(1234); par(mar=c(0,0,0,0))
-x &lt;- rnorm(12,mean=rep(1:3,each=4),sd=0.2)
-y &lt;- rnorm(12,mean=rep(c(1,2,1),each=4),sd=0.2)
-plot(x,y,col=&quot;blue&quot;,pch=19,cex=2)
-text(x+0.05,y+0.05,labels=as.character(1:12))
+    <pre><code class="r">set.seed(1234)
+par(mar = c(0, 0, 0, 0))
+x &lt;- rnorm(12, mean = rep(1:3, each = 4), sd = 0.2)
+y &lt;- rnorm(12, mean = rep(c(1, 2, 1), each = 4), sd = 0.2)
+plot(x, y, col = &quot;blue&quot;, pch = 19, cex = 2)
+text(x + 0.05, y + 0.05, labels = as.character(1:12))
 </code></pre>
 
-<div class="rimage center"><img src="fig/createData.png" title="plot of chunk createData" alt="plot of chunk createData" class="plot" /></div>
+<p><img src="figure/createData.png" alt="plot of chunk createData"> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -140,7 +146,7 @@ text(x+0.05,y+0.05,labels=as.character(1:12))
     <h2>K-means clustering -  starting centroids</h2>
   </hgroup>
   <article>
-    <div class="rimage center"><img src="fig/unnamed-chunk-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div>
+    <p><img src="figure/unnamed-chunk-1.png" alt="plot of chunk unnamed-chunk-1"> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -151,7 +157,7 @@ text(x+0.05,y+0.05,labels=as.character(1:12))
     <h2>K-means clustering -  assign to closest centroid</h2>
   </hgroup>
   <article>
-    <div class="rimage center"><img src="fig/unnamed-chunk-2.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" class="plot" /></div>
+    <p><img src="figure/unnamed-chunk-2.png" alt="plot of chunk unnamed-chunk-2"> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -162,7 +168,7 @@ text(x+0.05,y+0.05,labels=as.character(1:12))
     <h2>K-means clustering -  recalculate centroids</h2>
   </hgroup>
   <article>
-    <div class="rimage center"><img src="fig/unnamed-chunk-3.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" class="plot" /></div>
+    <p><img src="figure/unnamed-chunk-3.png" alt="plot of chunk unnamed-chunk-3"> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -173,7 +179,7 @@ text(x+0.05,y+0.05,labels=as.character(1:12))
     <h2>K-means clustering -  reassign values</h2>
   </hgroup>
   <article>
-    <div class="rimage center"><img src="fig/unnamed-chunk-4.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" class="plot" /></div>
+    <p><img src="figure/unnamed-chunk-4.png" alt="plot of chunk unnamed-chunk-4"> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -184,7 +190,7 @@ text(x+0.05,y+0.05,labels=as.character(1:12))
     <h2>K-means clustering -  update centroids</h2>
   </hgroup>
   <article>
-    <div class="rimage center"><img src="fig/unnamed-chunk-5.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" class="plot" /></div>
+    <p><img src="figure/unnamed-chunk-5.png" alt="plot of chunk unnamed-chunk-5"> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -192,26 +198,27 @@ text(x+0.05,y+0.05,labels=as.character(1:12))
 
       <slide class="" id="slide-10" style="background:;">
   <hgroup>
-    <h2>kmeans()</h2>
+    <h2><code>kmeans()</code></h2>
   </hgroup>
   <article>
     <ul>
-<li>Important parameters: <em>x</em>,<em>centers</em>,<em>iter.max</em>,<em>nstart</em></li>
+<li>Important parameters: <em>x</em>, <em>centers</em>, <em>iter.max</em>, <em>nstart</em></li>
 </ul>
 
-<pre><code class="r">dataFrame &lt;- data.frame(x,y)
-kmeansObj &lt;- kmeans(dataFrame,centers=3)
+<pre><code class="r">dataFrame &lt;- data.frame(x, y)
+kmeansObj &lt;- kmeans(dataFrame, centers = 3)
 names(kmeansObj)
 </code></pre>
 
-<pre><code>[1] &quot;cluster&quot;      &quot;centers&quot;      &quot;totss&quot;        &quot;withinss&quot;     &quot;tot.withinss&quot; &quot;betweenss&quot;   
-[7] &quot;size&quot;        
+<pre><code>## [1] &quot;cluster&quot;      &quot;centers&quot;      &quot;totss&quot;        &quot;withinss&quot;    
+## [5] &quot;tot.withinss&quot; &quot;betweenss&quot;    &quot;size&quot;         &quot;iter&quot;        
+## [9] &quot;ifault&quot;
 </code></pre>
 
 <pre><code class="r">kmeansObj$cluster
 </code></pre>
 
-<pre><code> [1] 3 3 3 3 1 1 1 1 2 2 2 2
+<pre><code>##  [1] 3 3 3 3 1 1 1 1 2 2 2 2
 </code></pre>
 
   </article>
@@ -220,15 +227,15 @@ names(kmeansObj)
 
       <slide class="" id="slide-11" style="background:;">
   <hgroup>
-    <h2>kmeans()</h2>
+    <h2><code>kmeans()</code></h2>
   </hgroup>
   <article>
-    <pre><code class="r">par(mar=rep(0.2,4))
-plot(x,y,col=kmeansObj$cluster,pch=19,cex=2)
-points(kmeansObj$centers,col=1:3,pch=3,cex=3,lwd=3)
+    <pre><code class="r">par(mar = rep(0.2, 4))
+plot(x, y, col = kmeansObj$cluster, pch = 19, cex = 2)
+points(kmeansObj$centers, col = 1:3, pch = 3, cex = 3, lwd = 3)
 </code></pre>
 
-<div class="rimage center"><img src="fig/unnamed-chunk-6.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" class="plot" /></div>
+<p><img src="figure/unnamed-chunk-6.png" alt="plot of chunk unnamed-chunk-6"> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -240,14 +247,14 @@ points(kmeansObj$centers,col=1:3,pch=3,cex=3,lwd=3)
   </hgroup>
   <article>
     <pre><code class="r">set.seed(1234)
-dataMatrix &lt;- as.matrix(dataFrame)[sample(1:12),]
-kmeansObj2 &lt;- kmeans(dataMatrix,centers=3)
-par(mfrow=c(1,2),mar=rep(0.2,4))
-image(t(dataMatrix)[,nrow(dataMatrix):1],yaxt=&quot;n&quot;)
-image(t(dataMatrix)[,order(kmeansObj$cluster)],yaxt=&quot;n&quot;)
+dataMatrix &lt;- as.matrix(dataFrame)[sample(1:12), ]
+kmeansObj2 &lt;- kmeans(dataMatrix, centers = 3)
+par(mfrow = c(1, 2), mar = c(2, 4, 0.1, 0.1))
+image(t(dataMatrix)[, nrow(dataMatrix):1], yaxt = &quot;n&quot;)
+image(t(dataMatrix)[, order(kmeansObj$cluster)], yaxt = &quot;n&quot;)
 </code></pre>
 
-<div class="rimage center"><img src="fig/unnamed-chunk-7.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" class="plot" /></div>
+<p><img src="figure/unnamed-chunk-7.png" alt="plot of chunk unnamed-chunk-7"> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -272,7 +279,7 @@ image(t(dataMatrix)[,order(kmeansObj$cluster)],yaxt=&quot;n&quot;)
 <li>Different # of clusters </li>
 <li>Different number of iterations</li>
 </ul></li>
-<li><a href="http://www.youtube.com/watch?v=wQhVWUcXM0A">Rafa&#39;s Distances and Clustering Video</a></li>
+<li><a href="http://www.youtube.com/watch?v=wQhVWUcXM0A">Rafael Irizarry&#39;s Distances and Clustering Video</a></li>
 <li><a href="http://www-stat.stanford.edu/%7Etibs/ElemStatLearn/">Elements of statistical learning</a></li>
 </ul>
 

@@ -1,7 +1,7 @@
 ---
-title       : K-means clustering
+title       : K-means Clustering
 subtitle    : 
-author      : Jeffrey Leek, Assistant Professor of Biostatistics 
+author      : Roger D. Peng, Associate Professor of Biostatistics 
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -13,23 +13,6 @@ url:
 widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 ---
-
-
-```{r setup, cache = F, echo = F, message = F, warning = F, tidy = F}
-# make this an external chunk that can be included in any file
-options(width = 100)
-opts_chunk$set(message = F, error = F, warning = F, comment = NA, fig.align = 'center', dpi = 100, tidy = F, cache = T, cache.path = '.cache/', fig.path = 'fig/')
-
-options(xtable.type = 'html')
-knit_hooks$set(inline = function(x) {
-  if(is.numeric(x)) {
-    round(x, getOption('digits'))
-  } else {
-    paste(as.character(x), collapse = ', ')
-  }
-})
-knit_hooks$set(plot = knitr:::hook_plot_html)
-```
 
 ## Can we find things that are close together? 
 
@@ -44,7 +27,7 @@ knit_hooks$set(plot = knitr:::hook_plot_html)
 ## How do we define close?
 
 * Most important step
-  * Garbage in -> garbage out
+  * Garbage in $\longrightarrow$ garbage out
 * Distance or similarity
   * Continuous - euclidean distance
   * Continous - correlation similarity
@@ -239,9 +222,9 @@ points(x,y,pch=19,cex=2,col=cols1[finalClust])
 
 ---
 
-## kmeans()
+## `kmeans()`
 
-* Important parameters: _x_,_centers_,_iter.max_,_nstart_
+* Important parameters: _x_, _centers_, _iter.max_, _nstart_
 
 ```{r kmeans,dependson="createData"}
 dataFrame <- data.frame(x,y)
@@ -252,7 +235,7 @@ kmeansObj$cluster
 
 ---
 
-## kmeans()
+## `kmeans()`
 
 ```{r, dependson="kmeans",fig.height=4,fig.width=4}
 par(mar=rep(0.2,4))
@@ -264,11 +247,11 @@ points(kmeansObj$centers,col=1:3,pch=3,cex=3,lwd=3)
 
 ## Heatmaps
 
-```{r, dependson="kmeans",fig.height=3,fig.width=6}
+```{r, dependson="kmeans",fig.height=4,fig.width=8}
 set.seed(1234)
 dataMatrix <- as.matrix(dataFrame)[sample(1:12),]
 kmeansObj2 <- kmeans(dataMatrix,centers=3)
-par(mfrow=c(1,2),mar=rep(0.2,4))
+par(mfrow=c(1,2), mar = c(2, 4, 0.1, 0.1))
 image(t(dataMatrix)[,nrow(dataMatrix):1],yaxt="n")
 image(t(dataMatrix)[,order(kmeansObj$cluster)],yaxt="n")
 ```
@@ -286,7 +269,7 @@ image(t(dataMatrix)[,order(kmeansObj$cluster)],yaxt="n")
 * K-means is not deterministic
   * Different # of clusters 
   * Different number of iterations
-* [Rafa's Distances and Clustering Video](http://www.youtube.com/watch?v=wQhVWUcXM0A)
+* [Rafael Irizarry's Distances and Clustering Video](http://www.youtube.com/watch?v=wQhVWUcXM0A)
 * [Elements of statistical learning](http://www-stat.stanford.edu/~tibs/ElemStatLearn/)
 
 
