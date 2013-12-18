@@ -1,5 +1,5 @@
 ---
-title       : Hierarchical clustering
+title       : Hierarchical Clustering
 subtitle    : 
 author      : Roger D. Peng, Associate Professor of Biostatistics 
 job         : Johns Hopkins Bloomberg School of Public Health
@@ -113,7 +113,7 @@ text(x+0.05,y+0.05,labels=as.character(1:12))
 
 ---
 
-## Hierarchical clustering - dist
+## Hierarchical clustering - `dist`
 
 * Important parameters: _x_,_method_
 ```{r dependson="createData",fig.height=4,fig.width=4}
@@ -126,7 +126,7 @@ dist(dataFrame)
 ## Hierarchical clustering - #1
 
 ```{r dependson="createData",echo=FALSE, fig.height=4,fig.width=8}
-library(fields)
+suppressMessages(library(fields))
 dataFrame <- data.frame(x=x,y=y)
 rdistxy <- rdist(dataFrame)
 diag(rdistxy) <- diag(rdistxy) + 1e5
@@ -153,7 +153,7 @@ plot(cutDendro$lower[[11]],yaxt="n")
 
 ## Hierarchical clustering - #2
 
-```{r dependson="createData",echo=FALSE, fig.height=4,fig.width=4}
+```{r dependson="createData",echo=FALSE}
 library(fields)
 dataFrame <- data.frame(x=x,y=y)
 rdistxy <- rdist(dataFrame)
@@ -178,7 +178,7 @@ points(mean(x[ind[1,]]),mean(y[ind[1,]]),col="orange",cex=5,lwd=3,pch=1)
 
 ## Hierarchical clustering - #3
 
-```{r dependson="createData",echo=FALSE, fig.height=4,fig.width=8}
+```{r dependson="createData",echo=FALSE, fig.height=6,fig.width=12}
 library(fields)
 dataFrame <- data.frame(x=x,y=y)
 rdistxy <- rdist(dataFrame)
@@ -270,7 +270,7 @@ myplclust(hClustering,lab=rep(1:3,each=4),lab.col=rep(1:3,each=4))
 
 ## Merging points - complete
 
-```{r,echo=FALSE,dependson="createData",fig.height=4,fig.width=4}
+```{r,echo=FALSE,dependson="createData"}
 dataFrame <- data.frame(x=x,y=y)
 par(mar=rep(0.1,4))
 plot(x,y,col="blue",pch=19,cex=2)
@@ -286,7 +286,7 @@ segments(x[8],y[8],x[1],y[1],lwd=3,col="orange")
 
 ## Merging points - average
 
-```{r,echo=FALSE,dependson="createData",fig.height=4,fig.width=4}
+```{r,echo=FALSE,dependson="createData"}
 dataFrame <- data.frame(x=x,y=y)
 par(mar=rep(0.1,4))
 plot(x,y,col="blue",pch=19,cex=2)
@@ -299,9 +299,9 @@ segments(mean(x[1:4]),mean(y[1:4]),mean(x[5:8]),mean(y[5:8]),lwd=3,col="orange")
 
 ---
 
-## heatmap()
+## `heatmap()`
 
-```{r,dependson="createData",fig.height=4,fig.width=4}
+```{r,dependson="createData",fig.height=5,fig.width=6}
 dataFrame <- data.frame(x=x,y=y)
 set.seed(143)
 dataMatrix <- as.matrix(dataFrame)[sample(1:12),]

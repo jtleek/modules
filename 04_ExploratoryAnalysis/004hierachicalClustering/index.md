@@ -1,7 +1,7 @@
 ---
-title       : Hierarchical clustering
+title       : Hierarchical Clustering
 subtitle    : 
-author      : Jeffrey Leek, Assistant Professor of Biostatistics 
+author      : Roger D. Peng, Associate Professor of Biostatistics 
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -13,10 +13,6 @@ url:
 widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 ---
-
-
-
-
 
 ## Can we find things that are close together? 
 
@@ -108,41 +104,54 @@ $$|A_1-A_2| + |B_1-B_2| + \ldots + |Z_1-Z_2|$$
 
 
 ```r
-set.seed(1234); par(mar=c(0,0,0,0))
-x <- rnorm(12,mean=rep(1:3,each=4),sd=0.2)
-y <- rnorm(12,mean=rep(c(1,2,1),each=4),sd=0.2)
-plot(x,y,col="blue",pch=19,cex=2)
-text(x+0.05,y+0.05,labels=as.character(1:12))
+set.seed(1234)
+par(mar = c(0, 0, 0, 0))
+x <- rnorm(12, mean = rep(1:3, each = 4), sd = 0.2)
+y <- rnorm(12, mean = rep(c(1, 2, 1), each = 4), sd = 0.2)
+plot(x, y, col = "blue", pch = 19, cex = 2)
+text(x + 0.05, y + 0.05, labels = as.character(1:12))
 ```
 
-<div class="rimage center"><img src="fig/createData.png" title="plot of chunk createData" alt="plot of chunk createData" class="plot" /></div>
+![plot of chunk createData](figure/createData.png) 
 
 
 
 ---
 
-## Hierarchical clustering - dist
+## Hierarchical clustering - `dist`
 
 * Important parameters: _x_,_method_
 
 ```r
-dataFrame <- data.frame(x=x,y=y)
+dataFrame <- data.frame(x = x, y = y)
 dist(dataFrame)
 ```
 
 ```
-         1       2       3       4       5       6       7       8       9      10      11
-2  0.34121                                                                                
-3  0.57494 0.24103                                                                        
-4  0.26382 0.52579 0.71862                                                                
-5  1.69425 1.35818 1.11953 1.80667                                                        
-6  1.65813 1.31960 1.08339 1.78081 0.08150                                                
-7  1.49823 1.16621 0.92569 1.60132 0.21110 0.21667                                        
-8  1.99149 1.69093 1.45649 2.02849 0.61704 0.69792 0.65063                                
-9  2.13630 1.83168 1.67836 2.35676 1.18350 1.11500 1.28583 1.76461                        
-10 2.06420 1.76999 1.63110 2.29239 1.23848 1.16550 1.32063 1.83518 0.14090                
-11 2.14702 1.85183 1.71074 2.37462 1.28154 1.21077 1.37370 1.86999 0.11624 0.08318        
-12 2.05664 1.74663 1.58659 2.27232 1.07701 1.00777 1.17740 1.66224 0.10849 0.19129 0.20803
+##          1       2       3       4       5       6       7       8       9
+## 2  0.34121                                                                
+## 3  0.57494 0.24103                                                        
+## 4  0.26382 0.52579 0.71862                                                
+## 5  1.69425 1.35818 1.11953 1.80667                                        
+## 6  1.65813 1.31960 1.08339 1.78081 0.08150                                
+## 7  1.49823 1.16621 0.92569 1.60132 0.21110 0.21667                        
+## 8  1.99149 1.69093 1.45649 2.02849 0.61704 0.69792 0.65063                
+## 9  2.13630 1.83168 1.67836 2.35676 1.18350 1.11500 1.28583 1.76461        
+## 10 2.06420 1.76999 1.63110 2.29239 1.23848 1.16550 1.32063 1.83518 0.14090
+## 11 2.14702 1.85183 1.71074 2.37462 1.28154 1.21077 1.37370 1.86999 0.11624
+## 12 2.05664 1.74663 1.58659 2.27232 1.07701 1.00777 1.17740 1.66224 0.10849
+##         10      11
+## 2                 
+## 3                 
+## 4                 
+## 5                 
+## 6                 
+## 7                 
+## 8                 
+## 9                 
+## 10                
+## 11 0.08318        
+## 12 0.19129 0.20803
 ```
 
 
@@ -150,7 +159,7 @@ dist(dataFrame)
 
 ## Hierarchical clustering - #1
 
-<div class="rimage center"><img src="fig/unnamed-chunk-2.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" class="plot" /></div>
+![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2.png) 
 
 
 
@@ -159,7 +168,7 @@ dist(dataFrame)
 
 ## Hierarchical clustering - #2
 
-<div class="rimage center"><img src="fig/unnamed-chunk-3.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" class="plot" /></div>
+![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3.png) 
 
 
 
@@ -168,7 +177,7 @@ dist(dataFrame)
 
 ## Hierarchical clustering - #3
 
-<div class="rimage center"><img src="fig/unnamed-chunk-4.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" class="plot" /></div>
+![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4.png) 
 
 
 
@@ -179,13 +188,13 @@ dist(dataFrame)
 
 
 ```r
-dataFrame <- data.frame(x=x,y=y)
+dataFrame <- data.frame(x = x, y = y)
 distxy <- dist(dataFrame)
 hClustering <- hclust(distxy)
 plot(hClustering)
 ```
 
-<div class="rimage center"><img src="fig/unnamed-chunk-5.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" class="plot" /></div>
+![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5.png) 
 
 
 
@@ -195,23 +204,23 @@ plot(hClustering)
 
 
 ```r
-myplclust <- function( hclust, lab=hclust$labels, lab.col=rep(1,length(hclust$labels)), hang=0.1,...){
-  ## modifiction of plclust for plotting hclust objects *in colour*!
-  ## Copyright Eva KF Chan 2009
-  ## Arguments:
-  ##    hclust:    hclust object
-  ##    lab:        a character vector of labels of the leaves of the tree
-  ##    lab.col:    colour for the labels; NA=default device foreground colour
-  ##    hang:     as in hclust & plclust
-  ## Side effect:
-  ##    A display of hierarchical cluster with coloured leaf labels.
-  y <- rep(hclust$height,2); x <- as.numeric(hclust$merge)
-  y <- y[which(x<0)]; x <- x[which(x<0)]; x <- abs(x)
-  y <- y[order(x)]; x <- x[order(x)]
-  plot( hclust, labels=FALSE, hang=hang, ... )
-  text( x=x, y=y[hclust$order]-(max(hclust$height)*hang),
-        labels=lab[hclust$order], col=lab.col[hclust$order], 
-        srt=90, adj=c(1,0.5), xpd=NA, ... )
+myplclust <- function(hclust, lab = hclust$labels, lab.col = rep(1, length(hclust$labels)), 
+    hang = 0.1, ...) {
+    ## modifiction of plclust for plotting hclust objects *in colour*!  Copyright
+    ## Eva KF Chan 2009 Arguments: hclust: hclust object lab: a character vector
+    ## of labels of the leaves of the tree lab.col: colour for the labels;
+    ## NA=default device foreground colour hang: as in hclust & plclust Side
+    ## effect: A display of hierarchical cluster with coloured leaf labels.
+    y <- rep(hclust$height, 2)
+    x <- as.numeric(hclust$merge)
+    y <- y[which(x < 0)]
+    x <- x[which(x < 0)]
+    x <- abs(x)
+    y <- y[order(x)]
+    x <- x[order(x)]
+    plot(hclust, labels = FALSE, hang = hang, ...)
+    text(x = x, y = y[hclust$order] - (max(hclust$height) * hang), labels = lab[hclust$order], 
+        col = lab.col[hclust$order], srt = 90, adj = c(1, 0.5), xpd = NA, ...)
 }
 ```
 
@@ -223,13 +232,13 @@ myplclust <- function( hclust, lab=hclust$labels, lab.col=rep(1,length(hclust$la
 
 
 ```r
-dataFrame <- data.frame(x=x,y=y)
+dataFrame <- data.frame(x = x, y = y)
 distxy <- dist(dataFrame)
 hClustering <- hclust(distxy)
-myplclust(hClustering,lab=rep(1:3,each=4),lab.col=rep(1:3,each=4))
+myplclust(hClustering, lab = rep(1:3, each = 4), lab.col = rep(1:3, each = 4))
 ```
 
-<div class="rimage center"><img src="fig/unnamed-chunk-6.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" class="plot" /></div>
+![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6.png) 
 
 
 ---
@@ -247,7 +256,7 @@ myplclust(hClustering,lab=rep(1:3,each=4),lab.col=rep(1:3,each=4))
 
 ## Merging points - complete
 
-<div class="rimage center"><img src="fig/unnamed-chunk-7.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" class="plot" /></div>
+![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7.png) 
 
 
 
@@ -256,23 +265,23 @@ myplclust(hClustering,lab=rep(1:3,each=4),lab.col=rep(1:3,each=4))
 
 ## Merging points - average
 
-<div class="rimage center"><img src="fig/unnamed-chunk-8.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" class="plot" /></div>
+![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8.png) 
 
 
 
 ---
 
-## heatmap()
+## `heatmap()`
 
 
 ```r
-dataFrame <- data.frame(x=x,y=y)
+dataFrame <- data.frame(x = x, y = y)
 set.seed(143)
-dataMatrix <- as.matrix(dataFrame)[sample(1:12),]
+dataMatrix <- as.matrix(dataFrame)[sample(1:12), ]
 heatmap(dataMatrix)
 ```
 
-<div class="rimage center"><img src="fig/unnamed-chunk-9.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" class="plot" /></div>
+![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9.png) 
 
 
 
