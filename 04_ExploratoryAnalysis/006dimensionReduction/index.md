@@ -1,7 +1,7 @@
 ---
 title       : Principal Components Analysis and Singular Value Decomposition
 subtitle    : 
-author      : Roger D. Peng, Assistant Professor of Biostatistics 
+author      : Roger D. Peng, Associate Professor of Biostatistics 
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -130,7 +130,7 @@ If $X$ is a matrix with each variable in a column and each observation in a row 
 
 $$ X = UDV^T$$
 
-where the columns of $U$ are orthogonal (left singular vectors), the columns of $V$ are orthogonal (right singluar vectors) and $D$ is a diagonal matrix (singular values). 
+where the columns of $U$ are orthogonal (left singular vectors), the columns of $V$ are orthogonal (right singular vectors) and $D$ is a diagonal matrix (singular values). 
 
 __PCA__
 
@@ -138,7 +138,7 @@ The principal components are equal to the right singular values if you first sca
 
 ---
 
-## Components of the SVD - u and v
+## Components of the SVD - $u$ and $v$
 
 
 ```r
@@ -247,15 +247,15 @@ plot(rep(c(0, 1), 5), pch = 19, xlab = "Column", ylab = "Pattern 2")
 
 ---
 
-##  v and patterns of variance in rows
+##  $v$ and patterns of variance in rows
 
 
 ```r
 svd2 <- svd(scale(dataMatrixOrdered))
 par(mfrow = c(1, 3))
 image(t(dataMatrixOrdered)[, nrow(dataMatrixOrdered):1])
-plot(svd2$v[, 1], pch = 19, xlab = "Column", ylab = "First right singluar vector")
-plot(svd2$v[, 2], pch = 19, xlab = "Column", ylab = "Second right singluar vector")
+plot(svd2$v[, 1], pch = 19, xlab = "Column", ylab = "First right singular vector")
+plot(svd2$v[, 2], pch = 19, xlab = "Column", ylab = "Second right singular vector")
 ```
 
 ![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9.png) 
@@ -264,7 +264,7 @@ plot(svd2$v[, 2], pch = 19, xlab = "Column", ylab = "Second right singluar vecto
 
 ---
 
-##  d and variance explained
+##  $d$ and variance explained
 
 
 ```r
@@ -278,9 +278,9 @@ plot(svd1$d^2/sum(svd1$d^2), xlab = "Column", ylab = "Percent of variance explai
 ![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10.png) 
 
 
-
-
 ---
+
+<!-- 
 
 ## fast.svd function {corpcor}
 
@@ -293,7 +293,7 @@ system.time(svd(scale(bigMatrix)))
 
 ```
 ##    user  system elapsed 
-##   0.158   0.009   0.166
+##   0.145   0.006   0.153
 ```
 
 ```r
@@ -303,12 +303,13 @@ system.time(fast.svd(scale(bigMatrix), tol = 0))
 
 ```
 ##    user  system elapsed 
-##   0.073   0.005   0.079
+##   0.072   0.004   0.076
 ```
 
 
 
 ---
+-->
 
 ## Missing values
 
