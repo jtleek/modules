@@ -221,22 +221,6 @@ plot(svd1$d^2/sum(svd1$d^2),xlab="Column",ylab="Percent of variance explained",p
 
 ---
 
-<!-- 
-
-## fast.svd function {corpcor}
-
-Important parameters: _m_,_tol_
-```{r dependson ="twoPattern",fig.height=4,fig.width=8}
-bigMatrix <- matrix(rnorm(1e4*40),nrow=1e4)
-system.time(svd(scale(bigMatrix)))
-library(corpcor)
-system.time(fast.svd(scale(bigMatrix),tol=0))
-```
-
-
----
--->
-
 ## Missing values
 
 ```{r,dependson="twoPattern",error=TRUE}
