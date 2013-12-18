@@ -161,7 +161,7 @@ plot(svd1$v[, 1], xlab = "Column", ylab = "First right singular vector", pch = 1
 
 ```r
 par(mfrow = c(1, 2))
-plot(svd1$d, xlab = "Column", ylab = "Singluar value", pch = 19)
+plot(svd1$d, xlab = "Column", ylab = "Singular value", pch = 19)
 plot(svd1$d^2/sum(svd1$d^2), xlab = "Column", ylab = "Prop. of variance explained", 
     pch = 19)
 ```
@@ -197,7 +197,7 @@ for(i in 1:dim(dataMatrixOrdered)[1]){constantMatrix[i,] <- rep(c(0,1),each=5)}
 svd1 <- svd(constantMatrix)
 par(mfrow=c(1,3))
 image(t(constantMatrix)[,nrow(constantMatrix):1])
-plot(svd1$d,xlab="Column",ylab="Singluar value",pch=19)
+plot(svd1$d,xlab="Column",ylab="Singular value",pch=19)
 plot(svd1$d^2/sum(svd1$d^2),xlab="Column",ylab="Prop. of variance explained",pch=19)
 ```
 
@@ -270,7 +270,7 @@ plot(svd2$v[, 2], pch = 19, xlab = "Column", ylab = "Second right singular vecto
 ```r
 svd1 <- svd(scale(dataMatrixOrdered))
 par(mfrow = c(1, 2))
-plot(svd1$d, xlab = "Column", ylab = "Singluar value", pch = 19)
+plot(svd1$d, xlab = "Column", ylab = "Singular value", pch = 19)
 plot(svd1$d^2/sum(svd1$d^2), xlab = "Column", ylab = "Percent of variance explained", 
     pch = 19)
 ```
@@ -280,37 +280,6 @@ plot(svd1$d^2/sum(svd1$d^2), xlab = "Column", ylab = "Percent of variance explai
 
 ---
 
-<!-- 
-
-## fast.svd function {corpcor}
-
-Important parameters: _m_,_tol_
-
-```r
-bigMatrix <- matrix(rnorm(10000 * 40), nrow = 10000)
-system.time(svd(scale(bigMatrix)))
-```
-
-```
-##    user  system elapsed 
-##   0.145   0.006   0.153
-```
-
-```r
-library(corpcor)
-system.time(fast.svd(scale(bigMatrix), tol = 0))
-```
-
-```
-##    user  system elapsed 
-##   0.072   0.004   0.076
-```
-
-
-
----
--->
-
 ## Missing values
 
 
@@ -318,7 +287,7 @@ system.time(fast.svd(scale(bigMatrix), tol = 0))
 dataMatrix2 <- dataMatrixOrdered
 ## Randomly insert some missing data
 dataMatrix2[sample(1:100, size = 40, replace = FALSE)] <- NA
-svd1 <- svd(scale(dataMatrix2))
+svd1 <- svd(scale(dataMatrix2))  ## Doesn't work!
 ```
 
 ```
@@ -333,7 +302,7 @@ svd1 <- svd(scale(dataMatrix2))
 
 
 ```r
-library(impute)
+library(impute)  ## Available from http://bioconductor.org
 dataMatrix2 <- dataMatrixOrdered
 dataMatrix2[sample(1:100,size=40,replace=FALSE)] <- NA
 dataMatrix2 <- impute.knn(dataMatrix2)$data
@@ -341,7 +310,7 @@ svd1 <- svd(scale(dataMatrixOrdered)); svd2 <- svd(scale(dataMatrix2))
 par(mfrow=c(1,2)); plot(svd1$v[,1],pch=19); plot(svd2$v[,1],pch=19)
 ```
 
-![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13.png) 
+![plot of chunk unnamed-chunk-12](figure/unnamed-chunk-12.png) 
 
 
 
@@ -369,10 +338,10 @@ image(t(faceData)[, nrow(faceData):1])
 
 ```r
 svd1 <- svd(scale(faceData))
-plot(svd1$d^2/sum(svd1$d^2), pch = 19, xlab = "Singluar vector", ylab = "Variance explained")
+plot(svd1$d^2/sum(svd1$d^2), pch = 19, xlab = "Singular vector", ylab = "Variance explained")
 ```
 
-![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14.png) 
+![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13.png) 
 
 
 ---
@@ -383,7 +352,7 @@ plot(svd1$d^2/sum(svd1$d^2), pch = 19, xlab = "Singluar vector", ylab = "Varianc
 ```r
 
 svd1 <- svd(scale(faceData))
-# %*% is matrix multiplication
+## Note that %*% is matrix multiplication
 
 # Here svd1$d[1] is a constant
 approx1 <- svd1$u[, 1] %*% t(svd1$v[, 1]) * svd1$d[1]
@@ -400,13 +369,13 @@ approx10 <- svd1$u[, 1:10] %*% diag(svd1$d[1:10]) %*% t(svd1$v[, 1:10])
 
 ```r
 par(mfrow = c(1, 4))
-image(t(faceData)[, nrow(faceData):1])  ## Original data
-image(t(approx10)[, nrow(approx10):1])
-image(t(approx5)[, nrow(approx5):1])
-image(t(approx1)[, nrow(approx1):1])
+image(t(approx1)[, nrow(approx1):1], main = "(a)")
+image(t(approx5)[, nrow(approx5):1], main = "(b)")
+image(t(approx10)[, nrow(approx10):1], main = "(c)")
+image(t(faceData)[, nrow(faceData):1], main = "(d)")  ## Original data
 ```
 
-![plot of chunk unnamed-chunk-15](figure/unnamed-chunk-15.png) 
+![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14.png) 
 
 
 
