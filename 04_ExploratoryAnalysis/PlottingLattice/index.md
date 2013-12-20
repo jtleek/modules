@@ -1,7 +1,7 @@
 ---
 title       : The Lattice Plotting System in R
-subtitle    : Computing for Data Analysis
-author      : Roger Peng, Associate Professor of Biostatistics
+subtitle    : 
+author      : Roger D. Peng, Associate Professor of Biostatistics
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -201,6 +201,23 @@ xyplot(y ~ x | f, panel = function(x, y, ...) {
 
 ![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7.png) 
 
+
+---
+
+## Many Panel Lattice Plot: Example from MAACS
+
+* Study: Mouse Allergen and Asthma Cohort Study (MAACS)
+
+* Study subjects: Children with asthma living in Baltimore City, many
+  allergic to mouse allergen
+
+* Design: Observational study, baseline home visit + every 3 months for a year.
+
+* Question: How does indoor airborne mouse allergen vary over time and
+  across subjects?
+
+
+[Ahluwalia et al., *Journal of Allergy and Clinical Immunology*, 2013](http://www.ncbi.nlm.nih.gov/pubmed/23810154)
 
 ---
 
