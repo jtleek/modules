@@ -53,7 +53,7 @@
     <h2>A famous motivating example</h2>
   </hgroup>
   <article>
-    <pre><code>## [1] 0.1306
+    <pre><code>## [1] 0.667
 </code></pre>
 
 <p><img class=center src=../../assets/img/galton.jpg height=150></p>
@@ -147,11 +147,11 @@ hist(galton$parent,col=&quot;blue&quot;,breaks=100)
 
 <ul>
 <li>How could one describe the &quot;middle&quot;?</li>
-<li>One definition, let \(Y_i\) be the height of child \(i\) for \(i = 1, \ldots, n = 928\), then define the middle as the value of \(\mu\)
-that minimizes \[ \sum_{i=1}^n (Y_i - \mu)^2\]</li>
+<li>One definition, let $Y<em>i$ be the height of child $i$ for $i = 1, \ldots, n = 928$, then define the middle as the value of $\mu$
+that minimizes $$ \sum</em>{i=1}<sup>n</sup> (Y_i - \mu)<sup>2$$</sup></li>
 </ul></li>
 <li>This is physical center of mass of the histrogram.</li>
-<li>You might have guessed that the answer \(\mu = \bar X\).</li>
+<li>You might have guessed that the answer $\mu = \bar X$.</li>
 </ul>
 
   </article>
@@ -163,7 +163,7 @@ that minimizes \[ \sum_{i=1}^n (Y_i - \mu)^2\]</li>
     <h2>Experiment</h2>
   </hgroup>
   <article>
-    <h3>Use R studio&#39;s manipulate to see what value of \(\mu\) minimizes the sum of the squared deviations.</h3>
+    <h3>Use R studio&#39;s manipulate to see what value of $\mu$ minimizes the sum of the squared deviations.</h3>
 
 <pre><code>library(manipulate)
 myHist &lt;- function(mu){
@@ -201,23 +201,23 @@ manipulate(myHist(mu), mu = slider(62, 74, step = 0.5))
     <h3>The math follows as:</h3>
   </hgroup>
   <article>
-    <p>\[ 
+    <p>$$ 
 \begin{align} 
-\sum_{i=1}^n (Y_i - \mu)^2 & = \
-\sum_{i=1}^n (Y_i - \bar Y + \bar Y - \mu)^2 \\ 
-& = \sum_{i=1}^n (Y_i - \bar Y)^2 + \
-2 \sum_{i=1}^n (Y_i - \bar Y)  (\bar Y - \mu) +\
-\sum_{i=1}^n (\bar Y - \mu)^2 \\
-& = \sum_{i=1}^n (Y_i - \bar Y)^2 + \
-2 (\bar Y - \mu) \sum_{i=1}^n (Y_i - \bar Y)  +\
-\sum_{i=1}^n (\bar Y - \mu)^2 \\
-& = \sum_{i=1}^n (Y_i - \bar Y)^2 + \
-2 (\bar Y - \mu)  (\sum_{i=1}^n Y_i - n \bar Y) +\
-\sum_{i=1}^n (\bar Y - \mu)^2 \\
-& = \sum_{i=1}^n (Y_i - \bar Y)^2 + \sum_{i=1}^n (\bar Y - \mu)^2\\ 
-& \geq \sum_{i=1}^n (Y_i - \bar Y)^2 \
+\sum<em>{i=1}<sup>n</sup> (Y_i - \mu)<sup>2</sup> &amp; = \
+\sum</em>{i=1}<sup>n</sup> (Y<em>i - \bar Y + \bar Y - \mu)<sup>2</sup> \ 
+&amp; = \sum</em>{i=1}<sup>n</sup> (Y<em>i - \bar Y)<sup>2</sup> + \
+2 \sum</em>{i=1}<sup>n</sup> (Y<em>i - \bar Y)  (\bar Y - \mu) +\
+\sum</em>{i=1}<sup>n</sup> (\bar Y - \mu)<sup>2</sup> \
+&amp; = \sum<em>{i=1}<sup>n</sup> (Y_i - \bar Y)<sup>2</sup> + \
+2 (\bar Y - \mu) \sum</em>{i=1}<sup>n</sup> (Y<em>i - \bar Y)  +\
+\sum</em>{i=1}<sup>n</sup> (\bar Y - \mu)<sup>2</sup> \
+&amp; = \sum<em>{i=1}<sup>n</sup> (Y_i - \bar Y)<sup>2</sup> + \
+2 (\bar Y - \mu)  (\sum</em>{i=1}<sup>n</sup> Y<em>i - n \bar Y) +\
+\sum</em>{i=1}<sup>n</sup> (\bar Y - \mu)<sup>2</sup> \
+&amp; = \sum<em>{i=1}<sup>n</sup> (Y_i - \bar Y)<sup>2</sup> + \sum</em>{i=1}<sup>n</sup> (\bar Y - \mu)<sup>2\</sup> 
+&amp; \geq \sum_{i=1}<sup>n</sup> (Y_i - \bar Y)<sup>2</sup> \
 \end{align} 
-\]</p>
+$$</p>
 
   </article>
   <!-- Presenter Notes -->
@@ -256,8 +256,8 @@ manipulate(myHist(mu), mu = slider(62, 74, step = 0.5))
   </hgroup>
   <article>
     <ul>
-<li>Suppose that \(X_i\) are the parents&#39; heights.</li>
-<li>Consider picking the slope \(\beta\) that minimizes \[\sum_{i=1}^n (Y_i - X_i \beta)^2\]</li>
+<li>Suppose that $X_i$ are the parents&#39; heights.</li>
+<li>Consider picking the slope $\beta$ that minimizes $$\sum_{i=1}<sup>n</sup> (Y_i - X_i \beta)<sup>2$$</sup></li>
 <li>This is exactly using the origin as a pivot point picking the
 line that minimizes the sum of the squared vertical distances
 of the points to the line</li>
