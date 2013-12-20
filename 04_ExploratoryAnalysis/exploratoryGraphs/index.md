@@ -295,7 +295,7 @@ with(subset(pollution, region == "east"), plot(latitude, pm25, main = "East"))
 
 * Exploratory plots are "quick and dirty"
 
-* Let you summarize the data (usually graphically) and highly any broad features
+* Let you summarize the data (usually graphically) and highlight any broad features
 
 * Explore basic questions and hypotheses (and perhaps rule them out)
 
