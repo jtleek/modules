@@ -16,12 +16,9 @@ mode        : selfcontained # {standalone, draft}
 ## A famous motivating example
 
 
-```
-## [1] 0.667
-```
 
 
-<img class=center src=../../assets/img/galton.jpg height=150>
+<img class=center src=../../assets/galton.jpg height=150>
 
 ### (Perhaps surprisingly, this example is still relevant)
 
