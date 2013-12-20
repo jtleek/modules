@@ -30,6 +30,7 @@ mode        : selfcontained # {standalone, draft}
 
 ---
 ## Questions for this class
+$x^2$
 
 * Consider trying to answer the following kinds of questions:
   * To use the parents' heights to predict childrens' heights.
@@ -72,11 +73,10 @@ hist(galton$parent,col="blue",breaks=100)
 
 ---
 ## Finding the middle via least squares
-
 * Consider only the children's heights. 
   * How could one describe the "middle"?
   * One definition, let $Y_i$ be the height of child $i$ for $i = 1, \ldots, n = 928$, then define the middle as the value of $\mu$
-  that minimizes $$ \sum_{i=1}^n (Y_i - \mu)^2$$
+  that minimizes $$\sum_{i=1}^n (Y_i - \mu)^2$$
 * This is physical center of mass of the histrogram.
 * You might have guessed that the answer $\mu = \bar X$.
 
