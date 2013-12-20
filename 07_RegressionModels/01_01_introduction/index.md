@@ -30,7 +30,7 @@ mode        : selfcontained # {standalone, draft}
 
 ---
 ## Questions for this class
-$x^2$
+<div> $x^2$ </div>
 
 * Consider trying to answer the following kinds of questions:
   * To use the parents' heights to predict childrens' heights.

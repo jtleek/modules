@@ -44,8 +44,6 @@ runif(1)
 
 ---
 ## Questions for this class
-$x^2$
-
 * Consider trying to answer the following kinds of questions:
   * To use the parents' heights to predict childrens' heights.
   * To try to find a parsimonious, easily describe mean 
