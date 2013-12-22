@@ -30,8 +30,6 @@ mode        : selfcontained # {standalone, draft}
 
 ---
 ## Questions for this class
-<div> $x^2$ </div>
-
 * Consider trying to answer the following kinds of questions:
   * To use the parents' heights to predict childrens' heights.
   * To try to find a parsimonious, easily describe mean 
@@ -67,8 +65,6 @@ par(mfrow=c(1,2))
 hist(galton$child,col="blue",breaks=100)
 hist(galton$parent,col="blue",breaks=100)
 ```
-
-<div class="rimage center"><img src="fig/galton.png" title="plot of chunk galton" alt="plot of chunk galton" class="plot" /></div>
 
 
 ---
@@ -106,8 +102,6 @@ manipulate(myHist(mu), mu = slider(62, 74, step = 0.5))
   lines(rep(meanChild,100),seq(0,150,length=100),col="red",lwd=5)
 ```
 
-<div class="rimage center"><img src="fig/lsm.png" title="plot of chunk lsm" alt="plot of chunk lsm" class="plot" /></div>
-
 
 ---
 ### The math follows as:
@@ -137,13 +131,11 @@ $$
 plot(galton$parent,galton$child,pch=19,col="blue")
 ```
 
-<div class="rimage center"><img src="fig/unnamed-chunk-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div>
-
 
 ---
 Size of point represents number of points at that (X, Y) combination (See the Rmd file for the code).
 
-<div class="rimage center"><img src="fig/freqGalton.png" title="plot of chunk freqGalton" alt="plot of chunk freqGalton" class="plot" /></div>
+
 
 
 ---
@@ -188,20 +180,10 @@ manipulate(myPlot(beta), beta = slider(0.8, 1.2, step = 0.02))
 lm(child ~ parent, data = galton)
 ```
 
-```
-
-Call:
-lm(formula = child ~ parent, data = galton)
-
-Coefficients:
-(Intercept)       parent  
-     23.942        0.646  
-```
-
 
 ---
 ## Visualizing the best fit line
 ### Size of points are frequencies at that X, Y combination
-<div class="rimage center"><img src="fig/unnamed-chunk-3.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" class="plot" /></div>
+
 
 

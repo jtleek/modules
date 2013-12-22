@@ -72,9 +72,7 @@
     <h2>Questions for this class</h2>
   </hgroup>
   <article>
-    <div> $x^2$ </div>
-
-<ul>
+    <ul>
 <li>Consider trying to answer the following kinds of questions:
 
 <ul>
@@ -130,8 +128,6 @@ hist(galton$child,col=&quot;blue&quot;,breaks=100)
 hist(galton$parent,col=&quot;blue&quot;,breaks=100)
 </code></pre>
 
-<div class="rimage center"><img src="fig/galton.png" title="plot of chunk galton" alt="plot of chunk galton" class="plot" /></div>
-
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -146,11 +142,11 @@ hist(galton$parent,col=&quot;blue&quot;,breaks=100)
 
 <ul>
 <li>How could one describe the &quot;middle&quot;?</li>
-<li>One definition, let $Y<em>i$ be the height of child $i$ for $i = 1, \ldots, n = 928$, then define the middle as the value of $\mu$
-that minimizes $$\sum</em>{i=1}<sup>n</sup> (Y_i - \mu)<sup>2$$</sup></li>
+<li>One definition, let \(Y_i\) be the height of child \(i\) for \(i = 1, \ldots, n = 928\), then define the middle as the value of \(\mu\)
+that minimizes \[\sum_{i=1}^n (Y_i - \mu)^2\]</li>
 </ul></li>
 <li>This is physical center of mass of the histrogram.</li>
-<li>You might have guessed that the answer $\mu = \bar X$.</li>
+<li>You might have guessed that the answer \(\mu = \bar X\).</li>
 </ul>
 
   </article>
@@ -162,7 +158,7 @@ that minimizes $$\sum</em>{i=1}<sup>n</sup> (Y_i - \mu)<sup>2$$</sup></li>
     <h2>Experiment</h2>
   </hgroup>
   <article>
-    <h3>Use R studio&#39;s manipulate to see what value of $\mu$ minimizes the sum of the squared deviations.</h3>
+    <h3>Use R studio&#39;s manipulate to see what value of \(\mu\) minimizes the sum of the squared deviations.</h3>
 
 <pre><code>library(manipulate)
 myHist &lt;- function(mu){
@@ -189,8 +185,6 @@ manipulate(myHist(mu), mu = slider(62, 74, step = 0.5))
   lines(rep(meanChild,100),seq(0,150,length=100),col=&quot;red&quot;,lwd=5)
 </code></pre>
 
-<div class="rimage center"><img src="fig/lsm.png" title="plot of chunk lsm" alt="plot of chunk lsm" class="plot" /></div>
-
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -200,23 +194,23 @@ manipulate(myHist(mu), mu = slider(62, 74, step = 0.5))
     <h3>The math follows as:</h3>
   </hgroup>
   <article>
-    <p>$$ 
+    <p>\[ 
 \begin{align} 
-\sum<em>{i=1}<sup>n</sup> (Y_i - \mu)<sup>2</sup> &amp; = \
-\sum</em>{i=1}<sup>n</sup> (Y<em>i - \bar Y + \bar Y - \mu)<sup>2</sup> \ 
-&amp; = \sum</em>{i=1}<sup>n</sup> (Y<em>i - \bar Y)<sup>2</sup> + \
-2 \sum</em>{i=1}<sup>n</sup> (Y<em>i - \bar Y)  (\bar Y - \mu) +\
-\sum</em>{i=1}<sup>n</sup> (\bar Y - \mu)<sup>2</sup> \
-&amp; = \sum<em>{i=1}<sup>n</sup> (Y_i - \bar Y)<sup>2</sup> + \
-2 (\bar Y - \mu) \sum</em>{i=1}<sup>n</sup> (Y<em>i - \bar Y)  +\
-\sum</em>{i=1}<sup>n</sup> (\bar Y - \mu)<sup>2</sup> \
-&amp; = \sum<em>{i=1}<sup>n</sup> (Y_i - \bar Y)<sup>2</sup> + \
-2 (\bar Y - \mu)  (\sum</em>{i=1}<sup>n</sup> Y<em>i - n \bar Y) +\
-\sum</em>{i=1}<sup>n</sup> (\bar Y - \mu)<sup>2</sup> \
-&amp; = \sum<em>{i=1}<sup>n</sup> (Y_i - \bar Y)<sup>2</sup> + \sum</em>{i=1}<sup>n</sup> (\bar Y - \mu)<sup>2\</sup> 
-&amp; \geq \sum_{i=1}<sup>n</sup> (Y_i - \bar Y)<sup>2</sup> \
+\sum_{i=1}^n (Y_i - \mu)^2 & = \
+\sum_{i=1}^n (Y_i - \bar Y + \bar Y - \mu)^2 \\ 
+& = \sum_{i=1}^n (Y_i - \bar Y)^2 + \
+2 \sum_{i=1}^n (Y_i - \bar Y)  (\bar Y - \mu) +\
+\sum_{i=1}^n (\bar Y - \mu)^2 \\
+& = \sum_{i=1}^n (Y_i - \bar Y)^2 + \
+2 (\bar Y - \mu) \sum_{i=1}^n (Y_i - \bar Y)  +\
+\sum_{i=1}^n (\bar Y - \mu)^2 \\
+& = \sum_{i=1}^n (Y_i - \bar Y)^2 + \
+2 (\bar Y - \mu)  (\sum_{i=1}^n Y_i - n \bar Y) +\
+\sum_{i=1}^n (\bar Y - \mu)^2 \\
+& = \sum_{i=1}^n (Y_i - \bar Y)^2 + \sum_{i=1}^n (\bar Y - \mu)^2\\ 
+& \geq \sum_{i=1}^n (Y_i - \bar Y)^2 \
 \end{align} 
-$$</p>
+\]</p>
 
   </article>
   <!-- Presenter Notes -->
@@ -230,8 +224,6 @@ $$</p>
     <pre><code class="r">plot(galton$parent,galton$child,pch=19,col=&quot;blue&quot;)
 </code></pre>
 
-<div class="rimage center"><img src="fig/unnamed-chunk-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div>
-
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -243,8 +235,6 @@ $$</p>
   <article>
     <p>Size of point represents number of points at that (X, Y) combination (See the Rmd file for the code).</p>
 
-<div class="rimage center"><img src="fig/freqGalton.png" title="plot of chunk freqGalton" alt="plot of chunk freqGalton" class="plot" /></div>
-
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -255,8 +245,8 @@ $$</p>
   </hgroup>
   <article>
     <ul>
-<li>Suppose that $X_i$ are the parents&#39; heights.</li>
-<li>Consider picking the slope $\beta$ that minimizes $$\sum_{i=1}<sup>n</sup> (Y_i - X_i \beta)<sup>2$$</sup></li>
+<li>Suppose that \(X_i\) are the parents&#39; heights.</li>
+<li>Consider picking the slope \(\beta\) that minimizes \[\sum_{i=1}^n (Y_i - X_i \beta)^2\]</li>
 <li>This is exactly using the origin as a pivot point picking the
 line that minimizes the sum of the squared vertical distances
 of the points to the line</li>
@@ -309,15 +299,6 @@ manipulate(myPlot(beta), beta = slider(0.8, 1.2, step = 0.02))
 <pre><code class="r">lm(child ~ parent, data = galton)
 </code></pre>
 
-<pre><code>
-Call:
-lm(formula = child ~ parent, data = galton)
-
-Coefficients:
-(Intercept)       parent  
-     23.942        0.646  
-</code></pre>
-
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -328,8 +309,6 @@ Coefficients:
   </hgroup>
   <article>
     <h3>Size of points are frequencies at that X, Y combination</h3>
-
-<div class="rimage center"><img src="fig/unnamed-chunk-3.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" class="plot" /></div>
 
   </article>
   <!-- Presenter Notes -->
