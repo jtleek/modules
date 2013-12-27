@@ -268,7 +268,7 @@ summary(fit)$sigma
 
 <h3>Scratch work</h3>
 
-<p>\((Y_i - \hat Y_i) = (Y_i - (\bar Y - \hat \beta_1 \bar X) - \hat \beta_1 X_i) = (Y_i - \bar Y) - \hat \beta_1 (X_i - \bar X))\)</p>
+<p>\((Y_i - \hat Y_i) = \{Y_i - (\bar Y - \hat \beta_1 \bar X) - \hat \beta_1 X_i\} = (Y_i - \bar Y) - \hat \beta_1 (X_i - \bar X)\)</p>
 
 <p>\((\hat Y_i - \bar Y) = (\bar Y - \hat \beta_1 \bar X - \hat \beta_1 X_i - \bar Y )
 = \hat \beta_1  (X_i - \bar X)\)</p>
@@ -339,13 +339,17 @@ So, \(R^2\) is literally \(r\) squared.</p>
 <li>\(R^2\) is the percentage of variation explained by the regression odel.</li>
 <li>\(0 \leq R^2 \leq 1\)</li>
 <li>\(R^2\) is the sample correlation squared.</li>
-<li>\(R^2\) can be a misleading summary of model fit.</li>
+<li>\(R^2\) can be a misleading summary of model fit. 
+
+<ul>
 <li>Deleting data can inflate \(R^2\).</li>
+<li>(For later.) Adding terms to a regression model always increases \(R^2\).</li>
+</ul></li>
 <li>Do <code>example(anscombe)</code> to see the following data.
 
 <ul>
 <li>Basically same mean and variance of X and Y.</li>
-<li>Identical correlations (hence $R<sup>2$s).</sup></li>
+<li>Identical correlations (hence same \(R^2\) ).</li>
 <li>Same linear regression relationship.</li>
 </ul></li>
 </ul>
@@ -356,7 +360,7 @@ So, \(R^2\) is literally \(r\) squared.</p>
 
       <slide class="" id="slide-16" style="background:;">
   <hgroup>
-    
+    <h2><code>data(anscombe);example(anscombe)</code></h2>
   </hgroup>
   <article>
     <div class="rimage center"><img src="fig/unnamed-chunk-9.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" class="plot" /></div>

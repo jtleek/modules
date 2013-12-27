@@ -170,7 +170,7 @@ $$
 
 ****
 ### Scratch work
-$(Y_i - \hat Y_i) = (Y_i - (\bar Y - \hat \beta_1 \bar X) - \hat \beta_1 X_i) = (Y_i - \bar Y) - \hat \beta_1 (X_i - \bar X))$
+$(Y_i - \hat Y_i) = \{Y_i - (\bar Y - \hat \beta_1 \bar X) - \hat \beta_1 X_i\} = (Y_i - \bar Y) - \hat \beta_1 (X_i - \bar X)$
 
 $(\hat Y_i - \bar Y) = (\bar Y - \hat \beta_1 \bar X - \hat \beta_1 X_i - \bar Y )
 = \hat \beta_1  (X_i - \bar X)$
@@ -219,14 +219,16 @@ So, $R^2$ is literally $r$ squared.
 * $R^2$ is the percentage of variation explained by the regression odel.
 * $0 \leq R^2 \leq 1$
 * $R^2$ is the sample correlation squared.
-* $R^2$ can be a misleading summary of model fit.
-* Deleting data can inflate $R^2$.
+* $R^2$ can be a misleading summary of model fit. 
+  * Deleting data can inflate $R^2$.
+  * (For later.) Adding terms to a regression model always increases $R^2$.
 * Do `example(anscombe)` to see the following data.
   * Basically same mean and variance of X and Y.
-  * Identical correlations (hence $R^2$s).
+  * Identical correlations (hence same $R^2$ ).
   * Same linear regression relationship.
 
 ---
+## `data(anscombe);example(anscombe)`
 <div class="rimage center"><img src="fig/unnamed-chunk-9.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" class="plot" /></div>
 
 
