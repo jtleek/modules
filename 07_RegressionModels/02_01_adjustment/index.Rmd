@@ -49,7 +49,7 @@ points(x[(n/2 + 1) : n], y[(n/2 + 1) : n], pch = 21, col = "black", bg = "salmon
 
 
 ---
-## Unadjusted and adjusted effects about the same
+## Simulation 1
 ```{r, fig.height=5, fig.width=5, echo = FALSE, results='hide'}
 n <- 100; t <- rep(c(0, 1), c(n/2, n/2)); x <- c(runif(n/2), runif(n/2)); 
 beta0 <- 0; beta1 <- 2; tau <- 1; sigma <- .2
@@ -65,11 +65,20 @@ points(x[1 : (n/2)], y[1 : (n/2)], pch = 21, col = "black", bg = "lightblue", ce
 points(x[(n/2 + 1) : n], y[(n/2 + 1) : n], pch = 21, col = "black", bg = "salmon", cex = 2)
 ```
 
+---
+## Discussion
+### Some things to note in this simulation
+* The X variable is unrelated to group status
+* The X variable is related to Y, but the intercept depends
+  on group status.
+* The group variable is related to Y.
+  * The relationship between group status and Y is constant depending on X.
+  * The relationship between group and Y disregarding X is about the same as holding X constant
 
 ---
-## Marginal effect, no adjusted
+## Simulation 2
 ```{r, fig.height=5, fig.width=5, echo = FALSE, results='hide'}
-n <- 100; t <- rep(c(0, 1), c(n/2, n/2)); x <- c(runif(n/2), 1 + runif(n/2)); 
+n <- 100; t <- rep(c(0, 1), c(n/2, n/2)); x <- c(runif(n/2), 1.5 + runif(n/2)); 
 beta0 <- 0; beta1 <- 2; tau <- 0; sigma <- .2
 y <- beta0 + x * beta1 + t * tau + rnorm(n, sd = sigma)
 plot(x, y, type = "n", frame = FALSE)
@@ -83,10 +92,24 @@ points(x[1 : (n/2)], y[1 : (n/2)], pch = 21, col = "black", bg = "lightblue", ce
 points(x[(n/2 + 1) : n], y[(n/2 + 1) : n], pch = 21, col = "black", bg = "salmon", cex = 2)
 ```
 
+
 ---
-## Marginal and adjusted reversed
+## Discussion
+### Some things to note in this simulation
+* The X variable is highly related to group status
+* The X variable is related to Y, the intercept
+  doesn't depend on the group variable.
+  * The X variable remains related to Y holding group status constant
+* The group variable is marginally related to Y disregarding X.
+* The model would estimate no adjusted effect due to group. 
+  * There isn't any data to inform the relationship between
+    group and Y.
+  * This conclusion is entirely based on the model. 
+
+---
+## Simulation 3
 ```{r, fig.height=5, fig.width=5, echo = FALSE, results='hide'}
-n <- 100; t <- rep(c(0, 1), c(n/2, n/2)); x <- c(runif(n/2), 1 + runif(n/2)); 
+n <- 100; t <- rep(c(0, 1), c(n/2, n/2)); x <- c(runif(n/2), .9 + runif(n/2)); 
 beta0 <- 0; beta1 <- 2; tau <- -1; sigma <- .2
 y <- beta0 + x * beta1 + t * tau + rnorm(n, sd = sigma)
 plot(x, y, type = "n", frame = FALSE)
@@ -101,7 +124,18 @@ points(x[(n/2 + 1) : n], y[(n/2 + 1) : n], pch = 21, col = "black", bg = "salmon
 ```
 
 ---
-## No marginal but adjusted effect
+## Discussion
+### Some things to note in this simulation
+* Marginal association has red group higher than blue.
+* Adjusted relationship has blue group higher than red.
+* Group status related to X.
+* There is some direct evidence for comparing red and blue
+holding X fixed.
+
+
+
+---
+## Simulation 4
 ```{r, fig.height=5, fig.width=5, echo = FALSE, results='hide'}
 n <- 100; t <- rep(c(0, 1), c(n/2, n/2)); x <- c(.5 + runif(n/2), runif(n/2)); 
 beta0 <- 0; beta1 <- 2; tau <- 1; sigma <- .2
@@ -118,8 +152,85 @@ points(x[(n/2 + 1) : n], y[(n/2 + 1) : n], pch = 21, col = "black", bg = "salmon
 ```
 
 ---
-## What's going on?
-* Relationship between $Y$ and $T$ depends on $X$ (and relationship between $Y$ and $X$ depends on $T$).
-  * We can simulate the data to have any relationship that we want between marginal and adjusted estimates. 
-* Example $T$ is a weight loss treatment, $Y$ is weight loss and $X$ is starting weight.
+## Discussion
+### Some things to note in this simulation
+* No marginal association between group status and Y.
+* Strong adjusted relationship.
+* Group status not related to X.
+* There is lots of direct evidence for comparing red and blue
+holding X fixed.
 
+---
+## Simulation 5
+```{r, fig.height=5, fig.width=5, echo = FALSE, results='hide'}
+n <- 100; t <- rep(c(0, 1), c(n/2, n/2)); x <- c(runif(n/2, -1, 1), runif(n/2, -1, 1)); 
+beta0 <- 0; beta1 <- 2; tau <- 0; tau1 <- -4; sigma <- .2
+y <- beta0 + x * beta1 + t * tau + t * x * tau1 + rnorm(n, sd = sigma)
+plot(x, y, type = "n", frame = FALSE)
+abline(lm(y ~ x), lwd = 2)
+abline(h = mean(y[1 : (n/2)]), lwd = 3)
+abline(h = mean(y[(n/2 + 1) : n]), lwd = 3)
+fit <- lm(y ~ x + t + I(x * t))
+abline(coef(fit)[1], coef(fit)[2], lwd = 3)
+abline(coef(fit)[1] + coef(fit)[3], coef(fit)[2] + coef(fit)[4], lwd = 3)
+points(x[1 : (n/2)], y[1 : (n/2)], pch = 21, col = "black", bg = "lightblue", cex = 2)
+points(x[(n/2 + 1) : n], y[(n/2 + 1) : n], pch = 21, col = "black", bg = "salmon", cex = 2)
+```
+
+---
+## Discussion
+### Some things to note from this simulation
+* There is no such thing as a group effect here. 
+  * The impact of group reverses itself depending on X.
+  * Both intercept and slope depends on group.
+* Group status and X unrelated.
+  * There's lots of information about group effects holding X fixed.
+
+---
+### Simulation 6
+```{r, fig.height=5, fig.width=5, echo = FALSE, results='hide'}
+p <- 1
+n <- 100; x2 <- runif(n); x1 <- p * runif(n) - (1 - p) * x2 
+beta0 <- 0; beta1 <- 1; tau <- 4 ; sigma <- .01
+y <- beta0 + x1 * beta1 + tau * x2 + rnorm(n, sd = sigma)
+plot(x1, y, type = "n", frame = FALSE)
+abline(lm(y ~ x1), lwd = 2)
+co.pal <- heat.colors(n)
+points(x1, y, pch = 21, col = "black", bg = co.pal[round((n - 1) * x2 + 1)], cex = 2)
+```
+
+---
+### Do this to investigate the bivariate relationship
+```
+library(rgl)
+plot3d(x1, x2, y)
+```
+
+---
+### Residual relationship
+```{r, fig.height=5, fig.width=5, echo = FALSE, results='hide'}
+plot(resid(lm(x1 ~ x2)), resid(lm(y ~ x2)), frame = FALSE, col = "black", bg = "lightblue", pch = 21, cex = 2)
+abline(lm(I(resid(lm(x1 ~ x2))) ~ I(resid(lm(y ~ x2)))), lwd = 2)
+```
+
+
+---
+## Discussion
+### Some things to note from this simulation
+
+* X1 unrelated to X2
+* X2 strongly related to Y
+* Adjusted relationship between X1 and Y largely unchanged
+  by considering X2.
+  * Almost no residual variability after accounting for X2.
+
+---
+## Some final thoughts
+* Modeling multivariate relationships is difficult.
+* Play around with simulations to see how the
+  inclusion or exclustion of another variable can
+  change analyse.
+* The results of these analyses deal with the
+impact of variables on associations.
+  * Ascertaining mechanisms or cause are difficult subjects 
+    to be added on top of difficulty in understanding multivariate associations.
