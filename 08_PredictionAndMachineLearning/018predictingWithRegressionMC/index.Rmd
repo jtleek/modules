@@ -37,7 +37,8 @@ knit_hooks$set(plot = knitr:::hook_plot_html)
 <img class=center src=../../assets/img/08_PredictionAndMachineLearning/wages.jpg height=350>
 
 Image Credit [http://www.cahs-media.org/the-high-cost-of-low-wages](http://www.cahs-media.org/the-high-cost-of-low-wages)
-Data from: [ISLR package](http://cran.r-project.org/web/packages/ISLR) from the book: [Introduction to statistical learning](http://www-bcf.usc.edu/~gareth/ISL/)]  
+
+Data from: [ISLR package](http://cran.r-project.org/web/packages/ISLR) from the book: [Introduction to statistical learning](http://www-bcf.usc.edu/~gareth/ISL/)
 
 
 

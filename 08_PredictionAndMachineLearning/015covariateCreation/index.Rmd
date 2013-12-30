@@ -32,7 +32,15 @@ knit_hooks$set(plot = knitr:::hook_plot_html)
 ```
 
 
-## Why preprocess?
+## Two levels of covariate creation
+
+**Level 1: From raw data to covariate**
+
+
+
+**Level 2: Transforming tidy covariates** 
+
+
 
 ```{r loadPackage,cache=TRUE,fig.height=3.5,fig.width=3.5}
 library(caret); library(kernlab); data(spam)
@@ -151,3 +159,13 @@ quantile(capAve - capAveTruth)
 quantile((capAve - capAveTruth)[selectNA])
 quantile((capAve - capAveTruth)[!selectNA])
 ```
+
+---
+
+## Notes and further reading
+
+* Training and test must be processed in the same way
+* Test transformations will likely be imperfect
+  * Especially if the test/training sets collected at different times
+* Careful when transforming factor variables!
+* [preprocessing with caret](http://caret.r-forge.r-project.org/preprocess.html)
