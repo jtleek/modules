@@ -34,10 +34,8 @@ knit_hooks$set(plot = knitr:::hook_plot_html)
 
 ## Key ideas
 
-* Use a standard regression model
-  * lm
-  * glm
-* Predict new values with the coefficients
+* Fit a simple regression model
+* Plug in new covariates and multiply by the coefficients
 * Useful when the linear model is (nearly) correct
 
 __Pros__:
@@ -52,7 +50,7 @@ __Cons__:
 
 ## Example: Old faithful eruptions
 
-<img class=center src=../../assets/img/yellowstone.png height=400>
+<img class=center src=../../assets/img/08_PredictionAndMachineLearning/yellowstone.png height=400>
 
 Image Credit/Copyright Wally Pacholka [http://www.astropics.com/](http://www.astropics.com/)
 
@@ -61,12 +59,10 @@ Image Credit/Copyright Wally Pacholka [http://www.astropics.com/](http://www.ast
 ## Example: Old faithful eruptions
 
 ```{r faith}
-data(faithful)
-dim(faithful)
-set.seed(333)
-trainSamples <- sample(1:272,size=(272/2),replace=F)
-trainFaith <- faithful[trainSamples,]
-testFaith <- faithful[-trainSamples,]
+library(caret);data(faithful); set.seed(333)
+inTrain <- createDataPartition(y=faithful$waiting,
+                              p=0.5, list=FALSE)
+trainFaith <- faithful[inTrain,]; testFaith <- faithful[-inTrain,]
 head(trainFaith)
 ```
 
@@ -145,63 +141,16 @@ plot(testFaith$waiting,testFaith$eruptions,pch=19,col="blue")
 matlines(testFaith$waiting[ord],pred1[ord,],type="l",,col=c(1,2,2),lty = c(1,1,1), lwd=3)
 ```
 
----
-
-## Example with binary data: Baltimore Ravens
-
-<img class=center src=../../assets/img/ravens.png height=400>
-
-[http://espn.go.com/nfl/team/_/name/bal/baltimore-ravens](http://espn.go.com/nfl/team/_/name/bal/baltimore-ravens)
 
 ---
 
-## Ravens Data
+## Same process with caret
 
-```{r loadRavens,cache=TRUE}
-download.file("https://dl.dropboxusercontent.com/u/7710864/data/ravensData.rda",
-              destfile="./data/ravensData.rda",method="curl")
-load("./data/ravensData.rda")
-head(ravensData)
+```{r caretfaith,dependson="faith",fig.height=4,fig.width=4}
+modFit <- train(eruptions ~ waiting,data=trainFaith,method="lm")
+summary(modFit$finalModel)
 ```
 
----
-
-## Fit a logistic regression
-
-$$logit(E[RW_i | RS_i]) = b_0 + b_1 RS_i$$
-```{r glmRavens, dependson="loadRavens",fig.height=3.5,fig.width=8}
-glm1 <- glm(ravenWinNum ~ ravenScore,family="binomial",data=ravensData)
-par(mfrow=c(1,2))
-boxplot(predict(glm1) ~ ravensData$ravenWinNum,col="blue")
-boxplot(predict(glm1,type="response") ~ ravensData$ravenWinNum,col="blue")
-```
-
----
-
-## Choosing a cutoff (re-substitution)
-
-```{r cutoff, dependson="glmRavens",fig.height=4,fig.width=4}
-xx <- seq(0,1,length=10); err <- rep(NA,10)
-for(i in 1:length(xx)){
-  err[i] <- sum((predict(glm1,type="response") > xx[i]) != ravensData$ravenWinNum)
-}
-plot(xx,err,pch=19,xlab="Cutoff",ylab="Error")
-```
-
----
-
-## Comparing models with cross validation
-
-```{r,dependson="glmRavens",fig.height=4,fig.width=4}
-library(boot)
-cost <- function(win, pred = 0) mean(abs(win-pred) > 0.5)
-glm1 <- glm(ravenWinNum ~ ravenScore,family="binomial",data=ravensData)
-glm2 <- glm(ravenWinNum ~ ravenScore,family="gaussian",data=ravensData)
-cv1 <- cv.glm(ravensData,glm1,cost,K=3)
-cv2 <- cv.glm(ravensData,glm2,cost,K=3)
-cv1$delta
-cv2$delta
-```
 
 ---
 
@@ -211,6 +160,8 @@ cv2$delta
 * Often useful in combination with other models 
 * [Elements of statistical learning](http://www-stat.stanford.edu/~tibs/ElemStatLearn/)
 * [Modern applied statistics with S](http://www.amazon.com/Modern-Applied-Statistics-W-N-Venables/dp/0387954570)
+* [Introduction to statistical learning](http://www-bcf.usc.edu/~gareth/ISL/)
+
 
 
 

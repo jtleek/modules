@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Preprocessing with Principal Components Analysis (PCA)</title>
+  <title>Predicting with regression</title>
   <meta charset="utf-8">
-  <meta name="description" content="Preprocessing with Principal Components Analysis (PCA)">
+  <meta name="description" content="Predicting with regression">
   <meta name="author" content="Jeffrey Leek">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -41,7 +41,7 @@
         <img src="../../assets/img/bloomberg_shield.png">
       </aside>
       <hgroup class="auto-fadein">
-        <h1>Preprocessing with Principal Components Analysis (PCA)</h1>
+        <h1>Predicting with regression</h1>
         <h2></h2>
         <p>Jeffrey Leek<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
@@ -50,24 +50,27 @@
     <!-- SLIDES -->
       <slide class="" id="slide-1" style="background:;">
   <hgroup>
-    <h2>Correlated predictors</h2>
+    <h2>Key ideas</h2>
   </hgroup>
   <article>
-    <pre><code class="r">library(caret); library(kernlab); data(spam)
-inTrain &lt;- createDataPartition(y=spam$type,
-                              p=0.75, list=FALSE)
-training &lt;- spam[inTrain,]
-testing &lt;- spam[-inTrain,]
+    <ul>
+<li>Fit a simple regression model</li>
+<li>Plug in new covariates and multiply by the coefficients</li>
+<li>Useful when the linear model is (nearly) correct</li>
+</ul>
 
-M &lt;- abs(cor(training[,-58]))
-diag(M) &lt;- 0
-which(M &gt; 0.8,arr.ind=T)
-</code></pre>
+<p><strong>Pros</strong>:</p>
 
-<pre><code>       row col
-num415  34  32
-num857  32  34
-</code></pre>
+<ul>
+<li>Easy to implement</li>
+<li>Easy to interpret</li>
+</ul>
+
+<p><strong>Cons</strong>:</p>
+
+<ul>
+<li>Often poor performance in nonlinear settings</li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
@@ -75,16 +78,48 @@ num857  32  34
 
       <slide class="" id="slide-2" style="background:;">
   <hgroup>
-    <h2>Correlated predictors</h2>
+    <h2>Example: Old faithful eruptions</h2>
   </hgroup>
   <article>
-    <pre><code class="r">names(spam)[c(34,32)]
+    <p><img class=center src=../../assets/img/08_PredictionAndMachineLearning/yellowstone.png height=400></p>
+
+<p>Image Credit/Copyright Wally Pacholka <a href="http://www.astropics.com/">http://www.astropics.com/</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Example: Old faithful eruptions</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">library(caret);data(faithful); set.seed(333)
+inTrain &lt;- createDataPartition(y=faithful$waiting,
+                              p=0.5, list=FALSE)
+trainFaith &lt;- faithful[inTrain,]; testFaith &lt;- faithful[-inTrain,]
+head(trainFaith)
 </code></pre>
 
-<pre><code>[1] &quot;num415&quot; &quot;num857&quot;
+<pre><code>   eruptions waiting
+6      2.883      55
+11     1.833      54
+16     2.167      52
+19     1.600      52
+22     1.750      47
+27     1.967      55
 </code></pre>
 
-<pre><code class="r">plot(spam[,34],spam[,32])
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Eruption duration versus waiting time</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">plot(trainFaith$waiting,trainFaith$eruptions,pch=19,col=&quot;blue&quot;,xlab=&quot;Waiting&quot;,ylab=&quot;Duration&quot;)
 </code></pre>
 
 <div class="rimage center"><img src="fig/unnamed-chunk-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div>
@@ -93,39 +128,48 @@ num857  32  34
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-3" style="background:;">
+      <slide class="" id="slide-5" style="background:;">
   <hgroup>
-    <h2>Basic PCA idea</h2>
+    <h2>Fit a linear model</h2>
   </hgroup>
   <article>
-    <ul>
-<li>We might not need every predictor</li>
-<li>A weighted combination of predictors might be better</li>
-<li>We should pick this combination to capture the &quot;most information&quot; possible</li>
-<li>Benefits
+    <p>\[ ED_i = b_0 + b_1 WT_i + e_i \]</p>
 
-<ul>
-<li>Reduced number of predictors</li>
-<li>Reduced noise (due to averaging)</li>
-</ul></li>
-</ul>
+<pre><code class="r">lm1 &lt;- lm(eruptions ~ waiting,data=trainFaith)
+summary(lm1)
+</code></pre>
+
+<pre><code>
+Call:
+lm(formula = eruptions ~ waiting, data = trainFaith)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-1.2699 -0.3479  0.0398  0.3659  1.0502 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -1.79274    0.22787   -7.87    1e-12 ***
+waiting      0.07390    0.00315   23.47   &lt;2e-16 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 0.495 on 135 degrees of freedom
+Multiple R-squared:  0.803, Adjusted R-squared:  0.802 
+F-statistic:  551 on 1 and 135 DF,  p-value: &lt;2e-16
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-4" style="background:;">
+      <slide class="" id="slide-6" style="background:;">
   <hgroup>
-    <h2>We could rotate the plot</h2>
+    <h2>Model fit</h2>
   </hgroup>
   <article>
-    <p>\[ X = 0.71 \times {\rm num 415} + 0.71 \times {\rm num857}\]</p>
-
-<p>\[ Y = 0.71 \times {\rm num 415} - 0.71 \times {\rm num857}\]</p>
-
-<pre><code class="r">X &lt;- 0.71*training$num415 + 0.71*training$num857
-Y &lt;- 0.71*training$num415 - 0.71*training$num857
-plot(X,Y)
+    <pre><code class="r">plot(trainFaith$waiting,trainFaith$eruptions,pch=19,col=&quot;blue&quot;,xlab=&quot;Waiting&quot;,ylab=&quot;Duration&quot;)
+lines(trainFaith$waiting,lm1$fitted,lwd=3)
 </code></pre>
 
 <div class="rimage center"><img src="fig/unnamed-chunk-2.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" class="plot" /></div>
@@ -134,56 +178,27 @@ plot(X,Y)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-5" style="background:;">
-  <hgroup>
-    <h2>Related problems</h2>
-  </hgroup>
-  <article>
-    <p>You have multivariate variables \(X_1,\ldots,X_n\) so \(X_1 = (X_{11},\ldots,X_{1m})\)</p>
-
-<ul>
-<li>Find a new set of multivariate variables that are uncorrelated and explain as much variance as possible.</li>
-<li>If you put all the variables together in one matrix, find the best matrix created with fewer variables (lower rank) that explains the original data.</li>
-</ul>
-
-<p>The first goal is <font color="#330066">statistical</font> and the second goal is <font color="#993300">data compression</font>.</p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-6" style="background:;">
-  <hgroup>
-    <h2>Related solutions - PCA/SVD</h2>
-  </hgroup>
-  <article>
-    <p><strong>SVD</strong></p>
-
-<p>If \(X\) is a matrix with each variable in a column and each observation in a row then the SVD is a &quot;matrix decomposition&quot;</p>
-
-<p>\[ X = UDV^T\]</p>
-
-<p>where the columns of \(U\) are orthogonal (left singular vectors), the columns of \(V\) are orthogonal (right singluar vectors) and \(D\) is a diagonal matrix (singular values). </p>
-
-<p><strong>PCA</strong></p>
-
-<p>The principal components are equal to the right singular values if you first scale (subtract the mean, divide by the standard deviation) the variables.</p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
       <slide class="" id="slide-7" style="background:;">
   <hgroup>
-    <h2>Principal components in R - prcomp</h2>
+    <h2>Predict a new value</h2>
   </hgroup>
   <article>
-    <pre><code class="r">smallSpam &lt;- spam[,c(34,32)]
-prComp &lt;- prcomp(smallSpam)
-plot(prComp$x[,1],prComp$x[,2])
+    <p>\[\hat{ED} = \hat{b}_0 + \hat{b}_1 WT\]</p>
+
+<pre><code class="r">coef(lm1)[1] + coef(lm1)[2]*80
 </code></pre>
 
-<div class="rimage center"><img src="fig/prcomp.png" title="plot of chunk prcomp" alt="plot of chunk prcomp" class="plot" /></div>
+<pre><code>(Intercept) 
+      4.119 
+</code></pre>
+
+<pre><code class="r">newdata &lt;- data.frame(waiting=80)
+predict(lm1,newdata)
+</code></pre>
+
+<pre><code>    1 
+4.119 
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
@@ -191,45 +206,14 @@ plot(prComp$x[,1],prComp$x[,2])
 
       <slide class="" id="slide-8" style="background:;">
   <hgroup>
-    <h2>Principal components in R - prcomp</h2>
+    <h2>Plot predictions - training and test</h2>
   </hgroup>
   <article>
-    <pre><code class="r">prComp$rotation
-</code></pre>
-
-<pre><code>          PC1     PC2
-num415 0.7081  0.7061
-num857 0.7061 -0.7081
-</code></pre>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-9" style="background:;">
-  <hgroup>
-    <h2>PCA on SPAM data</h2>
-  </hgroup>
-  <article>
-    <pre><code class="r">typeColor &lt;- ((spam$type==&quot;spam&quot;)*1 + 1)
-prComp &lt;- prcomp(log10(spam[,-58]+1))
-plot(prComp$x[,1],prComp$x[,2],col=typeColor,xlab=&quot;PC1&quot;,ylab=&quot;PC2&quot;)
-</code></pre>
-
-<div class="rimage center"><img src="fig/spamPC.png" title="plot of chunk spamPC" alt="plot of chunk spamPC" class="plot" /></div>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-10" style="background:;">
-  <hgroup>
-    <h2>PCA with caret</h2>
-  </hgroup>
-  <article>
-    <pre><code class="r">preProc &lt;- preProcess(log10(spam[,-58]+1),method=&quot;pca&quot;,pcaComp=2)
-spamPC &lt;- predict(preProc,log10(spam[,-58]+1))
-plot(spamPC[,1],spamPC[,2],col=typeColor)
+    <pre><code class="r">par(mfrow=c(1,2))
+plot(trainFaith$waiting,trainFaith$eruptions,pch=19,col=&quot;blue&quot;,xlab=&quot;Waiting&quot;,ylab=&quot;Duration&quot;)
+lines(trainFaith$waiting,predict(lm1),lwd=3)
+plot(testFaith$waiting,testFaith$eruptions,pch=19,col=&quot;blue&quot;,xlab=&quot;Waiting&quot;,ylab=&quot;Duration&quot;)
+lines(testFaith$waiting,predict(lm1,newdata=testFaith),lwd=3)
 </code></pre>
 
 <div class="rimage center"><img src="fig/unnamed-chunk-4.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" class="plot" /></div>
@@ -238,14 +222,74 @@ plot(spamPC[,1],spamPC[,2],col=typeColor)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-11" style="background:;">
+      <slide class="" id="slide-9" style="background:;">
   <hgroup>
-    <h2>Preprocessing with PCA</h2>
+    <h2>Get training set/test set errors</h2>
   </hgroup>
   <article>
-    <pre><code class="r">preProc &lt;- preProcess(log10(training[,-58]+1),method=&quot;pca&quot;,pcaComp=2)
-trainPC &lt;- predict(preProc,log10(training[,-58]+1))
-modelFit &lt;- train(training$type ~ .,method=&quot;glm&quot;,data=trainPC)
+    <pre><code class="r"># Calculate RMSE on training
+sqrt(sum((lm1$fitted-trainFaith$eruptions)^2))
+</code></pre>
+
+<pre><code>[1] 5.752
+</code></pre>
+
+<pre><code class="r">
+# Calculate RMSE on test
+sqrt(sum((predict(lm1,newdata=testFaith)-testFaith$eruptions)^2))
+</code></pre>
+
+<pre><code>[1] 5.839
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>Prediction intervals</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">pred1 &lt;- predict(lm1,newdata=testFaith,interval=&quot;prediction&quot;)
+ord &lt;- order(testFaith$waiting)
+plot(testFaith$waiting,testFaith$eruptions,pch=19,col=&quot;blue&quot;)
+matlines(testFaith$waiting[ord],pred1[ord,],type=&quot;l&quot;,,col=c(1,2,2),lty = c(1,1,1), lwd=3)
+</code></pre>
+
+<div class="rimage center"><img src="fig/unnamed-chunk-6.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" class="plot" /></div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Same process with caret</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">modFit &lt;- train(eruptions ~ waiting,data=trainFaith,method=&quot;lm&quot;)
+summary(modFit$finalModel)
+</code></pre>
+
+<pre><code>
+Call:
+lm(formula = modFormula, data = data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-1.2699 -0.3479  0.0398  0.3659  1.0502 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -1.79274    0.22787   -7.87    1e-12 ***
+waiting      0.07390    0.00315   23.47   &lt;2e-16 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 0.495 on 135 degrees of freedom
+Multiple R-squared:  0.803, Adjusted R-squared:  0.802 
+F-statistic:  551 on 1 and 135 DF,  p-value: &lt;2e-16
 </code></pre>
 
   </article>
@@ -254,104 +298,15 @@ modelFit &lt;- train(training$type ~ .,method=&quot;glm&quot;,data=trainPC)
 
       <slide class="" id="slide-12" style="background:;">
   <hgroup>
-    <h2>Preprocessing with PCA</h2>
-  </hgroup>
-  <article>
-    <pre><code class="r">testPC &lt;- predict(preProc,log10(testing[,-58]+1))
-confusionMatrix(testing$type,predict(modelFit,testPC))
-</code></pre>
-
-<pre><code>Confusion Matrix and Statistics
-
-          Reference
-Prediction nonspam spam
-   nonspam     646   51
-   spam         64  389
-
-               Accuracy : 0.9           
-                 95% CI : (0.881, 0.917)
-    No Information Rate : 0.617         
-    P-Value [Acc &gt; NIR] : &lt;2e-16        
-
-                  Kappa : 0.79          
- Mcnemar&#39;s Test P-Value : 0.263         
-
-            Sensitivity : 0.910         
-            Specificity : 0.884         
-         Pos Pred Value : 0.927         
-         Neg Pred Value : 0.859         
-             Prevalence : 0.617         
-         Detection Rate : 0.562         
-   Detection Prevalence : 0.606         
-
-       &#39;Positive&#39; Class : nonspam       
-
-</code></pre>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-13" style="background:;">
-  <hgroup>
-    <h2>Alternative (sets # of PCs)</h2>
-  </hgroup>
-  <article>
-    <pre><code class="r">modelFit &lt;- train(training$type ~ .,method=&quot;glm&quot;,preProcess=&quot;pca&quot;,data=training)
-confusionMatrix(testing$type,predict(modelFit,testing))
-</code></pre>
-
-<pre><code>Confusion Matrix and Statistics
-
-          Reference
-Prediction nonspam spam
-   nonspam     660   37
-   spam         54  399
-
-               Accuracy : 0.921         
-                 95% CI : (0.904, 0.936)
-    No Information Rate : 0.621         
-    P-Value [Acc &gt; NIR] : &lt;2e-16        
-
-                  Kappa : 0.833         
- Mcnemar&#39;s Test P-Value : 0.0935        
-
-            Sensitivity : 0.924         
-            Specificity : 0.915         
-         Pos Pred Value : 0.947         
-         Neg Pred Value : 0.881         
-             Prevalence : 0.621         
-         Detection Rate : 0.574         
-   Detection Prevalence : 0.606         
-
-       &#39;Positive&#39; Class : nonspam       
-
-</code></pre>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-14" style="background:;">
-  <hgroup>
-    <h2>Final thoughts on PCs</h2>
+    <h2>Notes and further reading</h2>
   </hgroup>
   <article>
     <ul>
-<li>Most useful for linear-type models</li>
-<li>Can make it harder to interpret predictors</li>
-<li>Watch out for outliers! 
-
-<ul>
-<li>Transform first (with logs/Box Cox)</li>
-<li>Plot predictors to identify problems</li>
-</ul></li>
-<li>For more info see 
-
-<ul>
-<li>Exploratory Data Analysis</li>
-<li><a href="http://statweb.stanford.edu/%7Etibs/ElemStatLearn/">Elements of Statistical Learning</a></li>
-</ul></li>
+<li>Regression models with multiple covariates can be included</li>
+<li>Often useful in combination with other models </li>
+<li><a href="http://www-stat.stanford.edu/%7Etibs/ElemStatLearn/">Elements of statistical learning</a></li>
+<li><a href="http://www.amazon.com/Modern-Applied-Statistics-W-N-Venables/dp/0387954570">Modern applied statistics with S</a></li>
+<li><a href="http://www-bcf.usc.edu/%7Egareth/ISL/">Introduction to statistical learning</a></li>
 </ul>
 
   </article>
