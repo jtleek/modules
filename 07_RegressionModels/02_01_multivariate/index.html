@@ -99,10 +99,29 @@ the purpose of prediction?</li>
     <h2>The linear model</h2>
   </hgroup>
   <article>
-    <p>\[
-Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \ldots +
-\beta_{p-1} X_{(p-1), i} + \epsilon_{i} 
-\]</p>
+    <ul>
+<li>The general linear model extends simple linear regression (SLR)
+by adding terms linearly into the model.
+\[
+Y_i =  \beta_1 X_{1i} + \beta_2 X_{2i} + \ldots +
+\beta_{p} X_{pi} + \epsilon_{i} 
+= \sum_{k=1}^p X_{ik} \beta_j + \epsilon_{i}
+\]</li>
+<li>Here \(X_{1i}=1\) typically, so that an intercept is included.</li>
+<li>Least squares (and hence ML estimates under iid Gaussianity 
+of the errors) minimizes
+\[
+\sum_{i=1}^n \left(Y_i - \sum_{k=1}^p X_{ik} \beta_j\right)^2
+\]</li>
+<li>Note, the important linearity is linearity in the coefficients.
+Thus
+\[
+Y_i =  \beta_1 X_{1i}^2 + \beta_2 X_{2i}^2 + \ldots +
+\beta_{p} X_{pi}^2 + \epsilon_{i} 
+\]
+is still a linear model. (We&#39;ve just squared the elements of the
+predictor variables.)</li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
@@ -110,14 +129,376 @@ Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \ldots +
 
       <slide class="" id="slide-4" style="background:;">
   <hgroup>
-    <h2>Other amazing things that you can accomplish with linear models</h2>
+    <h2>How to get estimates</h2>
   </hgroup>
   <article>
     <ul>
+<li>The real way requires linear algebra. We&#39;ll go over an intuitive development instead. </li>
+<li>Recall that the LS estimate for regression through the origin, \(E[Y_i]=X_{i1}\beta_1\), was \(\sum X_i Y_i / \sum X_i^2\).</li>
+<li>Let&#39;s consider two regressors, \(E[Y_i] = X_{i1}\beta_1 + X_{i2}\beta_2 = \mu_i\). </li>
+<li>Also, recall, that if \(\hat \mu_i\) satisfies
+\[
+\sum_{i=1} (Y_i - \hat \mu_i) (\hat \mu_i - \mu_i) = 0
+\]
+for all possible values of \(\mu_i\), then we&#39;ve found the LS estimates.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    
+  </hgroup>
+  <article>
+    <p>\[
+\sum_{i=1}^n (Y_i - \hat \mu_i) (\hat \mu_i - \mu_i) = \sum_{i=1}^n (Y_i - \hat \beta_1 X_{i1} - \hat \beta_2 X_{i2})
+\left\{X_{i1}(\hat \beta_1 - \beta_1) + X_{i2}(\hat \beta_2 - \beta_2) \right\}
+\]</p>
+
+<ul>
+<li>Thus we need 
+
+<ol>
+<li>\(\sum_{i=1}^n (Y_i - \hat \beta_1 X_{i1} - \hat \beta_2 X_{i2}) X_{i1} = 0\) </li>
+<li> \(\sum_{i=1}^n (Y_i - \hat \beta_1 X_{i1} - \hat \beta_2 X_{i2}) X_{i2} = 0\)</li>
+</ol></li>
+<li>Hold \(\hat \beta_1\) fixed in 2. and solve and we get that
+\[
+\hat \beta_2 = \frac{\sum_{i=1} (Y_i - X_{i1}\hat \beta_1)X_{i2}}{\sum_{i=1}^n X_{i2}^2}
+\]</li>
+<li>Plugging this into 1. we get that
+\[
+0 = \sum_{i=1}^n \left\{Y_i - \frac{\sum_j X_{j2}Y_j}{\sum_j X_{j2}^2}X_{i2} + 
+\beta_1 \left(X_{i1} - \frac{\sum_j X_{j2}X_{j1}}{\sum_j X_{j2}^2} X_{i2}\right)\right\} X_{i1}
+\]</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Continued</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Re writing  this we get
+\[
+0 = \sum_{i=1}^n \left\{ e_{i, Y | X_2} - \hat \beta_1 e_{i, X_1 | X_2} 
+\right\} X_{i1} 
+\]
+where \(e_{i, a | b} = a_i -  \frac{\sum_{j=1}^n a_j b_j }{\sum_{i=1}^n b_j^2} b_i\) is the residual when regressing \(b\) from \(a\) without an intercept.</li>
+<li>We get the solution
+\[
+\hat \beta_1 = \frac{\sum_{i=1}^n e_{i, Y | X_2} e_{i, X_1 | X_2}}{\sum_{i=1}^n e_{i, X_1 | X_2} X_1}
+\]</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    
+  </hgroup>
+  <article>
+    <ul>
+<li>But note that 
+\[
+\sum_{i=1}^n e_{i, X_1 | X_2}^2 
+= e_{i, X_1 | X_2} \left(X_{i1} - \frac{\sum_j X_{j2}X_{j1}}{\sum_j X_{j2}^2} X_{i2}\right)
+\]
+\[
+= \sum_{i=1}^n e_{i, X_1 | X_2} X_{i1} - \frac{\sum_j X_{j2}X_{j1}}{\sum_j X_{j2}^2} \sum_{i=1}^n e_{i, X_1 | X_2} X_{i2}
+\]
+But \(\sum_{i=1}^n e_{i, X_1 | X_2} X_{i2} = 0\). So we get that
+\[
+\sum_{i=1}^n e_{i, X_1 | X_2}^2  = \sum_{i=1}^n e_{i, X_1 | X_2} X_{i1}
+\]
+Thus we get that
+\[
+\hat \beta_1 = \frac{\sum_{i=1}^n e_{i, Y | X_2} e_{i, X_1 | X_2}}{\sum_{i=1}^n e_{i, X_1 | X_2}^2}
+\]</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>Summing up fitting with two regressors</h2>
+  </hgroup>
+  <article>
+    <p>\[\hat \beta_1 = \frac{\sum_{i=1}^n e_{i, Y | X_2} e_{i, X_1 | X_2}}{\sum_{i=1}^n e_{i, X_1 | X_2}^2}\]</p>
+
+<ul>
+<li>That is, the regression estimate for \(\beta_1\) is the regression 
+through the origin estimate having regressed \(X_2\) out of both
+the response and the predictor.</li>
+<li>(Similarly, the regression estimate for \(\beta_2\) is the regression  through the origin estimate having regressed \(X_1\) out of both the response and the predictor.)</li>
+<li>More generally, multivariate regression estimates are exactly those having removed the linear relationship of the other variables
+from both the regressor and response.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>Example with two variables, simple linear regression</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>\(Y_{i} = \beta_1 X_{i1} + \beta_2 X_{i2}\) where  \(X_{i2} = 1\) is an intercept term.</li>
+<li>Then  \(\frac{\sum_j X_{j2}X_{j1}}{\sum_j X_{j2}^2}X_{i2} = 
+\frac{\sum_j X_{j1}}{n} = \bar X_1\). </li>
+<li>\(e_{i, X_1 | X_2} = X_{i1} - \bar X_1\).</li>
+<li>Simiarly \(e_{i, Y | X_2} = Y_i - \bar Y\).</li>
+<li>Thus
+\[
+\hat \beta_1 = \frac{\sum_{i=1}^n e_{i, Y | X_2} e_{i, X_1 | X_2}}{\sum_{i=1}^n e_{i, X_1 | X_2}^2} = \frac{\sum_{i=1}^n (X_i - \bar X)(Y_i - \bar Y)}{\sum_{i=1}^n (X_i - \bar X)^2}
+= Cor(X, Y) \frac{Sd(Y)}{Sd(X)}
+\]</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>The general case</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>The equations
+\[
+\sum_{i=1}^n (Y_i - X_{i1}\hat \beta_1 - \ldots - X_{ip}\hat \beta_p) X_k = 0
+\]
+for \(k = 1, \ldots, p\) yields \(p\) equations with \(p\) unknowns.</li>
+<li>Solving them yields the least squares estimates. (With obtaining a good, fast, general solution requiring some knowledge of linear algebra.)</li>
+<li>The least squares estimate for the coefficient of a multivariate regression model is exactly regression through the origin with the linear relationships with the other regressors removed from both the regressor and outcome by taking residuals. </li>
+<li>In this sense, multivariate regression &quot;adjusts&quot; a coefficient for the linear impact of the other variables. </li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Fitting LS equations</h2>
+  </hgroup>
+  <article>
+    <p>Just so I don&#39;t leave you hanging, let&#39;s show a way to get estimates. Recall the equations:
+\[
+\sum_{i=1}^n (Y_i - X_{i1}\hat \beta_1 - \ldots - X_{ip}\hat \beta_p) X_k = 0
+\]
+If I hold \(\hat \beta_1, \ldots, \hat \beta_{p-1}\) fixed then
+we get that
+\[
+\hat \beta_p = \frac{\sum_{i=1}^n (Y_i - X_{i1}\hat \beta_1 - \ldots - X_{i,p-1}\hat \beta_{p-1}) X_{ip} }{\sum_{i=1}^n X_{ip}^2}
+\]
+Plugging this back into the equations, we wind up with 
+\[
+\sum_{i=1}^n (e_{i,Y|X_p} - e_{i, X_{1} | X_p} \hat \beta_1 - \ldots - e_{i, X_{p-1} | X_{p}} \hat \beta_{p-1}) X_k = 0
+\]</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>We can tidy it up a bit more, though</h2>
+  </hgroup>
+  <article>
+    <p>Note that
+\[
+X_k  = e_{i,X_k|X_p} + \frac{\sum_{i=1}^n X_{ik} X_{ip}}{\sum_{i=1}^n X_{ip^2}} X_p
+\]
+and \(\sum_{i=1}^n e_{i,X_j | X_p} X_{ip} = 0\).
+Thus 
+\[
+\sum_{i=1}^n (e_{i,Y|X_p} - e_{i, X_{1} | X_p} \hat \beta_1 - \ldots - e_{i, X_{p-1} | X_{p}} \hat \beta_{p-1}) X_k = 0
+\]
+is equal to
+\[
+\sum_{i=1}^n (e_{i,Y|X_p} - e_{i, X_{1} | X_p} \hat \beta_1 - \ldots - e_{i, X_{p-1} | X_{p}} \hat \beta_{p-1}) e_{i,X_k|X_p} = 0
+\]</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>To sum up</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>We&#39;ve reduced \(p\) LS equations and \(p\) unknowns to \(p-1\) LS equations and \(p-1\) unknowns.
+
+<ul>
+<li>Every variable has been replaced by its residual with \(X_p\). </li>
+<li>This process can then be iterated until only Y and one
+variable remains. </li>
+</ul></li>
+<li>Think of it as follows. If we want an adjusted relationship between y and x, keep taking residuals over confounders and do regression through the origin.
+
+<ul>
+<li>The order that you do the confounders doesn&#39;t matter.</li>
+<li>(It can&#39;t because our choice of doing \(p\) first 
+was arbitrary.)</li>
+</ul></li>
+<li>This isn&#39;t a terribly efficient way to get estimates. But, it&#39;s nice conceputally, as it shows how regression estimates are adjusted for the linear relationship with other variables.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h2>Demonstration that it works using an example</h2>
+  </hgroup>
+  <article>
+    <h3>Linear model with two variables and an intercept</h3>
+
+<pre><code class="r">n &lt;- 100; x &lt;- rnorm(n); x2 &lt;- rnorm(n); x3 &lt;- rnorm(n)
+y &lt;- x + x2 + x3 + rnorm(n, sd = .1)
+e &lt;- function(a, b) a -  sum( a * b ) / sum( b ^ 2) * b
+ey &lt;- e(e(y, x2), e(x3, x2))
+ex &lt;- e(e(x, x2), e(x3, x2))
+sum(ey * ex) / sum(ex ^ 2)
+</code></pre>
+
+<pre><code>[1] 0.9936
+</code></pre>
+
+<pre><code class="r">coef(lm(y ~ x + x2 + x3 - 1)) #the -1 removes the intercept term
+</code></pre>
+
+<pre><code>     x     x2     x3 
+0.9936 1.0163 0.9891 
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>Showing that order doesn&#39;t matter</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">ey &lt;- e(e(y, x3), e(x2, x3))
+ex &lt;- e(e(x, x3), e(x2, x3))
+sum(ey * ex) / sum(ex ^ 2)
+</code></pre>
+
+<pre><code>[1] 0.9936
+</code></pre>
+
+<pre><code class="r">coef(lm(y ~ x + x2 + x3 - 1)) #the -1 removes the intercept term
+</code></pre>
+
+<pre><code>     x     x2     x3 
+0.9936 1.0163 0.9891 
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2>Residuals again</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">ey &lt;- resid(lm(y ~ x2 + x3 - 1))
+ex &lt;- resid(lm(x ~ x2 + x3 - 1))
+sum(ey * ex) / sum(ex ^ 2)
+</code></pre>
+
+<pre><code>[1] 0.9936
+</code></pre>
+
+<pre><code class="r">coef(lm(y ~ x + x2 + x3 - 1)) #the -1 removes the intercept term
+</code></pre>
+
+<pre><code>     x     x2     x3 
+0.9936 1.0163 0.9891 
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>Interpretation of the coeficient</h2>
+  </hgroup>
+  <article>
+    <p>\[E[Y | X_1 = x_1, \ldots, X_p = x_p] = \sum_{k=1}^p x_{k} \beta_k\]
+So that
+\[
+E[Y | X_1 = x_1 + 1, \ldots, X_p = x_p]  - E[Y | X_1 = x_1, \ldots, X_p = x_p]\]
+\[= (x_1 + 1) \beta_1 + \sum_{k=2}^p x_{k}+ \sum_{k=1}^p x_{k} \beta_k = \beta_1 \]
+So that the interpretation of a multivariate regression coefficient is the expected change in the response per unit change in the regressor, holding all of the other regressors fixed.</p>
+
+<p>In the next lecture, we&#39;ll do examples and go over context-specific
+interpretations.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>Fitted values, residuals and residual variation</h2>
+  </hgroup>
+  <article>
+    <p>All of our SLR quantities can be extended to linear models</p>
+
+<ul>
+<li>Model \(Y_i = \sum_{k=1}^p X_{ik} \beta_{k} + \epsilon_{i}\) where \(\epsilon_i \sim N(0, \sigma^2)\)</li>
+<li>Fitted responses \(\hat Y_i = \sum_{k=1}^p X_{ik} \hat \beta_{k}\)</li>
+<li>Residuals \(e_i = Y_i - \hat Y_i\)</li>
+<li>Variance estimate \(\hat \sigma^2 = \frac{1}{n-p} \sum_{i=1}^n e_i ^2\)</li>
+<li>To get predicted responses at new values, \(x_1, \ldots, x_p\), simply plug them into the linear model \(\sum_{k=1}^p x_{k} \hat \beta_{k}\)</li>
+<li>Coefficients have standard errors, \(\hat \sigma_{\hat \beta_k}\), and
+\(\frac{\hat \beta_k - \beta_k}{\hat \sigma_{\hat \beta_k}}\)
+follows a \(T\) distribution with \(n-p\) degrees of freedom.</li>
+<li>Predicted responses have standard errors and we can calculate predicted and expected response intervals.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>Linear models</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Linear models are the single most important applied statistical and machine learning techniqe, <em>by far</em>.</li>
+<li>Some amazing things that you can accomplish with linear models
+
+<ul>
 <li>Decompose a signal into its harmonics.</li>
-<li>Flexibly fit complex functions.</li>
+<li>Flexibly fit complicated functions.</li>
 <li>Fit factor variables as predictors.</li>
 <li>Uncover complex multivariate relationships with the response.</li>
+<li>Build accurate prediction models.</li>
+</ul></li>
 </ul>
 
   </article>
