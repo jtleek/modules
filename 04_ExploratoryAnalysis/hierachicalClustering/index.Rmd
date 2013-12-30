@@ -178,7 +178,7 @@ points(mean(x[ind[1,]]),mean(y[ind[1,]]),col="orange",cex=5,lwd=3,pch=1)
 
 ## Hierarchical clustering - #3
 
-```{r dependson="createData",echo=FALSE, fig.height=6,fig.width=12}
+```{r dependson="createData",echo=FALSE, fig.height=5,fig.width=14}
 library(fields)
 dataFrame <- data.frame(x=x,y=y)
 rdistxy <- rdist(dataFrame)
