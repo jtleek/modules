@@ -1,5 +1,5 @@
 ---
-title       : Preprocessing with Principal Components Analysis (PCA)
+title       : Predicting with regression 
 subtitle    : 
 author      : Jeffrey Leek
 job         : Johns Hopkins Bloomberg School of Public Health
@@ -19,74 +19,106 @@ mode        : selfcontained # {standalone, draft}
 
 
 
-## Correlated predictors
+## Key ideas
+
+* Fit a simple regression model
+* Plug in new covariates and multiply by the coefficients
+* Useful when the linear model is (nearly) correct
+
+__Pros__:
+* Easy to implement
+* Easy to interpret
+
+__Cons__:
+* Often poor performance in nonlinear settings
+
+
+---
+
+## Example: Old faithful eruptions
+
+<img class=center src=../../assets/img/08_PredictionAndMachineLearning/yellowstone.png height=400>
+
+Image Credit/Copyright Wally Pacholka [http://www.astropics.com/](http://www.astropics.com/)
+
+---
+
+## Example: Old faithful eruptions
 
 
 ```r
-library(caret); library(kernlab); data(spam)
-inTrain <- createDataPartition(y=spam$type,
-                              p=0.75, list=FALSE)
-training <- spam[inTrain,]
-testing <- spam[-inTrain,]
-
-M <- abs(cor(training[,-58]))
-diag(M) <- 0
-which(M > 0.8,arr.ind=T)
+library(caret);data(faithful); set.seed(333)
+inTrain <- createDataPartition(y=faithful$waiting,
+                              p=0.5, list=FALSE)
+trainFaith <- faithful[inTrain,]; testFaith <- faithful[-inTrain,]
+head(trainFaith)
 ```
 
 ```
-       row col
-num415  34  32
-num857  32  34
+   eruptions waiting
+6      2.883      55
+11     1.833      54
+16     2.167      52
+19     1.600      52
+22     1.750      47
+27     1.967      55
 ```
 
 
 ---
 
-## Correlated predictors
+## Eruption duration versus waiting time
 
 
 ```r
-names(spam)[c(34,32)]
-```
-
-```
-[1] "num415" "num857"
-```
-
-```r
-plot(spam[,34],spam[,32])
+plot(trainFaith$waiting,trainFaith$eruptions,pch=19,col="blue",xlab="Waiting",ylab="Duration")
 ```
 
 <div class="rimage center"><img src="fig/unnamed-chunk-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div>
 
 
-
 ---
 
-## Basic PCA idea
+## Fit a linear model 
 
-* We might not need every predictor
-* A weighted combination of predictors might be better
-* We should pick this combination to capture the "most information" possible
-* Benefits
-  * Reduced number of predictors
-  * Reduced noise (due to averaging)
-
-
----
-
-## We could rotate the plot
-
-$$ X = 0.71 \times {\rm num 415} + 0.71 \times {\rm num857}$$
-
-$$ Y = 0.71 \times {\rm num 415} - 0.71 \times {\rm num857}$$
+$$ ED_i = b_0 + b_1 WT_i + e_i $$
 
 
 ```r
-X <- 0.71*training$num415 + 0.71*training$num857
-Y <- 0.71*training$num415 - 0.71*training$num857
-plot(X,Y)
+lm1 <- lm(eruptions ~ waiting,data=trainFaith)
+summary(lm1)
+```
+
+```
+
+Call:
+lm(formula = eruptions ~ waiting, data = trainFaith)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-1.2699 -0.3479  0.0398  0.3659  1.0502 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -1.79274    0.22787   -7.87    1e-12 ***
+waiting      0.07390    0.00315   23.47   <2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.495 on 135 degrees of freedom
+Multiple R-squared:  0.803,	Adjusted R-squared:  0.802 
+F-statistic:  551 on 1 and 135 DF,  p-value: <2e-16
+```
+
+
+
+---
+## Model fit
+
+
+```r
+plot(trainFaith$waiting,trainFaith$eruptions,pch=19,col="blue",xlab="Waiting",ylab="Duration")
+lines(trainFaith$waiting,lm1$fitted,lwd=3)
 ```
 
 <div class="rimage center"><img src="fig/unnamed-chunk-2.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" class="plot" /></div>
@@ -94,193 +126,131 @@ plot(X,Y)
 
 ---
 
-## Related problems
+## Predict a new value
 
-You have multivariate variables $X_1,\ldots,X_n$ so $X_1 = (X_{11},\ldots,X_{1m})$
-
-* Find a new set of multivariate variables that are uncorrelated and explain as much variance as possible.
-* If you put all the variables together in one matrix, find the best matrix created with fewer variables (lower rank) that explains the original data.
-
-
-The first goal is <font color="#330066">statistical</font> and the second goal is <font color="#993300">data compression</font>.
-
----
-
-## Related solutions - PCA/SVD
-
-__SVD__
-
-If $X$ is a matrix with each variable in a column and each observation in a row then the SVD is a "matrix decomposition"
-
-$$ X = UDV^T$$
-
-where the columns of $U$ are orthogonal (left singular vectors), the columns of $V$ are orthogonal (right singluar vectors) and $D$ is a diagonal matrix (singular values). 
-
-__PCA__
-
-The principal components are equal to the right singular values if you first scale (subtract the mean, divide by the standard deviation) the variables.
-
----
-
-## Principal components in R - prcomp
+$$\hat{ED} = \hat{b}_0 + \hat{b}_1 WT$$
 
 
 ```r
-smallSpam <- spam[,c(34,32)]
-prComp <- prcomp(smallSpam)
-plot(prComp$x[,1],prComp$x[,2])
+coef(lm1)[1] + coef(lm1)[2]*80
 ```
 
-<div class="rimage center"><img src="fig/prcomp.png" title="plot of chunk prcomp" alt="plot of chunk prcomp" class="plot" /></div>
+```
+(Intercept) 
+      4.119 
+```
+
+```r
+newdata <- data.frame(waiting=80)
+predict(lm1,newdata)
+```
+
+```
+    1 
+4.119 
+```
 
 
 ---
 
-## Principal components in R - prcomp
+## Plot predictions - training and test
 
 
 ```r
-prComp$rotation
-```
-
-```
-          PC1     PC2
-num415 0.7081  0.7061
-num857 0.7061 -0.7081
-```
-
-
-
----
-
-## PCA on SPAM data
-
-
-```r
-typeColor <- ((spam$type=="spam")*1 + 1)
-prComp <- prcomp(log10(spam[,-58]+1))
-plot(prComp$x[,1],prComp$x[,2],col=typeColor,xlab="PC1",ylab="PC2")
-```
-
-<div class="rimage center"><img src="fig/spamPC.png" title="plot of chunk spamPC" alt="plot of chunk spamPC" class="plot" /></div>
-
-
-
----
-
-## PCA with caret
-
-
-```r
-preProc <- preProcess(log10(spam[,-58]+1),method="pca",pcaComp=2)
-spamPC <- predict(preProc,log10(spam[,-58]+1))
-plot(spamPC[,1],spamPC[,2],col=typeColor)
+par(mfrow=c(1,2))
+plot(trainFaith$waiting,trainFaith$eruptions,pch=19,col="blue",xlab="Waiting",ylab="Duration")
+lines(trainFaith$waiting,predict(lm1),lwd=3)
+plot(testFaith$waiting,testFaith$eruptions,pch=19,col="blue",xlab="Waiting",ylab="Duration")
+lines(testFaith$waiting,predict(lm1,newdata=testFaith),lwd=3)
 ```
 
 <div class="rimage center"><img src="fig/unnamed-chunk-4.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" class="plot" /></div>
 
 
-
 ---
 
-## Preprocessing with PCA
+## Get training set/test set errors
 
 
 ```r
-preProc <- preProcess(log10(training[,-58]+1),method="pca",pcaComp=2)
-trainPC <- predict(preProc,log10(training[,-58]+1))
-modelFit <- train(training$type ~ .,method="glm",data=trainPC)
+# Calculate RMSE on training
+sqrt(sum((lm1$fitted-trainFaith$eruptions)^2))
+```
+
+```
+[1] 5.752
+```
+
+```r
+
+# Calculate RMSE on test
+sqrt(sum((predict(lm1,newdata=testFaith)-testFaith$eruptions)^2))
+```
+
+```
+[1] 5.839
 ```
 
 
 ---
 
-## Preprocessing with PCA
+## Prediction intervals
 
 
 ```r
-testPC <- predict(preProc,log10(testing[,-58]+1))
-confusionMatrix(testing$type,predict(modelFit,testPC))
+pred1 <- predict(lm1,newdata=testFaith,interval="prediction")
+ord <- order(testFaith$waiting)
+plot(testFaith$waiting,testFaith$eruptions,pch=19,col="blue")
+matlines(testFaith$waiting[ord],pred1[ord,],type="l",,col=c(1,2,2),lty = c(1,1,1), lwd=3)
 ```
 
-```
-Confusion Matrix and Statistics
+<div class="rimage center"><img src="fig/unnamed-chunk-6.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" class="plot" /></div>
 
-          Reference
-Prediction nonspam spam
-   nonspam     646   51
-   spam         64  389
-                                        
-               Accuracy : 0.9           
-                 95% CI : (0.881, 0.917)
-    No Information Rate : 0.617         
-    P-Value [Acc > NIR] : <2e-16        
-                                        
-                  Kappa : 0.79          
- Mcnemar's Test P-Value : 0.263         
-                                        
-            Sensitivity : 0.910         
-            Specificity : 0.884         
-         Pos Pred Value : 0.927         
-         Neg Pred Value : 0.859         
-             Prevalence : 0.617         
-         Detection Rate : 0.562         
-   Detection Prevalence : 0.606         
-                                        
-       'Positive' Class : nonspam       
-                                        
-```
 
 
 ---
 
-## Alternative (sets # of PCs)
+## Same process with caret
 
 
 ```r
-modelFit <- train(training$type ~ .,method="glm",preProcess="pca",data=training)
-confusionMatrix(testing$type,predict(modelFit,testing))
+modFit <- train(eruptions ~ waiting,data=trainFaith,method="lm")
+summary(modFit$finalModel)
 ```
 
 ```
-Confusion Matrix and Statistics
 
-          Reference
-Prediction nonspam spam
-   nonspam     660   37
-   spam         54  399
-                                        
-               Accuracy : 0.921         
-                 95% CI : (0.904, 0.936)
-    No Information Rate : 0.621         
-    P-Value [Acc > NIR] : <2e-16        
-                                        
-                  Kappa : 0.833         
- Mcnemar's Test P-Value : 0.0935        
-                                        
-            Sensitivity : 0.924         
-            Specificity : 0.915         
-         Pos Pred Value : 0.947         
-         Neg Pred Value : 0.881         
-             Prevalence : 0.621         
-         Detection Rate : 0.574         
-   Detection Prevalence : 0.606         
-                                        
-       'Positive' Class : nonspam       
-                                        
+Call:
+lm(formula = modFormula, data = data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-1.2699 -0.3479  0.0398  0.3659  1.0502 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -1.79274    0.22787   -7.87    1e-12 ***
+waiting      0.07390    0.00315   23.47   <2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.495 on 135 degrees of freedom
+Multiple R-squared:  0.803,	Adjusted R-squared:  0.802 
+F-statistic:  551 on 1 and 135 DF,  p-value: <2e-16
 ```
+
 
 
 ---
 
-## Final thoughts on PCs
+## Notes and further reading
 
-* Most useful for linear-type models
-* Can make it harder to interpret predictors
-* Watch out for outliers! 
-  * Transform first (with logs/Box Cox)
-  * Plot predictors to identify problems
-* For more info see 
-  * Exploratory Data Analysis
-  * [Elements of Statistical Learning](http://statweb.stanford.edu/~tibs/ElemStatLearn/)
-  
+* Regression models with multiple covariates can be included
+* Often useful in combination with other models 
+* [Elements of statistical learning](http://www-stat.stanford.edu/~tibs/ElemStatLearn/)
+* [Modern applied statistics with S](http://www.amazon.com/Modern-Applied-Statistics-W-N-Venables/dp/0387954570)
+* [Introduction to statistical learning](http://www-bcf.usc.edu/~gareth/ISL/)
+
+
+
+
