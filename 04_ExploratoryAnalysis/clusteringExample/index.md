@@ -1,5 +1,5 @@
 ---
-title       : Clustering Example
+title       : EDA Case Study - Understanding Human Activity with Smart Phones
 subtitle    : 
 author      : Roger D. Peng, Associate Professor of Biostatistics 
 job         : Johns Hopkins Bloomberg School of Public Health
@@ -200,12 +200,12 @@ table(kClust$cluster, sub1$activity)
 ```
 ##    
 ##     laying sitting standing walk walkdown walkup
-##   1      0       0        0   95        0      0
-##   2      5       0        0    0        0     53
-##   3      0       0        0    0       23      0
-##   4     19      13        5    0        0      0
-##   5     26      34       48    0        0      0
-##   6      0       0        0    0       26      0
+##   1      0       0        0   50        1      0
+##   2      0       0        0    0       48      0
+##   3     27      37       51    0        0      0
+##   4      3       0        0    0        0     53
+##   5      0       0        0   45        0      0
+##   6     20      10        2    0        0      0
 ```
 
 
@@ -299,7 +299,7 @@ plot(kClust$center[1, 1:10], pch = 19, ylab = "Cluster Center", xlab = "")
 
 
 ```r
-plot(kClust$center[6, 1:10], pch = 19, ylab = "Cluster Center", xlab = "")
+plot(kClust$center[4, 1:10], pch = 19, ylab = "Cluster Center", xlab = "")
 ```
 
 ![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10.png) 
