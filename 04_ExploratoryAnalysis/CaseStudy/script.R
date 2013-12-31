@@ -5,10 +5,10 @@
 
 ## Read in data from 1999
 
-pm0 <- read.table(gzfile("RD_501_88101_1999-0.txt.gz"), comment.char = "#", header = FALSE, sep = "|", na.strings = "")
+pm0 <- read.table("RD_501_88101_1999-0.txt", comment.char = "#", header = FALSE, sep = "|", na.strings = "")
 dim(pm0)
 head(pm0)
-cnames <- readLines(gzfile("RD_501_88101_1999-0.txt.gz"), 1)
+cnames <- readLines("RD_501_88101_1999-0.txt", 1)
 print(cnames)
 cnames <- strsplit(cnames, "|", fixed = TRUE)
 print(cnames)
@@ -22,7 +22,7 @@ mean(is.na(x0))  ## Are missing values important here?
 
 ## Read in data from 2012
 
-pm1 <- read.table(gzfile("RD_501_88101_2012-0.txt.gz"), comment.char = "#", header = FALSE, sep = "|", na.strings = "", nrow = 1304290)
+pm1 <- read.table("RD_501_88101_2012-0.txt", comment.char = "#", header = FALSE, sep = "|", na.strings = "", nrow = 1304290)
 names(pm1) <- make.names(cnames[[1]])
 head(pm1)
 dim(pm1)
@@ -127,5 +127,3 @@ with(mrg, plot(rep(1, 52), mrg[, 2], xlim = c(.5, 2.5)))
 with(mrg, points(rep(2, 52), mrg[, 3]))
 segments(rep(1, 52), mrg[, 2], rep(2, 52), mrg[, 3])
 
-
-## Conclusions
