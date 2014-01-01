@@ -1,0 +1,60 @@
+---
+title       : Boosting
+subtitle    : 
+author      : Jeffrey Leek, Assistant Professor of Biostatistics 
+job         : Johns Hopkins Bloomberg School of Public Health
+logo        : bloomberg_shield.png
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow   # 
+url:
+  lib: ../../libraries
+  assets: ../../assets
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+---
+
+
+```{r setup, cache = F, echo = F, message = F, warning = F, tidy = F}
+# make this an external chunk that can be included in any file
+options(width = 100)
+opts_chunk$set(message = F, error = F, warning = F, comment = NA, fig.align = 'center', dpi = 100, tidy = F, cache.path = '.cache/', fig.path = 'fig/')
+
+options(xtable.type = 'html')
+knit_hooks$set(inline = function(x) {
+  if(is.numeric(x)) {
+    round(x, getOption('digits'))
+  } else {
+    paste(as.character(x), collapse = ', ')
+  }
+})
+knit_hooks$set(plot = knitr:::hook_plot_html)
+```
+
+
+## Basic idea
+
+1. Take lots of (possibly) weak predictors
+2. Weight them and add them up
+3. Get a stronger predictor
+
+---
+
+## Basic intuition - majority vote
+
+Suppose we have 5 completely independent classifiers
+
+If accuracy is 70% for each:
+  * $10\times(0.7)^3(0.3)^2 + 5\times(0.7)^4(0.3)^2 + (0.7)^5$
+  * 83.7% majority vote accuracy
+
+With 101 independent classifiers
+  * 99.9% majority vote accuracy
+  
+[http://www.cbcb.umd.edu/~hcorrada/PracticalML/pdf/lectures/EnsembleMethods.pdf](http://www.cbcb.umd.edu/~hcorrada/PracticalML/pdf/lectures/EnsembleMethods.pdf)
+
+
+---
+
+## Example algorithm - Adaboost
+
