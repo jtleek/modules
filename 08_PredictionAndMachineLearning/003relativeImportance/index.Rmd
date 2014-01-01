@@ -124,7 +124,7 @@ __Common mistakes__
 
 ## Interpretability matters
 
-<img class=center src=../../assets/img/08_PredictionAndMachineLearning/interpretable.png height=250>
+<img class=center src=../../assets/img/08_PredictionAndMachineLearning/interpretable.png height=150>
 
 </br></br></br>
 

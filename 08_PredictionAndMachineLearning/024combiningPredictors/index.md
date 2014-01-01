@@ -23,6 +23,7 @@ mode        : selfcontained # {standalone, draft}
 * You can combine classifiers by averaging/voting
 * Combining classifiers improves accuracy
 * Combining classifiers reduces interpretability
+* Boosting, bagging, and random forests are variants on this theme
 
 ---
 
@@ -30,7 +31,7 @@ mode        : selfcontained # {standalone, draft}
 
 BellKor = Combination of 107 predictors 
 
-<img class=center src=../../assets/img/netflix.png height=400>
+<img class=center src=../../assets/img/08_PredictionAndMachineLearning/netflix.png height=450>
 
 [http://www.netflixprize.com//leaderboard](http://www.netflixprize.com//leaderboard)
 
@@ -38,10 +39,11 @@ BellKor = Combination of 107 predictors
 
 ## Heritage health prize - Progress Prize 1
 
-<img class=center src=../../assets/img/makers.png height=200>
+<img class=center src=../../assets/img/08_PredictionAndMachineLearning/makers.png height=200>
 [Market Makers](https://kaggle2.blob.core.windows.net/wiki-files/327/e4cd1d25-eca9-49ca-9593-b254a773fe03/Market%20Makers%20-%20Milestone%201%20Description%20V2%201.pdf)
 
-<img class=center src=../../assets/img/mestrom.png height=200>
+<img class=center src=../../assets/img/08_PredictionAndMachineLearning/mestrom.png height=200>
+
 [Mestrom](https://kaggle2.blob.core.windows.net/wiki-files/327/09ccf652-8c1c-4a3d-b979-ce2369c985e4/Willem%20Mestrom%20-%20Milestone%201%20Description%20V2%202.pdf)
 
 
@@ -63,143 +65,204 @@ With 101 independent classifiers
 
 ## Approaches for combining classifiers
 
-1. Bagging (see previous lecture)
-2. [Boosting](http://en.wikipedia.org/wiki/AdaBoost)
-3. Combining different classifiers
+1. Bagging, boosting, random forests
+  * Usually combine similar classifiers
+2. Combining different classifiers
+  * Model stacking
+  * Model ensembling
 
 ---
 
-## Example
+## Example with Wage data
+
+__Create training, test and validation sets__
 
 
 ```r
-#library(devtools)
-#install_github("medley","mewo2")
-library(medley)
-set.seed(453234)
-y <- rnorm(1000)
-x1 <- (y > 0); x2 <- y*rnorm(1000)
-x3 <- rnorm(1000,mean=y,sd=1); x4 <- (y > 0) & (y < 3)
-x5 <- rbinom(1000,size=4,prob=exp(y)/(1+exp(y)))
-x6 <- (y < -2) | (y > 2)
-data <- data.frame(y=y,x1=x1,x2=x2,x3=x3,x4=x4,x5=x5,x6=x6)
-train <- sample(1:1000,size=500)
-trainData <- data[train,]; testData <- data[-train,]
+library(ISLR); data(Wage); library(ggplot2); library(caret);
+Wage <- subset(Wage,select=-c(logwage))
+
+# Create a building data set and validation set
+inBuild <- createDataPartition(y=Wage$wage,
+                              p=0.7, list=FALSE)
+validation <- Wage[-inBuild,]; buildData <- Wage[inBuild,]
+
+inTrain <- createDataPartition(y=buildData$wage,
+                              p=0.7, list=FALSE)
+training <- buildData[inTrain,]; testing <- buildData[-inTrain,]
 ```
 
-
----
-
-## Basic models
-
-
-```r
-library(tree)
-lm1 <- lm(y ~.,data=trainData)
-rmse(predict(lm1,data=testData),testData$y)
-tree1 <- tree(y ~.,data=trainData)
-rmse(predict(tree1,data=testData),testData$y)
-tree2 <- tree(y~.,data=trainData[sample(1:dim(trainData)[1]),])
-```
 
 
 ---
 
-## Combining models
+## Wage data sets
+
+__Create training, test and validation sets__
 
 
 ```r
-combine1 <- predict(lm1,data=testData)/2 + predict(tree1,data=testData)/2
-rmse(combine1,testData$y)
+dim(training)
 ```
 
 ```
-[1] 1.281
+[1] 1474   11
 ```
 
 ```r
-combine2 <- (predict(lm1,data=testData)/3 + predict(tree1,data=testData)/3 
-             + predict(tree2,data=testData)/3)
-rmse(combine2,testData$y)
+dim(testing)
 ```
 
 ```
-[1] 1.175
+[1] 628  11
 ```
+
+```r
+dim(validation)
+```
+
+```
+[1] 898  11
+```
+
 
 
 ---
 
-## Medley package
+## Build two different models
 
 
 ```r
-#library(devtools)
-#install_github("medley","mewo2")
-library(medley)
-library(e1071)
-library(randomForests)
-x <- trainData[,-1]
-y <- trainData$y
-newx <- testData[,-1]
+mod1 <- train(wage ~.,method="glm",data=training)
+mod2 <- train(wage ~.,method="rf",
+              data=training, 
+              trControl = trainControl(method="cv"),number=3)
 ```
 
-
-
-[http://www.kaggle.com/users/10748/martin-o-leary](http://www.kaggle.com/users/10748/martin-o-leary)
-
----
-
-## Blending models (part 1)
-
-
-```r
-m <- create.medley(x, y, errfunc=rmse);
-for (g in 1:10) {
-  m <- add.medley(m, svm, list(gamma=1e-3 * g));
-}
-```
 
 
 ---
 
-## Blending models (part 2)
+## Predict on the testing set 
 
 
 ```r
-for (mt in 1:2) {
-  m <- add.medley(m, randomForest, list(mtry=mt));
-}
-m <- prune.medley(m, 0.8);
-rmse(predict(m,newx),testData$y)
+pred1 <- predict(mod1,testing); pred2 <- predict(mod2,testing)
+qplot(pred1,pred2,colour=wage,data=testing)
+```
+
+<div class="rimage center"><img src="fig/predict.png" title="plot of chunk predict" alt="plot of chunk predict" class="plot" /></div>
+
+
+
+---
+
+## Fit a model that combines predictors
+
+
+```r
+predDF <- data.frame(pred1,pred2,wage=testing$wage)
+combModFit <- train(wage ~.,method="gam",data=predDF)
+combPred <- predict(combModFit,predDF)
+```
+
+
+
+---
+
+## Testing errors
+
+
+```r
+sqrt(sum((pred1-testing$wage)^2))
 ```
 
 ```
-Sampled... 96.00 %:  1 svm (gamma = 0.01) 
-1.00 %:  2 svm (gamma = 0.009) 
-1.00 %:  5 svm (gamma = 0.006) 
-1.00 %:  6 svm (gamma = 0.005) 
-1.00 %:  7 svm (gamma = 0.004) 
-CV error: 0.4956 
+[1] 827.1
+```
+
+```r
+sqrt(sum((pred2-testing$wage)^2))
 ```
 
 ```
-[1] 0.4694
+[1] 866.8
 ```
+
+```r
+sqrt(sum((combPred-testing$wage)^2))
+```
+
+```
+[1] 813.9
+```
+
+
+
+---
+
+## Predict on validation data set
+
+
+```r
+pred1V <- predict(mod1,validation); pred2V <- predict(mod2,validation)
+predVDF <- data.frame(pred1=pred1V,pred2=pred2V)
+combPredV <- predict(combModFit,predVDF)
+```
+
+
+
+---
+
+## Evaluate on validation
+
+
+```r
+sqrt(sum((pred1V-validation$wage)^2))
+```
+
+```
+[1] 1003
+```
+
+```r
+sqrt(sum((pred2V-validation$wage)^2))
+```
+
+```
+[1] 1068
+```
+
+```r
+sqrt(sum((combPredV-validation$wage)^2))
+```
+
+```
+[1] 999.9
+```
+
+
 
 
 ---
 
 ## Notes and further resources
 
-__Notes__:
-
 * Even simple blending can be useful
-* Majority vote is typical model for binary/multiclass data
-* Makes models hard to interpret
+* Typical model for binary/multiclass data
+  * Build an odd number of models
+  * Predict with each model
+  * Predict the class by majority vote
+* This can get dramatically more complicated
+  * Simple blending in caret: [caretEnsemble](https://github.com/zachmayer/caretEnsemble) (use at your own risk!)
 
-__Further resources__:
+---
 
-* [Bayesian model averaging](http://www.research.att.com/~volinsky/bma.html)
-* [Heritage health prize](https://www.heritagehealthprize.com/c/hhp/details/milestone-winners)
-* [Netflix model blending](http://www2.research.att.com/~volinsky/papers/chance.pdf)
+## Recall - scalability matters
+
+<img class=center src=../../assets/img/08_PredictionAndMachineLearning/netflixno.png height=250>
+</br></br></br>
+
+[http://www.techdirt.com/blog/innovation/articles/20120409/03412518422/](http://www.techdirt.com/blog/innovation/articles/20120409/03412518422/)
+
+[http://techblog.netflix.com/2012/04/netflix-recommendations-beyond-5-stars.html](http://techblog.netflix.com/2012/04/netflix-recommendations-beyond-5-stars.html)

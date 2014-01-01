@@ -43,7 +43,7 @@ knit_hooks$set(plot = knitr:::hook_plot_html)
 
 BellKor = Combination of 107 predictors 
 
-<img class=center src=../../assets/img/netflix.png height=400>
+<img class=center src=../../assets/img/08_PredictionAndMachineLearning/netflix.png height=450>
 
 [http://www.netflixprize.com//leaderboard](http://www.netflixprize.com//leaderboard)
 
@@ -51,7 +51,7 @@ BellKor = Combination of 107 predictors
 
 ## Heritage health prize - Progress Prize 1
 
-<img class=center src=../../assets/img/makers.png height=200>
+<img class=center src=../../assets/img/08_PredictionAndMachineLearning/makers.png height=450>
 [Market Makers](https://kaggle2.blob.core.windows.net/wiki-files/327/e4cd1d25-eca9-49ca-9593-b254a773fe03/Market%20Makers%20-%20Milestone%201%20Description%20V2%201.pdf)
 
 <img class=center src=../../assets/img/mestrom.png height=200>
