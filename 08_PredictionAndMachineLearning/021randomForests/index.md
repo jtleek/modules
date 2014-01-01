@@ -35,6 +35,16 @@ __Cons__:
 2. Interpretability
 3. Overfitting
 
+
+---
+
+## Random forests
+
+<img class=center src=../../assets/img/08_PredictionAndMachineLearning/forests.png height=400>
+
+[http://www.robots.ox.ac.uk/~az/lectures/ml/lect5.pdf](http://www.robots.ox.ac.uk/~az/lectures/ml/lect5.pdf)
+
+
 ---
 
 ## Iris data

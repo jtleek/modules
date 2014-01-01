@@ -1,5 +1,5 @@
 ---
-title       : Combining predictors
+title       : Other prediction algorithms
 subtitle    : 
 author      : Jeffrey Leek, Assistant Professor of Biostatistics 
 job         : Johns Hopkins Bloomberg School of Public Health
@@ -18,188 +18,104 @@ mode        : selfcontained # {standalone, draft}
 
 
 
-## Key ideas
+## There are a ton of prediction algorithms 
 
-* You can combine classifiers by averaging/voting
-* Combining classifiers improves accuracy
-* Combining classifiers reduces interpretability
+<img class=center src=../../assets/img/08_PredictionAndMachineLearning/lotsamodels.png height=450>
 
----
-
-## Netflix prize
-
-BellKor = Combination of 107 predictors 
-
-<img class=center src=../../assets/img/netflix.png height=400>
-
-[http://www.netflixprize.com//leaderboard](http://www.netflixprize.com//leaderboard)
+[http://caret.r-forge.r-project.org/modelList.html](http://caret.r-forge.r-project.org/modelList.html)
 
 ---
 
-## Heritage health prize - Progress Prize 1
+## Don't forget this
 
-<img class=center src=../../assets/img/makers.png height=200>
-[Market Makers](https://kaggle2.blob.core.windows.net/wiki-files/327/e4cd1d25-eca9-49ca-9593-b254a773fe03/Market%20Makers%20-%20Milestone%201%20Description%20V2%201.pdf)
+<img class=center src=../../assets/img/08_PredictionAndMachineLearning/illusion.png height=100>
 
-<img class=center src=../../assets/img/mestrom.png height=200>
-[Mestrom](https://kaggle2.blob.core.windows.net/wiki-files/327/09ccf652-8c1c-4a3d-b979-ce2369c985e4/Willem%20Mestrom%20-%20Milestone%201%20Description%20V2%202.pdf)
+<img class=center src=../../assets/img/08_PredictionAndMachineLearning/illusiontable.png height=300>
+
+[http://arxiv.org/pdf/math/0606441.pdf](http://arxiv.org/pdf/math/0606441.pdf)
 
 
 ---
 
-## Basic intuition - majority vote
+## Support vector machines
 
-Suppose we have 5 completely independent classifiers
+<img class=center src=../../assets/img/08_PredictionAndMachineLearning/svm.png height=450>
 
-If accuracy is 70% for each:
-  * $10\times(0.7)^3(0.3)^2 + 5\times(0.7)^4(0.3)^2 + (0.7)^5$
-  * 83.7% majority vote accuracy
-
-With 101 independent classifiers
-  * 99.9% majority vote accuracy
-  
+[http://en.wikipedia.org/wiki/Support_vector_machine](http://en.wikipedia.org/wiki/Support_vector_machine)
 
 ---
 
-## Approaches for combining classifiers
+## Naive Bayes
 
-1. Bagging (see previous lecture)
-2. [Boosting](http://en.wikipedia.org/wiki/AdaBoost)
-3. Combining different classifiers
+<img class=center src=../../assets/img/08_PredictionAndMachineLearning/naivebayes1.png height=75>
+
+</br></br>
+
+<img class=center src=../../assets/img/08_PredictionAndMachineLearning/naivebayes2.png height=225>
+
+[http://en.wikipedia.org/wiki/Naive_Bayes_classifier](http://en.wikipedia.org/wiki/Naive_Bayes_classifier)
+
+_(Used often for document classification, spam filtering,...)_
 
 ---
 
-## Example
+## Neural networks
 
+<img class=center src=../../assets/img/08_PredictionAndMachineLearning/neuralnet.jpg height=450>
 
-```r
-#library(devtools)
-#install_github("medley","mewo2")
-library(medley)
-set.seed(453234)
-y <- rnorm(1000)
-x1 <- (y > 0); x2 <- y*rnorm(1000)
-x3 <- rnorm(1000,mean=y,sd=1); x4 <- (y > 0) & (y < 3)
-x5 <- rbinom(1000,size=4,prob=exp(y)/(1+exp(y)))
-x6 <- (y < -2) | (y > 2)
-data <- data.frame(y=y,x1=x1,x2=x2,x3=x3,x4=x4,x5=x5,x6=x6)
-train <- sample(1:1000,size=500)
-trainData <- data[train,]; testData <- data[-train,]
-```
+[http://www.learnartificialneuralnetworks.com/images/bneuronmodel.jpg](http://www.learnartificialneuralnetworks.com/images/bneuronmodel.jpg)
+
+_(The basis for "deep learning" among other things)_
 
 
 ---
 
-## Basic models
+## Bias variance tradeoff
 
+<img class=center src=../../assets/img/08_PredictionAndMachineLearning/biasvariance.png height=450>
 
-```r
-library(tree)
-lm1 <- lm(y ~.,data=trainData)
-rmse(predict(lm1,data=testData),testData$y)
-tree1 <- tree(y ~.,data=trainData)
-rmse(predict(tree1,data=testData),testData$y)
-tree2 <- tree(y~.,data=trainData[sample(1:dim(trainData)[1]),])
-```
+[http://www.willamette.edu/~gorr/classes/cs449/overfitting.html](http://www.willamette.edu/~gorr/classes/cs449/overfitting.html)
 
 
 ---
 
-## Combining models
+## Lasso
 
+Linear regression minimizes: 
 
-```r
-combine1 <- predict(lm1,data=testData)/2 + predict(tree1,data=testData)/2
-rmse(combine1,testData$y)
-```
+$$ \sum_{i=1}^n \left(Y_i - \sum_{k=1}^K \beta_k X_{ik}\right)^2$$
 
-```
-[1] 1.281
-```
+Lasso minimizes
 
-```r
-combine2 <- (predict(lm1,data=testData)/3 + predict(tree1,data=testData)/3 
-             + predict(tree2,data=testData)/3)
-rmse(combine2,testData$y)
-```
-
-```
-[1] 1.175
-```
+<center>
+$\sum_{i=1}^n \left(Y_i - \sum_{k=1}^K \beta_k X_{ik}\right)^2$ where $\sum_{k=1}^K |\beta_k| < t$
+</center>
 
 
 ---
 
-## Medley package
+## Makes some coefficients zero
 
+<img class=center src=../../assets/img/08_PredictionAndMachineLearning/lasso.png height=450>
 
-```r
-#library(devtools)
-#install_github("medley","mewo2")
-library(medley)
-library(e1071)
-library(randomForests)
-x <- trainData[,-1]
-y <- trainData$y
-newx <- testData[,-1]
-```
-
-
-
-[http://www.kaggle.com/users/10748/martin-o-leary](http://www.kaggle.com/users/10748/martin-o-leary)
-
----
-
-## Blending models (part 1)
-
-
-```r
-m <- create.medley(x, y, errfunc=rmse);
-for (g in 1:10) {
-  m <- add.medley(m, svm, list(gamma=1e-3 * g));
-}
-```
+[http://statweb.stanford.edu/~tibs/lasso.html](http://statweb.stanford.edu/~tibs/lasso.html)
 
 
 ---
 
-## Blending models (part 2)
+## Nearest neighbors
 
+<img class=center src=../../assets/img/08_PredictionAndMachineLearning/knn.png height=450>
 
-```r
-for (mt in 1:2) {
-  m <- add.medley(m, randomForest, list(mtry=mt));
-}
-m <- prune.medley(m, 0.8);
-rmse(predict(m,newx),testData$y)
-```
-
-```
-Sampled... 96.00 %:  1 svm (gamma = 0.01) 
-1.00 %:  2 svm (gamma = 0.009) 
-1.00 %:  5 svm (gamma = 0.006) 
-1.00 %:  6 svm (gamma = 0.005) 
-1.00 %:  7 svm (gamma = 0.004) 
-CV error: 0.4956 
-```
-
-```
-[1] 0.4694
-```
+[http://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm](http://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm)
 
 
 ---
 
 ## Notes and further resources
 
-__Notes__:
+* [Introduction to statistical learning](http://www-bcf.usc.edu/~gareth/ISL/)
+* [Elements of Statistical Learning](http://www-stat.stanford.edu/~tibs/ElemStatLearn/)
+* Also check out [Machine Learning on Coursera](https://www.coursera.org/course/ml)
 
-* Even simple blending can be useful
-* Majority vote is typical model for binary/multiclass data
-* Makes models hard to interpret
 
-__Further resources__:
-
-* [Bayesian model averaging](http://www.research.att.com/~volinsky/bma.html)
-* [Heritage health prize](https://www.heritagehealthprize.com/c/hhp/details/milestone-winners)
-* [Netflix model blending](http://www2.research.att.com/~volinsky/papers/chance.pdf)

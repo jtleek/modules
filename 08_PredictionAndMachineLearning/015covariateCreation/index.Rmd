@@ -156,4 +156,5 @@ predict(bsBasis,age=testing$age)
   * Use exploratory analysis on the training set for creating them
   * Be careful about overfitting!
 * [preprocessing with caret](http://caret.r-forge.r-project.org/preprocess.html)
+* If you want to fit spline models, use the _gam_ method in the _caret_ package which allows smoothing of multiple variables.
 * More on feature creation/data tidying in the Obtaining Data course from the Data Science course track. 

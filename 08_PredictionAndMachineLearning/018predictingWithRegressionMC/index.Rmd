@@ -48,7 +48,7 @@ Data from: [ISLR package](http://cran.r-project.org/web/packages/ISLR) from the 
 
 ```{r loadData,cache=TRUE}
 library(ISLR); library(ggplot2); library(caret);
-data(Wage)
+data(Wage); Wage <- subset(Wage,select=-c(logwage))
 summary(Wage)
 ```
 
@@ -61,8 +61,7 @@ summary(Wage)
 ```{r trainingTest,dependson="loadData",cache=TRUE}
 inTrain <- createDataPartition(y=Wage$wage,
                               p=0.7, list=FALSE)
-training <- Wage[inTrain,]
-testing <- Wage[-inTrain,]
+training <- Wage[inTrain,]; testing <- Wage[-inTrain,]
 dim(training); dim(testing)
 ```
 

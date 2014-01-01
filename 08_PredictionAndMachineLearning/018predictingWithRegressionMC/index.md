@@ -36,7 +36,7 @@ Data from: [ISLR package](http://cran.r-project.org/web/packages/ISLR) from the 
 
 ```r
 library(ISLR); library(ggplot2); library(caret);
-data(Wage)
+data(Wage); Wage <- subset(Wage,select=-c(logwage))
 summary(Wage)
 ```
 
@@ -57,14 +57,14 @@ summary(Wage)
  5. Advanced Degree:426   5. South Atlantic    :   0                                              
                           6. East South Central:   0                                              
                           (Other)              :   0                                              
-  health_ins      logwage          wage      
- 1. Yes:2083   Min.   :3.00   Min.   : 20.1  
- 2. No : 917   1st Qu.:4.45   1st Qu.: 85.4  
-               Median :4.65   Median :104.9  
-               Mean   :4.65   Mean   :111.7  
-               3rd Qu.:4.86   3rd Qu.:128.7  
-               Max.   :5.76   Max.   :318.3  
-                                             
+  health_ins        wage      
+ 1. Yes:2083   Min.   : 20.1  
+ 2. No : 917   1st Qu.: 85.4  
+               Median :104.9  
+               Mean   :111.7  
+               3rd Qu.:128.7  
+               Max.   :318.3  
+                              
 ```
 
 
@@ -78,13 +78,12 @@ summary(Wage)
 ```r
 inTrain <- createDataPartition(y=Wage$wage,
                               p=0.7, list=FALSE)
-training <- Wage[inTrain,]
-testing <- Wage[-inTrain,]
+training <- Wage[inTrain,]; testing <- Wage[-inTrain,]
 dim(training); dim(testing)
 ```
 
 ```
-[1] 898  12
+[1] 898  11
 ```
 
 
@@ -162,7 +161,7 @@ print(modFit)
 
 ```
 2102 samples
-  11 predictors
+  10 predictors
 
 No pre-processing
 Resampling: Bootstrap (25 reps) 

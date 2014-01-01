@@ -18,7 +18,7 @@ mode        : selfcontained # {standalone, draft}
 ```{r setup, cache = F, echo = F, message = F, warning = F, tidy = F}
 # make this an external chunk that can be included in any file
 options(width = 100)
-opts_chunk$set(message = F, error = F, warning = F, comment = NA, fig.align = 'center', dpi = 100, tidy = F, cache.path = '.cache/', fig.path = 'fig/')
+opts_chunk$set(message = F, error = F, warning = F, comment = NA, fig.align = 'center', cache=TRUE, dpi = 100, tidy = F, cache.path = '.cache/', fig.path = 'fig/')
 
 options(xtable.type = 'html')
 knit_hooks$set(inline = function(x) {
@@ -47,6 +47,16 @@ __Cons__:
 1. Speed
 2. Interpretability
 3. Overfitting
+
+
+---
+
+## Random forests
+
+<img class=center src=../../assets/img/08_PredictionAndMachineLearning/forests.png height=400>
+
+[http://www.robots.ox.ac.uk/~az/lectures/ml/lect5.pdf](http://www.robots.ox.ac.uk/~az/lectures/ml/lect5.pdf)
+
 
 ---
 

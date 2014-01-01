@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Combining predictors</title>
+  <title>Other prediction algorithms</title>
   <meta charset="utf-8">
-  <meta name="description" content="Combining predictors">
+  <meta name="description" content="Other prediction algorithms">
   <meta name="author" content="Jeffrey Leek, Assistant Professor of Biostatistics">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -19,6 +19,11 @@
   </script>
   
     <link rel="stylesheet" href = "../../assets/css/custom.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BACKUP.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BASE.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.LOCAL.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.orig">
+<link rel="stylesheet" href = "../../assets/css/custom.css.REMOTE.546.css">
 <link rel="stylesheet" href = "../../assets/css/ribbons.css">
 
 </head>
@@ -36,7 +41,7 @@
         <img src="../../assets/img/bloomberg_shield.png">
       </aside>
       <hgroup class="auto-fadein">
-        <h1>Combining predictors</h1>
+        <h1>Other prediction algorithms</h1>
         <h2></h2>
         <p>Jeffrey Leek, Assistant Professor of Biostatistics<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
@@ -45,14 +50,12 @@
     <!-- SLIDES -->
       <slide class="" id="slide-1" style="background:;">
   <hgroup>
-    <h2>Key ideas</h2>
+    <h2>There are a ton of prediction algorithms</h2>
   </hgroup>
   <article>
-    <ul>
-<li>You can combine classifiers by averaging/voting</li>
-<li>Combining classifiers improves accuracy</li>
-<li>Combining classifiers reduces interpretability</li>
-</ul>
+    <p><img class=center src=../../assets/img/08_PredictionAndMachineLearning/lotsamodels.png height=450></p>
+
+<p><a href="http://caret.r-forge.r-project.org/modelList.html">http://caret.r-forge.r-project.org/modelList.html</a></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -60,14 +63,14 @@
 
       <slide class="" id="slide-2" style="background:;">
   <hgroup>
-    <h2>Netflix prize</h2>
+    <h2>Don&#39;t forget this</h2>
   </hgroup>
   <article>
-    <p>BellKor = Combination of 107 predictors </p>
+    <p><img class=center src=../../assets/img/08_PredictionAndMachineLearning/illusion.png height=100></p>
 
-<p><img class=center src=../../assets/img/netflix.png height=400></p>
+<p><img class=center src=../../assets/img/08_PredictionAndMachineLearning/illusiontable.png height=300></p>
 
-<p><a href="http://www.netflixprize.com//leaderboard">http://www.netflixprize.com//leaderboard</a></p>
+<p><a href="http://arxiv.org/pdf/math/0606441.pdf">http://arxiv.org/pdf/math/0606441.pdf</a></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -75,14 +78,12 @@
 
       <slide class="" id="slide-3" style="background:;">
   <hgroup>
-    <h2>Heritage health prize - Progress Prize 1</h2>
+    <h2>Support vector machines</h2>
   </hgroup>
   <article>
-    <p><img class=center src=../../assets/img/makers.png height=200>
-<a href="https://kaggle2.blob.core.windows.net/wiki-files/327/e4cd1d25-eca9-49ca-9593-b254a773fe03/Market%20Makers%20-%20Milestone%201%20Description%20V2%201.pdf">Market Makers</a></p>
+    <p><img class=center src=../../assets/img/08_PredictionAndMachineLearning/svm.png height=450></p>
 
-<p><img class=center src=../../assets/img/mestrom.png height=200>
-<a href="https://kaggle2.blob.core.windows.net/wiki-files/327/09ccf652-8c1c-4a3d-b979-ce2369c985e4/Willem%20Mestrom%20-%20Milestone%201%20Description%20V2%202.pdf">Mestrom</a></p>
+<p><a href="http://en.wikipedia.org/wiki/Support_vector_machine">http://en.wikipedia.org/wiki/Support_vector_machine</a></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -90,23 +91,18 @@
 
       <slide class="" id="slide-4" style="background:;">
   <hgroup>
-    <h2>Basic intuition - majority vote</h2>
+    <h2>Naive Bayes</h2>
   </hgroup>
   <article>
-    <p>Suppose we have 5 completely independent classifiers</p>
+    <p><img class=center src=../../assets/img/08_PredictionAndMachineLearning/naivebayes1.png height=75></p>
 
-<p>If accuracy is 70% for each:</p>
+<p></br></br></p>
 
-<ul>
-<li>\(10\times(0.7)^3(0.3)^2 + 5\times(0.7)^4(0.3)^2 + (0.7)^5\)</li>
-<li>83.7% majority vote accuracy</li>
-</ul>
+<p><img class=center src=../../assets/img/08_PredictionAndMachineLearning/naivebayes2.png height=225></p>
 
-<p>With 101 independent classifiers</p>
+<p><a href="http://en.wikipedia.org/wiki/Naive_Bayes_classifier">http://en.wikipedia.org/wiki/Naive_Bayes_classifier</a></p>
 
-<ul>
-<li>99.9% majority vote accuracy</li>
-</ul>
+<p><em>(Used often for document classification, spam filtering,...)</em></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -114,14 +110,14 @@
 
       <slide class="" id="slide-5" style="background:;">
   <hgroup>
-    <h2>Approaches for combining classifiers</h2>
+    <h2>Neural networks</h2>
   </hgroup>
   <article>
-    <ol>
-<li>Bagging (see previous lecture)</li>
-<li><a href="http://en.wikipedia.org/wiki/AdaBoost">Boosting</a></li>
-<li>Combining different classifiers</li>
-</ol>
+    <p><img class=center src=../../assets/img/08_PredictionAndMachineLearning/neuralnet.jpg height=450></p>
+
+<p><a href="http://www.learnartificialneuralnetworks.com/images/bneuronmodel.jpg">http://www.learnartificialneuralnetworks.com/images/bneuronmodel.jpg</a></p>
+
+<p><em>(The basis for &quot;deep learning&quot; among other things)</em></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -129,22 +125,12 @@
 
       <slide class="" id="slide-6" style="background:;">
   <hgroup>
-    <h2>Example</h2>
+    <h2>Bias variance tradeoff</h2>
   </hgroup>
   <article>
-    <pre><code class="r">#library(devtools)
-#install_github(&quot;medley&quot;,&quot;mewo2&quot;)
-library(medley)
-set.seed(453234)
-y &lt;- rnorm(1000)
-x1 &lt;- (y &gt; 0); x2 &lt;- y*rnorm(1000)
-x3 &lt;- rnorm(1000,mean=y,sd=1); x4 &lt;- (y &gt; 0) &amp; (y &lt; 3)
-x5 &lt;- rbinom(1000,size=4,prob=exp(y)/(1+exp(y)))
-x6 &lt;- (y &lt; -2) | (y &gt; 2)
-data &lt;- data.frame(y=y,x1=x1,x2=x2,x3=x3,x4=x4,x5=x5,x6=x6)
-train &lt;- sample(1:1000,size=500)
-trainData &lt;- data[train,]; testData &lt;- data[-train,]
-</code></pre>
+    <p><img class=center src=../../assets/img/08_PredictionAndMachineLearning/biasvariance.png height=450></p>
+
+<p><a href="http://www.willamette.edu/%7Egorr/classes/cs449/overfitting.html">http://www.willamette.edu/~gorr/classes/cs449/overfitting.html</a></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -152,16 +138,18 @@ trainData &lt;- data[train,]; testData &lt;- data[-train,]
 
       <slide class="" id="slide-7" style="background:;">
   <hgroup>
-    <h2>Basic models</h2>
+    <h2>Lasso</h2>
   </hgroup>
   <article>
-    <pre><code class="r">library(tree)
-lm1 &lt;- lm(y ~.,data=trainData)
-rmse(predict(lm1,data=testData),testData$y)
-tree1 &lt;- tree(y ~.,data=trainData)
-rmse(predict(tree1,data=testData),testData$y)
-tree2 &lt;- tree(y~.,data=trainData[sample(1:dim(trainData)[1]),])
-</code></pre>
+    <p>Linear regression minimizes: </p>
+
+<p>\[ \sum_{i=1}^n \left(Y_i - \sum_{k=1}^K \beta_k X_{ik}\right)^2\]</p>
+
+<p>Lasso minimizes</p>
+
+<p><center>
+\(\sum_{i=1}^n \left(Y_i - \sum_{k=1}^K \beta_k X_{ik}\right)^2\) where \(\sum_{k=1}^K |\beta_k| < t\)
+</center></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -169,23 +157,12 @@ tree2 &lt;- tree(y~.,data=trainData[sample(1:dim(trainData)[1]),])
 
       <slide class="" id="slide-8" style="background:;">
   <hgroup>
-    <h2>Combining models</h2>
+    <h2>Makes some coefficients zero</h2>
   </hgroup>
   <article>
-    <pre><code class="r">combine1 &lt;- predict(lm1,data=testData)/2 + predict(tree1,data=testData)/2
-rmse(combine1,testData$y)
-</code></pre>
+    <p><img class=center src=../../assets/img/08_PredictionAndMachineLearning/lasso.png height=450></p>
 
-<pre><code>[1] 1.281
-</code></pre>
-
-<pre><code class="r">combine2 &lt;- (predict(lm1,data=testData)/3 + predict(tree1,data=testData)/3 
-             + predict(tree2,data=testData)/3)
-rmse(combine2,testData$y)
-</code></pre>
-
-<pre><code>[1] 1.175
-</code></pre>
+<p><a href="http://statweb.stanford.edu/%7Etibs/lasso.html">http://statweb.stanford.edu/~tibs/lasso.html</a></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -193,20 +170,12 @@ rmse(combine2,testData$y)
 
       <slide class="" id="slide-9" style="background:;">
   <hgroup>
-    <h2>Medley package</h2>
+    <h2>Nearest neighbors</h2>
   </hgroup>
   <article>
-    <pre><code class="r">#library(devtools)
-#install_github(&quot;medley&quot;,&quot;mewo2&quot;)
-library(medley)
-library(e1071)
-library(randomForests)
-x &lt;- trainData[,-1]
-y &lt;- trainData$y
-newx &lt;- testData[,-1]
-</code></pre>
+    <p><img class=center src=../../assets/img/08_PredictionAndMachineLearning/knn.png height=450></p>
 
-<p><a href="http://www.kaggle.com/users/10748/martin-o-leary">http://www.kaggle.com/users/10748/martin-o-leary</a></p>
+<p><a href="http://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm">http://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm</a></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -214,65 +183,13 @@ newx &lt;- testData[,-1]
 
       <slide class="" id="slide-10" style="background:;">
   <hgroup>
-    <h2>Blending models (part 1)</h2>
-  </hgroup>
-  <article>
-    <pre><code class="r">m &lt;- create.medley(x, y, errfunc=rmse);
-for (g in 1:10) {
-  m &lt;- add.medley(m, svm, list(gamma=1e-3 * g));
-}
-</code></pre>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-11" style="background:;">
-  <hgroup>
-    <h2>Blending models (part 2)</h2>
-  </hgroup>
-  <article>
-    <pre><code class="r">for (mt in 1:2) {
-  m &lt;- add.medley(m, randomForest, list(mtry=mt));
-}
-m &lt;- prune.medley(m, 0.8);
-rmse(predict(m,newx),testData$y)
-</code></pre>
-
-<pre><code>Sampled... 96.00 %:  1 svm (gamma = 0.01) 
-1.00 %:  2 svm (gamma = 0.009) 
-1.00 %:  5 svm (gamma = 0.006) 
-1.00 %:  6 svm (gamma = 0.005) 
-1.00 %:  7 svm (gamma = 0.004) 
-CV error: 0.4956 
-</code></pre>
-
-<pre><code>[1] 0.4694
-</code></pre>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-12" style="background:;">
-  <hgroup>
     <h2>Notes and further resources</h2>
   </hgroup>
   <article>
-    <p><strong>Notes</strong>:</p>
-
-<ul>
-<li>Even simple blending can be useful</li>
-<li>Majority vote is typical model for binary/multiclass data</li>
-<li>Makes models hard to interpret</li>
-</ul>
-
-<p><strong>Further resources</strong>:</p>
-
-<ul>
-<li><a href="http://www.research.att.com/%7Evolinsky/bma.html">Bayesian model averaging</a></li>
-<li><a href="https://www.heritagehealthprize.com/c/hhp/details/milestone-winners">Heritage health prize</a></li>
-<li><a href="http://www2.research.att.com/%7Evolinsky/papers/chance.pdf">Netflix model blending</a></li>
+    <ul>
+<li><a href="http://www-bcf.usc.edu/%7Egareth/ISL/">Introduction to statistical learning</a></li>
+<li><a href="http://www-stat.stanford.edu/%7Etibs/ElemStatLearn/">Elements of Statistical Learning</a></li>
+<li>Also check out <a href="https://www.coursera.org/course/ml">Machine Learning on Coursera</a></li>
 </ul>
 
   </article>
