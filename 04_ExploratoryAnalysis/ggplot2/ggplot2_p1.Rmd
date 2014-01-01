@@ -12,12 +12,11 @@ url:
   assets: ../../assets
 widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
-
 ---
 
 ```{r setup, cache = F, echo = F, message = F, warning = F, tidy = F}
 # make this an external chunk that can be included in any file
-options(width = 100)
+options(width = 80)
 opts_chunk$set(message = F, error = F, warning = F, comment = NA, fig.align = 'center', dpi = 100, tidy = F, cache.path = '.cache/', fig.path = 'fig/', fig.height = 4, cache = TRUE, fig.show = 'hold')
 
 options(xtable.type = 'html')
@@ -73,14 +72,14 @@ knit_hooks$set(plot = knitr:::hook_plot_html)
 - Can’t go back once plot has started (i.e. to adjust margins); need to plan in advance
 - Difficult to “translate” to others once a new plot has been created (no graphical “language”)
   - Plot is just a series of R commands
-  
+
 ---
 
 ## Plotting Systems in R: Lattice
 
 - Plots are created with a single function call (`xyplot`, `bwplot`, etc.)
 - Most useful for conditioning types of plots: Looking at how $y$ changes with $x$ across levels of $z$
-- Thinks like margins/spacing set automatically because entire plot is specified at once
+- Things like margins/spacing set automatically because entire plot is specified at once
 - Good for putting many many plots on a screen
 
 ---
@@ -89,7 +88,7 @@ knit_hooks$set(plot = knitr:::hook_plot_html)
 
 - Sometimes awkward to specify an entire plot in a single function call
 - Annotation in plot is not intuitive
-- Use of panel functions and subscripts difficult ot wield and requires intense preparation
+- Use of panel functions and subscripts difficult to wield and requires intense preparation
 - Cannot “add” to the plot once it’s created
 
 ---
@@ -189,7 +188,7 @@ qplot(hwy, data = mpg, facets = drv ~ ., binwidth = 2)
 ## Example: MAACS
 
 ```{r}
-#str(maacs)
+str(maacs)
 ```
 
 
@@ -198,7 +197,7 @@ qplot(hwy, data = mpg, facets = drv ~ ., binwidth = 2)
 ## Histogram of eNO
 
 ```{r}
-#qplot(log(eno), data = maacs)
+qplot(log(eno), data = maacs)
 ```
 
 ---
@@ -206,7 +205,7 @@ qplot(hwy, data = mpg, facets = drv ~ ., binwidth = 2)
 ## Histogram by Group
 
 ```{r}
-#qplot(log(eno), data = maacs, fill = mopos)
+qplot(log(eno), data = maacs, fill = mopos)
 ```
 
 ---
@@ -214,8 +213,8 @@ qplot(hwy, data = mpg, facets = drv ~ ., binwidth = 2)
 ## Density Smooth
 
 ```{r, fig.width=4.5}
-#qplot(log(eno), data = maacs, geom = "density")
-#qplot(log(eno), data = maacs, geom = "density", color = mopos)
+qplot(log(eno), data = maacs, geom = "density")
+qplot(log(eno), data = maacs, geom = "density", color = mopos)
 ```
 
 ---
@@ -223,9 +222,9 @@ qplot(hwy, data = mpg, facets = drv ~ ., binwidth = 2)
 ## Scatterplots: eNO vs. PM$_{2.5}$
 
 ```{r, fig.width=3}
-#qplot(log(pm25), log(eno), data = maacs)
-#qplot(log(pm25), log(eno), data = maacs, shape = mopos)
-#qplot(log(pm25), log(eno), data = maacs, color = mopos)
+qplot(log(pm25), log(eno), data = maacs)
+qplot(log(pm25), log(eno), data = maacs, shape = mopos)
+qplot(log(pm25), log(eno), data = maacs, color = mopos)
 ```
 
 
@@ -234,7 +233,8 @@ qplot(hwy, data = mpg, facets = drv ~ ., binwidth = 2)
 ## Scatterplots: eNO vs. PM$_{2.5}$
 
 ```{r}
-#qplot(log(pm25), log(eno), data = maacs, color = mopos, geom = c("point", "smooth"), method = "lm")
+qplot(log(pm25), log(eno), data = maacs, color = mopos, 
+      geom = c("point", "smooth"), method = "lm")
 ```
 
 
@@ -242,8 +242,9 @@ qplot(hwy, data = mpg, facets = drv ~ ., binwidth = 2)
 
 ## Scatterplots: eNO vs. PM$_{2.5}$
 
-```{r, fig.width=4.5}
-#qplot(log(pm25), log(eno), data = maacs, geom = c("point", "smooth"), method = "lm", facets = . ~ mopos)
+```{r, fig.width=9}
+qplot(log(pm25), log(eno), data = maacs, geom = c("point", "smooth"), 
+      method = "lm", facets = . ~ mopos)
 ```
 
 
