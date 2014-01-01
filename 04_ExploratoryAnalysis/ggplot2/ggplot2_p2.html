@@ -50,10 +50,255 @@
     <!-- SLIDES -->
       <slide class="" id="slide-1" style="background:;">
   <hgroup>
-    
+    <h2>What is ggplot2?</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>An implementation of the <strong>Grammar of Graphics</strong> by Leland Wilkinson</li>
+<li>Grammar of graphics represents and abstraction of graphics ideas/objects</li>
+<li>Think “verb”, “noun”, “adjective” for graphics</li>
+<li>Allows for a “theory” of graphics on which to build new graphics and graphics objects</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Basic Components of a ggplot2 Plot</h2>
+  </hgroup>
+  <article>
+    <p>A data frame
+aesthetic mappings: how data are mapped to color, size 
+geoms: geometric objects like points, lines, shapes. 
+facets: for conditional plots. 
+stats: statistical transformations like binning, quantiles, smoothing. 
+scales: what scale an aesthetic map uses (example: male = red, female = blue). 
+coordinate system </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Building Plots with ggplot2</h2>
+  </hgroup>
+  <article>
+    <p>When building plots in ggplot2 (rather than using qplot) the “artist’s palette” model may be the closest analogy
+Plots are built up in layers
+Plot the data
+Overlay a summary
+Metadata and annotation</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Example: BMI, PM2.5, Asthma</h2>
+  </hgroup>
+  <article>
+    <p>Mouse Allergen and Asthma Cohort Study
+Baltimore children (age 5-17)
+Persistent asthma, exacerbation in past year
+Does BMI (normal vs. overweight) modify the relationship between PM2.5 and asthma symptoms?</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Basic Plot</h2>
   </hgroup>
   <article>
     
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Building Up in Layers</h2>
+  </hgroup>
+  <article>
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>No Plot Yet!</h2>
+  </hgroup>
+  <article>
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>First Plot with Point Layer</h2>
+  </hgroup>
+  <article>
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>Adding More Layers: Smooth</h2>
+  </hgroup>
+  <article>
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>Adding More Layers: Facets</h2>
+  </hgroup>
+  <article>
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Annotation</h2>
+  </hgroup>
+  <article>
+    <p>Labels: xlab(), ylab(), labs(), ggtitle()
+Each of the “geom” functions has options to modify 
+For things that only make sense globally, use theme() 
+Example: theme(legend.position = &quot;none&quot;) 
+Two standard appearance themes are included
+theme_gray(): The default theme (gray background)
+theme_bw(): More stark/plain </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>Modifying Aesthetics</h2>
+  </hgroup>
+  <article>
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>Modifying Labels</h2>
+  </hgroup>
+  <article>
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h2>Customizing the Smooth</h2>
+  </hgroup>
+  <article>
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>Changing the Theme</h2>
+  </hgroup>
+  <article>
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2>A Notes about Axis Limits</h2>
+  </hgroup>
+  <article>
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>Axis Limits</h2>
+  </hgroup>
+  <article>
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>More Complex Example</h2>
+  </hgroup>
+  <article>
+    <p>How does the relationship between PM2.5 and nocturnal symptoms vary by BMI and NO2?
+Unlike our previous BMI variable, NO2 is continuous
+We need to make NO2 categorical so we can condition on it in the plotting
+Use the cut() function for this</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>Making NO2 Deciles</h2>
+  </hgroup>
+  <article>
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h2>Final Plot</h2>
+  </hgroup>
+  <article>
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-21" style="background:;">
+  <hgroup>
+    <h2>Code for Final Plot</h2>
+  </hgroup>
+  <article>
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-22" style="background:;">
+  <hgroup>
+    <h2>Summary</h2>
+  </hgroup>
+  <article>
+    <p>ggplot2 is very powerful and flexible if you learn the “grammar” and the various elements that can be tuned/modified
+Many more types of plots can be made; explore and mess around with the package (references mentioned in Part 1 are useful)</p>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
