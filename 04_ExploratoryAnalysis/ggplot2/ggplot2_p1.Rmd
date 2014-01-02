@@ -183,6 +183,14 @@ qplot(hwy, data = mpg, facets = drv ~ ., binwidth = 2)
 - Study indoor environment and its relationship with asthma morbidity
 - Recent publication: http://goo.gl/WqE9j8
 
+```{r,echo=FALSE}
+eno <- read.csv("eno.csv")
+skin <- read.csv("skin.csv")
+env <- read.csv("environmental.csv")
+m <- merge(eno, env, by = "id")
+maacs <- merge(m, skin, by = "id")
+```
+
 ---
 
 ## Example: MAACS

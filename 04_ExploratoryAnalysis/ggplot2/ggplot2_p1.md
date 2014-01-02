@@ -205,6 +205,9 @@ qplot(hwy, data = mpg, facets = drv ~ ., binwidth = 2)
 - Study indoor environment and its relationship with asthma morbidity
 - Recent publication: http://goo.gl/WqE9j8
 
+
+
+
 ---
 
 ## Example: MAACS
@@ -234,7 +237,7 @@ str(maacs)
 qplot(log(eno), data = maacs)
 ```
 
-<div class="rimage center"><img src="fig/unnamed-chunk-8.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" class="plot" /></div>
+<div class="rimage center"><img src="fig/unnamed-chunk-9.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" class="plot" /></div>
 
 
 ---
@@ -246,7 +249,7 @@ qplot(log(eno), data = maacs)
 qplot(log(eno), data = maacs, fill = mopos)
 ```
 
-<div class="rimage center"><img src="fig/unnamed-chunk-9.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" class="plot" /></div>
+<div class="rimage center"><img src="fig/unnamed-chunk-10.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" class="plot" /></div>
 
 
 ---
@@ -259,8 +262,8 @@ qplot(log(eno), data = maacs, geom = "density")
 qplot(log(eno), data = maacs, geom = "density", color = mopos)
 ```
 
-<div class="rimage center"><img src="fig/unnamed-chunk-101.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" class="plot" />
-<img src="fig/unnamed-chunk-102.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" class="plot" /></div>
+<div class="rimage center"><img src="fig/unnamed-chunk-111.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" class="plot" />
+<img src="fig/unnamed-chunk-112.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" class="plot" /></div>
 
 
 ---
@@ -274,9 +277,9 @@ qplot(log(pm25), log(eno), data = maacs, shape = mopos)
 qplot(log(pm25), log(eno), data = maacs, color = mopos)
 ```
 
-<div class="rimage center"><img src="fig/unnamed-chunk-111.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" class="plot" />
-<img src="fig/unnamed-chunk-112.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" class="plot" />
-<img src="fig/unnamed-chunk-113.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" class="plot" /></div>
+<div class="rimage center"><img src="fig/unnamed-chunk-121.png" title="plot of chunk unnamed-chunk-12" alt="plot of chunk unnamed-chunk-12" class="plot" />
+<img src="fig/unnamed-chunk-122.png" title="plot of chunk unnamed-chunk-12" alt="plot of chunk unnamed-chunk-12" class="plot" />
+<img src="fig/unnamed-chunk-123.png" title="plot of chunk unnamed-chunk-12" alt="plot of chunk unnamed-chunk-12" class="plot" /></div>
 
 
 
@@ -290,7 +293,7 @@ qplot(log(pm25), log(eno), data = maacs, color = mopos,
       geom = c("point", "smooth"), method = "lm")
 ```
 
-<div class="rimage center"><img src="fig/unnamed-chunk-12.png" title="plot of chunk unnamed-chunk-12" alt="plot of chunk unnamed-chunk-12" class="plot" /></div>
+<div class="rimage center"><img src="fig/unnamed-chunk-13.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" class="plot" /></div>
 
 
 
@@ -304,7 +307,7 @@ qplot(log(pm25), log(eno), data = maacs, geom = c("point", "smooth"),
       method = "lm", facets = . ~ mopos)
 ```
 
-<div class="rimage center"><img src="fig/unnamed-chunk-13.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" class="plot" /></div>
+<div class="rimage center"><img src="fig/unnamed-chunk-14.png" title="plot of chunk unnamed-chunk-14" alt="plot of chunk unnamed-chunk-14" class="plot" /></div>
 
 
 
