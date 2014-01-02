@@ -1,5 +1,5 @@
 ---
-title       : Preprocessing
+title       : Covariate creation
 subtitle    : 
 author      : Jeffrey Leek
 job         : Johns Hopkins Bloomberg School of Public Health
@@ -18,7 +18,7 @@ mode        : selfcontained # {standalone, draft}
 ```{r setup, cache = F, echo = F, message = F, warning = F, tidy = F}
 # make this an external chunk that can be included in any file
 options(width = 100)
-opts_chunk$set(message = F, error = F, warning = F, comment = NA, fig.align = 'center', dpi = 100, tidy = F, cache.path = '.cache/', fig.path = 'fig/')
+opts_chunk$set(message = F, error = F, warning = F, comment = NA, fig.align = 'center', dpi = 100, tidy = F, cache=TRUE, cache.path = '.cache/', fig.path = 'fig/')
 
 options(xtable.type = 'html')
 knit_hooks$set(inline = function(x) {
@@ -36,136 +36,125 @@ knit_hooks$set(plot = knitr:::hook_plot_html)
 
 **Level 1: From raw data to covariate**
 
-
+<img class=center src=../../assets/img/08_PredictionAndMachineLearning/covCreation1.png height=200>
 
 **Level 2: Transforming tidy covariates** 
 
-
-
-```{r loadPackage,cache=TRUE,fig.height=3.5,fig.width=3.5}
-library(caret); library(kernlab); data(spam)
-inTrain <- createDataPartition(y=spam$type,
-                              p=0.75, list=FALSE)
-training <- spam[inTrain,]
-testing <- spam[-inTrain,]
-hist(training$capitalAve,main="",xlab="ave. capital run length")
-```
-
----
-
-## Why preprocess?
-
-```{r ,dependson="loadPackage",cache=TRUE,fig.height=3.5,fig.width=3.5}
-mean(training$capitalAve)
-sd(training$capitalAve)
-```
-
----
-
-## Standardizing
-
-```{r ,dependson="loadPackage",cache=TRUE,fig.height=3.5,fig.width=3.5}
-trainCapAve <- training$capitalAve
-trainCapAveS <- (trainCapAve  - mean(trainCapAve))/sd(trainCapAve) 
-mean(trainCapAveS)
-sd(trainCapAveS)
-```
-
----
-
-## Standardizing - test set
-
-```{r ,dependson="loadPackage",cache=TRUE,fig.height=3.5,fig.width=3.5}
-testCapAve <- testing$capitalAve
-testCapAveS <- (testCapAve  - mean(trainCapAve))/sd(trainCapAve) 
-mean(testCapAveS)
-sd(testCapAveS)
+```{r spamData,fig.height=4,fig.width=4}
+library(kernlab);data(spam)
+spam$capitalAveSq <- spam$capitalAve^2
 ```
 
 
 ---
 
-## Standardizing - _preProcess_ function
+## Level 1, Raw data -> covariates
 
-```{r preprocess,dependson="loadPackage",cache=TRUE,fig.height=3.5,fig.width=3.5}
-preObj <- preProcess(training[,-58],method=c("center","scale"))
-trainCapAveS <- predict(preObj,training[,-58])$capitalAve
-mean(trainCapAveS)
-sd(trainCapAveS)
+* Depends heavily on application
+* The balancing act is summarization vs. information loss
+* Examples:
+  * Text files: frequency of words, frequency of phrases ([Google ngrams](https://books.google.com/ngrams)), frequency of capital letters.
+  * Images: Edges, corners, blobs, ridges ([computer vision feature detection](http://en.wikipedia.org/wiki/Feature_detection_(computer_vision)))
+  * Webpages: Number and type of images, position of elements, colors, videos ([A/B Testing](http://en.wikipedia.org/wiki/A/B_testing))
+  * People: Height, weight, hair color, sex, country of origin. 
+* The more knowledge of the system you have the better the job you will do. 
+* When in doubt, err on the side of more features
+* Can be automated, but use caution!
+
+
+---
+
+## Level 2, Tidy covariates -> new covariates
+
+* More necessary for some methods (regression, svms) than for others (classification trees).
+* Should be done _only on the training set_
+* The best approach is through exploratory analysis (plotting/tables)
+* New covariates should be added to data frames
+
+
+
+---
+
+## Load example data
+
+
+```{r loadData,cache=TRUE}
+library(ISLR); library(caret); data(Wage);
+inTrain <- createDataPartition(y=Wage$wage,
+                              p=0.7, list=FALSE)
+training <- Wage[inTrain,]; testing <- Wage[-inTrain,]
 ```
 
 
 ---
 
-## Standardizing - _preProcess_ function
+## Common covariates to add, dummy variables
 
-```{r ,dependson="preprocess",cache=TRUE,fig.height=3.5,fig.width=3.5}
-testCapAveS <- predict(preObj,testing[,-58])$capitalAve
-mean(testCapAveS)
-sd(testCapAveS)
+__Basic idea - convert factor variables to [indicator variables](http://bit.ly/19ZhWB6)__
+
+```{r dummyVar,dependson="loadData"}
+table(training$jobclass)
+dummies <- dummyVars(wage ~ jobclass,data=training)
+head(predict(dummies,newdata=training))
 ```
 
----
-
-## Standardizing - _preProcess_ argument
-
-```{r training, dependson="loadPackage",cache=TRUE}
-set.seed(32343)
-modelFit <- train(type ~.,data=training,
-                  preProcess=c("center","scale"),method="glm")
-modelFit
-```
 
 
 ---
 
-## Standardizing - Box-Cox transforms
+## Removing zero covariates
 
-```{r ,dependson="loadPackage",cache=TRUE,fig.height=3.5,fig.width=7}
-preObj <- preProcess(training[,-58],method=c("BoxCox"))
-trainCapAveS <- predict(preObj,training[,-58])$capitalAve
-par(mfrow=c(1,2)); hist(trainCapAveS); qqnorm(trainCapAveS)
+```{r ,dependson="dummyVar"}
+nsv <- nearZeroVar(training,saveMetrics=TRUE)
+nsv
 ```
+
 
 
 ---
 
-## Standardizing - Imputing data
+## Spline basis
 
-```{r knn,dependson="loadPackage",cache=TRUE,fig.height=3.5,fig.width=7}
-set.seed(13343)
+```{r splines,dependson="dummyVar",cache=TRUE}
+library(splines)
+bsBasis <- bs(training$age,df=3) 
+bsBasis
+```
 
-# Make some values NA
-training$capAve <- training$capitalAve
-selectNA <- rbinom(dim(training)[1],size=1,prob=0.05)==1
-training$capAve[selectNA] <- NA
+_See also_: ns(),poly()
 
-# Impute and standardize
-preObj <- preProcess(training[,-58],method="knnImpute")
-capAve <- predict(preObj,training[,-58])$capAve
+---
 
-# Standardize true values
-capAveTruth <- training$capitalAve
-capAveTruth <- (capAveTruth-mean(capAveTruth))/sd(capAveTruth)
+## Fitting curves with splines
+
+```{r ,dependson="splines",fig.height=4,fig.width=4}
+lm1 <- lm(wage ~ bsBasis,data=training)
+plot(training$age,training$wage,pch=19,cex=0.5)
+points(training$age,predict(lm1,newdata=training),col="red",pch=19,cex=0.5)
 ```
 
 
 ---
 
-## Standardizing - Imputing data
+## Splines on the test set
 
-```{r ,dependson="knn",cache=TRUE,fig.height=3.5,fig.width=7}
-quantile(capAve - capAveTruth)
-quantile((capAve - capAveTruth)[selectNA])
-quantile((capAve - capAveTruth)[!selectNA])
+```{r ,dependson="splines",fig.height=4,fig.width=4}
+predict(bsBasis,age=testing$age)
 ```
+
 
 ---
 
 ## Notes and further reading
 
-* Training and test must be processed in the same way
-* Test transformations will likely be imperfect
-  * Especially if the test/training sets collected at different times
-* Careful when transforming factor variables!
+* Level 1 feature creation (raw data to covariates)
+  * Science is key. Google "feature extraction for [data type]"
+  * Err on overcreation of features
+* Level 2 feature creation (covariates to new covariates)
+  * The function _preProcess_ in _caret_ will handle some preprocessing.
+  * Create new covariates if you think they will improve fit
+  * Use exploratory analysis on the training set for creating them
+  * Be careful about overfitting!
 * [preprocessing with caret](http://caret.r-forge.r-project.org/preprocess.html)
+* If you want to fit spline models, use the _gam_ method in the _caret_ package which allows smoothing of multiple variables.
+* More on feature creation/data tidying in the Obtaining Data course from the Data Science course track. 
