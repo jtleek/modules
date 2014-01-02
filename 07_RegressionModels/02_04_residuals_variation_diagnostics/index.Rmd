@@ -109,10 +109,11 @@ abline(lm(y ~ x))
 * The point `c(10, 10)` has created a strong regression relationship where there shouldn't be one.
 
 ---
+## Showing a couple of the diagnostic values
 ```{r}
 fit <- lm(y ~ x)
-round(dfbetas(fit)[1 : 6, 1], 3)
-round(hatvalues(fit)[1 : 6, 1], 3)
+round(dfbetas(fit)[1 : 10, 1 : 2], 3)
+round(hatvalues(fit)[1 : 10], 3)
 ```
 
 ---

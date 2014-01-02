@@ -54,11 +54,11 @@
   </hgroup>
   <article>
     <ul>
-<li>Specified as \(Y_i =  \sum_{k=1}^p X_{ik} \beta_j + \epsilon_{i}\)</li>
-<li>We&#39;ll also assume here that \(\epsilon_i \stackrel{iid}{\sim} N(0, \sigma^2)\)</li>
+<li>Specified as $Y<em>i =  \sum</em>{k=1}<sup>p</sup> X<em>{ik} \beta_j + \epsilon</em>{i}$</li>
+<li>We&#39;ll also assume here that $\epsilon_i \stackrel{iid}{\sim} N(0, \sigma<sup>2)$</sup></li>
 <li>Define the residuals as
-\(e_i = Y_i -  \hat Y_i =  Y_i - \sum_{k=1}^p X_{ik} \hat \beta_j\)</li>
-<li>Our estimate of residual variation is \(\hat \sigma^2 = \frac{\sum_{i=1}^n e_i^2}{n-p}\), the \(n-p\) so that \(E[\hat \sigma^2] = \sigma^2\)</li>
+$e<em>i = Y_i -  \hat Y_i =  Y_i - \sum</em>{k=1}<sup>p</sup> X_{ik} \hat \beta_j$</li>
+<li>Our estimate of residual variation is $\hat \sigma<sup>2</sup> = \frac{\sum_{i=1}<sup>n</sup> e_i<sup>2}{n-p}$,</sup> the $n-p$ so that $E[\hat \sigma<sup>2]</sup> = \sigma<sup>2$</sup></li>
 </ul>
 
   </article>
@@ -70,10 +70,11 @@
     
   </hgroup>
   <article>
-    <p>data(swiss); par(mfrow = c(2, 2))
-fit &lt;- lm(Fertility ~ . , data = swiss); plot(fit)</p>
+    <pre><code class="r">data(swiss); par(mfrow = c(2, 2))
+fit &lt;- lm(Fertility ~ . , data = swiss); plot(fit)
+</code></pre>
 
-<div class="rimage center"><img src="fig/unnamed-chunk-1.pdf" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div>
+<div class="rimage center"><img src="fig/unnamed-chunk-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div>
 
   </article>
   <!-- Presenter Notes -->
@@ -84,7 +85,7 @@ fit &lt;- lm(Fertility ~ . , data = swiss); plot(fit)</p>
     <h2>Influential, high leverage and outlying points</h2>
   </hgroup>
   <article>
-    <div class="rimage center"><img src="fig/unnamed-chunk-2.pdf" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" class="plot" /></div>
+    <div class="rimage center"><img src="fig/unnamed-chunk-2.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" class="plot" /></div>
 
   </article>
   <!-- Presenter Notes -->
@@ -126,11 +127,11 @@ fit &lt;- lm(Fertility ~ . , data = swiss); plot(fit)</p>
 <li><code>rstandard</code> - standardized residuals, residuals divided by their standard deviations)</li>
 <li><code>rstudent</code> - standardized residuals, residuals divided by their standard deviations, where the ith data point was deleted in the calculation of the standard deviation for the residual to follow a t distribution</li>
 <li><code>hatvalues</code> - measures of leverage</li>
-<li><code>dffits</code> - change in the predicted response when the \(i^{th}\) point is deleted in fitting the model.</li>
-<li><code>dfbetas</code> - change in individual coefficients when the \(i^{th}\) point is deleted in fitting the model.</li>
-<li><code>cooks.distance</code> - overall change in teh coefficients when the \(i^{th}\) point is deleted.</li>
+<li><code>dffits</code> - change in the predicted response when the $i<sup>{th}$</sup> point is deleted in fitting the model.</li>
+<li><code>dfbetas</code> - change in individual coefficients when the $i<sup>{th}$</sup> point is deleted in fitting the model.</li>
+<li><code>cooks.distance</code> - overall change in teh coefficients when the $i<sup>{th}$</sup> point is deleted.</li>
 <li><code>resid</code> - returns the ordinary residuals</li>
-<li><code>resid(fit) / (1 - hatvalues(fit))</code> where <code>fit</code> is the linear model fit returns the PRESS residuals, i.e. the leave one out cross validation residuals - the difference in the response and the predicted response at data point \(i\), where it was not included in the model fitting.</li>
+<li><code>resid(fit) / (1 - hatvalues(fit))</code> where <code>fit</code> is the linear model fit returns the PRESS residuals, i.e. the leave one out cross validation residuals - the difference in the response and the predicted response at data point $i$, where it was not included in the model fitting.</li>
 </ul></li>
 </ul>
 
@@ -168,7 +169,7 @@ fit &lt;- lm(Fertility ~ . , data = swiss); plot(fit)</p>
     <h2>Case 1</h2>
   </hgroup>
   <article>
-    <div class="rimage center"><img src="fig/unnamed-chunk-3.pdf" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" class="plot" /></div>
+    <div class="rimage center"><img src="fig/unnamed-chunk-3.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" class="plot" /></div>
 
   </article>
   <!-- Presenter Notes -->
@@ -194,14 +195,32 @@ abline(lm(y ~ x))
 
       <slide class="" id="slide-9" style="background:;">
   <hgroup>
-    
+    <h2>Showing a couple of the diagnostic values</h2>
   </hgroup>
   <article>
-    <p>fit &lt;- lm(y ~ x)
-round(dfbetas(fit)[1 : 6, 1], 3)
-     1      2      3      4      5      6 
- 0.843  0.063 -0.121 -0.018 -0.173  0.085 
-round(hatvalues(fit)[1 : 6, 1], 3)</p>
+    <pre><code class="r">fit &lt;- lm(y ~ x)
+round(dfbetas(fit)[1 : 10, 1 : 2], 3)
+</code></pre>
+
+<pre><code>   (Intercept)      x
+1        0.500  5.697
+2        0.128 -0.082
+3       -0.056  0.087
+4       -0.108  0.034
+5        0.107 -0.025
+6       -0.181 -0.093
+7       -0.040  0.009
+8       -0.098  0.015
+9        0.045 -0.024
+10       0.072 -0.107
+</code></pre>
+
+<pre><code class="r">round(hatvalues(fit)[1 : 10], 3)
+</code></pre>
+
+<pre><code>    1     2     3     4     5     6     7     8     9    10 
+0.508 0.014 0.038 0.011 0.010 0.012 0.010 0.010 0.013 0.036 
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
@@ -212,15 +231,16 @@ round(hatvalues(fit)[1 : 6, 1], 3)</p>
     <h2>Case 2</h2>
   </hgroup>
   <article>
-    <div class="rimage center"><img src="fig/unnamed-chunk-5.pdf" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" class="plot" /></div>
+    <div class="rimage center"><img src="fig/unnamed-chunk-5.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" class="plot" /></div>
 
-<p>dfb.1_  dfb.x  dffit cov.r cook.d   hat
-1 -0.091 -0.831 -0.839 2.221  0.354 0.546
-2 -0.026 -0.001 -0.026 1.029  0.000 0.010
-3  0.085 -0.006  0.085 1.016  0.004 0.010
-4 -0.089  0.036 -0.095 1.016  0.005 0.012
-5  0.055 -0.023  0.059 1.026  0.002 0.012
-6  0.134 -0.197  0.236 1.021  0.028 0.033</p>
+<pre><code>  dfb.1_  dfb.x  dffit cov.r cook.d   hat
+1  0.191  1.255  1.267 2.050  0.799 0.517
+2  0.026 -0.015  0.030 1.033  0.000 0.013
+3  0.026 -0.015  0.030 1.032  0.000 0.013
+4 -0.027  0.003 -0.027 1.029  0.000 0.010
+5  0.160 -0.168  0.233 0.989  0.027 0.021
+6  0.095  0.042  0.103 1.014  0.005 0.012
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
@@ -231,12 +251,12 @@ round(hatvalues(fit)[1 : 6, 1], 3)</p>
     <h2>Example described by Stefanski TAS 2007 Vol 61.</h2>
   </hgroup>
   <article>
-    <h2>Don&#39;t everyone hit this server at once.  Read the paper first.</h2>
+    <pre><code class="r">## Don&#39;t everyone hit this server at once.  Read the paper first.
+dat &lt;- read.table(&#39;http://www4.stat.ncsu.edu/~stefanski/NSF_Supported/Hidden_Images/orly_owl_files/orly_owl_Lin_4p_5_flat.txt&#39;, header = FALSE)
+pairs(dat)
+</code></pre>
 
-<p>dat &lt;- read.table(&#39;<a href="http://www4.stat.ncsu.edu/%7Estefanski/NSF_Supported/Hidden_Images/orly_owl_files/orly_owl_Lin_4p_5_flat.txt">http://www4.stat.ncsu.edu/~stefanski/NSF_Supported/Hidden_Images/orly_owl_files/orly_owl_Lin_4p_5_flat.txt</a>&#39;, header = FALSE)
-pairs(dat)</p>
-
-<div class="rimage center"><img src="fig/unnamed-chunk-7.pdf" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" class="plot" /></div>
+<div class="rimage center"><img src="fig/unnamed-chunk-7.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" class="plot" /></div>
 
   </article>
   <!-- Presenter Notes -->
@@ -247,12 +267,15 @@ pairs(dat)</p>
     <h2>Got our P-values, should we bother to do a residual plot?</h2>
   </hgroup>
   <article>
-    <p>summary(lm(V1 ~ . -1, data = dat))$coef
-   Estimate Std. Error t value  Pr(&gt;|t|)
+    <pre><code class="r">summary(lm(V1 ~ . -1, data = dat))$coef
+</code></pre>
+
+<pre><code>   Estimate Std. Error t value  Pr(&gt;|t|)
 V2   0.9856    0.12798   7.701 1.989e-14
 V3   0.9715    0.12664   7.671 2.500e-14
 V4   0.8606    0.11958   7.197 8.301e-13
-V5   0.9267    0.08328  11.127 4.778e-28</p>
+V5   0.9267    0.08328  11.127 4.778e-28
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
@@ -265,9 +288,10 @@ V5   0.9267    0.08328  11.127 4.778e-28</p>
   <article>
     <h3>P-values significant, O RLY?</h3>
 
-<p>fit &lt;- lm(V1 ~ . - 1, data = dat); plot(predict(fit), resid(fit), pch = &#39;.&#39;)</p>
+<pre><code class="r">fit &lt;- lm(V1 ~ . - 1, data = dat); plot(predict(fit), resid(fit), pch = &#39;.&#39;)
+</code></pre>
 
-<div class="rimage center"><img src="fig/unnamed-chunk-9.pdf" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" class="plot" /></div>
+<div class="rimage center"><img src="fig/unnamed-chunk-9.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" class="plot" /></div>
 
   </article>
   <!-- Presenter Notes -->

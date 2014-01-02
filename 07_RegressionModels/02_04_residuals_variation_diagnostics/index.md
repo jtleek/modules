@@ -23,16 +23,18 @@ $e_i = Y_i -  \hat Y_i =  Y_i - \sum_{k=1}^p X_{ik} \hat \beta_j$
 * Our estimate of residual variation is $\hat \sigma^2 = \frac{\sum_{i=1}^n e_i^2}{n-p}$, the $n-p$ so that $E[\hat \sigma^2] = \sigma^2$
 
 ---
+
+```r
 data(swiss); par(mfrow = c(2, 2))
 fit <- lm(Fertility ~ . , data = swiss); plot(fit)
-<div class="rimage center"><img src="fig/unnamed-chunk-1.pdf" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div>
+```
 
+<div class="rimage center"><img src="fig/unnamed-chunk-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div>
 
 
 ---
 ## Influential, high leverage and outlying points
-<div class="rimage center"><img src="fig/unnamed-chunk-2.pdf" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" class="plot" /></div>
-
+<div class="rimage center"><img src="fig/unnamed-chunk-2.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" class="plot" /></div>
 
 
 ---
@@ -73,8 +75,7 @@ Calling a point an outlier is vague.
 
 ---
 ## Case 1
-<div class="rimage center"><img src="fig/unnamed-chunk-3.pdf" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" class="plot" /></div>
-
+<div class="rimage center"><img src="fig/unnamed-chunk-3.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" class="plot" /></div>
 
 
 ---
@@ -87,53 +88,88 @@ abline(lm(y ~ x))
 * The point `c(10, 10)` has created a strong regression relationship where there shouldn't be one.
 
 ---
-fit <- lm(y ~ x)
-round(dfbetas(fit)[1 : 6, 1], 3)
-     1      2      3      4      5      6 
- 0.843  0.063 -0.121 -0.018 -0.173  0.085 
-round(hatvalues(fit)[1 : 6, 1], 3)
+## Showing a couple of the diagnostic values
 
+```r
+fit <- lm(y ~ x)
+round(dfbetas(fit)[1 : 10, 1 : 2], 3)
+```
+
+```
+   (Intercept)      x
+1        0.500  5.697
+2        0.128 -0.082
+3       -0.056  0.087
+4       -0.108  0.034
+5        0.107 -0.025
+6       -0.181 -0.093
+7       -0.040  0.009
+8       -0.098  0.015
+9        0.045 -0.024
+10       0.072 -0.107
+```
+
+```r
+round(hatvalues(fit)[1 : 10], 3)
+```
+
+```
+    1     2     3     4     5     6     7     8     9    10 
+0.508 0.014 0.038 0.011 0.010 0.012 0.010 0.010 0.013 0.036 
+```
 
 
 ---
 ## Case 2
-<div class="rimage center"><img src="fig/unnamed-chunk-5.pdf" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" class="plot" /></div>
+<div class="rimage center"><img src="fig/unnamed-chunk-5.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" class="plot" /></div>
 
 
+```
   dfb.1_  dfb.x  dffit cov.r cook.d   hat
-1 -0.091 -0.831 -0.839 2.221  0.354 0.546
-2 -0.026 -0.001 -0.026 1.029  0.000 0.010
-3  0.085 -0.006  0.085 1.016  0.004 0.010
-4 -0.089  0.036 -0.095 1.016  0.005 0.012
-5  0.055 -0.023  0.059 1.026  0.002 0.012
-6  0.134 -0.197  0.236 1.021  0.028 0.033
-
+1  0.191  1.255  1.267 2.050  0.799 0.517
+2  0.026 -0.015  0.030 1.033  0.000 0.013
+3  0.026 -0.015  0.030 1.032  0.000 0.013
+4 -0.027  0.003 -0.027 1.029  0.000 0.010
+5  0.160 -0.168  0.233 0.989  0.027 0.021
+6  0.095  0.042  0.103 1.014  0.005 0.012
+```
 
 
 ---
 ## Example described by Stefanski TAS 2007 Vol 61.
+
+```r
 ## Don't everyone hit this server at once.  Read the paper first.
 dat <- read.table('http://www4.stat.ncsu.edu/~stefanski/NSF_Supported/Hidden_Images/orly_owl_files/orly_owl_Lin_4p_5_flat.txt', header = FALSE)
 pairs(dat)
-<div class="rimage center"><img src="fig/unnamed-chunk-7.pdf" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" class="plot" /></div>
+```
 
+<div class="rimage center"><img src="fig/unnamed-chunk-7.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" class="plot" /></div>
 
 
 ---
 ## Got our P-values, should we bother to do a residual plot?
+
+```r
 summary(lm(V1 ~ . -1, data = dat))$coef
+```
+
+```
    Estimate Std. Error t value  Pr(>|t|)
 V2   0.9856    0.12798   7.701 1.989e-14
 V3   0.9715    0.12664   7.671 2.500e-14
 V4   0.8606    0.11958   7.197 8.301e-13
 V5   0.9267    0.08328  11.127 4.778e-28
-
+```
 
 
 ---
 ## Residual plot
 ### P-values significant, O RLY?
-fit <- lm(V1 ~ . - 1, data = dat); plot(predict(fit), resid(fit), pch = '.')
-<div class="rimage center"><img src="fig/unnamed-chunk-9.pdf" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" class="plot" /></div>
 
+```r
+fit <- lm(V1 ~ . - 1, data = dat); plot(predict(fit), resid(fit), pch = '.')
+```
+
+<div class="rimage center"><img src="fig/unnamed-chunk-9.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" class="plot" /></div>
 
