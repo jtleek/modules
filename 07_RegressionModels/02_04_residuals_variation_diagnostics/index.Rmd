@@ -112,7 +112,7 @@ abline(lm(y ~ x))
 ## Showing a couple of the diagnostic values
 ```{r}
 fit <- lm(y ~ x)
-round(dfbetas(fit)[1 : 10, 1 : 2], 3)
+round(dfbetas(fit)[1 : 10, 2], 3)
 round(hatvalues(fit)[1 : 10], 3)
 ```
 

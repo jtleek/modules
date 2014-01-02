@@ -54,11 +54,11 @@
   </hgroup>
   <article>
     <ul>
-<li>Specified as $Y<em>i =  \sum</em>{k=1}<sup>p</sup> X<em>{ik} \beta_j + \epsilon</em>{i}$</li>
-<li>We&#39;ll also assume here that $\epsilon_i \stackrel{iid}{\sim} N(0, \sigma<sup>2)$</sup></li>
+<li>Specified as \(Y_i =  \sum_{k=1}^p X_{ik} \beta_j + \epsilon_{i}\)</li>
+<li>We&#39;ll also assume here that \(\epsilon_i \stackrel{iid}{\sim} N(0, \sigma^2)\)</li>
 <li>Define the residuals as
-$e<em>i = Y_i -  \hat Y_i =  Y_i - \sum</em>{k=1}<sup>p</sup> X_{ik} \hat \beta_j$</li>
-<li>Our estimate of residual variation is $\hat \sigma<sup>2</sup> = \frac{\sum_{i=1}<sup>n</sup> e_i<sup>2}{n-p}$,</sup> the $n-p$ so that $E[\hat \sigma<sup>2]</sup> = \sigma<sup>2$</sup></li>
+\(e_i = Y_i -  \hat Y_i =  Y_i - \sum_{k=1}^p X_{ik} \hat \beta_j\)</li>
+<li>Our estimate of residual variation is \(\hat \sigma^2 = \frac{\sum_{i=1}^n e_i^2}{n-p}\), the \(n-p\) so that \(E[\hat \sigma^2] = \sigma^2\)</li>
 </ul>
 
   </article>
@@ -127,11 +127,11 @@ fit &lt;- lm(Fertility ~ . , data = swiss); plot(fit)
 <li><code>rstandard</code> - standardized residuals, residuals divided by their standard deviations)</li>
 <li><code>rstudent</code> - standardized residuals, residuals divided by their standard deviations, where the ith data point was deleted in the calculation of the standard deviation for the residual to follow a t distribution</li>
 <li><code>hatvalues</code> - measures of leverage</li>
-<li><code>dffits</code> - change in the predicted response when the $i<sup>{th}$</sup> point is deleted in fitting the model.</li>
-<li><code>dfbetas</code> - change in individual coefficients when the $i<sup>{th}$</sup> point is deleted in fitting the model.</li>
-<li><code>cooks.distance</code> - overall change in teh coefficients when the $i<sup>{th}$</sup> point is deleted.</li>
+<li><code>dffits</code> - change in the predicted response when the \(i^{th}\) point is deleted in fitting the model.</li>
+<li><code>dfbetas</code> - change in individual coefficients when the \(i^{th}\) point is deleted in fitting the model.</li>
+<li><code>cooks.distance</code> - overall change in teh coefficients when the \(i^{th}\) point is deleted.</li>
 <li><code>resid</code> - returns the ordinary residuals</li>
-<li><code>resid(fit) / (1 - hatvalues(fit))</code> where <code>fit</code> is the linear model fit returns the PRESS residuals, i.e. the leave one out cross validation residuals - the difference in the response and the predicted response at data point $i$, where it was not included in the model fitting.</li>
+<li><code>resid(fit) / (1 - hatvalues(fit))</code> where <code>fit</code> is the linear model fit returns the PRESS residuals, i.e. the leave one out cross validation residuals - the difference in the response and the predicted response at data point \(i\), where it was not included in the model fitting.</li>
 </ul></li>
 </ul>
 
@@ -203,23 +203,23 @@ round(dfbetas(fit)[1 : 10, 1 : 2], 3)
 </code></pre>
 
 <pre><code>   (Intercept)      x
-1        0.500  5.697
-2        0.128 -0.082
-3       -0.056  0.087
-4       -0.108  0.034
-5        0.107 -0.025
-6       -0.181 -0.093
-7       -0.040  0.009
-8       -0.098  0.015
-9        0.045 -0.024
-10       0.072 -0.107
+1        0.051  7.297
+2       -0.127  0.047
+3       -0.093  0.023
+4        0.180 -0.136
+5       -0.110 -0.106
+6        0.083  0.022
+7        0.106 -0.023
+8        0.116  0.020
+9       -0.049  0.017
+10      -0.044 -0.010
 </code></pre>
 
 <pre><code class="r">round(hatvalues(fit)[1 : 10], 3)
 </code></pre>
 
 <pre><code>    1     2     3     4     5     6     7     8     9    10 
-0.508 0.014 0.038 0.011 0.010 0.012 0.010 0.010 0.013 0.036 
+0.465 0.011 0.011 0.017 0.017 0.011 0.010 0.010 0.011 0.010 
 </code></pre>
 
   </article>
@@ -234,12 +234,12 @@ round(dfbetas(fit)[1 : 10, 1 : 2], 3)
     <div class="rimage center"><img src="fig/unnamed-chunk-5.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" class="plot" /></div>
 
 <pre><code>  dfb.1_  dfb.x  dffit cov.r cook.d   hat
-1  0.191  1.255  1.267 2.050  0.799 0.517
-2  0.026 -0.015  0.030 1.033  0.000 0.013
-3  0.026 -0.015  0.030 1.032  0.000 0.013
-4 -0.027  0.003 -0.027 1.029  0.000 0.010
-5  0.160 -0.168  0.233 0.989  0.027 0.021
-6  0.095  0.042  0.103 1.014  0.005 0.012
+1  0.021 -0.293 -0.296 1.943  0.044 0.476
+2 -0.030 -0.064 -0.078 1.048  0.003 0.030
+3 -0.073  0.065 -0.088 1.035  0.004 0.021
+4  0.041 -0.041  0.053 1.046  0.001 0.026
+5  0.087  0.061  0.119 1.013  0.007 0.013
+6 -0.082  0.000 -0.084 1.016  0.004 0.010
 </code></pre>
 
   </article>
