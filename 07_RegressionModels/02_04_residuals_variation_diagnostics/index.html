@@ -70,11 +70,10 @@
     
   </hgroup>
   <article>
-    <pre><code class="r">data(swiss); par(mfrow = c(2, 2))
-fit &lt;- lm(Fertility ~ . , data = swiss); plot(fit)
-</code></pre>
+    <p>data(swiss); par(mfrow = c(2, 2))
+fit &lt;- lm(Fertility ~ . , data = swiss); plot(fit)</p>
 
-<div class="rimage center"><img src="fig/unnamed-chunk-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div>
+<div class="rimage center"><img src="fig/unnamed-chunk-1.pdf" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div>
 
   </article>
   <!-- Presenter Notes -->
@@ -85,7 +84,7 @@ fit &lt;- lm(Fertility ~ . , data = swiss); plot(fit)
     <h2>Influential, high leverage and outlying points</h2>
   </hgroup>
   <article>
-    <div class="rimage center"><img src="fig/unnamed-chunk-2.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" class="plot" /></div>
+    <div class="rimage center"><img src="fig/unnamed-chunk-2.pdf" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" class="plot" /></div>
 
   </article>
   <!-- Presenter Notes -->
@@ -169,7 +168,7 @@ fit &lt;- lm(Fertility ~ . , data = swiss); plot(fit)
     <h2>Case 1</h2>
   </hgroup>
   <article>
-    <div class="rimage center"><img src="fig/unnamed-chunk-3.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" class="plot" /></div>
+    <div class="rimage center"><img src="fig/unnamed-chunk-3.pdf" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" class="plot" /></div>
 
   </article>
   <!-- Presenter Notes -->
@@ -180,12 +179,14 @@ fit &lt;- lm(Fertility ~ . , data = swiss); plot(fit)
     <h2>The code</h2>
   </hgroup>
   <article>
-    <pre><code>x &lt;- c(10, rnorm(n)); y &lt;- c(10, c(rnorm(n)))
+    <pre><code>n &lt;- 100; x &lt;- c(10, rnorm(n)); y &lt;- c(10, c(rnorm(n)))
 plot(x, y, frame = FALSE, cex = 2, pch = 21, bg = &quot;lightblue&quot;, col = &quot;black&quot;)
 abline(lm(y ~ x))            
 </code></pre>
 
-<p>Go through the diagnostic plots and measures. The point <code>c(10, 10)</code> has created a strong regression relationship where there shouldn&#39;t be one.</p>
+<ul>
+<li>The point <code>c(10, 10)</code> has created a strong regression relationship where there shouldn&#39;t be one.</li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
@@ -193,15 +194,14 @@ abline(lm(y ~ x))
 
       <slide class="" id="slide-9" style="background:;">
   <hgroup>
-    <h2>Example described by Stefanski TAS 2007 Vol 61.</h2>
+    
   </hgroup>
   <article>
-    <pre><code class="r">## Don&#39;t everyone hit this server at once.  Read the paper first.
-dat &lt;- read.table(&#39;http://www4.stat.ncsu.edu/~stefanski/NSF_Supported/Hidden_Images/orly_owl_files/orly_owl_Lin_4p_5_flat.txt&#39;, header = FALSE)
-pairs(dat)
-</code></pre>
-
-<div class="rimage center"><img src="fig/unnamed-chunk-4.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" class="plot" /></div>
+    <p>fit &lt;- lm(y ~ x)
+round(dfbetas(fit)[1 : 6, 1], 3)
+     1      2      3      4      5      6 
+ 0.843  0.063 -0.121 -0.018 -0.173  0.085 
+round(hatvalues(fit)[1 : 6, 1], 3)</p>
 
   </article>
   <!-- Presenter Notes -->
@@ -209,18 +209,18 @@ pairs(dat)
 
       <slide class="" id="slide-10" style="background:;">
   <hgroup>
-    <h2>Got our P-values, should we bother to do a residual plot?</h2>
+    <h2>Case 2</h2>
   </hgroup>
   <article>
-    <pre><code class="r">summary(lm(V1 ~ . -1, data = dat))$coef
-</code></pre>
+    <div class="rimage center"><img src="fig/unnamed-chunk-5.pdf" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" class="plot" /></div>
 
-<pre><code>   Estimate Std. Error t value  Pr(&gt;|t|)
-V2   0.9856    0.12798   7.701 1.989e-14
-V3   0.9715    0.12664   7.671 2.500e-14
-V4   0.8606    0.11958   7.197 8.301e-13
-V5   0.9267    0.08328  11.127 4.778e-28
-</code></pre>
+<p>dfb.1_  dfb.x  dffit cov.r cook.d   hat
+1 -0.091 -0.831 -0.839 2.221  0.354 0.546
+2 -0.026 -0.001 -0.026 1.029  0.000 0.010
+3  0.085 -0.006  0.085 1.016  0.004 0.010
+4 -0.089  0.036 -0.095 1.016  0.005 0.012
+5  0.055 -0.023  0.059 1.026  0.002 0.012
+6  0.134 -0.197  0.236 1.021  0.028 0.033</p>
 
   </article>
   <!-- Presenter Notes -->
@@ -228,15 +228,46 @@ V5   0.9267    0.08328  11.127 4.778e-28
 
       <slide class="" id="slide-11" style="background:;">
   <hgroup>
+    <h2>Example described by Stefanski TAS 2007 Vol 61.</h2>
+  </hgroup>
+  <article>
+    <h2>Don&#39;t everyone hit this server at once.  Read the paper first.</h2>
+
+<p>dat &lt;- read.table(&#39;<a href="http://www4.stat.ncsu.edu/%7Estefanski/NSF_Supported/Hidden_Images/orly_owl_files/orly_owl_Lin_4p_5_flat.txt">http://www4.stat.ncsu.edu/~stefanski/NSF_Supported/Hidden_Images/orly_owl_files/orly_owl_Lin_4p_5_flat.txt</a>&#39;, header = FALSE)
+pairs(dat)</p>
+
+<div class="rimage center"><img src="fig/unnamed-chunk-7.pdf" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" class="plot" /></div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>Got our P-values, should we bother to do a residual plot?</h2>
+  </hgroup>
+  <article>
+    <p>summary(lm(V1 ~ . -1, data = dat))$coef
+   Estimate Std. Error t value  Pr(&gt;|t|)
+V2   0.9856    0.12798   7.701 1.989e-14
+V3   0.9715    0.12664   7.671 2.500e-14
+V4   0.8606    0.11958   7.197 8.301e-13
+V5   0.9267    0.08328  11.127 4.778e-28</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-13" style="background:;">
+  <hgroup>
     <h2>Residual plot</h2>
   </hgroup>
   <article>
     <h3>P-values significant, O RLY?</h3>
 
-<pre><code class="r">fit &lt;- lm(V1 ~ . - 1, data = dat); plot(predict(fit), resid(fit), pch = &#39;.&#39;)
-</code></pre>
+<p>fit &lt;- lm(V1 ~ . - 1, data = dat); plot(predict(fit), resid(fit), pch = &#39;.&#39;)</p>
 
-<div class="rimage center"><img src="fig/unnamed-chunk-6.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" class="plot" /></div>
+<div class="rimage center"><img src="fig/unnamed-chunk-9.pdf" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" class="plot" /></div>
 
   </article>
   <!-- Presenter Notes -->
