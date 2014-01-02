@@ -177,7 +177,14 @@ Regardless of your platform (Windows or Mac) you will need a high-speed Internet
 
 _Windows_
 
-The Coursera web site seems to work best with either the Chrome or the Firefox web browsers. In particular, you may run into trouble if you use Internet Explorer. The Chrome and Firefox browsers can be downloaded from: _Chrome: [http://www.google.com/chrome](http://www.google.com/chrome) _ Firefox: [http://www.mozilla.org](http://www.mozilla.org)
+The Coursera web site seems to work best with either the Chrome or the
+Firefox web browsers. In particular, you may run into trouble if you
+use Internet Explorer. The Chrome and Firefox browsers can be
+downloaded from:
+
+* Chrome:
+  [http://www.google.com/chrome](http://www.google.com/chrome)
+* Firefox: [http://www.mozilla.org](http://www.mozilla.org)
 
 _Mac_
 
