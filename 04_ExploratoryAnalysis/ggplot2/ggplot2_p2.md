@@ -53,17 +53,21 @@ _coordinate system_
 - Persistent asthma, exacerbation in past year
 - Does BMI (normal vs. overweight) modify the relationship between PM$_{2.5}$ and asthma symptoms?
 
+
+
+
 ---
 
 ## Basic Plot
 
 
 ```r
+library(ggplot2)
 qplot(logpm25, NocturnalSympt, data = maacs, facets = . ~ bmicat, 
       geom = c("point", "smooth"), method = "lm")
 ```
 
-<div class="rimage center"><img src="fig/unnamed-chunk-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div>
+<div class="rimage center"><img src="fig/unnamed-chunk-2.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" class="plot" /></div>
 
 
 ---
@@ -72,6 +76,7 @@ qplot(logpm25, NocturnalSympt, data = maacs, facets = . ~ bmicat,
 
 
 ```r
+
 head(maacs)
 ```
 
@@ -119,7 +124,7 @@ g <- ggplot(maacs, aes(logpm25, NocturnalSympt))
 g + geom_point()
 ```
 
-<div class="rimage center"><img src="fig/unnamed-chunk-4.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" class="plot" /></div>
+<div class="rimage center"><img src="fig/unnamed-chunk-5.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" class="plot" /></div>
 
 
 ---
@@ -132,8 +137,8 @@ g + geom_point() + geom_smooth()
 g + geom_point() + geom_smooth(method = "lm")
 ```
 
-<div class="rimage center"><img src="fig/unnamed-chunk-51.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" class="plot" />
-<img src="fig/unnamed-chunk-52.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" class="plot" /></div>
+<div class="rimage center"><img src="fig/unnamed-chunk-61.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" class="plot" />
+<img src="fig/unnamed-chunk-62.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" class="plot" /></div>
 
 
 ---
@@ -145,7 +150,7 @@ g + geom_point() + geom_smooth(method = "lm")
 g + geom_point() + facet_grid(. ~ bmicat) + geom_smooth(method = "lm")
 ```
 
-<div class="rimage center"><img src="fig/unnamed-chunk-6.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" class="plot" /></div>
+<div class="rimage center"><img src="fig/unnamed-chunk-7.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" class="plot" /></div>
 
 
 ---
@@ -169,8 +174,8 @@ g + geom_point(color = "steelblue", size = 4, alpha = 1/2)
 g + geom_point(aes(color = bmicat), size = 4, alpha = 1/2)
 ```
 
-<div class="rimage center"><img src="fig/unnamed-chunk-71.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" class="plot" />
-<img src="fig/unnamed-chunk-72.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" class="plot" /></div>
+<div class="rimage center"><img src="fig/unnamed-chunk-81.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" class="plot" />
+<img src="fig/unnamed-chunk-82.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" class="plot" /></div>
 
 
 ---
@@ -182,7 +187,7 @@ g + geom_point(aes(color = bmicat), size = 4, alpha = 1/2)
 g + geom_point(aes(color = bmicat)) + labs(title = "MAACS Cohort") + labs(x = expression("log " * PM[2.5]), y = "Nocturnal Symptoms")
 ```
 
-<div class="rimage center"><img src="fig/unnamed-chunk-8.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" class="plot" /></div>
+<div class="rimage center"><img src="fig/unnamed-chunk-9.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" class="plot" /></div>
 
 
 ---
@@ -194,7 +199,7 @@ g + geom_point(aes(color = bmicat)) + labs(title = "MAACS Cohort") + labs(x = ex
 g + geom_point(aes(color = bmicat), size = 2, alpha = 1/2) + geom_smooth(size = 4, linetype = 3, method = "lm", se = FALSE)
 ```
 
-<div class="rimage center"><img src="fig/unnamed-chunk-9.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" class="plot" /></div>
+<div class="rimage center"><img src="fig/unnamed-chunk-10.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" class="plot" /></div>
 
 
 ---
@@ -206,7 +211,7 @@ g + geom_point(aes(color = bmicat), size = 2, alpha = 1/2) + geom_smooth(size = 
 g + geom_point(aes(color = bmicat)) + theme_bw(base_family = "Times")
 ```
 
-<div class="rimage center"><img src="fig/unnamed-chunk-10.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" class="plot" /></div>
+<div class="rimage center"><img src="fig/unnamed-chunk-11.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" class="plot" /></div>
 
 
 ---
@@ -223,8 +228,8 @@ g <- ggplot(testdat, aes(x = x, y = y))
 g + geom_line()
 ```
 
-<div class="rimage center"><img src="fig/unnamed-chunk-111.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" class="plot" />
-<img src="fig/unnamed-chunk-112.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" class="plot" /></div>
+<div class="rimage center"><img src="fig/unnamed-chunk-121.png" title="plot of chunk unnamed-chunk-12" alt="plot of chunk unnamed-chunk-12" class="plot" />
+<img src="fig/unnamed-chunk-122.png" title="plot of chunk unnamed-chunk-12" alt="plot of chunk unnamed-chunk-12" class="plot" /></div>
 
 
 ---
@@ -237,8 +242,8 @@ g + geom_line() + ylim(-3, 3)
 g + geom_line() + coord_cartesian(ylim = c(-3, 3))
 ```
 
-<div class="rimage center"><img src="fig/unnamed-chunk-121.png" title="plot of chunk unnamed-chunk-12" alt="plot of chunk unnamed-chunk-12" class="plot" />
-<img src="fig/unnamed-chunk-122.png" title="plot of chunk unnamed-chunk-12" alt="plot of chunk unnamed-chunk-12" class="plot" /></div>
+<div class="rimage center"><img src="fig/unnamed-chunk-131.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" class="plot" />
+<img src="fig/unnamed-chunk-132.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" class="plot" /></div>
 
 
 
@@ -256,20 +261,18 @@ g + geom_line() + coord_cartesian(ylim = c(-3, 3))
 
 
 ```r
-## Calculate the deciles of the data
-cutpoints <- quantile(maacs$logno2_new, seq(0, 1, length = 11), na.rm = TRUE)
+## Calculate the tertiles of the data
+cutpoints <- quantile(maacs$logno2_new, seq(0, 1, length = 4), na.rm = TRUE)
 
-## Cut the data at the deciles and create a new factor variable
-maacs$no2dec <- cut(maacs$logno2_new, cutpoints)
+## Cut the data at the tertiles and create a new factor variable
+maacs$no2tert <- cut(maacs$logno2_new, cutpoints)
 
 ## See the levels of the newly created factor variable
-levels(maacs$no2dec)
+levels(maacs$no2tert)
 ```
 
 ```
- [1] "(0.378,0.969]" "(0.969,1.1]"   "(1.1,1.17]"    "(1.17,1.26]"  
- [5] "(1.26,1.32]"   "(1.32,1.38]"   "(1.38,1.44]"   "(1.44,1.54]"  
- [9] "(1.54,1.69]"   "(1.69,2.55]"  
+[1] "(0.378,1.2]" "(1.2,1.42]"  "(1.42,2.55]"
 ```
 
 
@@ -277,7 +280,31 @@ levels(maacs$no2dec)
 
 ## Final Plot
 
+<div class="rimage center"><img src="fig/unnamed-chunk-15.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" class="plot" /></div>
 
 
+---
+
+## Code for Final Plot
 
 
+```r
+## Setup ggplot with data frame
+g <- ggplot(maacs, aes(logpm25, NocturnalSympt))
+
+## Add layers
+g + geom_point(alpha = 1/3) + 
+  facet_wrap(bmicat ~ no2tert, nrow = 2, ncol = 4) + 
+  geom_smooth(method="lm", se=FALSE, col="steelblue") + 
+  theme_bw(base_family = "Avenir", base_size = 10) + 
+  labs(x = expression("log " * PM[2.5])) + 
+  labs(y = "Nocturnal Symptoms") + 
+  labs(title = "MAACS Cohort")
+```
+
+
+---
+
+## Summary
+- ggplot2 is very powerful and flexible if you learn the “grammar” and the various elements that can be tuned/modified
+- Many more types of plots can be made; explore and mess around with the package (references mentioned in Part 1 are useful)

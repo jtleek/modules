@@ -69,13 +69,13 @@
     <h2>Basic Components of a ggplot2 Plot</h2>
   </hgroup>
   <article>
-    <p>A data frame
-aesthetic mappings: how data are mapped to color, size 
-geoms: geometric objects like points, lines, shapes. 
-facets: for conditional plots. 
-stats: statistical transformations like binning, quantiles, smoothing. 
-scales: what scale an aesthetic map uses (example: male = red, female = blue). 
-coordinate system </p>
+    <p>A <em>data frame</em>
+<em>aesthetic mappings</em>: how data are mapped to color, size 
+<em>geoms</em>: geometric objects like points, lines, shapes. 
+<em>facets</em>: for conditional plots. 
+<em>stats</em>: statistical transformations like binning, quantiles, smoothing. 
+<em>scales</em>: what scale an aesthetic map uses (example: male = red, female = blue). 
+<em>coordinate system</em> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -86,11 +86,16 @@ coordinate system </p>
     <h2>Building Plots with ggplot2</h2>
   </hgroup>
   <article>
-    <p>When building plots in ggplot2 (rather than using qplot) the “artist’s palette” model may be the closest analogy
-Plots are built up in layers
-Plot the data
-Overlay a summary
-Metadata and annotation</p>
+    <ul>
+<li>When building plots in ggplot2 (rather than using qplot) the “artist’s palette” model may be the closest analogy</li>
+<li>Plots are built up in layers
+
+<ul>
+<li>Plot the data</li>
+<li>Overlay a summary</li>
+<li>Metadata and annotation</li>
+</ul></li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
@@ -98,13 +103,15 @@ Metadata and annotation</p>
 
       <slide class="" id="slide-4" style="background:;">
   <hgroup>
-    <h2>Example: BMI, PM2.5, Asthma</h2>
+    <h2>Example: BMI, PM\(_{2.5}\), Asthma</h2>
   </hgroup>
   <article>
-    <p>Mouse Allergen and Asthma Cohort Study
-Baltimore children (age 5-17)
-Persistent asthma, exacerbation in past year
-Does BMI (normal vs. overweight) modify the relationship between PM2.5 and asthma symptoms?</p>
+    <ul>
+<li>Mouse Allergen and Asthma Cohort Study</li>
+<li>Baltimore children (age 5-17)</li>
+<li>Persistent asthma, exacerbation in past year</li>
+<li>Does BMI (normal vs. overweight) modify the relationship between PM\(_{2.5}\) and asthma symptoms?</li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
@@ -115,7 +122,13 @@ Does BMI (normal vs. overweight) modify the relationship between PM2.5 and asthm
     <h2>Basic Plot</h2>
   </hgroup>
   <article>
-    
+    <pre><code class="r">library(ggplot2)
+qplot(logpm25, NocturnalSympt, data = maacs, facets = . ~ bmicat, 
+      geom = c(&quot;point&quot;, &quot;smooth&quot;), method = &quot;lm&quot;)
+</code></pre>
+
+<div class="rimage center"><img src="fig/unnamed-chunk-2.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" class="plot" /></div>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -125,7 +138,28 @@ Does BMI (normal vs. overweight) modify the relationship between PM2.5 and asthm
     <h2>Building Up in Layers</h2>
   </hgroup>
   <article>
-    
+    <pre><code class="r">
+head(maacs)
+</code></pre>
+
+<pre><code>  logpm25        bmicat NocturnalSympt logno2_new
+1  1.5362 normal weight              1      1.299
+2  1.5905 normal weight              0      1.295
+3  1.5218 normal weight              0      1.304
+4  1.4323 normal weight              0         NA
+5  1.2762    overweight              8      1.108
+6  0.7139    overweight              0      0.837
+</code></pre>
+
+<pre><code class="r">g &lt;- ggplot(maacs, aes(logpm25, NocturnalSympt))
+summary(g)
+</code></pre>
+
+<pre><code>data: logpm25, bmicat, NocturnalSympt, logno2_new [554x4]
+mapping:  x = logpm25, y = NocturnalSympt
+faceting: facet_null() 
+</code></pre>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -135,7 +169,10 @@ Does BMI (normal vs. overweight) modify the relationship between PM2.5 and asthm
     <h2>No Plot Yet!</h2>
   </hgroup>
   <article>
-    
+    <pre><code class="r">g &lt;- ggplot(maacs, aes(logpm25, NocturnalSympt))
+print(g)
+</code></pre>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -145,7 +182,12 @@ Does BMI (normal vs. overweight) modify the relationship between PM2.5 and asthm
     <h2>First Plot with Point Layer</h2>
   </hgroup>
   <article>
-    
+    <pre><code class="r">g &lt;- ggplot(maacs, aes(logpm25, NocturnalSympt))
+g + geom_point()
+</code></pre>
+
+<div class="rimage center"><img src="fig/unnamed-chunk-5.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" class="plot" /></div>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -155,7 +197,13 @@ Does BMI (normal vs. overweight) modify the relationship between PM2.5 and asthm
     <h2>Adding More Layers: Smooth</h2>
   </hgroup>
   <article>
-    
+    <pre><code class="r">g + geom_point() + geom_smooth()
+g + geom_point() + geom_smooth(method = &quot;lm&quot;)
+</code></pre>
+
+<div class="rimage center"><img src="fig/unnamed-chunk-61.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" class="plot" />
+<img src="fig/unnamed-chunk-62.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" class="plot" /></div>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -165,7 +213,11 @@ Does BMI (normal vs. overweight) modify the relationship between PM2.5 and asthm
     <h2>Adding More Layers: Facets</h2>
   </hgroup>
   <article>
-    
+    <pre><code class="r">g + geom_point() + facet_grid(. ~ bmicat) + geom_smooth(method = &quot;lm&quot;)
+</code></pre>
+
+<div class="rimage center"><img src="fig/unnamed-chunk-7.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" class="plot" /></div>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -175,13 +227,21 @@ Does BMI (normal vs. overweight) modify the relationship between PM2.5 and asthm
     <h2>Annotation</h2>
   </hgroup>
   <article>
-    <p>Labels: xlab(), ylab(), labs(), ggtitle()
-Each of the “geom” functions has options to modify 
-For things that only make sense globally, use theme() 
-Example: theme(legend.position = &quot;none&quot;) 
-Two standard appearance themes are included
-theme_gray(): The default theme (gray background)
-theme_bw(): More stark/plain </p>
+    <ul>
+<li>Labels: <code>xlab()</code>, <code>ylab()</code>, <code>labs()</code>, <code>ggtitle()</code></li>
+<li>Each of the “geom” functions has options to modify </li>
+<li>For things that only make sense globally, use <code>theme()</code> 
+
+<ul>
+<li>Example: <code>theme(legend.position = &quot;none&quot;)</code> </li>
+</ul></li>
+<li>Two standard appearance themes are included
+
+<ul>
+<li><code>theme_gray()</code>: The default theme (gray background)</li>
+<li><code>theme_bw()</code>: More stark/plain </li>
+</ul></li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
@@ -192,7 +252,13 @@ theme_bw(): More stark/plain </p>
     <h2>Modifying Aesthetics</h2>
   </hgroup>
   <article>
-    
+    <pre><code class="r">g + geom_point(color = &quot;steelblue&quot;, size = 4, alpha = 1/2)
+g + geom_point(aes(color = bmicat), size = 4, alpha = 1/2)
+</code></pre>
+
+<div class="rimage center"><img src="fig/unnamed-chunk-81.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" class="plot" />
+<img src="fig/unnamed-chunk-82.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" class="plot" /></div>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -202,7 +268,11 @@ theme_bw(): More stark/plain </p>
     <h2>Modifying Labels</h2>
   </hgroup>
   <article>
-    
+    <pre><code class="r">g + geom_point(aes(color = bmicat)) + labs(title = &quot;MAACS Cohort&quot;) + labs(x = expression(&quot;log &quot; * PM[2.5]), y = &quot;Nocturnal Symptoms&quot;)
+</code></pre>
+
+<div class="rimage center"><img src="fig/unnamed-chunk-9.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" class="plot" /></div>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -212,7 +282,11 @@ theme_bw(): More stark/plain </p>
     <h2>Customizing the Smooth</h2>
   </hgroup>
   <article>
-    
+    <pre><code class="r">g + geom_point(aes(color = bmicat), size = 2, alpha = 1/2) + geom_smooth(size = 4, linetype = 3, method = &quot;lm&quot;, se = FALSE)
+</code></pre>
+
+<div class="rimage center"><img src="fig/unnamed-chunk-10.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" class="plot" /></div>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -222,7 +296,11 @@ theme_bw(): More stark/plain </p>
     <h2>Changing the Theme</h2>
   </hgroup>
   <article>
-    
+    <pre><code class="r">g + geom_point(aes(color = bmicat)) + theme_bw(base_family = &quot;Times&quot;)
+</code></pre>
+
+<div class="rimage center"><img src="fig/unnamed-chunk-11.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" class="plot" /></div>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -232,7 +310,17 @@ theme_bw(): More stark/plain </p>
     <h2>A Notes about Axis Limits</h2>
   </hgroup>
   <article>
-    
+    <pre><code class="r">testdat &lt;- data.frame(x = 1:100, y = rnorm(100))
+testdat[50,2] &lt;- 100  ## Outlier!
+plot(testdat$x, testdat$y, type = &quot;l&quot;, ylim = c(-3,3))
+
+g &lt;- ggplot(testdat, aes(x = x, y = y))
+g + geom_line()
+</code></pre>
+
+<div class="rimage center"><img src="fig/unnamed-chunk-121.png" title="plot of chunk unnamed-chunk-12" alt="plot of chunk unnamed-chunk-12" class="plot" />
+<img src="fig/unnamed-chunk-122.png" title="plot of chunk unnamed-chunk-12" alt="plot of chunk unnamed-chunk-12" class="plot" /></div>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -242,7 +330,13 @@ theme_bw(): More stark/plain </p>
     <h2>Axis Limits</h2>
   </hgroup>
   <article>
-    
+    <pre><code class="r">g + geom_line() + ylim(-3, 3)
+g + geom_line() + coord_cartesian(ylim = c(-3, 3))
+</code></pre>
+
+<div class="rimage center"><img src="fig/unnamed-chunk-131.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" class="plot" />
+<img src="fig/unnamed-chunk-132.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" class="plot" /></div>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -252,10 +346,12 @@ theme_bw(): More stark/plain </p>
     <h2>More Complex Example</h2>
   </hgroup>
   <article>
-    <p>How does the relationship between PM2.5 and nocturnal symptoms vary by BMI and NO2?
-Unlike our previous BMI variable, NO2 is continuous
-We need to make NO2 categorical so we can condition on it in the plotting
-Use the cut() function for this</p>
+    <ul>
+<li>How does the relationship between PM\(_{2.5}\) and nocturnal symptoms vary by BMI and NO\(_2\)?</li>
+<li>Unlike our previous BMI variable, NO\(_2\) is continuous</li>
+<li>We need to make NO\(_2\) categorical so we can condition on it in the plotting</li>
+<li>Use the <code>cut()</code> function for this</li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
@@ -263,10 +359,22 @@ Use the cut() function for this</p>
 
       <slide class="" id="slide-19" style="background:;">
   <hgroup>
-    <h2>Making NO2 Deciles</h2>
+    <h2>Making NO\(_2\) Deciles</h2>
   </hgroup>
   <article>
-    
+    <pre><code class="r">## Calculate the tertiles of the data
+cutpoints &lt;- quantile(maacs$logno2_new, seq(0, 1, length = 4), na.rm = TRUE)
+
+## Cut the data at the tertiles and create a new factor variable
+maacs$no2tert &lt;- cut(maacs$logno2_new, cutpoints)
+
+## See the levels of the newly created factor variable
+levels(maacs$no2tert)
+</code></pre>
+
+<pre><code>[1] &quot;(0.378,1.2]&quot; &quot;(1.2,1.42]&quot;  &quot;(1.42,2.55]&quot;
+</code></pre>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -276,7 +384,8 @@ Use the cut() function for this</p>
     <h2>Final Plot</h2>
   </hgroup>
   <article>
-    
+    <div class="rimage center"><img src="fig/unnamed-chunk-15.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" class="plot" /></div>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -286,7 +395,19 @@ Use the cut() function for this</p>
     <h2>Code for Final Plot</h2>
   </hgroup>
   <article>
-    
+    <pre><code class="r">## Setup ggplot with data frame
+g &lt;- ggplot(maacs, aes(logpm25, NocturnalSympt))
+
+## Add layers
+g + geom_point(alpha = 1/3) + 
+  facet_wrap(bmicat ~ no2tert, nrow = 2, ncol = 4) + 
+  geom_smooth(method=&quot;lm&quot;, se=FALSE, col=&quot;steelblue&quot;) + 
+  theme_bw(base_family = &quot;Avenir&quot;, base_size = 10) + 
+  labs(x = expression(&quot;log &quot; * PM[2.5])) + 
+  labs(y = &quot;Nocturnal Symptoms&quot;) + 
+  labs(title = &quot;MAACS Cohort&quot;)
+</code></pre>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -296,8 +417,10 @@ Use the cut() function for this</p>
     <h2>Summary</h2>
   </hgroup>
   <article>
-    <p>ggplot2 is very powerful and flexible if you learn the “grammar” and the various elements that can be tuned/modified
-Many more types of plots can be made; explore and mess around with the package (references mentioned in Part 1 are useful)</p>
+    <ul>
+<li>ggplot2 is very powerful and flexible if you learn the “grammar” and the various elements that can be tuned/modified</li>
+<li>Many more types of plots can be made; explore and mess around with the package (references mentioned in Part 1 are useful)</li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->

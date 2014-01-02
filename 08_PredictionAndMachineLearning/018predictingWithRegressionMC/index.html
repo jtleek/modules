@@ -69,7 +69,7 @@
   </hgroup>
   <article>
     <pre><code class="r">library(ISLR); library(ggplot2); library(caret);
-data(Wage)
+data(Wage); Wage &lt;- subset(Wage,select=-c(logwage))
 summary(Wage)
 </code></pre>
 
@@ -89,13 +89,13 @@ summary(Wage)
  5. Advanced Degree:426   5. South Atlantic    :   0                                              
                           6. East South Central:   0                                              
                           (Other)              :   0                                              
-  health_ins      logwage          wage      
- 1. Yes:2083   Min.   :3.00   Min.   : 20.1  
- 2. No : 917   1st Qu.:4.45   1st Qu.: 85.4  
-               Median :4.65   Median :104.9  
-               Mean   :4.65   Mean   :111.7  
-               3rd Qu.:4.86   3rd Qu.:128.7  
-               Max.   :5.76   Max.   :318.3  
+  health_ins        wage      
+ 1. Yes:2083   Min.   : 20.1  
+ 2. No : 917   1st Qu.: 85.4  
+               Median :104.9  
+               Mean   :111.7  
+               3rd Qu.:128.7  
+               Max.   :318.3  
 
 </code></pre>
 
@@ -110,12 +110,11 @@ summary(Wage)
   <article>
     <pre><code class="r">inTrain &lt;- createDataPartition(y=Wage$wage,
                               p=0.7, list=FALSE)
-training &lt;- Wage[inTrain,]
-testing &lt;- Wage[-inTrain,]
+training &lt;- Wage[inTrain,]; testing &lt;- Wage[-inTrain,]
 dim(training); dim(testing)
 </code></pre>
 
-<pre><code>[1] 898  12
+<pre><code>[1] 898  11
 </code></pre>
 
   </article>
@@ -194,7 +193,7 @@ print(modFit)
 </code></pre>
 
 <pre><code>2102 samples
-  11 predictors
+  10 predictors
 
 No pre-processing
 Resampling: Bootstrap (25 reps) 

@@ -66,11 +66,16 @@ _coordinate system_
 - Persistent asthma, exacerbation in past year
 - Does BMI (normal vs. overweight) modify the relationship between PM$_{2.5}$ and asthma symptoms?
 
+```{r,echo=FALSE}
+maacs <- read.csv("ggplot2_lecture2_data.csv")
+```
+
 ---
 
 ## Basic Plot
 
 ```{r, fig.width=9}
+library(ggplot2)
 qplot(logpm25, NocturnalSympt, data = maacs, facets = . ~ bmicat, 
       geom = c("point", "smooth"), method = "lm")
 ```
@@ -80,6 +85,7 @@ qplot(logpm25, NocturnalSympt, data = maacs, facets = . ~ bmicat,
 ## Building Up in Layers
 
 ```{r}
+
 head(maacs)
 g <- ggplot(maacs, aes(logpm25, NocturnalSympt))
 summary(g)
@@ -201,14 +207,14 @@ g + geom_line() + coord_cartesian(ylim = c(-3, 3))
 ## Making NO$_2$ Deciles
 
 ```{r}
-## Calculate the deciles of the data
-cutpoints <- quantile(maacs$logno2_new, seq(0, 1, length = 11), na.rm = TRUE)
+## Calculate the tertiles of the data
+cutpoints <- quantile(maacs$logno2_new, seq(0, 1, length = 4), na.rm = TRUE)
 
-## Cut the data at the deciles and create a new factor variable
-maacs$no2dec <- cut(maacs$logno2_new, cutpoints)
+## Cut the data at the tertiles and create a new factor variable
+maacs$no2tert <- cut(maacs$logno2_new, cutpoints)
 
 ## See the levels of the newly created factor variable
-levels(maacs$no2dec)
+levels(maacs$no2tert)
 ```
 
 ---
@@ -221,7 +227,7 @@ g <- ggplot(maacs, aes(logpm25, NocturnalSympt))
 
 ## Add layers
 g + geom_point(alpha = 1/3) + 
-  facet_wrap(bmicat ~ no2dec, nrow = 2, ncol = 4) + 
+  facet_wrap(bmicat ~ no2tert, nrow = 2, ncol = 4) + 
   geom_smooth(method="lm", se=FALSE, col="steelblue") + 
   theme_bw(base_family = "Avenir", base_size = 10) + 
   labs(x = expression("log " * PM[2.5])) + 
@@ -239,7 +245,7 @@ g <- ggplot(maacs, aes(logpm25, NocturnalSympt))
 
 ## Add layers
 g + geom_point(alpha = 1/3) + 
-  facet_wrap(bmicat ~ no2dec, nrow = 2, ncol = 4) + 
+  facet_wrap(bmicat ~ no2tert, nrow = 2, ncol = 4) + 
   geom_smooth(method="lm", se=FALSE, col="steelblue") + 
   theme_bw(base_family = "Avenir", base_size = 10) + 
   labs(x = expression("log " * PM[2.5])) + 
