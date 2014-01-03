@@ -12,7 +12,6 @@ url:
   assets: ../../assets
 widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
-
 ---
 
 ```{r setup, cache = F, echo = F, message = F, warning = F, tidy = F}
@@ -41,13 +40,13 @@ knit_hooks$set(plot = knitr:::hook_plot_html)
 ---
 
 ## Basic Components of a ggplot2 Plot
-A _data frame_
-_aesthetic mappings_: how data are mapped to color, size 
-_geoms_: geometric objects like points, lines, shapes. 
-_facets_: for conditional plots. 
-_stats_: statistical transformations like binning, quantiles, smoothing. 
-_scales_: what scale an aesthetic map uses (example: male = red, female = blue). 
-_coordinate system_ 
+- A _data frame_
+- _aesthetic mappings_: how data are mapped to color, size 
+- _geoms_: geometric objects like points, lines, shapes. 
+- _facets_: for conditional plots. 
+- _stats_: statistical transformations like binning, quantiles, smoothing. 
+- _scales_: what scale an aesthetic map uses (example: male = red, female = blue). 
+- _coordinate system_ 
 
 ---
 
@@ -85,7 +84,6 @@ qplot(logpm25, NocturnalSympt, data = maacs, facets = . ~ bmicat,
 ## Building Up in Layers
 
 ```{r}
-
 head(maacs)
 g <- ggplot(maacs, aes(logpm25, NocturnalSympt))
 summary(g)
@@ -96,7 +94,7 @@ summary(g)
 
 ## No Plot Yet!
 
-```{r, eval=FALSE}
+```{r, error=TRUE}
 g <- ggplot(maacs, aes(logpm25, NocturnalSympt))
 print(g)
 ```
@@ -114,7 +112,7 @@ g + geom_point()
 
 ## Adding More Layers: Smooth
 
-```{r, fig.width=9}
+```{r, fig.width=4.5}
 g + geom_point() + geom_smooth()
 g + geom_point() + geom_smooth(method = "lm")
 ```
@@ -142,7 +140,7 @@ g + geom_point() + facet_grid(. ~ bmicat) + geom_smooth(method = "lm")
 
 ## Modifying Aesthetics
 
-```{r, fig.width=9}
+```{r, fig.width=4.5}
 g + geom_point(color = "steelblue", size = 4, alpha = 1/2)
 g + geom_point(aes(color = bmicat), size = 4, alpha = 1/2)
 ```
@@ -152,7 +150,8 @@ g + geom_point(aes(color = bmicat), size = 4, alpha = 1/2)
 ## Modifying Labels
 
 ```{r}
-g + geom_point(aes(color = bmicat)) + labs(title = "MAACS Cohort") + labs(x = expression("log " * PM[2.5]), y = "Nocturnal Symptoms")
+g + geom_point(aes(color = bmicat)) + labs(title = "MAACS Cohort") + 
+  labs(x = expression("log " * PM[2.5]), y = "Nocturnal Symptoms")
 ```
 
 ---
@@ -160,7 +159,8 @@ g + geom_point(aes(color = bmicat)) + labs(title = "MAACS Cohort") + labs(x = ex
 ## Customizing the Smooth
 
 ```{r}
-g + geom_point(aes(color = bmicat), size = 2, alpha = 1/2) + geom_smooth(size = 4, linetype = 3, method = "lm", se = FALSE)
+g + geom_point(aes(color = bmicat), size = 2, alpha = 1/2) + 
+  geom_smooth(size = 4, linetype = 3, method = "lm", se = FALSE)
 ```
 
 ---
@@ -173,9 +173,9 @@ g + geom_point(aes(color = bmicat)) + theme_bw(base_family = "Times")
 
 ---
 
-## A Notes about Axis Limits
+## A Note about Axis Limits
 
-```{r}
+```{r, fig.width=4.5, fig.height=3}
 testdat <- data.frame(x = 1:100, y = rnorm(100))
 testdat[50,2] <- 100  ## Outlier!
 plot(testdat$x, testdat$y, type = "l", ylim = c(-3,3))
@@ -188,7 +188,7 @@ g + geom_line()
 
 ## Axis Limits
 
-```{r}
+```{r, fig.width=4.5}
 g + geom_line() + ylim(-3, 3)
 g + geom_line() + coord_cartesian(ylim = c(-3, 3))
 ```
@@ -204,7 +204,7 @@ g + geom_line() + coord_cartesian(ylim = c(-3, 3))
 
 ---
 
-## Making NO$_2$ Deciles
+## Making NO$_2$ Tertiles
 
 ```{r}
 ## Calculate the tertiles of the data
@@ -221,7 +221,7 @@ levels(maacs$no2tert)
 
 ## Final Plot
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, fig.width=9, fig.height=5}
 ## Setup ggplot with data frame
 g <- ggplot(maacs, aes(logpm25, NocturnalSympt))
 

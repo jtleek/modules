@@ -69,13 +69,15 @@
     <h2>Basic Components of a ggplot2 Plot</h2>
   </hgroup>
   <article>
-    <p>A <em>data frame</em>
-<em>aesthetic mappings</em>: how data are mapped to color, size 
-<em>geoms</em>: geometric objects like points, lines, shapes. 
-<em>facets</em>: for conditional plots. 
-<em>stats</em>: statistical transformations like binning, quantiles, smoothing. 
-<em>scales</em>: what scale an aesthetic map uses (example: male = red, female = blue). 
-<em>coordinate system</em> </p>
+    <ul>
+<li>A <em>data frame</em></li>
+<li><em>aesthetic mappings</em>: how data are mapped to color, size </li>
+<li><em>geoms</em>: geometric objects like points, lines, shapes. </li>
+<li><em>facets</em>: for conditional plots. </li>
+<li><em>stats</em>: statistical transformations like binning, quantiles, smoothing. </li>
+<li><em>scales</em>: what scale an aesthetic map uses (example: male = red, female = blue). </li>
+<li><em>coordinate system</em> </li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
@@ -138,8 +140,7 @@ qplot(logpm25, NocturnalSympt, data = maacs, facets = . ~ bmicat,
     <h2>Building Up in Layers</h2>
   </hgroup>
   <article>
-    <pre><code class="r">
-head(maacs)
+    <pre><code class="r">head(maacs)
 </code></pre>
 
 <pre><code>  logpm25        bmicat NocturnalSympt logno2_new
@@ -171,6 +172,9 @@ faceting: facet_null()
   <article>
     <pre><code class="r">g &lt;- ggplot(maacs, aes(logpm25, NocturnalSympt))
 print(g)
+</code></pre>
+
+<pre><code>Error: No layers in plot
 </code></pre>
 
   </article>
@@ -268,7 +272,8 @@ g + geom_point(aes(color = bmicat), size = 4, alpha = 1/2)
     <h2>Modifying Labels</h2>
   </hgroup>
   <article>
-    <pre><code class="r">g + geom_point(aes(color = bmicat)) + labs(title = &quot;MAACS Cohort&quot;) + labs(x = expression(&quot;log &quot; * PM[2.5]), y = &quot;Nocturnal Symptoms&quot;)
+    <pre><code class="r">g + geom_point(aes(color = bmicat)) + labs(title = &quot;MAACS Cohort&quot;) + 
+  labs(x = expression(&quot;log &quot; * PM[2.5]), y = &quot;Nocturnal Symptoms&quot;)
 </code></pre>
 
 <div class="rimage center"><img src="fig/unnamed-chunk-9.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" class="plot" /></div>
@@ -282,7 +287,8 @@ g + geom_point(aes(color = bmicat), size = 4, alpha = 1/2)
     <h2>Customizing the Smooth</h2>
   </hgroup>
   <article>
-    <pre><code class="r">g + geom_point(aes(color = bmicat), size = 2, alpha = 1/2) + geom_smooth(size = 4, linetype = 3, method = &quot;lm&quot;, se = FALSE)
+    <pre><code class="r">g + geom_point(aes(color = bmicat), size = 2, alpha = 1/2) + 
+  geom_smooth(size = 4, linetype = 3, method = &quot;lm&quot;, se = FALSE)
 </code></pre>
 
 <div class="rimage center"><img src="fig/unnamed-chunk-10.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" class="plot" /></div>
@@ -307,7 +313,7 @@ g + geom_point(aes(color = bmicat), size = 4, alpha = 1/2)
 
       <slide class="" id="slide-16" style="background:;">
   <hgroup>
-    <h2>A Notes about Axis Limits</h2>
+    <h2>A Note about Axis Limits</h2>
   </hgroup>
   <article>
     <pre><code class="r">testdat &lt;- data.frame(x = 1:100, y = rnorm(100))
@@ -359,7 +365,7 @@ g + geom_line() + coord_cartesian(ylim = c(-3, 3))
 
       <slide class="" id="slide-19" style="background:;">
   <hgroup>
-    <h2>Making NO\(_2\) Deciles</h2>
+    <h2>Making NO\(_2\) Tertiles</h2>
   </hgroup>
   <article>
     <pre><code class="r">## Calculate the tertiles of the data

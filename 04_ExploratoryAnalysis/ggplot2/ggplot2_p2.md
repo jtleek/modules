@@ -12,7 +12,6 @@ url:
   assets: ../../assets
 widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
-
 ---
 
 
@@ -28,13 +27,13 @@ mode        : selfcontained # {standalone, draft}
 ---
 
 ## Basic Components of a ggplot2 Plot
-A _data frame_
-_aesthetic mappings_: how data are mapped to color, size 
-_geoms_: geometric objects like points, lines, shapes. 
-_facets_: for conditional plots. 
-_stats_: statistical transformations like binning, quantiles, smoothing. 
-_scales_: what scale an aesthetic map uses (example: male = red, female = blue). 
-_coordinate system_ 
+- A _data frame_
+- _aesthetic mappings_: how data are mapped to color, size 
+- _geoms_: geometric objects like points, lines, shapes. 
+- _facets_: for conditional plots. 
+- _stats_: statistical transformations like binning, quantiles, smoothing. 
+- _scales_: what scale an aesthetic map uses (example: male = red, female = blue). 
+- _coordinate system_ 
 
 ---
 
@@ -76,7 +75,6 @@ qplot(logpm25, NocturnalSympt, data = maacs, facets = . ~ bmicat,
 
 
 ```r
-
 head(maacs)
 ```
 
@@ -111,6 +109,10 @@ faceting: facet_null()
 ```r
 g <- ggplot(maacs, aes(logpm25, NocturnalSympt))
 print(g)
+```
+
+```
+Error: No layers in plot
 ```
 
 
@@ -184,7 +186,8 @@ g + geom_point(aes(color = bmicat), size = 4, alpha = 1/2)
 
 
 ```r
-g + geom_point(aes(color = bmicat)) + labs(title = "MAACS Cohort") + labs(x = expression("log " * PM[2.5]), y = "Nocturnal Symptoms")
+g + geom_point(aes(color = bmicat)) + labs(title = "MAACS Cohort") + 
+  labs(x = expression("log " * PM[2.5]), y = "Nocturnal Symptoms")
 ```
 
 <div class="rimage center"><img src="fig/unnamed-chunk-9.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" class="plot" /></div>
@@ -196,7 +199,8 @@ g + geom_point(aes(color = bmicat)) + labs(title = "MAACS Cohort") + labs(x = ex
 
 
 ```r
-g + geom_point(aes(color = bmicat), size = 2, alpha = 1/2) + geom_smooth(size = 4, linetype = 3, method = "lm", se = FALSE)
+g + geom_point(aes(color = bmicat), size = 2, alpha = 1/2) + 
+  geom_smooth(size = 4, linetype = 3, method = "lm", se = FALSE)
 ```
 
 <div class="rimage center"><img src="fig/unnamed-chunk-10.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" class="plot" /></div>
@@ -216,7 +220,7 @@ g + geom_point(aes(color = bmicat)) + theme_bw(base_family = "Times")
 
 ---
 
-## A Notes about Axis Limits
+## A Note about Axis Limits
 
 
 ```r
@@ -257,7 +261,7 @@ g + geom_line() + coord_cartesian(ylim = c(-3, 3))
 
 ---
 
-## Making NO$_2$ Deciles
+## Making NO$_2$ Tertiles
 
 
 ```r
