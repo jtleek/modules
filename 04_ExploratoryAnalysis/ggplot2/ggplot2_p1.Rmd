@@ -229,7 +229,7 @@ qplot(log(eno), data = maacs, geom = "density", color = mopos)
 
 ## Scatterplots: eNO vs. PM$_{2.5}$
 
-```{r, fig.width=3}
+```{r, fig.width=2.7}
 qplot(log(pm25), log(eno), data = maacs)
 qplot(log(pm25), log(eno), data = maacs, shape = mopos)
 qplot(log(pm25), log(eno), data = maacs, color = mopos)
