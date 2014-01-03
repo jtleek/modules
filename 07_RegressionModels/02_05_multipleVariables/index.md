@@ -15,13 +15,12 @@ mode        : selfcontained # {standalone, draft}
 ---
 
 
----
 ## Multivariable regression
 * We have an entire class on prediction and machine learning, so we'll focus on modeling.
   * Prediction has a different set of criteria, needs for interpretability and standards for generalizability.
   * In modeling, our interest lies in parsimonious, interpretable representations of the data that enhance our understanding of the phenomena under study.
-  * A model is a lense through which to look at your data.
-  * Under this philosophy, what's the right model? Whatever model connects the data to a true, parsimonious statement.
+  * A model is a lense through which to look at your data. (I attribute this quote to Scott Zeger)
+  * Under this philosophy, what's the right model? Whatever model connects the data to a true, parsimonious statement about what you're studying.
 * There are nearly uncontable ways that a model can be wrong, in this lecture, we'll focus on variable inclusion and exclusion.
 * Like nearly all aspects of statistics, good modeling decisions are context dependent.
   * A good model for prediction versus one for studying mechanisms versus one for trying to establish causal effects may not be the same.
@@ -29,12 +28,12 @@ mode        : selfcontained # {standalone, draft}
 ---
 ## The Rumsfeldian triplet
 
-*There are known knowns. These are things we know that we know. There are known unknowns. That is to say, there are things that we know we don't know. But there are also unknown unknowns. There are things we don't know we don't know.*
+*There are known knowns. These are things we know that we know. There are known unknowns. That is to say, there are things that we know we don't know. But there are also unknown unknowns. There are things we don't know we don't know.* Donald Rumsfeld
 
 In our context
-* Regressors that we know we should check to include in the model and have collected.
-* Regressors that we would like to include in the model, but didn't collect.
-* Regressors that we don't even know about that we should have included in the model.
+* (Known knowns) Regressors that we know we should check to include in the model and have.
+* (Known Unknowns) Regressors that we would like to include in the model, but don't have.
+* (Unknown Unknowns) Regressors that we don't even know about that we should have included in the model.
 
 ---
 ## General rules
@@ -42,164 +41,188 @@ In our context
   * This is why we randomize treatments, it attempts to uncorrelate our treatment indicator with variables that we don't have to put in the model. 
   * (If there's too many unobserved confounding variables, even randomization won't help you.)
 * Including variables that we shouldn't have increases standard errors of the regression variables.
-  * Actually, including any new variables increasese standard errors of other regressors. So we don't want to idly through variables into the model.
+  * Actually, including any new variables increasese (actual, not estimated) standard errors of other regressors. So we don't want to idly through variables into the model.
 * The model must tend toward perfect fit as the number of non-redundant regressors approaches $n$.
 * $R^2$ increases monotonically as more regressors are included.
+* The SSE decreases monotonically as more regressors are included.
 
 ---
 ## Plot of $R^2$ versus $n$
-### For simulations as the number of variables included equals increases to $n=100$. 
+For simulations as the number of variables included equals increases to $n=100$. 
 No actual regression relationship exist in any simulation
 <div class="rimage center"><img src="fig/unnamed-chunk-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div>
 
 
-
-## The linear model
-* Specified as $Y_i =  \sum_{k=1}^p X_{ik} \beta_j + \epsilon_{i}$
-* We'll also assume here that $\epsilon_i \stackrel{iid}{\sim} N(0, \sigma^2)$
-* Define the residuals as
-$e_i = Y_i -  \hat Y_i =  Y_i - \sum_{k=1}^p X_{ik} \hat \beta_j$
-* Our estimate of residual variation is $\hat \sigma^2 = \frac{\sum_{i=1}^n e_i^2}{n-p}$, the $n-p$ so that $E[\hat \sigma^2] = \sigma^2$
-
 ---
+## Variance inflation
 
 ```r
-data(swiss); par(mfrow = c(2, 2))
-fit <- lm(Fertility ~ . , data = swiss); plot(fit)
+n <- 100; nosim <- 1000
+x1 <- rnorm(n); x2 <- rnorm(n); x3 <- rnorm(n); 
+betas <- sapply(1 : nosim, function(i){
+  y <- x1 + rnorm(n, sd = .3)
+  c(coef(lm(y ~ x1))[2], 
+    coef(lm(y ~ x1 + x2))[2], 
+    coef(lm(y ~ x1 + x2 + x3))[2])
+})
+round(apply(betas, 1, sd), 5)
 ```
 
-<div class="rimage center"><img src="fig/unnamed-chunk-2.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" class="plot" /></div>
-
-
----
-## Influential, high leverage and outlying points
-<div class="rimage center"><img src="fig/unnamed-chunk-3.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" class="plot" /></div>
-
-
----
-## Summary of the plot
-Calling a point an outlier is vague. 
-  * Outliers can be the result of spurious or real processes.
-  * Outliers can have varying degrees of influence.
-  * Outliers can conform to the regression relationship (i.e being marginally outlying in X or Y, but not outlying given the regression relationship).
-* Upper left hand point has low leverage, low influence, outlies in a way not conforming to the regression relationship.
-* Lower left hand point has low leverage, low influence and is not to be an outlier in any sense.
-* Upper right hand point has high leverage, but chooses not to extert it and thus would have low actual influence by conforming to the regresison relationship of the other points.
-* Lower right hand point has high leverage and would exert it if it were included in the fit.
-
----
-## Influence measures
-* Do `?influence.measures` to see the full suite of influence measures in stats. The measures include
-  * `rstandard` - standardized residuals, residuals divided by their standard deviations)
-  * `rstudent` - standardized residuals, residuals divided by their standard deviations, where the ith data point was deleted in the calculation of the standard deviation for the residual to follow a t distribution
-  * `hatvalues` - measures of leverage
-  * `dffits` - change in the predicted response when the $i^{th}$ point is deleted in fitting the model.
-  * `dfbetas` - change in individual coefficients when the $i^{th}$ point is deleted in fitting the model.
-  * `cooks.distance` - overall change in teh coefficients when the $i^{th}$ point is deleted.
-  * `resid` - returns the ordinary residuals
-  * `resid(fit) / (1 - hatvalues(fit))` where `fit` is the linear model fit returns the PRESS residuals, i.e. the leave one out cross validation residuals - the difference in the response and the predicted response at data point $i$, where it was not included in the model fitting.
-
----
-## How do I use all of these things?
-* Be wary of simplistic rules for diagnostic plots and measures. The use of these tools is context specific. It's better to understand what they are trying to accomplish and use them judiciously.
-* Not all of the measures have meaningful absolute scales. You can look at them relative to the values across the data.
-* They probe your data in different ways to diagnose different problems. 
-* Patterns in your residual plots generally indicate some poor aspect of model fit. These can include:
-  * Heteroskedasticity (non constant variance).
-  * Missing model terms.
-  * Temporal patterns (plot residuals versus collection order).
-* Residual QQ plots investigate normality of the errors.
-* Leverage measures (hat values) can be useful for diagnosing data entry errors.
-* Influence measures get to the bottom line, 'how does deleting or including this point impact a particular aspect of the model'.
-
----
-## Case 1
-<div class="rimage center"><img src="fig/unnamed-chunk-4.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" class="plot" /></div>
-
-
----
-## The code
 ```
-n <- 100; x <- c(10, rnorm(n)); y <- c(10, c(rnorm(n)))
-plot(x, y, frame = FALSE, cex = 2, pch = 21, bg = "lightblue", col = "black")
-abline(lm(y ~ x))            
+     x1      x1      x1 
+0.02856 0.02859 0.02883 
 ```
-* The point `c(10, 10)` has created a strong regression relationship where there shouldn't be one.
+
 
 ---
-## Showing a couple of the diagnostic values
+## Variance inflation
 
 ```r
-fit <- lm(y ~ x)
-round(dfbetas(fit)[1 : 10, 2], 3)
+n <- 100; nosim <- 1000
+x1 <- rnorm(n); x2 <- x1/sqrt(2) + rnorm(n) /sqrt(2)
+x3 <- x1 * 0.95 + rnorm(n) * sqrt(1 - 0.95^2); 
+betas <- sapply(1 : nosim, function(i){
+  y <- x1 + rnorm(n, sd = .3)
+  c(coef(lm(y ~ x1))[2], 
+    coef(lm(y ~ x1 + x2))[2], 
+    coef(lm(y ~ x1 + x2 + x3))[2])
+})
+round(apply(betas, 1, sd), 5)
 ```
 
 ```
-     1      2      3      4      5      6      7      8      9     10 
- 7.270 -0.015 -0.010  0.003  0.000 -0.110 -0.073  0.011  0.022 -0.127 
+     x1      x1      x1 
+0.03236 0.04330 0.11615 
+```
+
+
+
+---
+## Variance inflation factors
+* Notice variance inflation was much worse when we included a variable that
+was highly related to `x1`. 
+* We don't know $\sigma$, so we can only estimate the increase in the actual standard error of the coefficients for including a regressor.
+* However, $\sigma$ drops out of the relative standard errors. If one sequentially adds variables, one can check the variance (or sd) inflation for including each one.
+* When the other regressors are actually orthogonal to the regressor of interest, then there is no variance inflation.
+* The variance inflation factor (VIF) is the increase in the variance for the ith regressor compared to the ideal setting where it is orthogonal to the other regressors.
+  * (The square root of the VIF is the increase in the sd ...)
+* Remember, variance inflation is only part of the picture. We want to include certain variables, even if they dramatically inflate our variance. 
+
+---
+### Revisting our previous simulation
+
+```r
+##doesn't depend on which y you use,
+y <- x1 + rnorm(n, sd = .3)
+a <- summary(lm(y ~ x1))$cov.unscaled[2,2]
+c(summary(lm(y ~ x1 + x2))$cov.unscaled[2,2],
+  summary(lm(y~ x1 + x2 + x3))$cov.unscaled[2,2]) / a
+```
+
+```
+[1]  1.937 13.570
 ```
 
 ```r
-round(hatvalues(fit)[1 : 10], 3)
+temp <- apply(betas, 1, var); temp[2 : 3] / temp[1]
 ```
 
 ```
-    1     2     3     4     5     6     7     8     9    10 
-0.506 0.012 0.010 0.010 0.011 0.025 0.019 0.010 0.011 0.013 
+   x1    x1 
+ 1.79 12.88 
 ```
-
 
 ---
-## Case 2
-<div class="rimage center"><img src="fig/unnamed-chunk-6.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" class="plot" /></div>
-
-
-```
-  dfb.1_  dfb.x  dffit cov.r cook.d   hat
-1  0.032  0.367  0.370 2.288  0.069 0.555
-2 -0.013  0.007 -0.014 1.034  0.000 0.013
-3  0.076  0.108  0.135 1.035  0.009 0.027
-4 -0.067 -0.041 -0.080 1.024  0.003 0.013
-5  0.056 -0.005  0.056 1.024  0.002 0.010
-6  0.014  0.007  0.016 1.033  0.000 0.013
-```
-
-
----
-## Example described by Stefanski TAS 2007 Vol 61.
+### Swiss data
 
 ```r
-## Don't everyone hit this server at once.  Read the paper first.
-dat <- read.table('http://www4.stat.ncsu.edu/~stefanski/NSF_Supported/Hidden_Images/orly_owl_files/orly_owl_Lin_4p_5_flat.txt', header = FALSE)
-pairs(dat)
-```
-
-<div class="rimage center"><img src="fig/unnamed-chunk-8.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" class="plot" /></div>
-
-
----
-## Got our P-values, should we bother to do a residual plot?
-
-```r
-summary(lm(V1 ~ . -1, data = dat))$coef
+data(swiss); 
+fit1 <- lm(Fertility ~ Agriculture, data = swiss)
+a <- summary(fit1)$cov.unscaled[2,2]
+fit2 <- update(fit, Fertility ~ Agriculture + Examination)
+fit3 <- update(fit, Fertility ~ Agriculture + Examination + Education)
+  c(summary(fit2)$cov.unscaled[2,2],
+    summary(fit3)$cov.unscaled[2,2]) / a 
 ```
 
 ```
-   Estimate Std. Error t value  Pr(>|t|)
-V2   0.9856    0.12798   7.701 1.989e-14
-V3   0.9715    0.12664   7.671 2.500e-14
-V4   0.8606    0.11958   7.197 8.301e-13
-V5   0.9267    0.08328  11.127 4.778e-28
+[1] 1.892 2.089
 ```
 
 
 ---
-## Residual plot
-### P-values significant, O RLY?
+## Swiss data VIFs, 
 
 ```r
-fit <- lm(V1 ~ . - 1, data = dat); plot(predict(fit), resid(fit), pch = '.')
+library(car) 
+fit <- lm(Fertility ~ . , data = swiss)
+vif(fit)
 ```
 
-<div class="rimage center"><img src="fig/unnamed-chunk-10.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" class="plot" /></div>
+```
+     Agriculture      Examination        Education         Catholic Infant.Mortality 
+           2.284            3.675            2.775            1.937            1.108 
+```
+
+```r
+sqrt(vif(fit)) #I prefer sd 
+```
+
+```
+     Agriculture      Examination        Education         Catholic Infant.Mortality 
+           1.511            1.917            1.666            1.392            1.052 
+```
+
+
+---
+## What about residual variance estimation?
+* Assuming that the model is linear with additive iid errors (with finite variance), we can mathematically describe the impact of omitting necessary variables or including unnecessary ones.
+  * If we underfit the model, the variance estimate is biased. 
+  * If we correctly or overfit the model, including all necessary covariates and/or unnecessary covariates, the variance estimate is unbiased.
+    * However, the variance of the variance is larger if we include unnecessary variables.
+
+---
+## Covariate model selection
+* Automated covariate selection is a difficult topic. 
+  * It depends heavily on how rich of a covariate space one wants to explore. 
+  * For $p$ variables there are $2^{p}$ models of the variables with only main effects and it explodes quickly as you add interactions and polynomial terms. 
+* In the prediction class, we'll cover many modern methods for traversing large model spaces.
+  * Often they work with large numbers of covariates.
+  * Principal components or factor analytic models on covariates are often useful. 
+  * Regularized models are often useful.
+* Good design can often eliminate the need for complex model searches at analyses though often control over the design is limited.
+* If the models of interest are nested, it's fairly uncontroversial to use nested likelihood ratio tests. (Example to follow.)
+* My favoriate approach is as follows. Given a coefficient that I'm interested in, I like to use covariate adjustment and multiple models to probe that effect to evaluate it for robustness and to see what other covariates knock it out. 
+  * This isn't a terribly systematic approach, but it tends to teach you a lot about the the data as you get your hands dirty.
+
+---
+## How to do nested model testing in R
+
+```r
+fit1 <- lm(Fertility ~ Agriculture, data = swiss)
+fit2 <- update(fit, Fertility ~ Agriculture + Examination)
+fit3 <- update(fit, Fertility ~ Agriculture + Examination + Education)
+fit4 <- update(fit, Fertility ~ Agriculture + Examination + Education + Catholic)
+fit5 <- update(fit, Fertility ~ Agriculture + Examination + Education + Catholic + Infant.Mortality)
+anova(fit1, fit2, fit3, fit4, fit5)
+```
+
+```
+Analysis of Variance Table
+
+Model 1: Fertility ~ Agriculture
+Model 2: Fertility ~ Agriculture + Examination
+Model 3: Fertility ~ Agriculture + Examination + Education
+Model 4: Fertility ~ Agriculture + Examination + Education + Catholic
+Model 5: Fertility ~ Agriculture + Examination + Education + Catholic + 
+    Infant.Mortality
+  Res.Df  RSS Df Sum of Sq     F  Pr(>F)    
+1     45 6283                               
+2     44 4073  1      2210 43.05 6.9e-08 ***
+3     43 3181  1       892 17.37 0.00015 ***
+4     42 2514  1       667 12.99 0.00084 ***
+5     41 2105  1       409  7.96 0.00734 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+```
 
