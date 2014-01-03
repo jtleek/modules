@@ -1,0 +1,80 @@
+---
+title       : Multiple variables
+subtitle    : 
+author      : Brian Caffo, PhD
+job         : Johns Hopkins Bloomberg School of Public Health
+logo        : bloomberg_shield.png
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+url:
+  lib: ../../libraries
+  assets: ../../assets
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+---
+```{r setup, cache = F, echo = F, message = F, warning = F, tidy = F, results='hide'}
+# make this an external chunk that can be included in any file
+options(width = 100)
+opts_chunk$set(message = F, error = F, warning = F, comment = NA, fig.align = 'center', dpi = 100, tidy = F, cache.path = '.cache/', fig.path = 'fig/')
+
+options(xtable.type = 'html')
+knit_hooks$set(inline = function(x) {
+  if(is.numeric(x)) {
+    round(x, getOption('digits'))
+  } else {
+    paste(as.character(x), collapse = ', ')
+  }
+})
+knit_hooks$set(plot = knitr:::hook_plot_html)
+runif(1)
+```
+---
+## Multivariable regression
+* We have an entire class on prediction and machine learning, so we'll focus on modeling.
+  * Prediction has a different set of criteria, needs for interpretability and standards for generalizability.
+  * In modeling, our interest lies in parsimonious, interpretable representations of the data that enhance our understanding of the phenomena under study.
+  * A model is a lense through which to look at your data.
+  * Under this philosophy, what's the right model? Whatever model connects the data to a true, parsimonious statement.
+* There are nearly uncontable ways that a model can be wrong, in this lecture, we'll focus on variable inclusion and exclusion.
+* Like nearly all aspects of statistics, good modeling decisions are context dependent.
+  * A good model for prediction versus one for studying mechanisms versus one for trying to establish causal effects may not be the same.
+
+---
+## The Rumsfeldian triplet
+
+*There are known knowns. These are things we know that we know. There are known unknowns. That is to say, there are things that we know we don't know. But there are also unknown unknowns. There are things we don't know we don't know.*
+
+In our context
+* Regressors that we know we should check to include in the model and have collected.
+* Regressors that we would like to include in the model, but didn't collect.
+* Regressors that we don't even know about that we should have included in the model.
+
+---
+## General rules
+* Omitting variables results in bias in the coeficients of interest - unless their regressors are uncorrelated with the omitted ones.
+  * This is why we randomize treatments, it attempts to uncorrelate our treatment indicator with variables that we don't have to put in the model. 
+  * (If there's too many unobserved confounding variables, even randomization won't help you.)
+* Including variables that we shouldn't have increases standard errors of the regression variables.
+  * Actually, including any new variables increasese standard errors of other regressors. So we don't want to idly through variables into the model.
+* The model must tend toward perfect fit as the number of non-redundant regressors approaches $n$.
+* $R^2$ increases monotonically as more regressors are included.
+
+---
+## Plot of $R^2$ versus $n$
+### For simulations as the number of variables included equals increases to $n=100$. 
+No actual regression relationship exist in any simulation
+```{r, fig.height=5, fig.width=5, echo=FALSE}
+ n <- 100
+plot(c(1, n), 0 : 1, type = "n", frame = FALSE, xlab = "p", ylab = "R^2")
+r <- sapply(1 : n, function(p)
+      {
+        y <- rnorm(n); x <- matrix(rnorm(n * p), n, p)
+        summary(lm(y ~ x))$r.squared 
+      }
+    )
+lines(1 : n, r, lwd = 2)
+abline(h = 1)
+```
+
+
