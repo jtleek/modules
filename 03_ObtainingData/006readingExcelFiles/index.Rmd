@@ -1,0 +1,41 @@
+---
+title       : Reading Excel files
+subtitle    : 
+author      : Jeffrey Leek 
+job         : Johns Hopkins Bloomberg School of Public Health
+logo        : bloomberg_shield.png
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow   # 
+url:
+  lib: ../../libraries
+  assets: ../../assets
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+---
+
+## Example - Baltimore camera data
+
+<img class=center src=../../assets/img/03_ObtainingData/cameras.png height=500>
+
+[https://data.baltimorecity.gov/Transportation/Baltimore-Fixed-Speed-Cameras/dz54-2aru](https://data.baltimorecity.gov/Transportation/Baltimore-Fixed-Speed-Cameras/dz54-2aru)
+
+---
+
+## Download the file to load
+
+```{r data}
+if(!file.exists("data")){dir.create("data")}
+fileUrl <- "https://data.baltimorecity.gov/api/views/dz54-2aru/rows.csv?accessType=DOWNLOAD"
+download.file(fileUrl,destfile="cameras.csv",method="curl")
+dateDownloaded <- date()
+```
+
+---
+
+## read.xlsx(), read.xlsx2() {xlsx package}
+
+
+* Reads .xlsx files, but slow
+* Important parameters _file_, _sheetIndex_, _sheetIndex_, _rowIndex_, _colIndex_, _header_
+* read.xlsx2() relies more on low level Java functions so may be a bit faster

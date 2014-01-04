@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Reading local files</title>
+  <title>Downloading files</title>
   <meta charset="utf-8">
-  <meta name="description" content="Reading local files">
+  <meta name="description" content="Downloading files">
   <meta name="author" content="Jeffrey Leek">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -41,7 +41,7 @@
         <img src="../../assets/img/bloomberg_shield.png">
       </aside>
       <hgroup class="auto-fadein">
-        <h1>Reading local files</h1>
+        <h1>Downloading files</h1>
         <h2></h2>
         <p>Jeffrey Leek<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
@@ -53,20 +53,17 @@
     <h2>Get/set your working directory</h2>
   </hgroup>
   <article>
-    <p>Roger&#39;s lectures <a href="http://www.youtube.com/watch?v=XBcvH1BpIBo&amp;list=PLjTlxb-wKvXNSDfcKPFH2gzHGyjpeCZmJ&amp;index=2">windows</a>, <a href="http://www.youtube.com/watch?v=8xT3hmJQskU&amp;list=PLjTlxb-wKvXNSDfcKPFH2gzHGyjpeCZmJ&amp;index=1">mac</a>
-Andrew Jaffe&#39;s <a href="https://dl.dropbox.com/u/7710864/courseraPublic/otherResources/lecture1/index.html">lecture notes</a></p>
+    <ul>
+<li>A basic component of working with data is knowing your working directory</li>
+<li>The two main commands are <code>getwd()</code> and <code>setwd()</code>. </li>
+<li>Be aware of relative versus absolute paths
 
-<pre><code class="r">&gt; getwd()
-[1] &quot;/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1&quot;
-&gt; setwd(&quot;/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data&quot;)
-&gt; getwd()
-[1] &quot;/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data&quot;
-</code></pre>
-
-<p>Important difference with Windows: </p>
-
-<pre><code class="r">setwd(&quot;C:\\Users\\Andrew\\Downloads&quot;)
-</code></pre>
+<ul>
+<li><strong>Relative</strong> - <code>setwd(&quot;./data&quot;)</code>, <code>setwd(&quot;../&quot;)</code></li>
+<li><strong>Absolute</strong> - <code>setwd(&quot;/Users/jtleek/data/&quot;)</code></li>
+</ul></li>
+<li>Important difference in Windows <code>setwd(&quot;C:\\Users\\Andrew\\Downloads&quot;)</code></li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
@@ -74,32 +71,18 @@ Andrew Jaffe&#39;s <a href="https://dl.dropbox.com/u/7710864/courseraPublic/othe
 
       <slide class="" id="slide-2" style="background:;">
   <hgroup>
-    <h2>Get/set your working directory (relative paths)</h2>
+    <h2>Checking for and creating directories</h2>
   </hgroup>
   <article>
-    <pre><code class="r">getwd()
-</code></pre>
+    <ul>
+<li><code>file.exists(&quot;directoryName&quot;)</code> will check to see if the directory exists</li>
+<li><code>dir.create(&quot;directoryName&quot;)</code> will create a directory if it doesn&#39;t exist</li>
+<li>Here is an example checking for a &quot;data&quot; directory and creating it if it doesn&#39;t exist</li>
+</ul>
 
-<pre><code>## [1] &quot;/Users/jtleek/Dropbox/Jeff/teaching/2013/modules/03_ObtainingData/004readingLocalFiles&quot;
-</code></pre>
-
-<pre><code class="r">setwd(&quot;./data&quot;)
-</code></pre>
-
-<pre><code>## Error: cannot change working directory
-</code></pre>
-
-<pre><code class="r">getwd()
-</code></pre>
-
-<pre><code>## [1] &quot;/Users/jtleek/Dropbox/Jeff/teaching/2013/modules/03_ObtainingData/004readingLocalFiles&quot;
-</code></pre>
-
-<pre><code class="r">setwd(&quot;../&quot;)
-getwd()
-</code></pre>
-
-<pre><code>## [1] &quot;/Users/jtleek/Dropbox/Jeff/teaching/2013/modules/03_ObtainingData&quot;
+<pre><code class="r">if (!file.exists(&quot;data&quot;)) {
+    dir.create(&quot;data&quot;)
+}
 </code></pre>
 
   </article>
@@ -108,15 +91,82 @@ getwd()
 
       <slide class="" id="slide-3" style="background:;">
   <hgroup>
-    <h2>Get/set your working directory (absolute paths)</h2>
+    <h2>Getting data from the internet - download.file()</h2>
   </hgroup>
   <article>
-    <pre><code class="r">&gt; getwd()
-[1] &quot;/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1&quot;
-&gt; setwd(&quot;/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data&quot;)
-&gt; getwd()
-[1] &quot;/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data&quot;
+    <ul>
+<li>Downloads a file from the internet</li>
+<li>Even if you could do this by hand, helps with reproducibility</li>
+<li>Important parameters are <em>url</em>, <em>destfile</em>, <em>method</em></li>
+<li>Useful for downloading tab-delimited, csv, and other files</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Example - Baltimore camera data</h2>
+  </hgroup>
+  <article>
+    <p><img class=center src=../../assets/img/03_ObtainingData/cameras.png height=500></p>
+
+<p><a href="https://data.baltimorecity.gov/Transportation/Baltimore-Fixed-Speed-Cameras/dz54-2aru">https://data.baltimorecity.gov/Transportation/Baltimore-Fixed-Speed-Cameras/dz54-2aru</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Example - Baltimore camera data</h2>
+  </hgroup>
+  <article>
+    <p><img class=center src=../../assets/img/03_ObtainingData/cameraslink.png height=500></p>
+
+<p><a href="https://data.baltimorecity.gov/Transportation/Baltimore-Fixed-Speed-Cameras/dz54-2aru">https://data.baltimorecity.gov/Transportation/Baltimore-Fixed-Speed-Cameras/dz54-2aru</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Download a file from the web</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">fileUrl &lt;- &quot;https://data.baltimorecity.gov/api/views/dz54-2aru/rows.csv?accessType=DOWNLOAD&quot;
+download.file(fileUrl, destfile = &quot;./data/cameras.csv&quot;, method = &quot;curl&quot;)
+list.files(&quot;./data&quot;)
 </code></pre>
+
+<pre><code>## [1] &quot;cameras.csv&quot;
+</code></pre>
+
+<pre><code class="r">dateDownloaded &lt;- date()
+dateDownloaded
+</code></pre>
+
+<pre><code>## [1] &quot;Sat Jan  4 14:57:25 2014&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>Some notes about download.file()</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>If the url starts with <em>http</em> you can use download.file()</li>
+<li>If the url starts with <em>https</em> on Windows you may be ok</li>
+<li>If the url starts with <em>https</em> on Mac you may need to set <em>method=&quot;curl&quot;</em></li>
+<li>If the file is big, this might take a while</li>
+<li>Be sure to record when you downloaded. </li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
