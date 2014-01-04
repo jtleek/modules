@@ -1,5 +1,5 @@
 ---
-title       : Introduction to Git
+title       : Introduction to Git (Mac)
 subtitle    : 
 author      : Jeffrey Leek, Assistant Professor of Biostatistics 
 job         : Johns Hopkins Bloomberg School of Public Health
@@ -58,7 +58,7 @@ mode        : selfcontained # {standalone, draft}
 
 [http://git-scm.com/downloads](http://git-scm.com/downloads)
 
-<img class=center src=../../assets/img/IntroToGit/gitDownload1.png height='350'/>
+<img class=center src=../../assets/img/IntroToGit/git-dl.png height='350'/>
 
 ---
 
@@ -66,7 +66,7 @@ mode        : selfcontained # {standalone, draft}
 
 * Once the file is done downloading, open it up to begin the Git installation
 
-<img class=center src=../../assets/img/IntroToGit/gitInstall1.png height='350'/>
+<img class=center src=../../assets/img/IntroToGit/git-install.png height='350'/>
 
 ---
 
@@ -74,34 +74,35 @@ mode        : selfcontained # {standalone, draft}
 
 * Unless you really know what you are doing, just go with the default options at each step of the installation
 
-* Once the install is complete, hit the "Finish" button (you may want to uncheck the box next to "Review ReleaseNotes.rtf")
+* Once the install is complete, hit the "Finish" button
 
-<img class=center src=../../assets/img/IntroToGit/gitInstall9.png height='350'/>
-
----
-
-## Open Git Bash
-
-* Find a program called Git Bash, which is the command line environment for interacting with Git
-* It should be located in the directory into which Git was installed (or, for Windows users, in the Start Menu)
-
-<img class=center src=../../assets/img/IntroToGit/gitConfig1a.png height='350'/>
+<img class=center src=../../assets/img/IntroToGit/git-install-end.png height='350'/>
 
 ---
 
-## Open Git Bash
+## Open Terminal
 
-* Once Git Bash opens, you'll see a short welcome message followed by the name of your computer and a dollar sign on the next line
+- Open Spotlight
+- Search Terminal
+- Open Terminal
+
+<img class=center src=../../assets/img/IntroToGit/spotlight.png height='300'/>
+
+---
+
+## Open Terminal
+
+* Once Terminal opens, you'll see a dollar sign
 * The dollar sign means that it's your turn to type a command
 
-<img class=center src=../../assets/img/IntroToGit/gitOpen1.png width='750'/>
+<img class=center src=../../assets/img/IntroToGit/bash1.png height='200'/>
 
 ---
 
 ## Configure Username and Email
 
 * Each commit to a Git repository will be "tagged" with the username of the person who made the commit
-* Enter the following commands in Git Bash, one at a time, to set your username and email:
+* Enter the following commands in Terminal, one at a time, to set your username and email:
 
 ```
 $ git config --global user.name "Your Name Here"
@@ -120,17 +121,13 @@ $ git config --global user.email "your_email@example.com"
 $ git config --list
 ```
 
-<img class=center src=../../assets/img/IntroToGit/gitConfig2.png height='350'/>
+<img class=center src=../../assets/img/IntroToGit/git-config.png height='350'/>
 
 ---
 
 ## What's Next?
 
-* Go ahead and close Git Bash with following command:
-
-```
-$ exit
-```
+* Go ahead and close Terminal
 
 * Now that Git is set up on your computer, we're ready to move on to GitHub, which is a web-based platform that lets you do some pretty cool stuff
 * Once GitHub is up and running, we'll show you how to start using these tools to your benefit
