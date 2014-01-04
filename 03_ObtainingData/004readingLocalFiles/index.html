@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Reading local files</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Reading local files">
+  <meta name="author" content="Jeffrey Leek">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="../../libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="../../libraries/frameworks/io2012/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="../../libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="../../libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  <script data-main="../../libraries/frameworks/io2012/js/slides" 
+    src="../../libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+    <link rel="stylesheet" href = "../../assets/css/custom.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BACKUP.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BASE.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.LOCAL.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.orig">
+<link rel="stylesheet" href = "../../assets/css/custom.css.REMOTE.546.css">
+<link rel="stylesheet" href = "../../assets/css/ribbons.css">
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+    <!-- END LOGO SLIDE -->
+    
+
+    <!-- TITLE SLIDE -->
+    <!-- Should I move this to a Local Layout File? -->
+    <slide class="title-slide segue nobackground">
+      <aside class="gdbar">
+        <img src="../../assets/img/bloomberg_shield.png">
+      </aside>
+      <hgroup class="auto-fadein">
+        <h1>Reading local files</h1>
+        <h2></h2>
+        <p>Jeffrey Leek<br/>Johns Hopkins Bloomberg School of Public Health</p>
+      </hgroup>
+          </slide>
+
+    <!-- SLIDES -->
+      <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Get/set your working directory</h2>
+  </hgroup>
+  <article>
+    <p>Roger&#39;s lectures <a href="http://www.youtube.com/watch?v=XBcvH1BpIBo&amp;list=PLjTlxb-wKvXNSDfcKPFH2gzHGyjpeCZmJ&amp;index=2">windows</a>, <a href="http://www.youtube.com/watch?v=8xT3hmJQskU&amp;list=PLjTlxb-wKvXNSDfcKPFH2gzHGyjpeCZmJ&amp;index=1">mac</a>
+Andrew Jaffe&#39;s <a href="https://dl.dropbox.com/u/7710864/courseraPublic/otherResources/lecture1/index.html">lecture notes</a></p>
+
+<pre><code class="r">&gt; getwd()
+[1] &quot;/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1&quot;
+&gt; setwd(&quot;/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data&quot;)
+&gt; getwd()
+[1] &quot;/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data&quot;
+</code></pre>
+
+<p>Important difference with Windows: </p>
+
+<pre><code class="r">setwd(&quot;C:\\Users\\Andrew\\Downloads&quot;)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Get/set your working directory (relative paths)</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">getwd()
+</code></pre>
+
+<pre><code>## [1] &quot;/Users/jtleek/Dropbox/Jeff/teaching/2013/modules/03_ObtainingData/004readingLocalFiles&quot;
+</code></pre>
+
+<pre><code class="r">setwd(&quot;./data&quot;)
+</code></pre>
+
+<pre><code>## Error: cannot change working directory
+</code></pre>
+
+<pre><code class="r">getwd()
+</code></pre>
+
+<pre><code>## [1] &quot;/Users/jtleek/Dropbox/Jeff/teaching/2013/modules/03_ObtainingData/004readingLocalFiles&quot;
+</code></pre>
+
+<pre><code class="r">setwd(&quot;../&quot;)
+getwd()
+</code></pre>
+
+<pre><code>## [1] &quot;/Users/jtleek/Dropbox/Jeff/teaching/2013/modules/03_ObtainingData&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Get/set your working directory (absolute paths)</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">&gt; getwd()
+[1] &quot;/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1&quot;
+&gt; setwd(&quot;/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data&quot;)
+&gt; getwd()
+[1] &quot;/Users/jtleek/Dropbox/Jeff/teaching/2013/coursera/week2/004gettingData1/data&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+
+  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+<!-- Grab CDN jQuery, fall back to local if offline -->
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+<script>window.jQuery || document.write('<script src="../../libraries/widgets/quiz/js/jquery-1.7.min.js"><\/script>')</script>
+<!-- Load Javascripts for Widgets -->
+<!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script> -->
+<script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="../../libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+<script src="../../libraries/highlighters/highlight.js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<!-- DONE LOADING HIGHLIGHTER JS FILES -->
+</html>
