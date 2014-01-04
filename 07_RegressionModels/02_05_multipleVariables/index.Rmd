@@ -158,25 +158,19 @@ sqrt(vif(fit)) #I prefer sd
 
 ---
 ## Covariate model selection
-* Automated covariate selection is a difficult topic. 
-  * It depends heavily on how rich of a covariate space one wants to explore. 
-  * For $p$ variables there are $2^{p}$ models of the variables with only main effects and it explodes quickly as you add interactions and polynomial terms. 
-* In the prediction class, we'll cover many modern methods for traversing large model spaces.
-  * Often they work with large numbers of covariates.
-  * Principal components or factor analytic models on covariates are often useful. 
-  * Regularized models are often useful.
+* Automated covariate selection is a difficult topic. It depends heavily on how rich of a covariate space one wants to explore. 
+  * The space of models explodes quickly as you add interactions and polynomial terms. 
+* In the prediction class, we'll cover many modern methods for traversing large model spaces for the purposes of prediction.
+* Principal components or factor analytic models on covariates are often useful for reducing complex covariate spaces.
 * Good design can often eliminate the need for complex model searches at analyses though often control over the design is limited.
 * If the models of interest are nested, it's fairly uncontroversial to use nested likelihood ratio tests. (Example to follow.)
-* My favoriate approach is as follows. Given a coefficient that I'm interested in, I like to use covariate adjustment and multiple models to probe that effect to evaluate it for robustness and to see what other covariates knock it out. 
-  * This isn't a terribly systematic approach, but it tends to teach you a lot about the the data as you get your hands dirty.
+* My favoriate approach is as follows. Given a coefficient that I'm interested in, I like to use covariate adjustment and multiple models to probe that effect to evaluate it for robustness and to see what other covariates knock it out.  This isn't a terribly systematic approach, but it tends to teach you a lot about the the data as you get your hands dirty.
 
 ---
 ## How to do nested model testing in R
 ```{r}
 fit1 <- lm(Fertility ~ Agriculture, data = swiss)
-fit2 <- update(fit, Fertility ~ Agriculture + Examination)
 fit3 <- update(fit, Fertility ~ Agriculture + Examination + Education)
-fit4 <- update(fit, Fertility ~ Agriculture + Examination + Education + Catholic)
 fit5 <- update(fit, Fertility ~ Agriculture + Examination + Education + Catholic + Infant.Mortality)
-anova(fit1, fit2, fit3, fit4, fit5)
+anova(fit1, fit3, fit5)
 ```

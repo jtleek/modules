@@ -70,7 +70,7 @@ round(apply(betas, 1, sd), 5)
 
 ```
      x1      x1      x1 
-0.02856 0.02859 0.02883 
+0.03068 0.03066 0.03061 
 ```
 
 
@@ -92,7 +92,7 @@ round(apply(betas, 1, sd), 5)
 
 ```
      x1      x1      x1 
-0.03236 0.04330 0.11615 
+0.02878 0.04745 0.11096 
 ```
 
 
@@ -120,7 +120,7 @@ c(summary(lm(y ~ x1 + x2))$cov.unscaled[2,2],
 ```
 
 ```
-[1]  1.937 13.570
+[1]  2.87 13.91
 ```
 
 ```r
@@ -128,8 +128,8 @@ temp <- apply(betas, 1, var); temp[2 : 3] / temp[1]
 ```
 
 ```
-   x1    x1 
- 1.79 12.88 
+    x1     x1 
+ 2.718 14.862 
 ```
 
 ---
@@ -143,10 +143,6 @@ fit2 <- update(fit, Fertility ~ Agriculture + Examination)
 fit3 <- update(fit, Fertility ~ Agriculture + Examination + Education)
   c(summary(fit2)$cov.unscaled[2,2],
     summary(fit3)$cov.unscaled[2,2]) / a 
-```
-
-```
-[1] 1.892 2.089
 ```
 
 
@@ -183,45 +179,35 @@ sqrt(vif(fit)) #I prefer sd
 
 ---
 ## Covariate model selection
-* Automated covariate selection is a difficult topic. 
-  * It depends heavily on how rich of a covariate space one wants to explore. 
-  * For $p$ variables there are $2^{p}$ models of the variables with only main effects and it explodes quickly as you add interactions and polynomial terms. 
-* In the prediction class, we'll cover many modern methods for traversing large model spaces.
-  * Often they work with large numbers of covariates.
-  * Principal components or factor analytic models on covariates are often useful. 
-  * Regularized models are often useful.
+* Automated covariate selection is a difficult topic. It depends heavily on how rich of a covariate space one wants to explore. 
+  * The space of models explodes quickly as you add interactions and polynomial terms. 
+* In the prediction class, we'll cover many modern methods for traversing large model spaces for the purposes of prediction.
+* Principal components or factor analytic models on covariates are often useful for reducing complex covariate spaces.
 * Good design can often eliminate the need for complex model searches at analyses though often control over the design is limited.
 * If the models of interest are nested, it's fairly uncontroversial to use nested likelihood ratio tests. (Example to follow.)
-* My favoriate approach is as follows. Given a coefficient that I'm interested in, I like to use covariate adjustment and multiple models to probe that effect to evaluate it for robustness and to see what other covariates knock it out. 
-  * This isn't a terribly systematic approach, but it tends to teach you a lot about the the data as you get your hands dirty.
+* My favoriate approach is as follows. Given a coefficient that I'm interested in, I like to use covariate adjustment and multiple models to probe that effect to evaluate it for robustness and to see what other covariates knock it out.  This isn't a terribly systematic approach, but it tends to teach you a lot about the the data as you get your hands dirty.
 
 ---
 ## How to do nested model testing in R
 
 ```r
 fit1 <- lm(Fertility ~ Agriculture, data = swiss)
-fit2 <- update(fit, Fertility ~ Agriculture + Examination)
 fit3 <- update(fit, Fertility ~ Agriculture + Examination + Education)
-fit4 <- update(fit, Fertility ~ Agriculture + Examination + Education + Catholic)
 fit5 <- update(fit, Fertility ~ Agriculture + Examination + Education + Catholic + Infant.Mortality)
-anova(fit1, fit2, fit3, fit4, fit5)
+anova(fit1, fit3, fit5)
 ```
 
 ```
 Analysis of Variance Table
 
 Model 1: Fertility ~ Agriculture
-Model 2: Fertility ~ Agriculture + Examination
-Model 3: Fertility ~ Agriculture + Examination + Education
-Model 4: Fertility ~ Agriculture + Examination + Education + Catholic
-Model 5: Fertility ~ Agriculture + Examination + Education + Catholic + 
+Model 2: Fertility ~ Agriculture + Examination + Education
+Model 3: Fertility ~ Agriculture + Examination + Education + Catholic + 
     Infant.Mortality
-  Res.Df  RSS Df Sum of Sq     F  Pr(>F)    
-1     45 6283                               
-2     44 4073  1      2210 43.05 6.9e-08 ***
-3     43 3181  1       892 17.37 0.00015 ***
-4     42 2514  1       667 12.99 0.00084 ***
-5     41 2105  1       409  7.96 0.00734 ** 
+  Res.Df  RSS Df Sum of Sq    F  Pr(>F)    
+1     45 6283                              
+2     43 3181  2      3102 30.2 8.6e-09 ***
+3     41 2105  2      1076 10.5 0.00021 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 ```
