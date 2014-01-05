@@ -1,5 +1,5 @@
 ---
-title       : Reading JSON
+title       : Reading mySQL
 subtitle    : 
 author      : Jeffrey Leek 
 job         : Johns Hopkins Bloomberg School of Public Health
@@ -33,7 +33,7 @@ knit_hooks$set(plot = knitr:::hook_plot_html)
 
 
 
-## JSON
+## mySQL
 
 * Javascript Object Notation
 * Lightweight data storage
