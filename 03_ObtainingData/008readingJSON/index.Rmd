@@ -15,21 +15,22 @@ mode        : selfcontained # {standalone, draft}
 ---
 
 
+```{r setup, cache = F, echo = F, message = F, warning = F, tidy = F}
+# make this an external chunk that can be included in any file
+options(width = 100)
+opts_chunk$set(message = F, error = F, warning = F, comment = NA, fig.align = 'center', dpi = 100, tidy = F, cache.path = '.cache/', fig.path = 'fig/', cache=TRUE)
 
+options(xtable.type = 'html')
+knit_hooks$set(inline = function(x) {
+  if(is.numeric(x)) {
+    round(x, getOption('digits'))
+  } else {
+    paste(as.character(x), collapse = ', ')
+  }
+})
+knit_hooks$set(plot = knitr:::hook_plot_html)
+```
 
-
-
-
-## Excel files
-
-_Still probably the most widely used format for sharing data_
-
-<img class=center src=../../assets/img/03_ObtainingData/excel2.png height=450>
-
-
-[http://office.microsoft.com/en-us/excel/](http://office.microsoft.com/en-us/excel/)
-
----
 
 
 ## Example - Baltimore camera data
@@ -42,64 +43,34 @@ _Still probably the most widely used format for sharing data_
 
 ## Download the file to load
 
-
-```r
+```{r data}
 if(!file.exists("data")){dir.create("data")}
 fileUrl <- "https://data.baltimorecity.gov/api/views/dz54-2aru/rows.xlsx?accessType=DOWNLOAD"
 download.file(fileUrl,destfile="./data/cameras.xlsx",method="curl")
 dateDownloaded <- date()
 ```
 
-
 ---
 
 ## read.xlsx(), read.xlsx2() {xlsx package}
 
-
-```r
+```{r xlsx,dependson="data"}
 cameraData <- read.xlsx("./data/cameras.xlsx",sheetIndex=1,header=TRUE)
 head(cameraData)
 ```
-
-```
-                         address direction      street  crossStreet               intersection
-1       S CATON AVE & BENSON AVE       N/B   Caton Ave   Benson Ave     Caton Ave & Benson Ave
-2       S CATON AVE & BENSON AVE       S/B   Caton Ave   Benson Ave     Caton Ave & Benson Ave
-3 WILKENS AVE & PINE HEIGHTS AVE       E/B Wilkens Ave Pine Heights Wilkens Ave & Pine Heights
-4        THE ALAMEDA & E 33RD ST       S/B The Alameda      33rd St     The Alameda  & 33rd St
-5        E 33RD ST & THE ALAMEDA       E/B      E 33rd  The Alameda      E 33rd  & The Alameda
-6        ERDMAN AVE & N MACON ST       E/B      Erdman     Macon St         Erdman  & Macon St
-                       Location.1
-1 (39.2693779962, -76.6688185297)
-2 (39.2693157898, -76.6689698176)
-3  (39.2720252302, -76.676960806)
-4 (39.3285013141, -76.5953545714)
-5 (39.3283410623, -76.5953594625)
-6 (39.3068045671, -76.5593167803)
-```
-
 
 
 ---
 
 ## Reading specific rows and columns
 
-
-```r
+```{r ,dependson="xlsx"}
 colIndex <- 2:3
 rowIndex <- 1:4
 cameraDataSubset <- read.xlsx("./data/cameras.xlsx",sheetIndex=1,
                               colIndex=colIndex,rowIndex=rowIndex)
 cameraDataSubset
 ```
-
-```
-  direction      street
-1       N/B   Caton Ave
-2       S/B   Caton Ave
-3       E/B Wilkens Ave
-```
-
 
 ---
 

@@ -20,18 +20,6 @@ mode        : selfcontained # {standalone, draft}
 
 
 
-## Excel files
-
-_Still probably the most widely used format for sharing data_
-
-<img class=center src=../../assets/img/03_ObtainingData/excel2.png height=450>
-
-
-[http://office.microsoft.com/en-us/excel/](http://office.microsoft.com/en-us/excel/)
-
----
-
-
 ## Example - Baltimore camera data
 
 <img class=center src=../../assets/img/03_ObtainingData/cameras.png height=500>
