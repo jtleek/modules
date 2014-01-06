@@ -120,12 +120,16 @@ round(hatvalues(fit)[1 : 10], 3)
 ## Case 2
 ```{r, fig.height=5, fig.width=5, echo=FALSE}
 x <- rnorm(n); y <- x + rnorm(n, sd = .3)
-x <- c(10, x); y <- c(10, y)
+x <- c(5, x); y <- c(5, y)
 plot(x, y, frame = FALSE, cex = 2, pch = 21, bg = "lightblue", col = "black")
 abline(lm(y ~ x))            
 ```
-```{r, echo = FALSE}
-round(head(influence.measures(lm(y ~ x))$infmat), 3)
+
+---
+## Looking at some of the diagnostics
+```{r, echo = TRUE}
+round(dfbetas(fit)[1 : 10, 2], 3)
+round(hatvalues(fit)[1 : 10], 3)
 ```
 
 ---
@@ -148,3 +152,6 @@ summary(lm(V1 ~ . -1, data = dat))$coef
 ```{r, fig.height=4, fig.width=4, echo = TRUE}
 fit <- lm(V1 ~ . - 1, data = dat); plot(predict(fit), resid(fit), pch = '.')
 ```
+
+---
+## Back to the Swiss data

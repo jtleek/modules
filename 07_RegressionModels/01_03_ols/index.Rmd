@@ -34,7 +34,7 @@ knit_hooks$set(plot = knitr:::hook_plot_html)
 ## General least squares for linear equations
 Consider again the parent and child height data from Galton
 
-```{r freqGalton, dependson="galton",fig.height=5,fig.width=5,echo=FALSE}
+```{r, fig.height=5, fig.width=5, echo=FALSE}
 library(UsingR)
 data(galton)
 freqData <- as.data.frame(table(galton$child, galton$parent))
