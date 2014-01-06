@@ -1,7 +1,7 @@
 ---
 title       : Structure of a Data Analysis 
 subtitle    : Part 2
-author      : Jeffrey Leek, Assistant Professor of Biostatistics 
+author      : Roger D. Peng, Associate Professor of Biostatistics 
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -82,19 +82,19 @@ library(kernlab)
 data(spam)
 # Perform the subsampling
 set.seed(3435)
-trainIndicator = rbinom(4601, size = 1, prob = 0.5)
+trainIndicator = rbinom(4601,size=1,prob=0.5)
 table(trainIndicator)
 ```
 
 ```
-## trainIndicator
-##    0    1 
-## 2314 2287
+trainIndicator
+   0    1 
+2314 2287 
 ```
 
 ```r
-trainSpam = spam[trainIndicator == 1, ]
-testSpam = spam[trainIndicator == 0, ]
+trainSpam = spam[trainIndicator==1,]
+testSpam = spam[trainIndicator==0,]
 ```
 
 
@@ -116,26 +116,21 @@ names(trainSpam)
 ```
 
 ```
-##  [1] "make"              "address"           "all"              
-##  [4] "num3d"             "our"               "over"             
-##  [7] "remove"            "internet"          "order"            
-## [10] "mail"              "receive"           "will"             
-## [13] "people"            "report"            "addresses"        
-## [16] "free"              "business"          "email"            
-## [19] "you"               "credit"            "your"             
-## [22] "font"              "num000"            "money"            
-## [25] "hp"                "hpl"               "george"           
-## [28] "num650"            "lab"               "labs"             
-## [31] "telnet"            "num857"            "data"             
-## [34] "num415"            "num85"             "technology"       
-## [37] "num1999"           "parts"             "pm"               
-## [40] "direct"            "cs"                "meeting"          
-## [43] "original"          "project"           "re"               
-## [46] "edu"               "table"             "conference"       
-## [49] "charSemicolon"     "charRoundbracket"  "charSquarebracket"
-## [52] "charExclamation"   "charDollar"        "charHash"         
-## [55] "capitalAve"        "capitalLong"       "capitalTotal"     
-## [58] "type"
+ [1] "make"              "address"           "all"               "num3d"            
+ [5] "our"               "over"              "remove"            "internet"         
+ [9] "order"             "mail"              "receive"           "will"             
+[13] "people"            "report"            "addresses"         "free"             
+[17] "business"          "email"             "you"               "credit"           
+[21] "your"              "font"              "num000"            "money"            
+[25] "hp"                "hpl"               "george"            "num650"           
+[29] "lab"               "labs"              "telnet"            "num857"           
+[33] "data"              "num415"            "num85"             "technology"       
+[37] "num1999"           "parts"             "pm"                "direct"           
+[41] "cs"                "meeting"           "original"          "project"          
+[45] "re"                "edu"               "table"             "conference"       
+[49] "charSemicolon"     "charRoundbracket"  "charSquarebracket" "charExclamation"  
+[53] "charDollar"        "charHash"          "capitalAve"        "capitalLong"      
+[57] "capitalTotal"      "type"             
 ```
 
 
@@ -149,55 +144,41 @@ head(trainSpam)
 ```
 
 ```
-##    make address  all num3d  our over remove internet order mail receive
-## 1  0.00    0.64 0.64     0 0.32 0.00   0.00        0  0.00 0.00    0.00
-## 7  0.00    0.00 0.00     0 1.92 0.00   0.00        0  0.00 0.64    0.96
-## 9  0.15    0.00 0.46     0 0.61 0.00   0.30        0  0.92 0.76    0.76
-## 12 0.00    0.00 0.25     0 0.38 0.25   0.25        0  0.00 0.00    0.12
-## 14 0.00    0.00 0.00     0 0.90 0.00   0.90        0  0.00 0.90    0.90
-## 16 0.00    0.42 0.42     0 1.27 0.00   0.42        0  0.00 1.27    0.00
-##    will people report addresses free business email  you credit your font
-## 1  0.64   0.00      0         0 0.32        0  1.29 1.93   0.00 0.96    0
-## 7  1.28   0.00      0         0 0.96        0  0.32 3.85   0.00 0.64    0
-## 9  0.92   0.00      0         0 0.00        0  0.15 1.23   3.53 2.00    0
-## 12 0.12   0.12      0         0 0.00        0  0.00 1.16   0.00 0.77    0
-## 14 0.00   0.90      0         0 0.00        0  0.00 2.72   0.00 0.90    0
-## 16 0.00   0.00      0         0 1.27        0  0.00 1.70   0.42 1.27    0
-##    num000 money hp hpl george num650 lab labs telnet num857 data num415
-## 1       0  0.00  0   0      0      0   0    0      0      0 0.00      0
-## 7       0  0.00  0   0      0      0   0    0      0      0 0.00      0
-## 9       0  0.15  0   0      0      0   0    0      0      0 0.15      0
-## 12      0  0.00  0   0      0      0   0    0      0      0 0.00      0
-## 14      0  0.00  0   0      0      0   0    0      0      0 0.00      0
-## 16      0  0.42  0   0      0      0   0    0      0      0 0.00      0
-##    num85 technology num1999 parts pm direct cs meeting original project re
-## 1      0          0    0.00     0  0   0.00  0       0      0.0       0  0
-## 7      0          0    0.00     0  0   0.00  0       0      0.0       0  0
-## 9      0          0    0.00     0  0   0.00  0       0      0.3       0  0
-## 12     0          0    0.00     0  0   0.00  0       0      0.0       0  0
-## 14     0          0    0.00     0  0   0.00  0       0      0.0       0  0
-## 16     0          0    1.27     0  0   0.42  0       0      0.0       0  0
-##    edu table conference charSemicolon charRoundbracket charSquarebracket
-## 1    0     0          0         0.000            0.000                 0
-## 7    0     0          0         0.000            0.054                 0
-## 9    0     0          0         0.000            0.271                 0
-## 12   0     0          0         0.022            0.044                 0
-## 14   0     0          0         0.000            0.000                 0
-## 16   0     0          0         0.000            0.063                 0
-##    charExclamation charDollar charHash capitalAve capitalLong capitalTotal
-## 1            0.778      0.000    0.000      3.756          61          278
-## 7            0.164      0.054    0.000      1.671           4          112
-## 9            0.181      0.203    0.022      9.744         445         1257
-## 12           0.663      0.000    0.000      1.243          11          184
-## 14           0.000      0.000    0.000      2.083           7           25
-## 16           0.572      0.063    0.000      5.659          55          249
-##    type
-## 1  spam
-## 7  spam
-## 9  spam
-## 12 spam
-## 14 spam
-## 16 spam
+   make address  all num3d  our over remove internet order mail receive will people report
+1  0.00    0.64 0.64     0 0.32 0.00   0.00        0  0.00 0.00    0.00 0.64   0.00      0
+7  0.00    0.00 0.00     0 1.92 0.00   0.00        0  0.00 0.64    0.96 1.28   0.00      0
+9  0.15    0.00 0.46     0 0.61 0.00   0.30        0  0.92 0.76    0.76 0.92   0.00      0
+12 0.00    0.00 0.25     0 0.38 0.25   0.25        0  0.00 0.00    0.12 0.12   0.12      0
+14 0.00    0.00 0.00     0 0.90 0.00   0.90        0  0.00 0.90    0.90 0.00   0.90      0
+16 0.00    0.42 0.42     0 1.27 0.00   0.42        0  0.00 1.27    0.00 0.00   0.00      0
+   addresses free business email  you credit your font num000 money hp hpl george num650 lab labs
+1          0 0.32        0  1.29 1.93   0.00 0.96    0      0  0.00  0   0      0      0   0    0
+7          0 0.96        0  0.32 3.85   0.00 0.64    0      0  0.00  0   0      0      0   0    0
+9          0 0.00        0  0.15 1.23   3.53 2.00    0      0  0.15  0   0      0      0   0    0
+12         0 0.00        0  0.00 1.16   0.00 0.77    0      0  0.00  0   0      0      0   0    0
+14         0 0.00        0  0.00 2.72   0.00 0.90    0      0  0.00  0   0      0      0   0    0
+16         0 1.27        0  0.00 1.70   0.42 1.27    0      0  0.42  0   0      0      0   0    0
+   telnet num857 data num415 num85 technology num1999 parts pm direct cs meeting original project
+1       0      0 0.00      0     0          0    0.00     0  0   0.00  0       0      0.0       0
+7       0      0 0.00      0     0          0    0.00     0  0   0.00  0       0      0.0       0
+9       0      0 0.15      0     0          0    0.00     0  0   0.00  0       0      0.3       0
+12      0      0 0.00      0     0          0    0.00     0  0   0.00  0       0      0.0       0
+14      0      0 0.00      0     0          0    0.00     0  0   0.00  0       0      0.0       0
+16      0      0 0.00      0     0          0    1.27     0  0   0.42  0       0      0.0       0
+   re edu table conference charSemicolon charRoundbracket charSquarebracket charExclamation
+1   0   0     0          0         0.000            0.000                 0           0.778
+7   0   0     0          0         0.000            0.054                 0           0.164
+9   0   0     0          0         0.000            0.271                 0           0.181
+12  0   0     0          0         0.022            0.044                 0           0.663
+14  0   0     0          0         0.000            0.000                 0           0.000
+16  0   0     0          0         0.000            0.063                 0           0.572
+   charDollar charHash capitalAve capitalLong capitalTotal type
+1       0.000    0.000      3.756          61          278 spam
+7       0.054    0.000      1.671           4          112 spam
+9       0.203    0.022      9.744         445         1257 spam
+12      0.000    0.000      1.243          11          184 spam
+14      0.000    0.000      2.083           7           25 spam
+16      0.063    0.000      5.659          55          249 spam
 ```
 
 
@@ -210,9 +191,9 @@ table(trainSpam$type)
 ```
 
 ```
-## 
-## nonspam    spam 
-##    1381     906
+
+nonspam    spam 
+   1381     906 
 ```
 
 
@@ -224,7 +205,7 @@ table(trainSpam$type)
 plot(trainSpam$capitalAve ~ trainSpam$type)
 ```
 
-![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5.png) 
+<div class="rimage center"><img src="fig/unnamed-chunk-5.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" class="plot" /></div>
 
 
 ---
@@ -235,7 +216,7 @@ plot(trainSpam$capitalAve ~ trainSpam$type)
 plot(log10(trainSpam$capitalAve + 1) ~ trainSpam$type)
 ```
 
-![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6.png) 
+<div class="rimage center"><img src="fig/unnamed-chunk-6.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" class="plot" /></div>
 
 
 ---
@@ -243,10 +224,10 @@ plot(log10(trainSpam$capitalAve + 1) ~ trainSpam$type)
 ## Relationships between predictors
 
 ```r
-plot(log10(trainSpam[, 1:4] + 1))
+plot(log10(trainSpam[,1:4]+1))
 ```
 
-![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7.png) 
+<div class="rimage center"><img src="fig/unnamed-chunk-7.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" class="plot" /></div>
 
 
 ---
@@ -257,22 +238,22 @@ plot(log10(trainSpam[, 1:4] + 1))
 
 
 ```r
-hCluster = hclust(dist(t(trainSpam[, 1:57])))
+hCluster = hclust(dist(t(trainSpam[,1:57])))
 plot(hCluster)
 ```
 
-![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9.png) 
+<div class="rimage center"><img src="fig/unnamed-chunk-9.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" class="plot" /></div>
 
 
 ---
 ## New clustering
 
 ```r
-hClusterUpdated = hclust(dist(t(log10(trainSpam[, 1:55] + 1))))
+hClusterUpdated = hclust(dist(t(log10(trainSpam[,1:55]+1))))
 plot(hClusterUpdated)
 ```
 
-![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10.png) 
+<div class="rimage center"><img src="fig/unnamed-chunk-10.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" class="plot" /></div>
 
 
 ---
@@ -287,95 +268,22 @@ plot(hClusterUpdated)
 ## Statistical prediction/modeling
 
 ```r
-trainSpam$numType = as.numeric(trainSpam$type) - 1
-costFunction = function(x, y) {
-    sum(x != (y > 0.5))
-}
-cvError = rep(NA, 55)
+trainSpam$numType = as.numeric(trainSpam$type)-1
+costFunction = function(x,y) sum(x!=(y > 0.5)) 
+cvError = rep(NA,55)
 library(boot)
-for (i in 1:55) {
-    lmFormula = as.formula(paste("numType~", names(trainSpam)[i], sep = ""))
-    glmFit = glm(lmFormula, family = "binomial", data = trainSpam)
-    cvError[i] = cv.glm(trainSpam, glmFit, costFunction, 2)$delta[2]
+for(i in 1:55){
+  lmFormula = reformulate(names(trainSpam)[i], response = "numType")
+  glmFit = glm(lmFormula,family="binomial",data=trainSpam)
+  cvError[i] = cv.glm(trainSpam,glmFit,costFunction,2)$delta[2]
 }
-```
 
-```
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-```
-
-```r
-which.min(cvError)
-```
-
-```
-## [1] 53
-```
-
-```r
+## Which predictor has minimum cross-validated error?
 names(trainSpam)[which.min(cvError)]
 ```
 
 ```
-## [1] "charDollar"
+[1] "charDollar"
 ```
 
 
@@ -384,33 +292,43 @@ names(trainSpam)[which.min(cvError)]
 ## Get a measure of uncertainty
 
 ```r
-predictionModel = glm(numType ~ charDollar, family = "binomial", data = trainSpam)
-```
+## Use the best model from the group
+predictionModel = glm(numType ~ charDollar,family="binomial",data=trainSpam)
 
-```
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-```
+## Get predictions on the test set
+predictionTest = predict(predictionModel,testSpam)
+predictedSpam = rep("nonspam",dim(testSpam)[1])
 
-```r
-predictionTest = predict(predictionModel, testSpam)
-predictedSpam = rep("nonspam", dim(testSpam)[1])
+## Classify as `spam' for those with prob > 0.5
 predictedSpam[predictionModel$fitted > 0.5] = "spam"
-table(predictedSpam, testSpam$type)
+```
+
+
+---
+
+## Get a measure of uncertainty
+
+
+```r
+## Classification table
+table(predictedSpam,testSpam$type)
 ```
 
 ```
-##              
-## predictedSpam nonspam spam
-##       nonspam    1346  458
-##       spam         61  449
+             
+predictedSpam nonspam spam
+      nonspam    1346  458
+      spam         61  449
 ```
 
 ```r
-(61 + 458)/(1346 + 458 + 61 + 449)
+
+## Error rate
+(61+458)/(1346+458 + 61 + 449)
 ```
 
 ```
-## [1] 0.2243
+[1] 0.2243
 ```
 
 
