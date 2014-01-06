@@ -32,80 +32,129 @@ knit_hooks$set(plot = knitr:::hook_plot_html)
 ```
 
 
-
 ## mySQL
 
-* Javascript Object Notation
-* Lightweight data storage
-* Common format for data from application programming interfaces (APIs)
-* Similar structure to XML but different syntax/format
-* Data stored as
-  * Numbers (double)
-  * Strings (double quoted)
-  * Boolean (_true_ or _false_)
-  * Array (ordered, comma separated enclosed in square brackets _[]_)
-  * Object (unorderd, comma separated collection of key:value pairs in curley brackets _{}_)
+* Free and widely used open source database software
+* Widely used in internet based applications
+* Data are structured in 
+  * Databases
+  * Tables within databases
+  * Fields within tables
+* Each row is called a record
 
+[http://en.wikipedia.org/wiki/MySQL](http://en.wikipedia.org/wiki/MySQL)
+[http://www.mysql.com/](http://www.mysql.com/)
 
-[http://en.wikipedia.org/wiki/JSON](http://en.wikipedia.org/wiki/JSON)
+---
+
+## Step 1 - Install MySQL
+
+<img class=center src=../../assets/img/03_ObtainingData/installmysql.png height=450>
+
+[http://dev.mysql.com/doc/refman/5.7/en/installing.html](http://dev.mysql.com/doc/refman/5.7/en/installing.html)
+
+---
+
+## Step 2 - Install RMySQL
+
+* On a Mac: ```install.packages("RMySQL")```
+* On Windows: 
+  * Official instructions - [http://biostat.mc.vanderbilt.edu/wiki/Main/RMySQL](http://biostat.mc.vanderbilt.edu/wiki/Main/RMySQL) (may be useful for Mac/UNIX users as well)
+  * Potentially useful guide - [http://www.ahschulz.de/2013/07/23/installing-rmysql-under-windows/](http://www.ahschulz.de/2013/07/23/installing-rmysql-under-windows/)  
 
 
 ---
 
-## Example JSON file
+## Example - UCSC database
 
-<img class=center src=../../assets/img/03_ObtainingData/githubjson.png height=450>
+
+<img class=center src=../../assets/img/03_ObtainingData/ucsc.png height=450>
+
+[http://genome.ucsc.edu/](http://genome.ucsc.edu/)
+
 
 
 ---
 
-## Reading data from JSON {jsonlite package}
+## UCSC MySQL
 
-```{r readJSON}
-jsonData <- fromJSON("https://api.github.com/users/jtleek/repos")
-names(jsonData)
-jsonData$name
+
+<img class=center src=../../assets/img/03_ObtainingData/ucscmysql.png height=450>
+
+[http://genome.ucsc.edu/goldenPath/help/mysql.html](http://genome.ucsc.edu/goldenPath/help/mysql.html)
+
+
+---
+
+## Connecting and listing databases
+
+```{r databases}
+ucscDb <- dbConnect(MySQL(),user="genome", 
+                    host="genome-mysql.cse.ucsc.edu")
+result <- dbGetQuery(ucscDb,"show databases;"); dbDisconnect(ucscDb);
+result
 ```
 
 
 ---
 
-## Nested objects in JSON
+## Connecting to hg19 and listing tables
 
-```{r,dependson="readJSON"}
-names(jsonData$owner)
-jsonData$owner$login
+```{r tables}
+hg19 <- dbConnect(MySQL(),user="genome", db="hg19",
+                    host="genome-mysql.cse.ucsc.edu")
+allTables <- dbListTables(hg19)
+length(allTables)
+allTables[1:5]
 ```
 
 
 ---
 
-## Writing data frames to JSON
+## Get dimensions of a specific table
 
-```{r writeJSON}
-myjson <- toJSON(iris, pretty=TRUE)
-cat(myjson)
+```{r dimensions,dependson="tables"}
+dbListFields(hg19,"affyU133Plus2")
+dbGetQuery(hg19, "select count(*) from affyU133Plus2")
 ```
-
-[http://www.r-bloggers.com/new-package-jsonlite-a-smarter-json-encoderdecoder/](http://www.r-bloggers.com/new-package-jsonlite-a-smarter-json-encoderdecoder/)
 
 
 ---
 
-## Convert back to JSON
+## Read from the table
 
-```{r,dependson="writeJSON"}
-iris2 <- fromJSON(myjson)
-head(iris2)
+```{r readdata ,dependson="tables"}
+affyData <- dbReadTable(hg19, "affyU133Plus2")
+head(affyData)
 ```
 
 
-[http://www.r-bloggers.com/new-package-jsonlite-a-smarter-json-encoderdecoder/](http://www.r-bloggers.com/new-package-jsonlite-a-smarter-json-encoderdecoder/)
+---
+
+## Select a specific subset
+
+```{r, dependson="tables"}
+query <- dbSendQuery(hg19, "select * from affyU133Plus2 where misMatches between 1 and 3")
+affyMis <- fetch(query); quantile(affyMis$misMatches)
+affyMisSmall <- fetch(query,n=10); dbClearResult(query);
+dim(affyMisSmall)
+```
+
+---
+
+## Don't forget to close the connection!
+
+```{r, dependson="tables"}
+dbDisconnect(hg19)
+```
 
 ---
 
 ## Further resources
 
-* [http://www.json.org/](http://www.json.org/)
-* A good tutorial on jsonlite - [http://www.r-bloggers.com/new-package-jsonlite-a-smarter-json-encoderdecoder/](http://www.r-bloggers.com/new-package-jsonlite-a-smarter-json-encoderdecoder/)
-* [jsonlite vignette](http://cran.r-project.org/web/packages/jsonlite/vignettes/json-mapping.pdf)
+* RMySQL vignette [http://cran.r-project.org/web/packages/RMySQL/RMySQL.pdf](http://cran.r-project.org/web/packages/RMySQL/RMySQL.pdf)
+* List of commands [http://www.pantz.org/software/mysql/mysqlcommands.html](http://www.pantz.org/software/mysql/mysqlcommands.html)
+  * __Do not, do not, delete, add or join things from ensembl. Only select.__
+  * In general be careful with mysql commands
+* A nice blog post summarizing some other commands [http://www.r-bloggers.com/mysql-and-r/](http://www.r-bloggers.com/mysql-and-r/)
+  

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Reading JSON</title>
+  <title>Reading mySQL</title>
   <meta charset="utf-8">
-  <meta name="description" content="Reading JSON">
+  <meta name="description" content="Reading mySQL">
   <meta name="author" content="Jeffrey Leek">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -41,7 +41,7 @@
         <img src="../../assets/img/bloomberg_shield.png">
       </aside>
       <hgroup class="auto-fadein">
-        <h1>Reading JSON</h1>
+        <h1>Reading mySQL</h1>
         <h2></h2>
         <p>Jeffrey Leek<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
@@ -50,26 +50,24 @@
     <!-- SLIDES -->
       <slide class="" id="slide-1" style="background:;">
   <hgroup>
-    <h2>JSON</h2>
+    <h2>mySQL</h2>
   </hgroup>
   <article>
     <ul>
-<li>Javascript Object Notation</li>
-<li>Lightweight data storage</li>
-<li>Common format for data from application programming interfaces (APIs)</li>
-<li>Similar structure to XML but different syntax/format</li>
-<li>Data stored as
+<li>Free and widely used open source database software</li>
+<li>Widely used in internet based applications</li>
+<li>Data are structured in 
 
 <ul>
-<li>Numbers (double)</li>
-<li>Strings (double quoted)</li>
-<li>Boolean (<em>true</em> or <em>false</em>)</li>
-<li>Array (ordered, comma separated enclosed in square brackets <em>[]</em>)</li>
-<li>Object (unorderd, comma separated collection of key:value pairs in curley brackets <em>{}</em>)</li>
+<li>Databases</li>
+<li>Tables within databases</li>
+<li>Fields within tables</li>
 </ul></li>
+<li>Each row is called a record</li>
 </ul>
 
-<p><a href="http://en.wikipedia.org/wiki/JSON">http://en.wikipedia.org/wiki/JSON</a></p>
+<p><a href="http://en.wikipedia.org/wiki/MySQL">http://en.wikipedia.org/wiki/MySQL</a>
+<a href="http://www.mysql.com/">http://www.mysql.com/</a></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -77,10 +75,12 @@
 
       <slide class="" id="slide-2" style="background:;">
   <hgroup>
-    <h2>Example JSON file</h2>
+    <h2>Step 1 - Install MySQL</h2>
   </hgroup>
   <article>
-    <p><img class=center src=../../assets/img/03_ObtainingData/githubjson.png height=450></p>
+    <p><img class=center src=../../assets/img/03_ObtainingData/installmysql.png height=450></p>
+
+<p><a href="http://dev.mysql.com/doc/refman/5.7/en/installing.html">http://dev.mysql.com/doc/refman/5.7/en/installing.html</a></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -88,42 +88,18 @@
 
       <slide class="" id="slide-3" style="background:;">
   <hgroup>
-    <h2>Reading data from JSON {jsonlite package}</h2>
+    <h2>Step 2 - Install RMySQL</h2>
   </hgroup>
   <article>
-    <pre><code class="r">jsonData &lt;- fromJSON(&quot;https://api.github.com/users/jtleek/repos&quot;)
-names(jsonData)
-</code></pre>
+    <ul>
+<li>On a Mac: <code>install.packages(&quot;RMySQL&quot;)</code></li>
+<li>On Windows: 
 
-<pre><code> [1] &quot;id&quot;                &quot;name&quot;              &quot;full_name&quot;         &quot;owner&quot;            
- [5] &quot;private&quot;           &quot;html_url&quot;          &quot;description&quot;       &quot;fork&quot;             
- [9] &quot;url&quot;               &quot;forks_url&quot;         &quot;keys_url&quot;          &quot;collaborators_url&quot;
-[13] &quot;teams_url&quot;         &quot;hooks_url&quot;         &quot;issue_events_url&quot;  &quot;events_url&quot;       
-[17] &quot;assignees_url&quot;     &quot;branches_url&quot;      &quot;tags_url&quot;          &quot;blobs_url&quot;        
-[21] &quot;git_tags_url&quot;      &quot;git_refs_url&quot;      &quot;trees_url&quot;         &quot;statuses_url&quot;     
-[25] &quot;languages_url&quot;     &quot;stargazers_url&quot;    &quot;contributors_url&quot;  &quot;subscribers_url&quot;  
-[29] &quot;subscription_url&quot;  &quot;commits_url&quot;       &quot;git_commits_url&quot;   &quot;comments_url&quot;     
-[33] &quot;issue_comment_url&quot; &quot;contents_url&quot;      &quot;compare_url&quot;       &quot;merges_url&quot;       
-[37] &quot;archive_url&quot;       &quot;downloads_url&quot;     &quot;issues_url&quot;        &quot;pulls_url&quot;        
-[41] &quot;milestones_url&quot;    &quot;notifications_url&quot; &quot;labels_url&quot;        &quot;releases_url&quot;     
-[45] &quot;created_at&quot;        &quot;updated_at&quot;        &quot;pushed_at&quot;         &quot;git_url&quot;          
-[49] &quot;ssh_url&quot;           &quot;clone_url&quot;         &quot;svn_url&quot;           &quot;homepage&quot;         
-[53] &quot;size&quot;              &quot;stargazers_count&quot;  &quot;watchers_count&quot;    &quot;language&quot;         
-[57] &quot;has_issues&quot;        &quot;has_downloads&quot;     &quot;has_wiki&quot;          &quot;forks_count&quot;      
-[61] &quot;mirror_url&quot;        &quot;open_issues_count&quot; &quot;forks&quot;             &quot;open_issues&quot;      
-[65] &quot;watchers&quot;          &quot;default_branch&quot;    &quot;master_branch&quot;    
-</code></pre>
-
-<pre><code class="r">jsonData$name
-</code></pre>
-
-<pre><code> [1] &quot;ballgown&quot;       &quot;dataanalysis&quot;   &quot;datascientist&quot;  &quot;datasharing&quot;    &quot;derfinder&quot;     
- [6] &quot;derfinder-1&quot;    &quot;DSM&quot;            &quot;EDA-Project&quot;    &quot;futureofstats&quot;  &quot;googleCite&quot;    
-[11] &quot;graduate&quot;       &quot;healthvis&quot;      &quot;jhsph753&quot;       &quot;jhsph753and4&quot;   &quot;modules&quot;       
-[16] &quot;rdsmGeneSig&quot;    &quot;reviews&quot;        &quot;rfitbit&quot;        &quot;rpackages&quot;      &quot;sva&quot;           
-[21] &quot;swfdr&quot;          &quot;talks&quot;          &quot;testrepository&quot; &quot;tornado&quot;        &quot;tsp-devel&quot;     
-[26] &quot;tspreg&quot;        
-</code></pre>
+<ul>
+<li>Official instructions - <a href="http://biostat.mc.vanderbilt.edu/wiki/Main/RMySQL">http://biostat.mc.vanderbilt.edu/wiki/Main/RMySQL</a> (may be useful for Mac/UNIX users as well)</li>
+<li>Potentially useful guide - <a href="http://www.ahschulz.de/2013/07/23/installing-rmysql-under-windows/">http://www.ahschulz.de/2013/07/23/installing-rmysql-under-windows/</a><br></li>
+</ul></li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
@@ -131,26 +107,12 @@ names(jsonData)
 
       <slide class="" id="slide-4" style="background:;">
   <hgroup>
-    <h2>Nested objects in JSON</h2>
+    <h2>Example - UCSC database</h2>
   </hgroup>
   <article>
-    <pre><code class="r">names(jsonData$owner)
-</code></pre>
+    <p><img class=center src=../../assets/img/03_ObtainingData/ucsc.png height=450></p>
 
-<pre><code> [1] &quot;login&quot;               &quot;id&quot;                  &quot;avatar_url&quot;          &quot;gravatar_id&quot;        
- [5] &quot;url&quot;                 &quot;html_url&quot;            &quot;followers_url&quot;       &quot;following_url&quot;      
- [9] &quot;gists_url&quot;           &quot;starred_url&quot;         &quot;subscriptions_url&quot;   &quot;organizations_url&quot;  
-[13] &quot;repos_url&quot;           &quot;events_url&quot;          &quot;received_events_url&quot; &quot;type&quot;               
-[17] &quot;site_admin&quot;         
-</code></pre>
-
-<pre><code class="r">jsonData$owner$login
-</code></pre>
-
-<pre><code> [1] &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot;
-[11] &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot;
-[21] &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot; &quot;jtleek&quot;
-</code></pre>
+<p><a href="http://genome.ucsc.edu/">http://genome.ucsc.edu/</a></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -158,1068 +120,12 @@ names(jsonData)
 
       <slide class="" id="slide-5" style="background:;">
   <hgroup>
-    <h2>Writing data frames to JSON</h2>
+    <h2>UCSC MySQL</h2>
   </hgroup>
   <article>
-    <pre><code class="r">myjson &lt;- toJSON(iris, pretty=TRUE)
-cat(myjson)
-</code></pre>
+    <p><img class=center src=../../assets/img/03_ObtainingData/ucscmysql.png height=450></p>
 
-<pre><code>[
-    {
-        &quot;Sepal.Length&quot; : 5.1,
-        &quot;Sepal.Width&quot; : 3.5,
-        &quot;Petal.Length&quot; : 1.4,
-        &quot;Petal.Width&quot; : 0.2,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 4.9,
-        &quot;Sepal.Width&quot; : 3,
-        &quot;Petal.Length&quot; : 1.4,
-        &quot;Petal.Width&quot; : 0.2,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 4.7,
-        &quot;Sepal.Width&quot; : 3.2,
-        &quot;Petal.Length&quot; : 1.3,
-        &quot;Petal.Width&quot; : 0.2,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 4.6,
-        &quot;Sepal.Width&quot; : 3.1,
-        &quot;Petal.Length&quot; : 1.5,
-        &quot;Petal.Width&quot; : 0.2,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5,
-        &quot;Sepal.Width&quot; : 3.6,
-        &quot;Petal.Length&quot; : 1.4,
-        &quot;Petal.Width&quot; : 0.2,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.4,
-        &quot;Sepal.Width&quot; : 3.9,
-        &quot;Petal.Length&quot; : 1.7,
-        &quot;Petal.Width&quot; : 0.4,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 4.6,
-        &quot;Sepal.Width&quot; : 3.4,
-        &quot;Petal.Length&quot; : 1.4,
-        &quot;Petal.Width&quot; : 0.3,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5,
-        &quot;Sepal.Width&quot; : 3.4,
-        &quot;Petal.Length&quot; : 1.5,
-        &quot;Petal.Width&quot; : 0.2,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 4.4,
-        &quot;Sepal.Width&quot; : 2.9,
-        &quot;Petal.Length&quot; : 1.4,
-        &quot;Petal.Width&quot; : 0.2,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 4.9,
-        &quot;Sepal.Width&quot; : 3.1,
-        &quot;Petal.Length&quot; : 1.5,
-        &quot;Petal.Width&quot; : 0.1,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.4,
-        &quot;Sepal.Width&quot; : 3.7,
-        &quot;Petal.Length&quot; : 1.5,
-        &quot;Petal.Width&quot; : 0.2,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 4.8,
-        &quot;Sepal.Width&quot; : 3.4,
-        &quot;Petal.Length&quot; : 1.6,
-        &quot;Petal.Width&quot; : 0.2,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 4.8,
-        &quot;Sepal.Width&quot; : 3,
-        &quot;Petal.Length&quot; : 1.4,
-        &quot;Petal.Width&quot; : 0.1,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 4.3,
-        &quot;Sepal.Width&quot; : 3,
-        &quot;Petal.Length&quot; : 1.1,
-        &quot;Petal.Width&quot; : 0.1,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.8,
-        &quot;Sepal.Width&quot; : 4,
-        &quot;Petal.Length&quot; : 1.2,
-        &quot;Petal.Width&quot; : 0.2,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.7,
-        &quot;Sepal.Width&quot; : 4.4,
-        &quot;Petal.Length&quot; : 1.5,
-        &quot;Petal.Width&quot; : 0.4,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.4,
-        &quot;Sepal.Width&quot; : 3.9,
-        &quot;Petal.Length&quot; : 1.3,
-        &quot;Petal.Width&quot; : 0.4,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.1,
-        &quot;Sepal.Width&quot; : 3.5,
-        &quot;Petal.Length&quot; : 1.4,
-        &quot;Petal.Width&quot; : 0.3,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.7,
-        &quot;Sepal.Width&quot; : 3.8,
-        &quot;Petal.Length&quot; : 1.7,
-        &quot;Petal.Width&quot; : 0.3,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.1,
-        &quot;Sepal.Width&quot; : 3.8,
-        &quot;Petal.Length&quot; : 1.5,
-        &quot;Petal.Width&quot; : 0.3,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.4,
-        &quot;Sepal.Width&quot; : 3.4,
-        &quot;Petal.Length&quot; : 1.7,
-        &quot;Petal.Width&quot; : 0.2,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.1,
-        &quot;Sepal.Width&quot; : 3.7,
-        &quot;Petal.Length&quot; : 1.5,
-        &quot;Petal.Width&quot; : 0.4,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 4.6,
-        &quot;Sepal.Width&quot; : 3.6,
-        &quot;Petal.Length&quot; : 1,
-        &quot;Petal.Width&quot; : 0.2,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.1,
-        &quot;Sepal.Width&quot; : 3.3,
-        &quot;Petal.Length&quot; : 1.7,
-        &quot;Petal.Width&quot; : 0.5,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 4.8,
-        &quot;Sepal.Width&quot; : 3.4,
-        &quot;Petal.Length&quot; : 1.9,
-        &quot;Petal.Width&quot; : 0.2,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5,
-        &quot;Sepal.Width&quot; : 3,
-        &quot;Petal.Length&quot; : 1.6,
-        &quot;Petal.Width&quot; : 0.2,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5,
-        &quot;Sepal.Width&quot; : 3.4,
-        &quot;Petal.Length&quot; : 1.6,
-        &quot;Petal.Width&quot; : 0.4,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.2,
-        &quot;Sepal.Width&quot; : 3.5,
-        &quot;Petal.Length&quot; : 1.5,
-        &quot;Petal.Width&quot; : 0.2,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.2,
-        &quot;Sepal.Width&quot; : 3.4,
-        &quot;Petal.Length&quot; : 1.4,
-        &quot;Petal.Width&quot; : 0.2,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 4.7,
-        &quot;Sepal.Width&quot; : 3.2,
-        &quot;Petal.Length&quot; : 1.6,
-        &quot;Petal.Width&quot; : 0.2,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 4.8,
-        &quot;Sepal.Width&quot; : 3.1,
-        &quot;Petal.Length&quot; : 1.6,
-        &quot;Petal.Width&quot; : 0.2,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.4,
-        &quot;Sepal.Width&quot; : 3.4,
-        &quot;Petal.Length&quot; : 1.5,
-        &quot;Petal.Width&quot; : 0.4,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.2,
-        &quot;Sepal.Width&quot; : 4.1,
-        &quot;Petal.Length&quot; : 1.5,
-        &quot;Petal.Width&quot; : 0.1,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.5,
-        &quot;Sepal.Width&quot; : 4.2,
-        &quot;Petal.Length&quot; : 1.4,
-        &quot;Petal.Width&quot; : 0.2,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 4.9,
-        &quot;Sepal.Width&quot; : 3.1,
-        &quot;Petal.Length&quot; : 1.5,
-        &quot;Petal.Width&quot; : 0.2,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5,
-        &quot;Sepal.Width&quot; : 3.2,
-        &quot;Petal.Length&quot; : 1.2,
-        &quot;Petal.Width&quot; : 0.2,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.5,
-        &quot;Sepal.Width&quot; : 3.5,
-        &quot;Petal.Length&quot; : 1.3,
-        &quot;Petal.Width&quot; : 0.2,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 4.9,
-        &quot;Sepal.Width&quot; : 3.6,
-        &quot;Petal.Length&quot; : 1.4,
-        &quot;Petal.Width&quot; : 0.1,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 4.4,
-        &quot;Sepal.Width&quot; : 3,
-        &quot;Petal.Length&quot; : 1.3,
-        &quot;Petal.Width&quot; : 0.2,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.1,
-        &quot;Sepal.Width&quot; : 3.4,
-        &quot;Petal.Length&quot; : 1.5,
-        &quot;Petal.Width&quot; : 0.2,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5,
-        &quot;Sepal.Width&quot; : 3.5,
-        &quot;Petal.Length&quot; : 1.3,
-        &quot;Petal.Width&quot; : 0.3,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 4.5,
-        &quot;Sepal.Width&quot; : 2.3,
-        &quot;Petal.Length&quot; : 1.3,
-        &quot;Petal.Width&quot; : 0.3,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 4.4,
-        &quot;Sepal.Width&quot; : 3.2,
-        &quot;Petal.Length&quot; : 1.3,
-        &quot;Petal.Width&quot; : 0.2,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5,
-        &quot;Sepal.Width&quot; : 3.5,
-        &quot;Petal.Length&quot; : 1.6,
-        &quot;Petal.Width&quot; : 0.6,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.1,
-        &quot;Sepal.Width&quot; : 3.8,
-        &quot;Petal.Length&quot; : 1.9,
-        &quot;Petal.Width&quot; : 0.4,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 4.8,
-        &quot;Sepal.Width&quot; : 3,
-        &quot;Petal.Length&quot; : 1.4,
-        &quot;Petal.Width&quot; : 0.3,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.1,
-        &quot;Sepal.Width&quot; : 3.8,
-        &quot;Petal.Length&quot; : 1.6,
-        &quot;Petal.Width&quot; : 0.2,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 4.6,
-        &quot;Sepal.Width&quot; : 3.2,
-        &quot;Petal.Length&quot; : 1.4,
-        &quot;Petal.Width&quot; : 0.2,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.3,
-        &quot;Sepal.Width&quot; : 3.7,
-        &quot;Petal.Length&quot; : 1.5,
-        &quot;Petal.Width&quot; : 0.2,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5,
-        &quot;Sepal.Width&quot; : 3.3,
-        &quot;Petal.Length&quot; : 1.4,
-        &quot;Petal.Width&quot; : 0.2,
-        &quot;Species&quot; : &quot;setosa&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 7,
-        &quot;Sepal.Width&quot; : 3.2,
-        &quot;Petal.Length&quot; : 4.7,
-        &quot;Petal.Width&quot; : 1.4,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.4,
-        &quot;Sepal.Width&quot; : 3.2,
-        &quot;Petal.Length&quot; : 4.5,
-        &quot;Petal.Width&quot; : 1.5,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.9,
-        &quot;Sepal.Width&quot; : 3.1,
-        &quot;Petal.Length&quot; : 4.9,
-        &quot;Petal.Width&quot; : 1.5,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.5,
-        &quot;Sepal.Width&quot; : 2.3,
-        &quot;Petal.Length&quot; : 4,
-        &quot;Petal.Width&quot; : 1.3,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.5,
-        &quot;Sepal.Width&quot; : 2.8,
-        &quot;Petal.Length&quot; : 4.6,
-        &quot;Petal.Width&quot; : 1.5,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.7,
-        &quot;Sepal.Width&quot; : 2.8,
-        &quot;Petal.Length&quot; : 4.5,
-        &quot;Petal.Width&quot; : 1.3,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.3,
-        &quot;Sepal.Width&quot; : 3.3,
-        &quot;Petal.Length&quot; : 4.7,
-        &quot;Petal.Width&quot; : 1.6,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 4.9,
-        &quot;Sepal.Width&quot; : 2.4,
-        &quot;Petal.Length&quot; : 3.3,
-        &quot;Petal.Width&quot; : 1,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.6,
-        &quot;Sepal.Width&quot; : 2.9,
-        &quot;Petal.Length&quot; : 4.6,
-        &quot;Petal.Width&quot; : 1.3,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.2,
-        &quot;Sepal.Width&quot; : 2.7,
-        &quot;Petal.Length&quot; : 3.9,
-        &quot;Petal.Width&quot; : 1.4,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5,
-        &quot;Sepal.Width&quot; : 2,
-        &quot;Petal.Length&quot; : 3.5,
-        &quot;Petal.Width&quot; : 1,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.9,
-        &quot;Sepal.Width&quot; : 3,
-        &quot;Petal.Length&quot; : 4.2,
-        &quot;Petal.Width&quot; : 1.5,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6,
-        &quot;Sepal.Width&quot; : 2.2,
-        &quot;Petal.Length&quot; : 4,
-        &quot;Petal.Width&quot; : 1,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.1,
-        &quot;Sepal.Width&quot; : 2.9,
-        &quot;Petal.Length&quot; : 4.7,
-        &quot;Petal.Width&quot; : 1.4,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.6,
-        &quot;Sepal.Width&quot; : 2.9,
-        &quot;Petal.Length&quot; : 3.6,
-        &quot;Petal.Width&quot; : 1.3,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.7,
-        &quot;Sepal.Width&quot; : 3.1,
-        &quot;Petal.Length&quot; : 4.4,
-        &quot;Petal.Width&quot; : 1.4,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.6,
-        &quot;Sepal.Width&quot; : 3,
-        &quot;Petal.Length&quot; : 4.5,
-        &quot;Petal.Width&quot; : 1.5,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.8,
-        &quot;Sepal.Width&quot; : 2.7,
-        &quot;Petal.Length&quot; : 4.1,
-        &quot;Petal.Width&quot; : 1,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.2,
-        &quot;Sepal.Width&quot; : 2.2,
-        &quot;Petal.Length&quot; : 4.5,
-        &quot;Petal.Width&quot; : 1.5,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.6,
-        &quot;Sepal.Width&quot; : 2.5,
-        &quot;Petal.Length&quot; : 3.9,
-        &quot;Petal.Width&quot; : 1.1,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.9,
-        &quot;Sepal.Width&quot; : 3.2,
-        &quot;Petal.Length&quot; : 4.8,
-        &quot;Petal.Width&quot; : 1.8,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.1,
-        &quot;Sepal.Width&quot; : 2.8,
-        &quot;Petal.Length&quot; : 4,
-        &quot;Petal.Width&quot; : 1.3,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.3,
-        &quot;Sepal.Width&quot; : 2.5,
-        &quot;Petal.Length&quot; : 4.9,
-        &quot;Petal.Width&quot; : 1.5,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.1,
-        &quot;Sepal.Width&quot; : 2.8,
-        &quot;Petal.Length&quot; : 4.7,
-        &quot;Petal.Width&quot; : 1.2,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.4,
-        &quot;Sepal.Width&quot; : 2.9,
-        &quot;Petal.Length&quot; : 4.3,
-        &quot;Petal.Width&quot; : 1.3,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.6,
-        &quot;Sepal.Width&quot; : 3,
-        &quot;Petal.Length&quot; : 4.4,
-        &quot;Petal.Width&quot; : 1.4,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.8,
-        &quot;Sepal.Width&quot; : 2.8,
-        &quot;Petal.Length&quot; : 4.8,
-        &quot;Petal.Width&quot; : 1.4,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.7,
-        &quot;Sepal.Width&quot; : 3,
-        &quot;Petal.Length&quot; : 5,
-        &quot;Petal.Width&quot; : 1.7,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6,
-        &quot;Sepal.Width&quot; : 2.9,
-        &quot;Petal.Length&quot; : 4.5,
-        &quot;Petal.Width&quot; : 1.5,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.7,
-        &quot;Sepal.Width&quot; : 2.6,
-        &quot;Petal.Length&quot; : 3.5,
-        &quot;Petal.Width&quot; : 1,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.5,
-        &quot;Sepal.Width&quot; : 2.4,
-        &quot;Petal.Length&quot; : 3.8,
-        &quot;Petal.Width&quot; : 1.1,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.5,
-        &quot;Sepal.Width&quot; : 2.4,
-        &quot;Petal.Length&quot; : 3.7,
-        &quot;Petal.Width&quot; : 1,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.8,
-        &quot;Sepal.Width&quot; : 2.7,
-        &quot;Petal.Length&quot; : 3.9,
-        &quot;Petal.Width&quot; : 1.2,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6,
-        &quot;Sepal.Width&quot; : 2.7,
-        &quot;Petal.Length&quot; : 5.1,
-        &quot;Petal.Width&quot; : 1.6,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.4,
-        &quot;Sepal.Width&quot; : 3,
-        &quot;Petal.Length&quot; : 4.5,
-        &quot;Petal.Width&quot; : 1.5,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6,
-        &quot;Sepal.Width&quot; : 3.4,
-        &quot;Petal.Length&quot; : 4.5,
-        &quot;Petal.Width&quot; : 1.6,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.7,
-        &quot;Sepal.Width&quot; : 3.1,
-        &quot;Petal.Length&quot; : 4.7,
-        &quot;Petal.Width&quot; : 1.5,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.3,
-        &quot;Sepal.Width&quot; : 2.3,
-        &quot;Petal.Length&quot; : 4.4,
-        &quot;Petal.Width&quot; : 1.3,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.6,
-        &quot;Sepal.Width&quot; : 3,
-        &quot;Petal.Length&quot; : 4.1,
-        &quot;Petal.Width&quot; : 1.3,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.5,
-        &quot;Sepal.Width&quot; : 2.5,
-        &quot;Petal.Length&quot; : 4,
-        &quot;Petal.Width&quot; : 1.3,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.5,
-        &quot;Sepal.Width&quot; : 2.6,
-        &quot;Petal.Length&quot; : 4.4,
-        &quot;Petal.Width&quot; : 1.2,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.1,
-        &quot;Sepal.Width&quot; : 3,
-        &quot;Petal.Length&quot; : 4.6,
-        &quot;Petal.Width&quot; : 1.4,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.8,
-        &quot;Sepal.Width&quot; : 2.6,
-        &quot;Petal.Length&quot; : 4,
-        &quot;Petal.Width&quot; : 1.2,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5,
-        &quot;Sepal.Width&quot; : 2.3,
-        &quot;Petal.Length&quot; : 3.3,
-        &quot;Petal.Width&quot; : 1,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.6,
-        &quot;Sepal.Width&quot; : 2.7,
-        &quot;Petal.Length&quot; : 4.2,
-        &quot;Petal.Width&quot; : 1.3,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.7,
-        &quot;Sepal.Width&quot; : 3,
-        &quot;Petal.Length&quot; : 4.2,
-        &quot;Petal.Width&quot; : 1.2,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.7,
-        &quot;Sepal.Width&quot; : 2.9,
-        &quot;Petal.Length&quot; : 4.2,
-        &quot;Petal.Width&quot; : 1.3,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.2,
-        &quot;Sepal.Width&quot; : 2.9,
-        &quot;Petal.Length&quot; : 4.3,
-        &quot;Petal.Width&quot; : 1.3,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.1,
-        &quot;Sepal.Width&quot; : 2.5,
-        &quot;Petal.Length&quot; : 3,
-        &quot;Petal.Width&quot; : 1.1,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.7,
-        &quot;Sepal.Width&quot; : 2.8,
-        &quot;Petal.Length&quot; : 4.1,
-        &quot;Petal.Width&quot; : 1.3,
-        &quot;Species&quot; : &quot;versicolor&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.3,
-        &quot;Sepal.Width&quot; : 3.3,
-        &quot;Petal.Length&quot; : 6,
-        &quot;Petal.Width&quot; : 2.5,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.8,
-        &quot;Sepal.Width&quot; : 2.7,
-        &quot;Petal.Length&quot; : 5.1,
-        &quot;Petal.Width&quot; : 1.9,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 7.1,
-        &quot;Sepal.Width&quot; : 3,
-        &quot;Petal.Length&quot; : 5.9,
-        &quot;Petal.Width&quot; : 2.1,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.3,
-        &quot;Sepal.Width&quot; : 2.9,
-        &quot;Petal.Length&quot; : 5.6,
-        &quot;Petal.Width&quot; : 1.8,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.5,
-        &quot;Sepal.Width&quot; : 3,
-        &quot;Petal.Length&quot; : 5.8,
-        &quot;Petal.Width&quot; : 2.2,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 7.6,
-        &quot;Sepal.Width&quot; : 3,
-        &quot;Petal.Length&quot; : 6.6,
-        &quot;Petal.Width&quot; : 2.1,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 4.9,
-        &quot;Sepal.Width&quot; : 2.5,
-        &quot;Petal.Length&quot; : 4.5,
-        &quot;Petal.Width&quot; : 1.7,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 7.3,
-        &quot;Sepal.Width&quot; : 2.9,
-        &quot;Petal.Length&quot; : 6.3,
-        &quot;Petal.Width&quot; : 1.8,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.7,
-        &quot;Sepal.Width&quot; : 2.5,
-        &quot;Petal.Length&quot; : 5.8,
-        &quot;Petal.Width&quot; : 1.8,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 7.2,
-        &quot;Sepal.Width&quot; : 3.6,
-        &quot;Petal.Length&quot; : 6.1,
-        &quot;Petal.Width&quot; : 2.5,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.5,
-        &quot;Sepal.Width&quot; : 3.2,
-        &quot;Petal.Length&quot; : 5.1,
-        &quot;Petal.Width&quot; : 2,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.4,
-        &quot;Sepal.Width&quot; : 2.7,
-        &quot;Petal.Length&quot; : 5.3,
-        &quot;Petal.Width&quot; : 1.9,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.8,
-        &quot;Sepal.Width&quot; : 3,
-        &quot;Petal.Length&quot; : 5.5,
-        &quot;Petal.Width&quot; : 2.1,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.7,
-        &quot;Sepal.Width&quot; : 2.5,
-        &quot;Petal.Length&quot; : 5,
-        &quot;Petal.Width&quot; : 2,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.8,
-        &quot;Sepal.Width&quot; : 2.8,
-        &quot;Petal.Length&quot; : 5.1,
-        &quot;Petal.Width&quot; : 2.4,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.4,
-        &quot;Sepal.Width&quot; : 3.2,
-        &quot;Petal.Length&quot; : 5.3,
-        &quot;Petal.Width&quot; : 2.3,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.5,
-        &quot;Sepal.Width&quot; : 3,
-        &quot;Petal.Length&quot; : 5.5,
-        &quot;Petal.Width&quot; : 1.8,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 7.7,
-        &quot;Sepal.Width&quot; : 3.8,
-        &quot;Petal.Length&quot; : 6.7,
-        &quot;Petal.Width&quot; : 2.2,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 7.7,
-        &quot;Sepal.Width&quot; : 2.6,
-        &quot;Petal.Length&quot; : 6.9,
-        &quot;Petal.Width&quot; : 2.3,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6,
-        &quot;Sepal.Width&quot; : 2.2,
-        &quot;Petal.Length&quot; : 5,
-        &quot;Petal.Width&quot; : 1.5,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.9,
-        &quot;Sepal.Width&quot; : 3.2,
-        &quot;Petal.Length&quot; : 5.7,
-        &quot;Petal.Width&quot; : 2.3,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.6,
-        &quot;Sepal.Width&quot; : 2.8,
-        &quot;Petal.Length&quot; : 4.9,
-        &quot;Petal.Width&quot; : 2,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 7.7,
-        &quot;Sepal.Width&quot; : 2.8,
-        &quot;Petal.Length&quot; : 6.7,
-        &quot;Petal.Width&quot; : 2,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.3,
-        &quot;Sepal.Width&quot; : 2.7,
-        &quot;Petal.Length&quot; : 4.9,
-        &quot;Petal.Width&quot; : 1.8,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.7,
-        &quot;Sepal.Width&quot; : 3.3,
-        &quot;Petal.Length&quot; : 5.7,
-        &quot;Petal.Width&quot; : 2.1,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 7.2,
-        &quot;Sepal.Width&quot; : 3.2,
-        &quot;Petal.Length&quot; : 6,
-        &quot;Petal.Width&quot; : 1.8,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.2,
-        &quot;Sepal.Width&quot; : 2.8,
-        &quot;Petal.Length&quot; : 4.8,
-        &quot;Petal.Width&quot; : 1.8,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.1,
-        &quot;Sepal.Width&quot; : 3,
-        &quot;Petal.Length&quot; : 4.9,
-        &quot;Petal.Width&quot; : 1.8,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.4,
-        &quot;Sepal.Width&quot; : 2.8,
-        &quot;Petal.Length&quot; : 5.6,
-        &quot;Petal.Width&quot; : 2.1,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 7.2,
-        &quot;Sepal.Width&quot; : 3,
-        &quot;Petal.Length&quot; : 5.8,
-        &quot;Petal.Width&quot; : 1.6,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 7.4,
-        &quot;Sepal.Width&quot; : 2.8,
-        &quot;Petal.Length&quot; : 6.1,
-        &quot;Petal.Width&quot; : 1.9,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 7.9,
-        &quot;Sepal.Width&quot; : 3.8,
-        &quot;Petal.Length&quot; : 6.4,
-        &quot;Petal.Width&quot; : 2,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.4,
-        &quot;Sepal.Width&quot; : 2.8,
-        &quot;Petal.Length&quot; : 5.6,
-        &quot;Petal.Width&quot; : 2.2,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.3,
-        &quot;Sepal.Width&quot; : 2.8,
-        &quot;Petal.Length&quot; : 5.1,
-        &quot;Petal.Width&quot; : 1.5,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.1,
-        &quot;Sepal.Width&quot; : 2.6,
-        &quot;Petal.Length&quot; : 5.6,
-        &quot;Petal.Width&quot; : 1.4,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 7.7,
-        &quot;Sepal.Width&quot; : 3,
-        &quot;Petal.Length&quot; : 6.1,
-        &quot;Petal.Width&quot; : 2.3,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.3,
-        &quot;Sepal.Width&quot; : 3.4,
-        &quot;Petal.Length&quot; : 5.6,
-        &quot;Petal.Width&quot; : 2.4,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.4,
-        &quot;Sepal.Width&quot; : 3.1,
-        &quot;Petal.Length&quot; : 5.5,
-        &quot;Petal.Width&quot; : 1.8,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6,
-        &quot;Sepal.Width&quot; : 3,
-        &quot;Petal.Length&quot; : 4.8,
-        &quot;Petal.Width&quot; : 1.8,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.9,
-        &quot;Sepal.Width&quot; : 3.1,
-        &quot;Petal.Length&quot; : 5.4,
-        &quot;Petal.Width&quot; : 2.1,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.7,
-        &quot;Sepal.Width&quot; : 3.1,
-        &quot;Petal.Length&quot; : 5.6,
-        &quot;Petal.Width&quot; : 2.4,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.9,
-        &quot;Sepal.Width&quot; : 3.1,
-        &quot;Petal.Length&quot; : 5.1,
-        &quot;Petal.Width&quot; : 2.3,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.8,
-        &quot;Sepal.Width&quot; : 2.7,
-        &quot;Petal.Length&quot; : 5.1,
-        &quot;Petal.Width&quot; : 1.9,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.8,
-        &quot;Sepal.Width&quot; : 3.2,
-        &quot;Petal.Length&quot; : 5.9,
-        &quot;Petal.Width&quot; : 2.3,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.7,
-        &quot;Sepal.Width&quot; : 3.3,
-        &quot;Petal.Length&quot; : 5.7,
-        &quot;Petal.Width&quot; : 2.5,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.7,
-        &quot;Sepal.Width&quot; : 3,
-        &quot;Petal.Length&quot; : 5.2,
-        &quot;Petal.Width&quot; : 2.3,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.3,
-        &quot;Sepal.Width&quot; : 2.5,
-        &quot;Petal.Length&quot; : 5,
-        &quot;Petal.Width&quot; : 1.9,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.5,
-        &quot;Sepal.Width&quot; : 3,
-        &quot;Petal.Length&quot; : 5.2,
-        &quot;Petal.Width&quot; : 2,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 6.2,
-        &quot;Sepal.Width&quot; : 3.4,
-        &quot;Petal.Length&quot; : 5.4,
-        &quot;Petal.Width&quot; : 2.3,
-        &quot;Species&quot; : &quot;virginica&quot;
-    },
-    {
-        &quot;Sepal.Length&quot; : 5.9,
-        &quot;Sepal.Width&quot; : 3,
-        &quot;Petal.Length&quot; : 5.1,
-        &quot;Petal.Width&quot; : 1.8,
-        &quot;Species&quot; : &quot;virginica&quot;
-    }
-]
-</code></pre>
-
-<p><a href="http://www.r-bloggers.com/new-package-jsonlite-a-smarter-json-encoderdecoder/">http://www.r-bloggers.com/new-package-jsonlite-a-smarter-json-encoderdecoder/</a></p>
+<p><a href="http://genome.ucsc.edu/goldenPath/help/mysql.html">http://genome.ucsc.edu/goldenPath/help/mysql.html</a></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -1227,23 +133,202 @@ cat(myjson)
 
       <slide class="" id="slide-6" style="background:;">
   <hgroup>
-    <h2>Convert back to JSON</h2>
+    <h2>Connecting and listing databases</h2>
   </hgroup>
   <article>
-    <pre><code class="r">iris2 &lt;- fromJSON(myjson)
-head(iris2)
+    <pre><code class="r">ucscDb &lt;- dbConnect(MySQL(),user=&quot;genome&quot;, 
+                    host=&quot;genome-mysql.cse.ucsc.edu&quot;)
+result &lt;- dbGetQuery(ucscDb,&quot;show databases;&quot;); dbDisconnect(ucscDb);
 </code></pre>
 
-<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-1          5.1         3.5          1.4         0.2  setosa
-2          4.9         3.0          1.4         0.2  setosa
-3          4.7         3.2          1.3         0.2  setosa
-4          4.6         3.1          1.5         0.2  setosa
-5          5.0         3.6          1.4         0.2  setosa
-6          5.4         3.9          1.7         0.4  setosa
+<pre><code>[1] TRUE
 </code></pre>
 
-<p><a href="http://www.r-bloggers.com/new-package-jsonlite-a-smarter-json-encoderdecoder/">http://www.r-bloggers.com/new-package-jsonlite-a-smarter-json-encoderdecoder/</a></p>
+<pre><code class="r">result
+</code></pre>
+
+<pre><code>              Database
+1   information_schema
+2              ailMel1
+3              allMis1
+4              anoCar1
+5              anoCar2
+6              anoGam1
+7              apiMel1
+8              apiMel2
+9              aplCal1
+10             bosTau2
+11             bosTau3
+12             bosTau4
+13             bosTau5
+14             bosTau6
+15             bosTau7
+16           bosTauMd3
+17             braFlo1
+18             caeJap1
+19              caePb1
+20              caePb2
+21             caeRem2
+22             caeRem3
+23             calJac1
+24             calJac3
+25             canFam1
+26             canFam2
+27             canFam3
+28             cavPor3
+29                 cb1
+30                 cb3
+31                ce10
+32                 ce2
+33                 ce4
+34                 ce6
+35             cerSim1
+36             choHof1
+37             chrPic1
+38                 ci1
+39                 ci2
+40             danRer1
+41             danRer2
+42             danRer3
+43             danRer4
+44             danRer5
+45             danRer6
+46             danRer7
+47             dasNov3
+48             dipOrd1
+49                 dm1
+50                 dm2
+51                 dm3
+52                 dp2
+53                 dp3
+54             droAna1
+55             droAna2
+56             droEre1
+57             droGri1
+58             droMoj1
+59             droMoj2
+60             droPer1
+61             droSec1
+62             droSim1
+63             droVir1
+64             droVir2
+65             droYak1
+66             droYak2
+67             echTel1
+68             echTel2
+69             equCab1
+70             equCab2
+71             eriEur1
+72             felCat3
+73             felCat4
+74             felCat5
+75                 fr1
+76                 fr2
+77                 fr3
+78             gadMor1
+79             galGal2
+80             galGal3
+81             galGal4
+82             gasAcu1
+83             geoFor1
+84                  go
+85            go080130
+86             gorGor3
+87             hetGla1
+88             hetGla2
+89                hg16
+90                hg17
+91                hg18
+92                hg19
+93         hg19Patch10
+94          hg19Patch2
+95          hg19Patch5
+96          hg19Patch9
+97             hgFixed
+98              hgTemp
+99           hgcentral
+100            latCha1
+101            loxAfr3
+102            macEug1
+103            macEug2
+104            melGal1
+105            melUnd1
+106            micMur1
+107               mm10
+108         mm10Patch1
+109                mm5
+110                mm6
+111                mm7
+112                mm8
+113                mm9
+114            monDom1
+115            monDom4
+116            monDom5
+117            musFur1
+118            myoLuc2
+119            nomLeu1
+120            nomLeu2
+121            nomLeu3
+122            ochPri2
+123            oreNil1
+124            oreNil2
+125            ornAna1
+126            oryCun2
+127            oryLat2
+128            otoGar3
+129            oviAri1
+130            oviAri3
+131            panTro1
+132            panTro2
+133            panTro3
+134            panTro4
+135            papAnu2
+136            papHam1
+137 performance_schema
+138            petMar1
+139            petMar2
+140            ponAbe2
+141            priPac1
+142            proCap1
+143     proteins120806
+144     proteins121210
+145           proteome
+146            pteVam1
+147            rheMac1
+148            rheMac2
+149            rheMac3
+150                rn3
+151                rn4
+152                rn5
+153            sacCer1
+154            sacCer2
+155            sacCer3
+156            saiBol1
+157            sarHar1
+158            sorAra1
+159           sp120323
+160           sp121210
+161            speTri2
+162            strPur1
+163            strPur2
+164            susScr2
+165            susScr3
+166            taeGut1
+167            tarSyr1
+168               test
+169            tetNig1
+170            tetNig2
+171            triMan1
+172            tupBel1
+173            turTru2
+174            uniProt
+175            vicPac1
+176            vicPac2
+177           visiGene
+178            xenTro1
+179            xenTro2
+180            xenTro3
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
@@ -1251,13 +336,161 @@ head(iris2)
 
       <slide class="" id="slide-7" style="background:;">
   <hgroup>
+    <h2>Connecting to hg19 and listing tables</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">hg19 &lt;- dbConnect(MySQL(),user=&quot;genome&quot;, db=&quot;hg19&quot;,
+                    host=&quot;genome-mysql.cse.ucsc.edu&quot;)
+allTables &lt;- dbListTables(hg19)
+length(allTables)
+</code></pre>
+
+<pre><code>[1] 10949
+</code></pre>
+
+<pre><code class="r">allTables[1:5]
+</code></pre>
+
+<pre><code>[1] &quot;HInv&quot;         &quot;HInvGeneMrna&quot; &quot;acembly&quot;      &quot;acemblyClass&quot; &quot;acemblyPep&quot;  
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>Get dimensions of a specific table</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">dbListFields(hg19,&quot;affyU133Plus2&quot;)
+</code></pre>
+
+<pre><code> [1] &quot;bin&quot;         &quot;matches&quot;     &quot;misMatches&quot;  &quot;repMatches&quot;  &quot;nCount&quot;      &quot;qNumInsert&quot; 
+ [7] &quot;qBaseInsert&quot; &quot;tNumInsert&quot;  &quot;tBaseInsert&quot; &quot;strand&quot;      &quot;qName&quot;       &quot;qSize&quot;      
+[13] &quot;qStart&quot;      &quot;qEnd&quot;        &quot;tName&quot;       &quot;tSize&quot;       &quot;tStart&quot;      &quot;tEnd&quot;       
+[19] &quot;blockCount&quot;  &quot;blockSizes&quot;  &quot;qStarts&quot;     &quot;tStarts&quot;    
+</code></pre>
+
+<pre><code class="r">dbGetQuery(hg19, &quot;select count(*) from affyU133Plus2&quot;)
+</code></pre>
+
+<pre><code>  count(*)
+1    58463
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>Read from the table</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">affyData &lt;- dbReadTable(hg19, &quot;affyU133Plus2&quot;)
+head(affyData)
+</code></pre>
+
+<pre><code>  bin matches misMatches repMatches nCount qNumInsert qBaseInsert tNumInsert tBaseInsert strand
+1 585     530          4          0     23          3          41          3         898      -
+2 585    3355         17          0    109          9          67          9       11621      -
+3 585    4156         14          0     83         16          18          2          93      -
+4 585    4667          9          0     68         21          42          3        5743      -
+5 585    5180         14          0    167         10          38          1          29      -
+6 585     468          5          0     14          0           0          0           0      -
+         qName qSize qStart qEnd tName     tSize tStart  tEnd blockCount
+1  225995_x_at   637      5  603  chr1 249250621  14361 15816          5
+2  225035_x_at  3635      0 3548  chr1 249250621  14381 29483         17
+3  226340_x_at  4318      3 4274  chr1 249250621  14399 18745         18
+4 1557034_s_at  4834     48 4834  chr1 249250621  14406 24893         23
+5    231811_at  5399      0 5399  chr1 249250621  19688 25078         11
+6    236841_at   487      0  487  chr1 249250621  27542 28029          1
+                                                                  blockSizes
+1                                                          93,144,229,70,21,
+2              73,375,71,165,303,360,198,661,201,1,260,250,74,73,98,155,163,
+3                 690,10,32,33,376,4,5,15,5,11,7,41,277,859,141,51,443,1253,
+4 99,352,286,24,49,14,6,5,8,149,14,44,98,12,10,355,837,59,8,1500,133,624,58,
+5                                       131,26,1300,6,4,11,4,7,358,3359,155,
+6                                                                       487,
+                                                                                                 qStarts
+1                                                                                    34,132,278,541,611,
+2                        87,165,540,647,818,1123,1484,1682,2343,2545,2546,2808,3058,3133,3206,3317,3472,
+3                   44,735,746,779,813,1190,1195,1201,1217,1223,1235,1243,1285,1564,2423,2565,2617,3062,
+4 0,99,452,739,764,814,829,836,842,851,1001,1016,1061,1160,1173,1184,1540,2381,2441,2450,3951,4103,4728,
+5                                                     0,132,159,1460,1467,1472,1484,1489,1497,1856,5244,
+6                                                                                                     0,
+                                                                                                                                     tStarts
+1                                                                                                             14361,14454,14599,14968,15795,
+2                                     14381,14454,14969,15075,15240,15543,15903,16104,16853,17054,17232,17492,17914,17988,18267,24736,29320,
+3                               14399,15089,15099,15131,15164,15540,15544,15549,15564,15569,15580,15587,15628,15906,16857,16998,17049,17492,
+4 14406,20227,20579,20865,20889,20938,20952,20958,20963,20971,21120,21134,21178,21276,21288,21298,21653,22492,22551,22559,24059,24211,24835,
+5                                                                         19688,19819,19845,21145,21151,21155,21166,21170,21177,21535,24923,
+6                                                                                                                                     27542,
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>Select a specific subset</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">query &lt;- dbSendQuery(hg19, &quot;select * from affyU133Plus2 where misMatches between 1 and 3&quot;)
+affyMis &lt;- fetch(query); quantile(affyMis$misMatches)
+</code></pre>
+
+<pre><code>  0%  25%  50%  75% 100% 
+   1    1    2    2    3 
+</code></pre>
+
+<pre><code class="r">affyMisSmall &lt;- fetch(query,n=10); dbClearResult(query);
+</code></pre>
+
+<pre><code>[1] TRUE
+</code></pre>
+
+<pre><code class="r">dim(affyMisSmall)
+</code></pre>
+
+<pre><code>[1] 10 22
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Don&#39;t forget to close the connection!</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">dbDisconnect(hg19)
+</code></pre>
+
+<pre><code>[1] TRUE
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-12" style="background:;">
+  <hgroup>
     <h2>Further resources</h2>
   </hgroup>
   <article>
     <ul>
-<li><a href="http://www.json.org/">http://www.json.org/</a></li>
-<li>A good tutorial on jsonlite - <a href="http://www.r-bloggers.com/new-package-jsonlite-a-smarter-json-encoderdecoder/">http://www.r-bloggers.com/new-package-jsonlite-a-smarter-json-encoderdecoder/</a></li>
-<li><a href="http://cran.r-project.org/web/packages/jsonlite/vignettes/json-mapping.pdf">jsonlite vignette</a></li>
+<li>RMySQL vignette <a href="http://cran.r-project.org/web/packages/RMySQL/RMySQL.pdf">http://cran.r-project.org/web/packages/RMySQL/RMySQL.pdf</a></li>
+<li>List of commands <a href="http://www.pantz.org/software/mysql/mysqlcommands.html">http://www.pantz.org/software/mysql/mysqlcommands.html</a>
+
+<ul>
+<li><strong>Do not, do not, delete, add or join things from ensembl. Only select.</strong></li>
+<li>In general be careful with mysql commands</li>
+</ul></li>
+<li>A nice blog post summarizing some other commands <a href="http://www.r-bloggers.com/mysql-and-r/">http://www.r-bloggers.com/mysql-and-r/</a></li>
 </ul>
 
   </article>
