@@ -32,11 +32,11 @@ knit_hooks$set(plot = knitr:::hook_plot_html)
 runif(1)
 ```
 
-<img class=center src=../../assets/galton.jpg height=150>
+<img class=center src=fig/galton.jpg height=150>
 
 ### (Perhaps surprisingly, this example is still relevant)
 
-<img class=center src=../../assets/img/height.png height=150>
+<img class=center src=fig/height.png height=150>
 
 [http://www.nature.com/ejhg/journal/v17/n8/full/ejhg20095a.html](http://www.nature.com/ejhg/journal/v17/n8/full/ejhg20095a.html)
 
@@ -46,7 +46,7 @@ runif(1)
 ## Questions for this class
 * Consider trying to answer the following kinds of questions:
   * To use the parents' heights to predict childrens' heights.
-  * To try to find a parsimonious, easily describe mean 
+  * To try to find a parsimonious, easily described mean 
     relationship between parent and children's heights.
   * To investigate the variation in childrens' heights that appears 
   unrelated to parents' heights (residual variation).
@@ -72,7 +72,7 @@ runif(1)
 ---
 ## Code
 
-```{r galton,fig.height=3.5,fig.width=8, cache=TRUE}
+```{r galton,fig.height=3.5,fig.width=8}
 library(UsingR); data(galton)
 par(mfrow=c(1,2))
 hist(galton$child,col="blue",breaks=100)
@@ -184,14 +184,14 @@ myPlot <- function(beta){
   mse <- mean( (y - beta * x)^2 )
   title(paste("beta = ", beta, "mse = ", round(mse, 3)))
 }
-manipulate(myPlot(beta), beta = slider(0.8, 1.2, step = 0.02))
+manipulate(myPlot(beta), beta = slider(0.6, 1.2, step = 0.02))
 ```
 
 ---
 ## The solution 
 ### In the next few lectures we'll talk about why this is the solution
 ```{r}
-lm(child ~ parent, data = galton)
+lm(I(child - mean(child))~ I(parent - mean(parent)) - 1, data = galton)
 ```
 
 ---

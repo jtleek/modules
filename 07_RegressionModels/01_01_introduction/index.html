@@ -4,7 +4,7 @@
   <title>Introduction to regression</title>
   <meta charset="utf-8">
   <meta name="description" content="Introduction to regression">
-  <meta name="author" content="Brian Caffo, PhD">
+  <meta name="author" content="Brian Caffo, Jeff Leek and Roger Peng">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -43,7 +43,7 @@
       <hgroup class="auto-fadein">
         <h1>Introduction to regression</h1>
         <h2>Regression</h2>
-        <p>Brian Caffo, PhD<br/>Johns Hopkins Bloomberg School of Public Health</p>
+        <p>Brian Caffo, Jeff Leek and Roger Peng<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
           </slide>
 
@@ -53,11 +53,11 @@
     <h2>A famous motivating example</h2>
   </hgroup>
   <article>
-    <p><img class=center src=../../assets/galton.jpg height=150></p>
+    <p><img class=center src=fig/galton.jpg height=150></p>
 
 <h3>(Perhaps surprisingly, this example is still relevant)</h3>
 
-<p><img class=center src=../../assets/img/height.png height=150></p>
+<p><img class=center src=fig/height.png height=150></p>
 
 <p><a href="http://www.nature.com/ejhg/journal/v17/n8/full/ejhg20095a.html">http://www.nature.com/ejhg/journal/v17/n8/full/ejhg20095a.html</a></p>
 
@@ -77,7 +77,7 @@
 
 <ul>
 <li>To use the parents&#39; heights to predict childrens&#39; heights.</li>
-<li>To try to find a parsimonious, easily describe mean 
+<li>To try to find a parsimonious, easily described mean 
 relationship between parent and children&#39;s heights.</li>
 <li>To investigate the variation in childrens&#39; heights that appears 
 unrelated to parents&#39; heights (residual variation).</li>
@@ -127,6 +127,8 @@ par(mfrow=c(1,2))
 hist(galton$child,col=&quot;blue&quot;,breaks=100)
 hist(galton$parent,col=&quot;blue&quot;,breaks=100)
 </code></pre>
+
+<div class="rimage center"><img src="fig/galton.png" title="plot of chunk galton" alt="plot of chunk galton" class="plot" /></div>
 
   </article>
   <!-- Presenter Notes -->
@@ -185,6 +187,8 @@ manipulate(myHist(mu), mu = slider(62, 74, step = 0.5))
   lines(rep(meanChild,100),seq(0,150,length=100),col=&quot;red&quot;,lwd=5)
 </code></pre>
 
+<div class="rimage center"><img src="fig/lsm.png" title="plot of chunk lsm" alt="plot of chunk lsm" class="plot" /></div>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -224,6 +228,8 @@ manipulate(myHist(mu), mu = slider(62, 74, step = 0.5))
     <pre><code class="r">plot(galton$parent,galton$child,pch=19,col=&quot;blue&quot;)
 </code></pre>
 
+<div class="rimage center"><img src="fig/unnamed-chunk-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -234,6 +240,8 @@ manipulate(myHist(mu), mu = slider(62, 74, step = 0.5))
   </hgroup>
   <article>
     <p>Size of point represents number of points at that (X, Y) combination (See the Rmd file for the code).</p>
+
+<div class="rimage center"><img src="fig/freqGalton.png" title="plot of chunk freqGalton" alt="plot of chunk freqGalton" class="plot" /></div>
 
   </article>
   <!-- Presenter Notes -->
@@ -282,7 +290,7 @@ and children&#39;s heights</li>
   mse &lt;- mean( (y - beta * x)^2 )
   title(paste(&quot;beta = &quot;, beta, &quot;mse = &quot;, round(mse, 3)))
 }
-manipulate(myPlot(beta), beta = slider(0.8, 1.2, step = 0.02))
+manipulate(myPlot(beta), beta = slider(0.6, 1.2, step = 0.02))
 </code></pre>
 
   </article>
@@ -296,7 +304,17 @@ manipulate(myPlot(beta), beta = slider(0.8, 1.2, step = 0.02))
   <article>
     <h3>In the next few lectures we&#39;ll talk about why this is the solution</h3>
 
-<pre><code class="r">lm(child ~ parent, data = galton)
+<pre><code class="r">lm(I(child - mean(child))~ I(parent - mean(parent)) - 1, data = galton)
+</code></pre>
+
+<pre><code>
+Call:
+lm(formula = I(child - mean(child)) ~ I(parent - mean(parent)) - 
+    1, data = galton)
+
+Coefficients:
+I(parent - mean(parent))  
+                   0.646  
 </code></pre>
 
   </article>
@@ -309,6 +327,8 @@ manipulate(myPlot(beta), beta = slider(0.8, 1.2, step = 0.02))
   </hgroup>
   <article>
     <h3>Size of points are frequencies at that X, Y combination</h3>
+
+<div class="rimage center"><img src="fig/unnamed-chunk-3.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" class="plot" /></div>
 
   </article>
   <!-- Presenter Notes -->

@@ -1,7 +1,7 @@
 ---
 title       : Statistical linear regression models
 subtitle    : 
-author      : Brian Caffo, PhD
+author      : Brian Caffo, Jeff Leek, Roger Peng
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -23,8 +23,8 @@ $$
 Y_i = \beta_0 + \beta_1 X_i + \epsilon_{i}
 $$
 * Here the $\epsilon_{i}$ are assumed iid $N(0, \sigma^2)$. 
-* Note, $E[Y_i ~|~ X_i] = \mu_i = \beta_0 + \beta_1 X_i$
-* Note, $Var(Y_i ~|~ X_i) = \sigma^2$.
+* Note, $E[Y_i ~|~ X_i = x_i] = \mu_i = \beta_0 + \beta_1 x_i$
+* Note, $Var(Y_i ~|~ X_i = x_i) = \sigma^2$.
 * Likelihood equivalent model specification is that the $Y_i$ are independent $N(\mu_i, \sigma^2)$.
 
 ---
@@ -36,7 +36,7 @@ $$
 so that the twice the negative log (base e) likelihood is
 $$
 -2 \log\{ {\cal L}(\beta, \sigma) \}
-= \frac{1}{\sigma^2} \sum_{i=1}^n (y_i - \mu_i)^2 + n\log(\sigma)
+= \frac{1}{\sigma^2} \sum_{i=1}^n (y_i - \mu_i)^2 + n\log(\sigma^2)
 $$
 Discussion
 * Maximizing the likelihood is the same as minimizing -2 log likelihood
@@ -80,7 +80,7 @@ Y_i = \beta_0 + \beta_1 X_i + \epsilon_i
 = \beta_0 + \tilde \beta_1 (X_i a) + \epsilon_i
 $$
 * Therefore, multiplication of $X$ by a factor $a$ results in dividing the coefficient by a factor of $a$. 
-* Example: $X$ is height in $m$ in inches and $Y$ is weight in $kg$. Then $\beta_1$ is $kg/m$. Converting $X$ to $cm$ imples multiplying $X$ by $100 cm/m$. To get $\beta_1$ in the right units, we have to divide by $100 cm /m$ to get it to have the right units. 
+* Example: $X$ is height in $m$ and $Y$ is weight in $kg$. Then $\beta_1$ is $kg/m$. Converting $X$ to $cm$ implies multiplying $X$ by $100 cm/m$. To get $\beta_1$ in the right units, we have to divide by $100 cm /m$ to get it to have the right units. 
 $$
 X m \times \frac{100cm}{m} = (100 X) cm
 ~~\mbox{and}~~
