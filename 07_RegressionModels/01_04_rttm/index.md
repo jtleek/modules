@@ -1,7 +1,7 @@
 ---
 title       : Historical side note, Regression to Mediocrity
 subtitle    : Regression to the mean
-author      : Brian Caffo, PhD
+author      : Brian Caffo, Jeff Leek, Roger Peng PhD
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}

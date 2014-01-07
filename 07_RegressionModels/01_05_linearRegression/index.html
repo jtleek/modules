@@ -4,7 +4,7 @@
   <title>Statistical linear regression models</title>
   <meta charset="utf-8">
   <meta name="description" content="Statistical linear regression models">
-  <meta name="author" content="Brian Caffo, PhD">
+  <meta name="author" content="Brian Caffo, Jeff Leek, Roger Peng">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -43,7 +43,7 @@
       <hgroup class="auto-fadein">
         <h1>Statistical linear regression models</h1>
         <h2></h2>
-        <p>Brian Caffo, PhD<br/>Johns Hopkins Bloomberg School of Public Health</p>
+        <p>Brian Caffo, Jeff Leek, Roger Peng<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
           </slide>
 
@@ -60,8 +60,8 @@
 Y_i = \beta_0 + \beta_1 X_i + \epsilon_{i}
 \]</li>
 <li>Here the \(\epsilon_{i}\) are assumed iid \(N(0, \sigma^2)\). </li>
-<li>Note, \(E[Y_i ~|~ X_i] = \mu_i = \beta_0 + \beta_1 X_i\)</li>
-<li>Note, \(Var(Y_i ~|~ X_i) = \sigma^2\).</li>
+<li>Note, \(E[Y_i ~|~ X_i = x_i] = \mu_i = \beta_0 + \beta_1 x_i\)</li>
+<li>Note, \(Var(Y_i ~|~ X_i = x_i) = \sigma^2\).</li>
 <li>Likelihood equivalent model specification is that the \(Y_i\) are independent \(N(\mu_i, \sigma^2)\).</li>
 </ul>
 
@@ -81,7 +81,7 @@ Y_i = \beta_0 + \beta_1 X_i + \epsilon_{i}
 so that the twice the negative log (base e) likelihood is
 \[
 -2 \log\{ {\cal L}(\beta, \sigma) \}
-= \frac{1}{\sigma^2} \sum_{i=1}^n (y_i - \mu_i)^2 + n\log(\sigma)
+= \frac{1}{\sigma^2} \sum_{i=1}^n (y_i - \mu_i)^2 + n\log(\sigma^2)
 \]
 Discussion</p>
 
@@ -154,7 +154,7 @@ Y_i = \beta_0 + \beta_1 X_i + \epsilon_i
 = \beta_0 + \tilde \beta_1 (X_i a) + \epsilon_i
 \]</li>
 <li>Therefore, multiplication of \(X\) by a factor \(a\) results in dividing the coefficient by a factor of \(a\). </li>
-<li>Example: \(X\) is height in \(m\) in inches and \(Y\) is weight in \(kg\). Then \(\beta_1\) is \(kg/m\). Converting \(X\) to \(cm\) imples multiplying \(X\) by \(100 cm/m\). To get \(\beta_1\) in the right units, we have to divide by \(100 cm /m\) to get it to have the right units. 
+<li>Example: \(X\) is height in \(m\) and \(Y\) is weight in \(kg\). Then \(\beta_1\) is \(kg/m\). Converting \(X\) to \(cm\) implies multiplying \(X\) by \(100 cm/m\). To get \(\beta_1\) in the right units, we have to divide by \(100 cm /m\) to get it to have the right units. 
 \[
 X m \times \frac{100cm}{m} = (100 X) cm
 ~~\mbox{and}~~

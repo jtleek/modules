@@ -1,7 +1,7 @@
 ---
 title       : Least squares estimation of regression lines
 subtitle    : Regression via least squares
-author      : Brian Caffo, PhD
+author      : Brian Caffo, Jeff Leek and Roger Peng
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -21,7 +21,7 @@ mode        : selfcontained # {standalone, draft}
 ## General least squares for linear equations
 Consider again the parent and child height data from Galton
 
-<div class="rimage center"><img src="fig/freqGalton.png" title="plot of chunk freqGalton" alt="plot of chunk freqGalton" class="plot" /></div>
+<div class="rimage center"><img src="fig/unnamed-chunk-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div>
 
 
 ---
@@ -245,5 +245,5 @@ points(mean(x), mean(y), cex = 2, pch = 19)
 ```
 
 ---
-<div class="rimage center"><img src="fig/unnamed-chunk-5.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" class="plot" /></div>
+<div class="rimage center"><img src="fig/unnamed-chunk-6.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" class="plot" /></div>
 

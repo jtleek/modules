@@ -1,7 +1,7 @@
 ---
 title       : Introduction to regression
 subtitle    : Regression
-author      : Brian Caffo, PhD
+author      : Brian Caffo, Jeff Leek and Roger Peng
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -18,11 +18,11 @@ mode        : selfcontained # {standalone, draft}
 
 
 
-<img class=center src=../../assets/galton.jpg height=150>
+<img class=center src=fig/galton.jpg height=150>
 
 ### (Perhaps surprisingly, this example is still relevant)
 
-<img class=center src=../../assets/img/height.png height=150>
+<img class=center src=fig/height.png height=150>
 
 [http://www.nature.com/ejhg/journal/v17/n8/full/ejhg20095a.html](http://www.nature.com/ejhg/journal/v17/n8/full/ejhg20095a.html)
 
@@ -32,7 +32,7 @@ mode        : selfcontained # {standalone, draft}
 ## Questions for this class
 * Consider trying to answer the following kinds of questions:
   * To use the parents' heights to predict childrens' heights.
-  * To try to find a parsimonious, easily describe mean 
+  * To try to find a parsimonious, easily described mean 
     relationship between parent and children's heights.
   * To investigate the variation in childrens' heights that appears 
   unrelated to parents' heights (residual variation).
@@ -65,6 +65,8 @@ par(mfrow=c(1,2))
 hist(galton$child,col="blue",breaks=100)
 hist(galton$parent,col="blue",breaks=100)
 ```
+
+<div class="rimage center"><img src="fig/galton.png" title="plot of chunk galton" alt="plot of chunk galton" class="plot" /></div>
 
 
 ---
@@ -102,6 +104,8 @@ manipulate(myHist(mu), mu = slider(62, 74, step = 0.5))
   lines(rep(meanChild,100),seq(0,150,length=100),col="red",lwd=5)
 ```
 
+<div class="rimage center"><img src="fig/lsm.png" title="plot of chunk lsm" alt="plot of chunk lsm" class="plot" /></div>
+
 
 ---
 ### The math follows as:
@@ -131,11 +135,13 @@ $$
 plot(galton$parent,galton$child,pch=19,col="blue")
 ```
 
+<div class="rimage center"><img src="fig/unnamed-chunk-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div>
+
 
 ---
 Size of point represents number of points at that (X, Y) combination (See the Rmd file for the code).
 
-
+<div class="rimage center"><img src="fig/freqGalton.png" title="plot of chunk freqGalton" alt="plot of chunk freqGalton" class="plot" /></div>
 
 
 ---
@@ -169,7 +175,7 @@ myPlot <- function(beta){
   mse <- mean( (y - beta * x)^2 )
   title(paste("beta = ", beta, "mse = ", round(mse, 3)))
 }
-manipulate(myPlot(beta), beta = slider(0.8, 1.2, step = 0.02))
+manipulate(myPlot(beta), beta = slider(0.6, 1.2, step = 0.02))
 ```
 
 ---
@@ -177,13 +183,24 @@ manipulate(myPlot(beta), beta = slider(0.8, 1.2, step = 0.02))
 ### In the next few lectures we'll talk about why this is the solution
 
 ```r
-lm(child ~ parent, data = galton)
+lm(I(child - mean(child))~ I(parent - mean(parent)) - 1, data = galton)
+```
+
+```
+
+Call:
+lm(formula = I(child - mean(child)) ~ I(parent - mean(parent)) - 
+    1, data = galton)
+
+Coefficients:
+I(parent - mean(parent))  
+                   0.646  
 ```
 
 
 ---
 ## Visualizing the best fit line
 ### Size of points are frequencies at that X, Y combination
-
+<div class="rimage center"><img src="fig/unnamed-chunk-3.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" class="plot" /></div>
 
 

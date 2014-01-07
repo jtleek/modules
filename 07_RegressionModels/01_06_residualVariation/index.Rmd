@@ -1,7 +1,7 @@
 ---
 title       : Residuals and residual variation
 subtitle    : 
-author      : Brian Caffo, PhD
+author      : Brian Caffo, Jeff Leek and Roger Peng
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -203,7 +203,7 @@ So, $R^2$ is literally $r$ squared.
 
 ---
 ## Some facts about $R^2$
-* $R^2$ is the percentage of variation explained by the regression odel.
+* $R^2$ is the percentage of variation explained by the regression model.
 * $0 \leq R^2 \leq 1$
 * $R^2$ is the sample correlation squared.
 * $R^2$ can be a misleading summary of model fit. 
