@@ -79,28 +79,6 @@ getwd()
 
 ---
 
-## Types of files data may come from
-
-* Tab-delimited text
-* Comma-separated text
-* Excel file
-* JSON File 
-* HTML/XML file
-* Database
-
-
----
-
-## Where you can get data
-
-* From a colleague
-* From the web
-* From an application programming interface
-* By scraping a web page 
-
-
----
-
 ## Getting data from the internet - download.file()
 
 * Downloads a file from the internet

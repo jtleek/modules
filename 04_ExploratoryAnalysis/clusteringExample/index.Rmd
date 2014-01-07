@@ -1,5 +1,5 @@
 ---
-title       : Clustering Example
+title       : EDA Case Study - Understanding Human Activity with Smart Phones
 subtitle    : 
 author      : Roger D. Peng, Associate Professor of Biostatistics 
 job         : Johns Hopkins Bloomberg School of Public Health
@@ -189,7 +189,7 @@ plot(kClust$center[1,1:10],pch=19,ylab="Cluster Center",xlab="")
 ##  Cluster 2 Variable Centers (Walking)
 
 ```{r dependson="kmeans100",fig.height=4,fig.width=8,cache=FALSE}
-plot(kClust$center[6,1:10],pch=19,ylab="Cluster Center",xlab="")
+plot(kClust$center[4,1:10],pch=19,ylab="Cluster Center",xlab="")
 ```
 
 
