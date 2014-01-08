@@ -1,7 +1,7 @@
 ---
-title       : Inference
+title       : Introduction to statistical inference
 subtitle    : 
-author      : Brian Caffo, PhD
+author      : Brian Caffo, Jeff Leek, Roger Peng
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -67,15 +67,18 @@ to use data to create general conclusions about a population.
 - Paramount among our concerns are:
   - Is the sample representative of the population that we'd like to draw inferences about?
   - Are there known and observed, known and unobserved or unknown and unobserved variables that contaminate our conclusions?
-  - Is there systematic bias created by missing data?
+  - Is there systematic bias created by missing data or the design or conduct of the study?
   - What randomness exists in the data and how do we use or adjust for it? Here randomness can either be explicit via randomization
 or random sampling, or implicit as the aggregation of many complex uknown processes.
-- Statistical inference requires navigating the set of tools and thinking about how to draw conclusions from data.
+  - Are we trying to estimate an underlying mechanistic model of phenomena under study?
+- Statistical inference requires navigating the set of assumptions and
+tools and subsequently thinking about how to draw conclusions from data.
 
 --- 
 ## Example goals of inference
 
-1. Estimate a population quantity (the proportion of people who will
+1. Estimate and quantify the uncertainty of an estimate of 
+a population quantity (the proportion of people who will
   vote for a candidate).
 2. Determine whether a population quantity 
   is a benchmark value ("is the treatment effective?").
@@ -86,7 +89,7 @@ or random sampling, or implicit as the aggregation of many complex uknown proces
 
 
 ---
-## Example tools of inference 
+## Example tools of the trade 
 
 1. Randomization: concerned with balancing unobserved variables that may confound inferences of interest
 2. Random sampling: concerned with obtaining data that is representative 
@@ -130,29 +133,26 @@ Data scientists tend to fall within shades of gray of these and various other sc
 * In this class, we will primarily focus on basic sampling models, 
 basic probability models and frequency style analyses
 to create standard inferences. 
-* Being data scientists, 
-we will also consider some inferential strategies that 
-rely heavily on the observed data, such as permutation testing
+* Being data scientists,  we will also consider some inferential strategies that  rely heavily on the observed data, such as permutation testing
 and bootstrapping.
 * As probability modeling will be our starting point, we first build
 up basic probability.
 
 ---
-## Where to learn more on the inference topics less covered in the class
+## Where to learn more on the topics not covered
 
 1. Explicit use of random sampling in inferences: look in references
 on "finite population statistics". Used heavily in polling and
 sample surveys.
 2. Explicit use of randomization in inferences: look in references
-on "causal inference".
-3. Bayesian statistics: look for basic itroductory books (there are many).
+on "causal inference" especially in clinical trials.
+3. Bayesian probability and Bayesian statistics: look for basic itroductory books (there are many).
 4. Missing data: well covered in biostatistics and econometric
-references; look
-for references to "multiple imputation", a popular tool for
+references; look for references to "multiple imputation", a popular tool for
 addressing missing data.
 5. Study design: consider looking in the subject matter area that
-  you are interested in; for examples with rich histories in design:
-  1. The epidemiological literature is very focused on using study design to investigate public health
+  you are interested in; some examples with rich histories in design:
+  1. The epidemiological literature is very focused on using study design to investigate public health.
   2. The classical development of study design in agriculture broadly covers design and design principles.
   3. The industrial quality control literature covers design thoroughly.
  
