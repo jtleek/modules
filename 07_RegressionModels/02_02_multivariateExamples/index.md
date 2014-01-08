@@ -1,7 +1,7 @@
 ---
 title       : Multivariable regression examples
-subtitle    : 
-author      : Brian Caffo, PhD
+subtitle    : Regression Models
+author      : Brian Caffo, Jeff Leek and Roger Peng
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -86,8 +86,8 @@ summary(lm(y ~ x1))$coef
 
 ```
             Estimate Std. Error t value  Pr(>|t|)
-(Intercept)    1.955      1.161   1.684 9.534e-02
-x1            95.621      1.996  47.899 8.363e-70
+(Intercept)    1.758      1.104   1.593 1.144e-01
+x1            95.100      1.881  50.546 5.261e-72
 ```
 
 ```r
@@ -96,9 +96,9 @@ summary(lm(y ~ x1 + x2))$coef
 
 ```
              Estimate Std. Error  t value   Pr(>|t|)
-(Intercept)  0.002382  0.0020911    1.139  2.575e-01
-x1          -1.018909  0.0176964  -57.577  8.321e-77
-x2           1.000146  0.0001794 5574.023 7.717e-269
+(Intercept) -0.002992  0.0021942   -1.364  1.759e-01
+x1          -0.982973  0.0194025  -50.662  1.374e-71
+x2           0.999846  0.0001982 5044.296 1.242e-264
 ```
 
 
@@ -322,4 +322,229 @@ round(out, 3)
 * Perhaps taking logs of the counts would help. 
   * There are 0 counts, so maybe log(Count + 1)
 * Also, we'll cover Poisson GLMs for fitting count data.
+
+---
+
+## Example - Millenium Development Goal 1
+
+<img class=center src=../../assets/img/mdg1.png height=450>
+
+[http://www.un.org/millenniumgoals/pdf/MDG_FS_1_EN.pdf](http://www.un.org/millenniumgoals/pdf/MDG_FS_1_EN.pdf)
+
+[http://apps.who.int/gho/athena/data/GHO/WHOSIS_000008.csv?profile=text&filter=COUNTRY:*;SEX:*](http://apps.who.int/gho/athena/data/GHO/WHOSIS_000008.csv?profile=text&filter=COUNTRY:*;SEX:*)
+
+---
+
+## WHO childhood hunger data
+
+
+
+```r
+download.file("http://apps.who.int/gho/athena/data/GHO/WHOSIS_000008.csv?profile=text&filter=COUNTRY:*;SEX:*","./data/hunger.csv",method="curl")
+hunger <- read.csv("./data/hunger.csv")
+hunger <- hunger[hunger$Sex!="Both sexes",]
+head(hunger)
+```
+
+
+---
+
+## Plot percent hungry versus time
+
+
+```r
+lm1 <- lm(hunger$Numeric ~ hunger$Year)
+plot(hunger$Year,hunger$Numeric,pch=19,col="blue")
+```
+
+
+---
+
+## Remember the linear model
+
+$$Hu_i = b_0 + b_1 Y_i + e_i$$
+
+$b_0$ = percent hungry at Year 0
+
+$b_1$ = decrease in percent hungry per year
+
+$e_i$ = everything we didn't measure
+
+---
+
+## Add the linear model
+
+
+```r
+lm1 <- lm(hunger$Numeric ~ hunger$Year)
+plot(hunger$Year,hunger$Numeric,pch=19,col="blue")
+lines(hunger$Year,lm1$fitted,lwd=3,col="darkgrey")
+```
+
+
+
+---
+
+## Color by male/female
+
+
+```r
+plot(hunger$Year,hunger$Numeric,pch=19)
+points(hunger$Year,hunger$Numeric,pch=19,col=((hunger$Sex=="Male")*1+1))
+```
+
+
+---
+
+## Now two lines
+
+$$HuF_i = bf_0 + bf_1 YF_i + ef_i$$
+
+$bf_0$ = percent of girls hungry at Year 0
+
+$bf_1$ = decrease in percent of girls hungry per year
+
+$ef_i$ = everything we didn't measure 
+
+
+$$HuM_i = bm_0 + bm_1 YM_i + em_i$$
+
+$bm_0$ = percent of boys hungry at Year 0
+
+$bm_1$ = decrease in percent of boys hungry per year
+
+$em_i$ = everything we didn't measure 
+
+
+
+---
+
+## Color by male/female
+
+
+```r
+lmM <- lm(hunger$Numeric[hunger$Sex=="Male"] ~ hunger$Year[hunger$Sex=="Male"])
+lmF <- lm(hunger$Numeric[hunger$Sex=="Female"] ~ hunger$Year[hunger$Sex=="Female"])
+plot(hunger$Year,hunger$Numeric,pch=19)
+points(hunger$Year,hunger$Numeric,pch=19,col=((hunger$Sex=="Male")*1+1))
+lines(hunger$Year[hunger$Sex=="Male"],lmM$fitted,col="black",lwd=3)
+lines(hunger$Year[hunger$Sex=="Female"],lmF$fitted,col="red",lwd=3)
+```
+
+
+
+---
+
+## Two lines, same slope
+
+$$Hu_i = b_0 + b_1 \mathbb{1}(Sex_i="Male") + b_2 Y_i + e^*_i$$
+
+$b_0$ - percent hungry at year zero for females
+
+$b_0 + b_1$ - percent hungry at year zero for males
+
+$b_2$ - change in percent hungry (for either males or females) in one year
+
+$e^*_i$ - everything we didn't measure
+
+---
+
+## Two lines, same slope in R
+
+
+
+```r
+lmBoth <- lm(hunger$Numeric ~ hunger$Year + hunger$Sex)
+plot(hunger$Year,hunger$Numeric,pch=19)
+points(hunger$Year,hunger$Numeric,pch=19,col=((hunger$Sex=="Male")*1+1))
+abline(c(lmBoth$coeff[1],lmBoth$coeff[2]),col="red",lwd=3)
+abline(c(lmBoth$coeff[1] + lmBoth$coeff[3],lmBoth$coeff[2] ),col="black",lwd=3)
+```
+
+
+---
+
+## Two lines, different slopes (interactions)
+
+$$Hu_i = b_0 + b_1 \mathbb{1}(Sex_i="Male") + b_2 Y_i + b_3 \mathbb{1}(Sex_i="Male")\times Y_i + e^+_i$$
+
+$b_0$ - percent hungry at year zero for females
+
+$b_0 + b_1$ - percent hungry at year zero for males
+
+$b_2$ - change in percent hungry (females) in one year
+
+$b_2 + b_3$ - change in percent hungry (males) in one year
+
+$e^+_i$ - everything we didn't measure
+
+---
+
+## Two lines, different slopes in R
+
+
+
+```r
+lmBoth <- lm(hunger$Numeric ~ hunger$Year + hunger$Sex + hunger$Sex*hunger$Year)
+plot(hunger$Year,hunger$Numeric,pch=19)
+points(hunger$Year,hunger$Numeric,pch=19,col=((hunger$Sex=="Male")*1+1))
+abline(c(lmBoth$coeff[1],lmBoth$coeff[2]),col="red",lwd=3)
+abline(c(lmBoth$coeff[1] + lmBoth$coeff[3],lmBoth$coeff[2] +lmBoth$coeff[4]),col="black",lwd=3)
+```
+
+
+
+---
+
+## Two lines, different slopes in R
+
+
+
+```r
+summary(lmBoth)
+```
+
+
+---
+## Interpretting a continuous interaction
+$$
+E[Y_i | X_{1i}=x_1, X_{2i}=x_2] = \beta_0 + \beta_1 x_{1} + \beta_2 x_{2} + \beta_3 x_{1}x_{2}
+$$
+Holding $X_2$ constant we have
+$$
+E[Y_i | X_{1i}=x_1+1, X_{2i}=x_2]-E[Y_i | X_{1i}=x_1, X_{2i}=x_2]
+= \beta_1 + \beta_3 x_{2} 
+$$
+And thus the expected change in $Y$ per unit change in $X_1$ holding all else constant is not constant. $\beta_1$ is the slope when $x_{2} = 0$. Note further that:
+$$
+E[Y_i | X_{1i}=x_1+1, X_{2i}=x_2+1]-E[Y_i | X_{1i}=x_1, X_{2i}=x_2+1]
+$$
+$$
+-E[Y_i | X_{1i}=x_1+1, X_{2i}=x_2]-E[Y_i | X_{1i}=x_1, X_{2i}=x_2]
+$$
+$$
+=\beta_3  
+$$
+Thus, $\beta_3$ is the change in the expected change in $Y$ per unit change in $X_1$, per unit change in $X_2$.
+
+---
+
+## Example
+
+$$Hu_i = b_0 + b_1 In_i + b_2 Y_i + b_3 In_i \times Y_i + e^+_i$$
+
+$b_0$ - percent hungry at year zero for children with whose parents have no income
+
+$b_1$ - change in percent hungry for each dollar of income in year zero
+
+$b_2$ - change in percent hungry in one year for children whose parents have no income
+
+$b_3$ - increased change in percent hungry by year for each dollar of income  - e.g. if income is $10,000, then change in percent hungry in one year will be
+
+$$b_2 + 1e4 \times b_3$$
+
+$e^+_i$ - everything we didn't measure
+
+__Lot's of care/caution needed!__
+
 

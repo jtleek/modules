@@ -4,7 +4,7 @@
   <title>Multivariable regression examples</title>
   <meta charset="utf-8">
   <meta name="description" content="Multivariable regression examples">
-  <meta name="author" content="Brian Caffo, PhD">
+  <meta name="author" content="Brian Caffo, Jeff Leek and Roger Peng">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -42,8 +42,8 @@
       </aside>
       <hgroup class="auto-fadein">
         <h1>Multivariable regression examples</h1>
-        <h2></h2>
-        <p>Brian Caffo, PhD<br/>Johns Hopkins Bloomberg School of Public Health</p>
+        <h2>Regression Models</h2>
+        <p>Brian Caffo, Jeff Leek and Roger Peng<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
           </slide>
 
@@ -146,17 +146,17 @@ summary(lm(y ~ x1))$coef
 </code></pre>
 
 <pre><code>            Estimate Std. Error t value  Pr(&gt;|t|)
-(Intercept)    1.955      1.161   1.684 9.534e-02
-x1            95.621      1.996  47.899 8.363e-70
+(Intercept)    1.758      1.104   1.593 1.144e-01
+x1            95.100      1.881  50.546 5.261e-72
 </code></pre>
 
 <pre><code class="r">summary(lm(y ~ x1 + x2))$coef
 </code></pre>
 
 <pre><code>             Estimate Std. Error  t value   Pr(&gt;|t|)
-(Intercept)  0.002382  0.0020911    1.139  2.575e-01
-x1          -1.018909  0.0176964  -57.577  8.321e-77
-x2           1.000146  0.0001794 5574.023 7.717e-269
+(Intercept) -0.002992  0.0021942   -1.364  1.759e-01
+x1          -0.982973  0.0194025  -50.662  1.374e-71
+x2           0.999846  0.0001982 5044.296 1.242e-264
 </code></pre>
 
   </article>
@@ -472,6 +472,273 @@ round(out, 3)
 </ul></li>
 <li>Also, we&#39;ll cover Poisson GLMs for fitting count data.</li>
 </ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h2>Example - Millenium Development Goal 1</h2>
+  </hgroup>
+  <article>
+    <p><img class=center src=../../assets/img/mdg1.png height=450></p>
+
+<p><a href="http://www.un.org/millenniumgoals/pdf/MDG_FS_1_EN.pdf">http://www.un.org/millenniumgoals/pdf/MDG_FS_1_EN.pdf</a></p>
+
+<p><a href="http://apps.who.int/gho/athena/data/GHO/WHOSIS_000008.csv?profile=text&amp;filter=COUNTRY:*;SEX:*">http://apps.who.int/gho/athena/data/GHO/WHOSIS_000008.csv?profile=text&amp;filter=COUNTRY:<em>;SEX:</em></a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-21" style="background:;">
+  <hgroup>
+    <h2>WHO childhood hunger data</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">download.file(&quot;http://apps.who.int/gho/athena/data/GHO/WHOSIS_000008.csv?profile=text&amp;filter=COUNTRY:*;SEX:*&quot;,&quot;./data/hunger.csv&quot;,method=&quot;curl&quot;)
+hunger &lt;- read.csv(&quot;./data/hunger.csv&quot;)
+hunger &lt;- hunger[hunger$Sex!=&quot;Both sexes&quot;,]
+head(hunger)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-22" style="background:;">
+  <hgroup>
+    <h2>Plot percent hungry versus time</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">lm1 &lt;- lm(hunger$Numeric ~ hunger$Year)
+plot(hunger$Year,hunger$Numeric,pch=19,col=&quot;blue&quot;)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-23" style="background:;">
+  <hgroup>
+    <h2>Remember the linear model</h2>
+  </hgroup>
+  <article>
+    <p>\[Hu_i = b_0 + b_1 Y_i + e_i\]</p>
+
+<p>\(b_0\) = percent hungry at Year 0</p>
+
+<p>\(b_1\) = decrease in percent hungry per year</p>
+
+<p>\(e_i\) = everything we didn&#39;t measure</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-24" style="background:;">
+  <hgroup>
+    <h2>Add the linear model</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">lm1 &lt;- lm(hunger$Numeric ~ hunger$Year)
+plot(hunger$Year,hunger$Numeric,pch=19,col=&quot;blue&quot;)
+lines(hunger$Year,lm1$fitted,lwd=3,col=&quot;darkgrey&quot;)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-25" style="background:;">
+  <hgroup>
+    <h2>Color by male/female</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">plot(hunger$Year,hunger$Numeric,pch=19)
+points(hunger$Year,hunger$Numeric,pch=19,col=((hunger$Sex==&quot;Male&quot;)*1+1))
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-26" style="background:;">
+  <hgroup>
+    <h2>Now two lines</h2>
+  </hgroup>
+  <article>
+    <p>\[HuF_i = bf_0 + bf_1 YF_i + ef_i\]</p>
+
+<p>\(bf_0\) = percent of girls hungry at Year 0</p>
+
+<p>\(bf_1\) = decrease in percent of girls hungry per year</p>
+
+<p>\(ef_i\) = everything we didn&#39;t measure </p>
+
+<p>\[HuM_i = bm_0 + bm_1 YM_i + em_i\]</p>
+
+<p>\(bm_0\) = percent of boys hungry at Year 0</p>
+
+<p>\(bm_1\) = decrease in percent of boys hungry per year</p>
+
+<p>\(em_i\) = everything we didn&#39;t measure </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-27" style="background:;">
+  <hgroup>
+    <h2>Color by male/female</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">lmM &lt;- lm(hunger$Numeric[hunger$Sex==&quot;Male&quot;] ~ hunger$Year[hunger$Sex==&quot;Male&quot;])
+lmF &lt;- lm(hunger$Numeric[hunger$Sex==&quot;Female&quot;] ~ hunger$Year[hunger$Sex==&quot;Female&quot;])
+plot(hunger$Year,hunger$Numeric,pch=19)
+points(hunger$Year,hunger$Numeric,pch=19,col=((hunger$Sex==&quot;Male&quot;)*1+1))
+lines(hunger$Year[hunger$Sex==&quot;Male&quot;],lmM$fitted,col=&quot;black&quot;,lwd=3)
+lines(hunger$Year[hunger$Sex==&quot;Female&quot;],lmF$fitted,col=&quot;red&quot;,lwd=3)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-28" style="background:;">
+  <hgroup>
+    <h2>Two lines, same slope</h2>
+  </hgroup>
+  <article>
+    <p>\[Hu_i = b_0 + b_1 \mathbb{1}(Sex_i="Male") + b_2 Y_i + e^*_i\]</p>
+
+<p>\(b_0\) - percent hungry at year zero for females</p>
+
+<p>\(b_0 + b_1\) - percent hungry at year zero for males</p>
+
+<p>\(b_2\) - change in percent hungry (for either males or females) in one year</p>
+
+<p>\(e^*_i\) - everything we didn&#39;t measure</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-29" style="background:;">
+  <hgroup>
+    <h2>Two lines, same slope in R</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">lmBoth &lt;- lm(hunger$Numeric ~ hunger$Year + hunger$Sex)
+plot(hunger$Year,hunger$Numeric,pch=19)
+points(hunger$Year,hunger$Numeric,pch=19,col=((hunger$Sex==&quot;Male&quot;)*1+1))
+abline(c(lmBoth$coeff[1],lmBoth$coeff[2]),col=&quot;red&quot;,lwd=3)
+abline(c(lmBoth$coeff[1] + lmBoth$coeff[3],lmBoth$coeff[2] ),col=&quot;black&quot;,lwd=3)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-30" style="background:;">
+  <hgroup>
+    <h2>Two lines, different slopes (interactions)</h2>
+  </hgroup>
+  <article>
+    <p>\[Hu_i = b_0 + b_1 \mathbb{1}(Sex_i="Male") + b_2 Y_i + b_3 \mathbb{1}(Sex_i="Male")\times Y_i + e^+_i\]</p>
+
+<p>\(b_0\) - percent hungry at year zero for females</p>
+
+<p>\(b_0 + b_1\) - percent hungry at year zero for males</p>
+
+<p>\(b_2\) - change in percent hungry (females) in one year</p>
+
+<p>\(b_2 + b_3\) - change in percent hungry (males) in one year</p>
+
+<p>\(e^+_i\) - everything we didn&#39;t measure</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-31" style="background:;">
+  <hgroup>
+    <h2>Two lines, different slopes in R</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">lmBoth &lt;- lm(hunger$Numeric ~ hunger$Year + hunger$Sex + hunger$Sex*hunger$Year)
+plot(hunger$Year,hunger$Numeric,pch=19)
+points(hunger$Year,hunger$Numeric,pch=19,col=((hunger$Sex==&quot;Male&quot;)*1+1))
+abline(c(lmBoth$coeff[1],lmBoth$coeff[2]),col=&quot;red&quot;,lwd=3)
+abline(c(lmBoth$coeff[1] + lmBoth$coeff[3],lmBoth$coeff[2] +lmBoth$coeff[4]),col=&quot;black&quot;,lwd=3)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-32" style="background:;">
+  <hgroup>
+    <h2>Two lines, different slopes in R</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">summary(lmBoth)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-33" style="background:;">
+  <hgroup>
+    <h2>Interpretting a continuous interaction</h2>
+  </hgroup>
+  <article>
+    <p>\[
+E[Y_i | X_{1i}=x_1, X_{2i}=x_2] = \beta_0 + \beta_1 x_{1} + \beta_2 x_{2} + \beta_3 x_{1}x_{2}
+\]
+Holding \(X_2\) constant we have
+\[
+E[Y_i | X_{1i}=x_1+1, X_{2i}=x_2]-E[Y_i | X_{1i}=x_1, X_{2i}=x_2]
+= \beta_1 + \beta_3 x_{2} 
+\]
+And thus the expected change in \(Y\) per unit change in \(X_1\) holding all else constant is not constant. \(\beta_1\) is the slope when \(x_{2} = 0\). Note further that:
+\[
+E[Y_i | X_{1i}=x_1+1, X_{2i}=x_2+1]-E[Y_i | X_{1i}=x_1, X_{2i}=x_2+1]
+\]
+\[
+-E[Y_i | X_{1i}=x_1+1, X_{2i}=x_2]-E[Y_i | X_{1i}=x_1, X_{2i}=x_2]
+\]
+\[
+=\beta_3  
+\]
+Thus, \(\beta_3\) is the change in the expected change in \(Y\) per unit change in \(X_1\), per unit change in \(X_2\).</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-34" style="background:;">
+  <hgroup>
+    <h2>Example</h2>
+  </hgroup>
+  <article>
+    <p>\[Hu_i = b_0 + b_1 In_i + b_2 Y_i + b_3 In_i \times Y_i + e^+_i\]</p>
+
+<p>\(b_0\) - percent hungry at year zero for children with whose parents have no income</p>
+
+<p>\(b_1\) - change in percent hungry for each dollar of income in year zero</p>
+
+<p>\(b_2\) - change in percent hungry in one year for children whose parents have no income</p>
+
+<p>\(b_3\) - increased change in percent hungry by year for each dollar of income  - e.g. if income is $10,000, then change in percent hungry in one year will be</p>
+
+<p>\[b_2 + 1e4 \times b_3\]</p>
+
+<p>\(e^+_i\) - everything we didn&#39;t measure</p>
+
+<p><strong>Lot&#39;s of care/caution needed!</strong></p>
 
   </article>
   <!-- Presenter Notes -->
