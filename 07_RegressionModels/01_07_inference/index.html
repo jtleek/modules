@@ -4,7 +4,7 @@
   <title>Inference in regression</title>
   <meta charset="utf-8">
   <meta name="description" content="Inference in regression">
-  <meta name="author" content="Brian Caffo, PhD">
+  <meta name="author" content="Brian Caffo, Jeff Leek and Roger Peng">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -43,7 +43,7 @@
       <hgroup class="auto-fadein">
         <h1>Inference in regression</h1>
         <h2></h2>
-        <p>Brian Caffo, PhD<br/>Johns Hopkins Bloomberg School of Public Health</p>
+        <p>Brian Caffo, Jeff Leek and Roger Peng<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
           </slide>
 
@@ -79,7 +79,7 @@ Y_i = \beta_0 + \beta_1 X_i + \epsilon_i
 
 <ol>
 <li>Is normally distributed and has a finite sample Student&#39;s T distribution if the estimated variance is replaced with a sample estimate (under normality assumptions).</li>
-<li>Can be used to test \(H_0 : \theta = \theta_0\) versus \(H_a : \theta \geq, \leq, \neq \theta\).</li>
+<li>Can be used to test \(H_0 : \theta = \theta_0\) versus \(H_a : \theta >, <, \neq \theta_0\).</li>
 <li>Can be used to create a confidence interval for \(\theta\) via \(\hat \theta \pm Q_{1-\alpha/2} \hat \sigma_{\hat \theta}\)
 where \(Q_{1-\alpha/2}\) is the relevant quantile from either a normal or T distribution.</li>
 </ol></li>
@@ -103,10 +103,9 @@ the normal results hold to create intervals and confidence intervals</li>
 \begin{align}
 Var(\hat \beta_1) & =
 Var\left(\frac{\sum_{i=1}^n (Y_i - \bar Y) (X_i - \bar X)}{\sum_{i=1}^n (X_i - \bar X)^2}\right) \\
-& = \frac{Var\left(\sum_{i=1}^n (Y_i - \bar Y)(X_i - \bar X) \right) }{\left(\sum_{i=1}^n (X_i - \bar X)^2 \right)^2} \\
-& = \frac{ E\left[ \left\{ \sum_{i=1}^n (Y_i - \bar Y)(X_i - \bar X) \right\}^2 \right]  - \left\{ E\left[\sum_{i=1}^n (Y_i - \bar Y)(X_i - \bar X) \right] \right\}^2}{\left(\sum_{i=1}^n (X_i - \bar X)^2 \right)^2} \\
-& = \frac{E\left[ \left\{\sum_{i=1}^n (Y_i - \bar Y)(X_i - \bar X) \right\}^2 \right]}{\left(\sum_{i=1}^n (X_i - \bar X)^2 \right)^2} \\
-& = \frac{E\left[ \left\{ \sum_{i=1}^n\sum_{j=1}^n (Y_i - \bar Y)(X_i - \bar X)(Y_j - \bar Y)(X_j - \bar X)  \right\} \right]}{\left(\sum_{i=1}^n (X_i - \bar X)^2 \right)^2}
+& = \frac{Var\left(\sum_{i=1}^n Y_i (X_i - \bar X) \right) }{\left(\sum_{i=1}^n (X_i - \bar X)^2 \right)^2} \\
+& = \frac{\sum_{i=1}^n \sigma^2(X_i - \bar X)^2}{\left(\sum_{i=1}^n (X_i - \bar X)^2 \right)^2} \\
+& = \frac{\sigma^2}{\sum_{i=1}^n (X_i - \bar X)^2} \\
 \end{align}
 \]</p>
 
@@ -115,25 +114,6 @@ Var\left(\frac{\sum_{i=1}^n (Y_i - \bar Y) (X_i - \bar X)}{\sum_{i=1}^n (X_i - \
 </slide>
 
       <slide class="" id="slide-4" style="background:;">
-  <hgroup>
-    <h2>continued</h2>
-  </hgroup>
-  <article>
-    <p>\[
-\begin{align}
-Var(\hat \beta_1) & = \frac{E\left[ \left\{ \sum_{i=1}^n\sum_{j=1}^n (Y_i - \bar Y)(X_i - \bar X)(Y_j - \bar Y)(X_j - \bar X)  \right\} \right]}{\left(\sum_{i=1}^n (X_i - \bar X)^2 \right)^2} \\
-& = \frac{\sum_{i=1}^n E\left[(Y_i - \bar Y)^2\right](X_i - \bar X)^2}{\left(\sum_{i=1}^n (X_i - \bar X)^2 \right)^2}\\
-& = \frac{\sigma^2\sum_{i=1}^n (X_i - \bar X)^2}{\left(\sum_{i=1}^n (X_i - \bar X)^2 \right)^2} \\
-& = \frac{\sigma^2}{\sum_{i=1}^n (X_i - \bar X)^2 }
-\end{align} 
-\]
-(WHEW!)</p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-5" style="background:;">
   <hgroup>
     <h2>Results</h2>
   </hgroup>
@@ -155,7 +135,7 @@ hypothesis tests.</li>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-6" style="background:;">
+      <slide class="" id="slide-5" style="background:;">
   <hgroup>
     <h2>Example diamond data set</h2>
   </hgroup>
@@ -181,7 +161,7 @@ rownames(coefTable) &lt;- c(&quot;(Intercept)&quot;, &quot;x&quot;)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-7" style="background:;">
+      <slide class="" id="slide-6" style="background:;">
   <hgroup>
     <h2>Example continued</h2>
   </hgroup>
@@ -207,7 +187,7 @@ x             3721.0      81.79   45.50 6.751e-40
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-8" style="background:;">
+      <slide class="" id="slide-7" style="background:;">
   <hgroup>
     <h2>Getting a confidence interval</h2>
   </hgroup>
@@ -232,7 +212,7 @@ diamond size results in a 355.6 to 388.6 increase in price in (Singapore) dollar
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-9" style="background:;">
+      <slide class="" id="slide-8" style="background:;">
   <hgroup>
     <h2>Prediction of outcomes</h2>
   </hgroup>
@@ -260,7 +240,7 @@ at point \(x_0\). </li>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-10" style="background:;">
+      <slide class="" id="slide-9" style="background:;">
   <hgroup>
     <h2>Plotting the prediction intervals</h2>
   </hgroup>
@@ -281,7 +261,7 @@ lines(xVals, yVals - 2 * se2)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-11" style="background:;">
+      <slide class="" id="slide-10" style="background:;">
   <hgroup>
     <h2>Plotting the prediction intervals</h2>
   </hgroup>
@@ -292,7 +272,7 @@ lines(xVals, yVals - 2 * se2)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-12" style="background:;">
+      <slide class="" id="slide-11" style="background:;">
   <hgroup>
     <h2>Discussion</h2>
   </hgroup>
@@ -321,7 +301,7 @@ in the data around the line.
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-13" style="background:;">
+      <slide class="" id="slide-12" style="background:;">
   <hgroup>
     <h2>In R</h2>
   </hgroup>
@@ -339,7 +319,7 @@ lines(xVals, p2[,2]); lines(xVals, p2[,3])
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-14" style="background:;">
+      <slide class="" id="slide-13" style="background:;">
   <hgroup>
     
   </hgroup>

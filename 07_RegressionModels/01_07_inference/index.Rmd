@@ -1,7 +1,7 @@
 ---
 title       : Inference in regression
 subtitle    : 
-author      : Brian Caffo, PhD
+author      : Brian Caffo, Jeff Leek and Roger Peng
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -44,7 +44,7 @@ $$
 ## Review
 * Statistics like $\frac{\hat \theta - \theta}{\hat \sigma_{\hat \theta}}$ often have the following properties.
     1. Is normally distributed and has a finite sample Student's T distribution if the estimated variance is replaced with a sample estimate (under normality assumptions).
-    3. Can be used to test $H_0 : \theta = \theta_0$ versus $H_a : \theta \geq, \leq, \neq \theta$.
+    3. Can be used to test $H_0 : \theta = \theta_0$ versus $H_a : \theta >, <, \neq \theta_0$.
     4. Can be used to create a confidence interval for $\theta$ via $\hat \theta \pm Q_{1-\alpha/2} \hat \sigma_{\hat \theta}$
     where $Q_{1-\alpha/2}$ is the relevant quantile from either a normal or T distribution.
 * In the case of regression with iid sampling assumptions and normal errors, our inferences will follow
@@ -59,24 +59,11 @@ $$
 \begin{align}
 Var(\hat \beta_1) & =
 Var\left(\frac{\sum_{i=1}^n (Y_i - \bar Y) (X_i - \bar X)}{\sum_{i=1}^n (X_i - \bar X)^2}\right) \\
-& = \frac{Var\left(\sum_{i=1}^n (Y_i - \bar Y)(X_i - \bar X) \right) }{\left(\sum_{i=1}^n (X_i - \bar X)^2 \right)^2} \\
-& = \frac{ E\left[ \left\{ \sum_{i=1}^n (Y_i - \bar Y)(X_i - \bar X) \right\}^2 \right]  - \left\{ E\left[\sum_{i=1}^n (Y_i - \bar Y)(X_i - \bar X) \right] \right\}^2}{\left(\sum_{i=1}^n (X_i - \bar X)^2 \right)^2} \\
-& = \frac{E\left[ \left\{\sum_{i=1}^n (Y_i - \bar Y)(X_i - \bar X) \right\}^2 \right]}{\left(\sum_{i=1}^n (X_i - \bar X)^2 \right)^2} \\
-& = \frac{E\left[ \left\{ \sum_{i=1}^n\sum_{j=1}^n (Y_i - \bar Y)(X_i - \bar X)(Y_j - \bar Y)(X_j - \bar X)  \right\} \right]}{\left(\sum_{i=1}^n (X_i - \bar X)^2 \right)^2}
+& = \frac{Var\left(\sum_{i=1}^n Y_i (X_i - \bar X) \right) }{\left(\sum_{i=1}^n (X_i - \bar X)^2 \right)^2} \\
+& = \frac{\sum_{i=1}^n \sigma^2(X_i - \bar X)^2}{\left(\sum_{i=1}^n (X_i - \bar X)^2 \right)^2} \\
+& = \frac{\sigma^2}{\sum_{i=1}^n (X_i - \bar X)^2} \\
 \end{align}
 $$
-
----
-## continued
-$$
-\begin{align}
-Var(\hat \beta_1) & = \frac{E\left[ \left\{ \sum_{i=1}^n\sum_{j=1}^n (Y_i - \bar Y)(X_i - \bar X)(Y_j - \bar Y)(X_j - \bar X)  \right\} \right]}{\left(\sum_{i=1}^n (X_i - \bar X)^2 \right)^2} \\
-& = \frac{\sum_{i=1}^n E\left[(Y_i - \bar Y)^2\right](X_i - \bar X)^2}{\left(\sum_{i=1}^n (X_i - \bar X)^2 \right)^2}\\
-& = \frac{\sigma^2\sum_{i=1}^n (X_i - \bar X)^2}{\left(\sum_{i=1}^n (X_i - \bar X)^2 \right)^2} \\
-& = \frac{\sigma^2}{\sum_{i=1}^n (X_i - \bar X)^2 }
-\end{align} 
-$$
-(WHEW!)
 
 ---
 ## Results
