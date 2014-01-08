@@ -4,7 +4,7 @@
   <title>Multivariable regression</title>
   <meta charset="utf-8">
   <meta name="description" content="Multivariable regression">
-  <meta name="author" content="Brian Caffo, PhD">
+  <meta name="author" content="Brian Caffo, Roger Peng and Jeff Leek">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -43,14 +43,14 @@
       <hgroup class="auto-fadein">
         <h1>Multivariable regression</h1>
         <h2></h2>
-        <p>Brian Caffo, PhD<br/>Johns Hopkins Bloomberg School of Public Health</p>
+        <p>Brian Caffo, Roger Peng and Jeff Leek<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
           </slide>
 
     <!-- SLIDES -->
       <slide class="" id="slide-1" style="background:;">
   <hgroup>
-    <h2>Multivariate regression analyses</h2>
+    <h2>Multivariable regression analyses</h2>
   </hgroup>
   <article>
     <ul>
@@ -71,7 +71,7 @@ breath mint useage (mints per day, X) and pulmonary function
 
       <slide class="" id="slide-2" style="background:;">
   <hgroup>
-    <h2>Multivariate regression analyses</h2>
+    <h2>Multivariable regression analyses</h2>
   </hgroup>
   <article>
     <ul>
@@ -111,7 +111,7 @@ Y_i =  \beta_1 X_{1i} + \beta_2 X_{2i} + \ldots +
 <li>Least squares (and hence ML estimates under iid Gaussianity 
 of the errors) minimizes
 \[
-\sum_{i=1}^n \left(Y_i - \sum_{k=1}^p X_{ik} \beta_j\right)^2
+\sum_{i=1}^n \left(Y_i - \sum_{k=1}^p X_{ki} \beta_j\right)^2
 \]</li>
 <li>Note, the important linearity is linearity in the coefficients.
 Thus
@@ -134,8 +134,8 @@ predictor variables.)</li>
   <article>
     <ul>
 <li>The real way requires linear algebra. We&#39;ll go over an intuitive development instead. </li>
-<li>Recall that the LS estimate for regression through the origin, \(E[Y_i]=X_{i1}\beta_1\), was \(\sum X_i Y_i / \sum X_i^2\).</li>
-<li>Let&#39;s consider two regressors, \(E[Y_i] = X_{i1}\beta_1 + X_{i2}\beta_2 = \mu_i\). </li>
+<li>Recall that the LS estimate for regression through the origin, \(E[Y_i]=X_{1i}\beta_1\), was \(\sum X_i Y_i / \sum X_i^2\).</li>
+<li>Let&#39;s consider two regressors, \(E[Y_i] = X_{1i}\beta_1 + X_{2i}\beta_2 = \mu_i\). </li>
 <li>Also, recall, that if \(\hat \mu_i\) satisfies
 \[
 \sum_{i=1} (Y_i - \hat \mu_i) (\hat \mu_i - \mu_i) = 0
@@ -153,25 +153,25 @@ for all possible values of \(\mu_i\), then we&#39;ve found the LS estimates.</li
   </hgroup>
   <article>
     <p>\[
-\sum_{i=1}^n (Y_i - \hat \mu_i) (\hat \mu_i - \mu_i) = \sum_{i=1}^n (Y_i - \hat \beta_1 X_{i1} - \hat \beta_2 X_{i2})
-\left\{X_{i1}(\hat \beta_1 - \beta_1) + X_{i2}(\hat \beta_2 - \beta_2) \right\}
+\sum_{i=1}^n (Y_i - \hat \mu_i) (\hat \mu_i - \mu_i) = \sum_{i=1}^n (Y_i - \hat \beta_1 X_{1i} - \hat \beta_2 X_{2i})
+\left\{X_{1i}(\hat \beta_1 - \beta_1) + X_{2i}(\hat \beta_2 - \beta_2) \right\}
 \]</p>
 
 <ul>
 <li>Thus we need 
 
 <ol>
-<li>\(\sum_{i=1}^n (Y_i - \hat \beta_1 X_{i1} - \hat \beta_2 X_{i2}) X_{i1} = 0\) </li>
-<li> \(\sum_{i=1}^n (Y_i - \hat \beta_1 X_{i1} - \hat \beta_2 X_{i2}) X_{i2} = 0\)</li>
+<li>\(\sum_{i=1}^n (Y_i - \hat \beta_1 X_{1i} - \hat \beta_2 X_{2i}) X_{1i} = 0\) </li>
+<li> \(\sum_{i=1}^n (Y_i - \hat \beta_1 X_{1i} - \hat \beta_2 X_{2i}) X_{2i} = 0\)</li>
 </ol></li>
 <li>Hold \(\hat \beta_1\) fixed in 2. and solve and we get that
 \[
-\hat \beta_2 = \frac{\sum_{i=1} (Y_i - X_{i1}\hat \beta_1)X_{i2}}{\sum_{i=1}^n X_{i2}^2}
+\hat \beta_2 = \frac{\sum_{i=1} (Y_i - X_{1i}\hat \beta_1)X_{2i}}{\sum_{i=1}^n X_{2i}^2}
 \]</li>
 <li>Plugging this into 1. we get that
 \[
-0 = \sum_{i=1}^n \left\{Y_i - \frac{\sum_j X_{j2}Y_j}{\sum_j X_{j2}^2}X_{i2} + 
-\beta_1 \left(X_{i1} - \frac{\sum_j X_{j2}X_{j1}}{\sum_j X_{j2}^2} X_{i2}\right)\right\} X_{i1}
+0 = \sum_{i=1}^n \left\{Y_i - \frac{\sum_j X_{2j}Y_j}{\sum_j X_{2j}^2}X_{2i} + 
+\beta_1 \left(X_{1i} - \frac{\sum_j X_{2j}X_{1j}}{\sum_j X_{2j}^2} X_{2i}\right)\right\} X_{1i}
 \]</li>
 </ul>
 
@@ -188,7 +188,7 @@ for all possible values of \(\mu_i\), then we&#39;ve found the LS estimates.</li
 <li>Re writing  this we get
 \[
 0 = \sum_{i=1}^n \left\{ e_{i, Y | X_2} - \hat \beta_1 e_{i, X_1 | X_2} 
-\right\} X_{i1} 
+\right\} X_{1i} 
 \]
 where \(e_{i, a | b} = a_i -  \frac{\sum_{j=1}^n a_j b_j }{\sum_{i=1}^n b_j^2} b_i\) is the residual when regressing \(b\) from \(a\) without an intercept.</li>
 <li>We get the solution
@@ -210,14 +210,14 @@ where \(e_{i, a | b} = a_i -  \frac{\sum_{j=1}^n a_j b_j }{\sum_{i=1}^n b_j^2} b
 <li>But note that 
 \[
 \sum_{i=1}^n e_{i, X_1 | X_2}^2 
-= e_{i, X_1 | X_2} \left(X_{i1} - \frac{\sum_j X_{j2}X_{j1}}{\sum_j X_{j2}^2} X_{i2}\right)
+= \sum_{i=1}^n e_{i, X_1 | X_2} \left(X_{1i} - \frac{\sum_j X_{2j}X_{1j}}{\sum_j X_{2j}^2} X_{2i}\right)
 \]
 \[
-= \sum_{i=1}^n e_{i, X_1 | X_2} X_{i1} - \frac{\sum_j X_{j2}X_{j1}}{\sum_j X_{j2}^2} \sum_{i=1}^n e_{i, X_1 | X_2} X_{i2}
+= \sum_{i=1}^n e_{i, X_1 | X_2} X_{1i} - \frac{\sum_j X_{2j}X_{1j}}{\sum_j X_{2j}^2} \sum_{i=1}^n e_{i, X_1 | X_2} X_{2i}
 \]
-But \(\sum_{i=1}^n e_{i, X_1 | X_2} X_{i2} = 0\). So we get that
+But \(\sum_{i=1}^n e_{i, X_1 | X_2} X_{2i} = 0\). So we get that
 \[
-\sum_{i=1}^n e_{i, X_1 | X_2}^2  = \sum_{i=1}^n e_{i, X_1 | X_2} X_{i1}
+\sum_{i=1}^n e_{i, X_1 | X_2}^2  = \sum_{i=1}^n e_{i, X_1 | X_2} X_{1i}
 \]
 Thus we get that
 \[
@@ -255,10 +255,10 @@ from both the regressor and response.</li>
   </hgroup>
   <article>
     <ul>
-<li>\(Y_{i} = \beta_1 X_{i1} + \beta_2 X_{i2}\) where  \(X_{i2} = 1\) is an intercept term.</li>
-<li>Then  \(\frac{\sum_j X_{j2}X_{j1}}{\sum_j X_{j2}^2}X_{i2} = 
-\frac{\sum_j X_{j1}}{n} = \bar X_1\). </li>
-<li>\(e_{i, X_1 | X_2} = X_{i1} - \bar X_1\).</li>
+<li>\(Y_{i} = \beta_1 X_{1i} + \beta_2 X_{2i}\) where  \(X_{2i} = 1\) is an intercept term.</li>
+<li>Then  \(\frac{\sum_j X_{2j}X_{1j}}{\sum_j X_{2j}^2}X_{2i} = 
+\frac{\sum_j X_{1j}}{n} = \bar X_1\). </li>
+<li>\(e_{i, X_1 | X_2} = X_{1i} - \bar X_1\).</li>
 <li>Simiarly \(e_{i, Y | X_2} = Y_i - \bar Y\).</li>
 <li>Thus
 \[
@@ -279,7 +279,7 @@ from both the regressor and response.</li>
     <ul>
 <li>The equations
 \[
-\sum_{i=1}^n (Y_i - X_{i1}\hat \beta_1 - \ldots - X_{ip}\hat \beta_p) X_k = 0
+\sum_{i=1}^n (Y_i - X_{1i}\hat \beta_1 - \ldots - X_{ip}\hat \beta_p) X_k = 0
 \]
 for \(k = 1, \ldots, p\) yields \(p\) equations with \(p\) unknowns.</li>
 <li>Solving them yields the least squares estimates. (With obtaining a good, fast, general solution requiring some knowledge of linear algebra.)</li>
@@ -298,12 +298,12 @@ for \(k = 1, \ldots, p\) yields \(p\) equations with \(p\) unknowns.</li>
   <article>
     <p>Just so I don&#39;t leave you hanging, let&#39;s show a way to get estimates. Recall the equations:
 \[
-\sum_{i=1}^n (Y_i - X_{i1}\hat \beta_1 - \ldots - X_{ip}\hat \beta_p) X_k = 0
+\sum_{i=1}^n (Y_i - X_{1i}\hat \beta_1 - \ldots - X_{ip}\hat \beta_p) X_k = 0
 \]
 If I hold \(\hat \beta_1, \ldots, \hat \beta_{p-1}\) fixed then
 we get that
 \[
-\hat \beta_p = \frac{\sum_{i=1}^n (Y_i - X_{i1}\hat \beta_1 - \ldots - X_{i,p-1}\hat \beta_{p-1}) X_{ip} }{\sum_{i=1}^n X_{ip}^2}
+\hat \beta_p = \frac{\sum_{i=1}^n (Y_i - X_{1i}\hat \beta_1 - \ldots - X_{i,p-1}\hat \beta_{p-1}) X_{ip} }{\sum_{i=1}^n X_{ip}^2}
 \]
 Plugging this back into the equations, we wind up with 
 \[
@@ -379,14 +379,14 @@ ex &lt;- e(e(x, x2), e(x3, x2))
 sum(ey * ex) / sum(ex ^ 2)
 </code></pre>
 
-<pre><code>[1] 0.9936
+<pre><code>[1] 1.004
 </code></pre>
 
 <pre><code class="r">coef(lm(y ~ x + x2 + x3 - 1)) #the -1 removes the intercept term
 </code></pre>
 
 <pre><code>     x     x2     x3 
-0.9936 1.0163 0.9891 
+1.0040 0.9899 1.0078 
 </code></pre>
 
   </article>
@@ -403,14 +403,14 @@ ex &lt;- e(e(x, x3), e(x2, x3))
 sum(ey * ex) / sum(ex ^ 2)
 </code></pre>
 
-<pre><code>[1] 0.9936
+<pre><code>[1] 1.004
 </code></pre>
 
 <pre><code class="r">coef(lm(y ~ x + x2 + x3 - 1)) #the -1 removes the intercept term
 </code></pre>
 
 <pre><code>     x     x2     x3 
-0.9936 1.0163 0.9891 
+1.0040 0.9899 1.0078 
 </code></pre>
 
   </article>
@@ -427,14 +427,14 @@ ex &lt;- resid(lm(x ~ x2 + x3 - 1))
 sum(ey * ex) / sum(ex ^ 2)
 </code></pre>
 
-<pre><code>[1] 0.9936
+<pre><code>[1] 1.004
 </code></pre>
 
 <pre><code class="r">coef(lm(y ~ x + x2 + x3 - 1)) #the -1 removes the intercept term
 </code></pre>
 
 <pre><code>     x     x2     x3 
-0.9936 1.0163 0.9891 
+1.0040 0.9899 1.0078 
 </code></pre>
 
   </article>

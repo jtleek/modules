@@ -1,7 +1,7 @@
 ---
 title       : Multivariable regression
 subtitle    : 
-author      : Brian Caffo, PhD
+author      : Brian Caffo, Roger Peng and Jeff Leek
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -15,7 +15,7 @@ mode        : selfcontained # {standalone, draft}
 ---
 
 
-## Multivariate regression analyses
+## Multivariable regression analyses
 * If I were to present evidence of a relationship between 
 breath mint useage (mints per day, X) and pulmonary function
 (measured in FEV), you would be skeptical.
@@ -24,7 +24,7 @@ breath mint useage (mints per day, X) and pulmonary function
 * In other words, to even consider my results, I would have to demonstrate that they hold while holding smoking status fixed.
 
 ---
-## Multivariate regression analyses
+## Multivariable regression analyses
 * An insurance company is interested in how last year's claims can predict a person's time in the hospital this year. 
   * They want to use an enormous amount of data contained in claims to predict a single number. Simple linear regression is not equipped to handle more than one predictor.
 * How can one generalize SLR to incoporate lots of regressors for
@@ -46,7 +46,7 @@ $$
 * Least squares (and hence ML estimates under iid Gaussianity 
 of the errors) minimizes
 $$
-\sum_{i=1}^n \left(Y_i - \sum_{k=1}^p X_{ik} \beta_j\right)^2
+\sum_{i=1}^n \left(Y_i - \sum_{k=1}^p X_{ki} \beta_j\right)^2
 $$
 * Note, the important linearity is linearity in the coefficients.
 Thus
@@ -60,8 +60,8 @@ predictor variables.)
 ---
 ## How to get estimates
 * The real way requires linear algebra. We'll go over an intuitive development instead. 
-* Recall that the LS estimate for regression through the origin, $E[Y_i]=X_{i1}\beta_1$, was $\sum X_i Y_i / \sum X_i^2$.
-* Let's consider two regressors, $E[Y_i] = X_{i1}\beta_1 + X_{i2}\beta_2 = \mu_i$. 
+* Recall that the LS estimate for regression through the origin, $E[Y_i]=X_{1i}\beta_1$, was $\sum X_i Y_i / \sum X_i^2$.
+* Let's consider two regressors, $E[Y_i] = X_{1i}\beta_1 + X_{2i}\beta_2 = \mu_i$. 
 * Also, recall, that if $\hat \mu_i$ satisfies
 $$
 \sum_{i=1} (Y_i - \hat \mu_i) (\hat \mu_i - \mu_i) = 0
@@ -70,20 +70,20 @@ for all possible values of $\mu_i$, then we've found the LS estimates.
 
 ---
 $$
-\sum_{i=1}^n (Y_i - \hat \mu_i) (\hat \mu_i - \mu_i) = \sum_{i=1}^n (Y_i - \hat \beta_1 X_{i1} - \hat \beta_2 X_{i2})
-\left\{X_{i1}(\hat \beta_1 - \beta_1) + X_{i2}(\hat \beta_2 - \beta_2) \right\}
+\sum_{i=1}^n (Y_i - \hat \mu_i) (\hat \mu_i - \mu_i) = \sum_{i=1}^n (Y_i - \hat \beta_1 X_{1i} - \hat \beta_2 X_{2i})
+\left\{X_{1i}(\hat \beta_1 - \beta_1) + X_{2i}(\hat \beta_2 - \beta_2) \right\}
 $$
 * Thus we need 
-  1. $\sum_{i=1}^n (Y_i - \hat \beta_1 X_{i1} - \hat \beta_2 X_{i2}) X_{i1} = 0$ 
-  2.  $\sum_{i=1}^n (Y_i - \hat \beta_1 X_{i1} - \hat \beta_2 X_{i2}) X_{i2} = 0$
+  1. $\sum_{i=1}^n (Y_i - \hat \beta_1 X_{1i} - \hat \beta_2 X_{2i}) X_{1i} = 0$ 
+  2.  $\sum_{i=1}^n (Y_i - \hat \beta_1 X_{1i} - \hat \beta_2 X_{2i}) X_{2i} = 0$
 * Hold $\hat \beta_1$ fixed in 2. and solve and we get that
 $$
-\hat \beta_2 = \frac{\sum_{i=1} (Y_i - X_{i1}\hat \beta_1)X_{i2}}{\sum_{i=1}^n X_{i2}^2}
+\hat \beta_2 = \frac{\sum_{i=1} (Y_i - X_{1i}\hat \beta_1)X_{2i}}{\sum_{i=1}^n X_{2i}^2}
 $$
 * Plugging this into 1. we get that
 $$
-0 = \sum_{i=1}^n \left\{Y_i - \frac{\sum_j X_{j2}Y_j}{\sum_j X_{j2}^2}X_{i2} + 
-\beta_1 \left(X_{i1} - \frac{\sum_j X_{j2}X_{j1}}{\sum_j X_{j2}^2} X_{i2}\right)\right\} X_{i1}
+0 = \sum_{i=1}^n \left\{Y_i - \frac{\sum_j X_{2j}Y_j}{\sum_j X_{2j}^2}X_{2i} + 
+\beta_1 \left(X_{1i} - \frac{\sum_j X_{2j}X_{1j}}{\sum_j X_{2j}^2} X_{2i}\right)\right\} X_{1i}
 $$
 
 ---
@@ -91,7 +91,7 @@ $$
 * Re writing  this we get
 $$
 0 = \sum_{i=1}^n \left\{ e_{i, Y | X_2} - \hat \beta_1 e_{i, X_1 | X_2} 
-\right\} X_{i1} 
+\right\} X_{1i} 
 $$
 where $e_{i, a | b} = a_i -  \frac{\sum_{j=1}^n a_j b_j }{\sum_{i=1}^n b_j^2} b_i$ is the residual when regressing $b$ from $a$ without an intercept.
 * We get the solution
@@ -103,14 +103,14 @@ $$
 * But note that 
 $$
 \sum_{i=1}^n e_{i, X_1 | X_2}^2 
-= e_{i, X_1 | X_2} \left(X_{i1} - \frac{\sum_j X_{j2}X_{j1}}{\sum_j X_{j2}^2} X_{i2}\right)
+= \sum_{i=1}^n e_{i, X_1 | X_2} \left(X_{1i} - \frac{\sum_j X_{2j}X_{1j}}{\sum_j X_{2j}^2} X_{2i}\right)
 $$
 $$
-= \sum_{i=1}^n e_{i, X_1 | X_2} X_{i1} - \frac{\sum_j X_{j2}X_{j1}}{\sum_j X_{j2}^2} \sum_{i=1}^n e_{i, X_1 | X_2} X_{i2}
+= \sum_{i=1}^n e_{i, X_1 | X_2} X_{1i} - \frac{\sum_j X_{2j}X_{1j}}{\sum_j X_{2j}^2} \sum_{i=1}^n e_{i, X_1 | X_2} X_{2i}
 $$
-But $\sum_{i=1}^n e_{i, X_1 | X_2} X_{i2} = 0$. So we get that
+But $\sum_{i=1}^n e_{i, X_1 | X_2} X_{2i} = 0$. So we get that
 $$
-\sum_{i=1}^n e_{i, X_1 | X_2}^2  = \sum_{i=1}^n e_{i, X_1 | X_2} X_{i1}
+\sum_{i=1}^n e_{i, X_1 | X_2}^2  = \sum_{i=1}^n e_{i, X_1 | X_2} X_{1i}
 $$
 Thus we get that
 $$
@@ -129,10 +129,10 @@ from both the regressor and response.
 
 ---
 ## Example with two variables, simple linear regression
-* $Y_{i} = \beta_1 X_{i1} + \beta_2 X_{i2}$ where  $X_{i2} = 1$ is an intercept term.
-* Then  $\frac{\sum_j X_{j2}X_{j1}}{\sum_j X_{j2}^2}X_{i2} = 
-\frac{\sum_j X_{j1}}{n} = \bar X_1$. 
-* $e_{i, X_1 | X_2} = X_{i1} - \bar X_1$.
+* $Y_{i} = \beta_1 X_{1i} + \beta_2 X_{2i}$ where  $X_{2i} = 1$ is an intercept term.
+* Then  $\frac{\sum_j X_{2j}X_{1j}}{\sum_j X_{2j}^2}X_{2i} = 
+\frac{\sum_j X_{1j}}{n} = \bar X_1$. 
+* $e_{i, X_1 | X_2} = X_{1i} - \bar X_1$.
 * Simiarly $e_{i, Y | X_2} = Y_i - \bar Y$.
 * Thus
 $$
@@ -144,7 +144,7 @@ $$
 ## The general case
 * The equations
 $$
-\sum_{i=1}^n (Y_i - X_{i1}\hat \beta_1 - \ldots - X_{ip}\hat \beta_p) X_k = 0
+\sum_{i=1}^n (Y_i - X_{1i}\hat \beta_1 - \ldots - X_{ip}\hat \beta_p) X_k = 0
 $$
 for $k = 1, \ldots, p$ yields $p$ equations with $p$ unknowns.
 * Solving them yields the least squares estimates. (With obtaining a good, fast, general solution requiring some knowledge of linear algebra.)
@@ -155,12 +155,12 @@ for $k = 1, \ldots, p$ yields $p$ equations with $p$ unknowns.
 ## Fitting LS equations
 Just so I don't leave you hanging, let's show a way to get estimates. Recall the equations:
 $$
-\sum_{i=1}^n (Y_i - X_{i1}\hat \beta_1 - \ldots - X_{ip}\hat \beta_p) X_k = 0
+\sum_{i=1}^n (Y_i - X_{1i}\hat \beta_1 - \ldots - X_{ip}\hat \beta_p) X_k = 0
 $$
 If I hold $\hat \beta_1, \ldots, \hat \beta_{p-1}$ fixed then
 we get that
 $$
-\hat \beta_p = \frac{\sum_{i=1}^n (Y_i - X_{i1}\hat \beta_1 - \ldots - X_{i,p-1}\hat \beta_{p-1}) X_{ip} }{\sum_{i=1}^n X_{ip}^2}
+\hat \beta_p = \frac{\sum_{i=1}^n (Y_i - X_{1i}\hat \beta_1 - \ldots - X_{i,p-1}\hat \beta_{p-1}) X_{ip} }{\sum_{i=1}^n X_{ip}^2}
 $$
 Plugging this back into the equations, we wind up with 
 $$
@@ -209,7 +209,7 @@ sum(ey * ex) / sum(ex ^ 2)
 ```
 
 ```
-[1] 0.9936
+[1] 1.004
 ```
 
 ```r
@@ -218,7 +218,7 @@ coef(lm(y ~ x + x2 + x3 - 1)) #the -1 removes the intercept term
 
 ```
      x     x2     x3 
-0.9936 1.0163 0.9891 
+1.0040 0.9899 1.0078 
 ```
 
 
@@ -232,7 +232,7 @@ sum(ey * ex) / sum(ex ^ 2)
 ```
 
 ```
-[1] 0.9936
+[1] 1.004
 ```
 
 ```r
@@ -241,7 +241,7 @@ coef(lm(y ~ x + x2 + x3 - 1)) #the -1 removes the intercept term
 
 ```
      x     x2     x3 
-0.9936 1.0163 0.9891 
+1.0040 0.9899 1.0078 
 ```
 
 
@@ -255,7 +255,7 @@ sum(ey * ex) / sum(ex ^ 2)
 ```
 
 ```
-[1] 0.9936
+[1] 1.004
 ```
 
 ```r
@@ -264,7 +264,7 @@ coef(lm(y ~ x + x2 + x3 - 1)) #the -1 removes the intercept term
 
 ```
      x     x2     x3 
-0.9936 1.0163 0.9891 
+1.0040 0.9899 1.0078 
 ```
 
 
