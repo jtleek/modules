@@ -4,7 +4,7 @@
   <title>Probability</title>
   <meta charset="utf-8">
   <meta name="description" content="Probability">
-  <meta name="author" content="Brian Caffo, PhD">
+  <meta name="author" content="Brian Caffo, Jeff Leek, Roger Peng">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -19,6 +19,11 @@
   </script>
   
     <link rel="stylesheet" href = "../../assets/css/custom.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BACKUP.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BASE.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.LOCAL.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.orig">
+<link rel="stylesheet" href = "../../assets/css/custom.css.REMOTE.546.css">
 <link rel="stylesheet" href = "../../assets/css/ribbons.css">
 
 </head>
@@ -37,24 +42,36 @@
       </aside>
       <hgroup class="auto-fadein">
         <h1>Probability</h1>
-        <h2>Mathematical Biostatistics Boot Camp</h2>
-        <p>Brian Caffo, PhD<br/>Johns Hopkins Bloomberg School of Public Health</p>
+        <h2>Statistical Inference</h2>
+        <p>Brian Caffo, Jeff Leek, Roger Peng<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
           </slide>
 
     <!-- SLIDES -->
       <slide class="" id="slide-1" style="background:;">
   <hgroup>
-    <h2>Table of contents</h2>
+    <h2>Notation</h2>
   </hgroup>
   <article>
-    <ol>
-<li>Probability</li>
-<li>Random variables</li>
-<li>PMFs and PDFs</li>
-<li>CDFs, survival functions and quantiles</li>
-<li>Summary</li>
-</ol>
+    <ul>
+<li>The <strong>sample space</strong>, \(\Omega\), is the collection of possible outcomes of an experiment
+
+<ul>
+<li>Example: die roll \(\Omega = \{1,2,3,4,5,6\}\)</li>
+</ul></li>
+<li>An <strong>event</strong>, say \(E\), is a subset of \(\Omega\) 
+
+<ul>
+<li>Example: die roll is even \(E = \{2,4,6\}\)</li>
+</ul></li>
+<li>An <strong>elementary</strong> or <strong>simple</strong> event is a particular result
+of an experiment
+
+<ul>
+<li>Example: die roll is a four, \(\omega = 4\)</li>
+</ul></li>
+<li>\(\emptyset\) is called the <strong>null event</strong> or the <strong>empty set</strong></li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
@@ -62,16 +79,19 @@
 
       <slide class="" id="slide-2" style="background:;">
   <hgroup>
-    <h2>Probability measures</h2>
+    <h2>Interpretation of set operations</h2>
   </hgroup>
   <article>
-    <p>A <strong>probability measure</strong>, \(P\), is a real valued function from the collection of possible events so that the following hold</p>
+    <p>Normal set operations have particular interpretations in this setting</p>
 
 <ol>
-<li>For an event \(E\subset \Omega\), \(0 \leq P(E) \leq 1\)</li>
-<li>\(P(\Omega) = 1\)</li>
-<li>If \(E_1\) and \(E_2\) are mutually exclusive events
-\(P(E_1 \cup E_2) = P(E_1) + P(E_2)\).</li>
+<li>\(\omega \in E\) implies that \(E\) occurs when \(\omega\) occurs</li>
+<li>\(\omega \not\in E\) implies that \(E\) does not occur when \(\omega\) occurs</li>
+<li>\(E \subset F\) implies that the occurrence of \(E\) implies the occurrence of \(F\)</li>
+<li>\(E \cap F\)  implies the event that both \(E\) and \(F\) occur</li>
+<li>\(E \cup F\) implies the event that at least one of \(E\) or \(F\) occur</li>
+<li>\(E \cap F=\emptyset\) means that \(E\) and \(F\) are <strong>mutually exclusive</strong>, or cannot both occur</li>
+<li>\(E^c\) or \(\bar E\) is the event that \(E\) does not occur</li>
 </ol>
 
   </article>
@@ -80,20 +100,25 @@
 
       <slide class="" id="slide-3" style="background:;">
   <hgroup>
-    <h2>Additivity</h2>
+    <h2>Probability</h2>
   </hgroup>
   <article>
-    <p>Part 3 of the definition implies <strong>finite additivity</strong></p>
+    <p>A <strong>probability measure</strong>, \(P\), is a function from the collection of possible events so that the following hold</p>
+
+<ol>
+<li>For an event \(E\subset \Omega\), \(0 \leq P(E) \leq 1\)</li>
+<li>\(P(\Omega) = 1\)</li>
+<li>If \(E_1\) and \(E_2\) are mutually exclusive events
+\(P(E_1 \cup E_2) = P(E_1) + P(E_2)\).</li>
+</ol>
+
+<p>Part 3 of the definition implies <strong>finite additivity</strong></p>
 
 <p>\[
 P(\cup_{i=1}^n A_i) = \sum_{i=1}^n P(A_i)
 \]
-where the \(\{A_i\}\) are mutually exclusive.</p>
-
-<p>This is usually extended to <strong>countable additivity</strong>
-\[
-P(\cup_{i=1}^\infty A_i) = \sum_{i=1}^\infty P(A_i)
-\]</p>
+where the \(\{A_i\}\) are mutually exclusive. (Note a more general version of
+additivity is used in advanced classes.)</p>
 
   </article>
   <!-- Presenter Notes -->
@@ -101,32 +126,10 @@ P(\cup_{i=1}^\infty A_i) = \sum_{i=1}^\infty P(A_i)
 
       <slide class="" id="slide-4" style="background:;">
   <hgroup>
-    <h2>Note</h2>
+    <h2>Example consequences</h2>
   </hgroup>
   <article>
     <ul>
-<li>\(P\) is defined on \({\cal F}\) a collection of subsets of \(\Omega\)</li>
-<li>Example \(\Omega = \{1, 2, 3\}\) then
-\[
-{\cal F} = \left\{\emptyset, \{1\}, \{2\}, \{3\}, \{1,2\} ,\{1,3\}, \{2,3\}, \{1,2,3\}\right\}.
-\]</li>
-<li>When \(\Omega\) is a continuous set, the definition gets much trickier. In this case we
-assume that \({\cal F}\) is sufficiently rich so that any set that we&#39;re interested in will
-be in it.</li>
-</ul>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-5" style="background:;">
-  <hgroup>
-    <h2>Consequences</h2>
-  </hgroup>
-  <article>
-    <p>You should be able to prove all of the following:</p>
-
-<ul>
 <li>\(P(\emptyset) = 0\)</li>
 <li>\(P(E) = 1 - P(E^c)\)</li>
 <li>\(P(A \cup B) = P(A) + P(B) - P(A \cap B)\)</li>
@@ -141,68 +144,18 @@ be in it.</li>
   <!-- Presenter Notes -->
 </slide>
 
+      <slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Example</h2>
+  </hgroup>
+  <article>
+    <p>The National Sleep Foundation (<a href="http://www.sleepfoundation.org/">www.sleepfoundation.org</a>) reports that around 3% of the American population has sleep apnea. They also report that around 10% of the North American and European population has restless leg syndrome. Does this imply that 13% of people will have at least one sleep problems of these sorts?</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
       <slide class="" id="slide-6" style="background:;">
-  <hgroup>
-    <h2>Example</h2>
-  </hgroup>
-  <article>
-    <p>Proof that \(P(E) = 1 - P(E^c)\)</p>
-
-<p>\[
-\begin{eqnarray*}
-1 & = & P(\Omega) \\
-  & = & P(E \cup E^c)\\
-  & = & P(E) + P(E^c)
-\end{eqnarray*}
-\]</p>
-
-<p>\(\blacksquare\)</p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-7" style="background:;">
-  <hgroup>
-    <h2>Example</h2>
-  </hgroup>
-  <article>
-    <p>Proof that \(P(\cup_{i=1}^n E_i) \leq \sum_{i=1}^n P(E_i)\)</p>
-
-<p>\[
-\begin{eqnarray*}
-  P(E_1 \cup E_2) & =   & P(E_1) + P(E_2) - P(E_1 \cap E_2) \\
-                  &\leq & P(E_1) + P(E_2)
-\end{eqnarray*}
-\]</p>
-
-<p>Assume the statement is true for \(n-1\) and consider \(n\)</p>
-
-<p>\[
-\begin{eqnarray*}
-  P(\cup_{i=1}^n E_i) & \leq & P(E_n) + P(\cup_{i=1}^{n-1} E_i) \\
-                      & \leq & P(E_n) + \sum_{i=1}^{n-1} P(E_i) \\
-                      & =    & \sum_{i=1}^n P(E_i)
-\end{eqnarray*}
-\]
-\(\blacksquare\)</p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-8" style="background:;">
-  <hgroup>
-    <h2>Example</h2>
-  </hgroup>
-  <article>
-    <p>The National Sleep Foundation (<a href="http://www.sleepfoundation.org/">www.sleepfoundation.org</a>) reports that around 3% of the American population has sleep apnea. They also report that around 10% of the North American and European population has restless leg syndrome. Similarly, they report that 58% of adults in the US experience insomnia. Does this imply that 71% of people will have at least one sleep problems of these sorts?</p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-9" style="background:;">
   <hgroup>
     <h2>Example continued</h2>
   </hgroup>
@@ -212,29 +165,25 @@ be in it.</li>
 <p>\[
 \begin{eqnarray*}
     A_1 & = & \{\mbox{Person has sleep apnea}\} \\
-    A_2 & = & \{\mbox{Person has RLS}\} \\
-    A_3 & = & \{\mbox{Person has insomnia}\}
+    A_2 & = & \{\mbox{Person has RLS}\} 
   \end{eqnarray*}
 \]</p>
 
-<p>Then (work out the details for yourself)</p>
+<p>Then </p>
 
 <p>\[
 \begin{eqnarray*}
-    P(A_1 \cup A_2 \cup A_3) & = & P(A_1) + P(A_2) + P(A_3) \\
-   & - & P(A_1 \cap A_2) - P(A_1 \cap A_3) - P(A_2 \cap A_3) \\
-   & + & P(A_1 \cap A_2 \cap A_3) \\
-   & = & .71 + \mbox{Other stuff}
+    P(A_1 \cup A_2 ) & = & P(A_1) + P(A_2) - P(A_1 \cap A_2) \\
+   & = & 0.13 - \mbox{Probability of having both}
   \end{eqnarray*}
-\]</p>
-
-<p>where the &quot;Other stuff&quot;&quot; has to be less than \(0\)</p>
+\]
+Likely, some fraction of the population has both.</p>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-10" style="background:;">
+      <slide class="" id="slide-7" style="background:;">
   <hgroup>
     <h2>Random variables</h2>
   </hgroup>
@@ -260,7 +209,7 @@ countable number of possibilities.
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-11" style="background:;">
+      <slide class="" id="slide-8" style="background:;">
   <hgroup>
     <h2>Examples of variables that can be thought of as random variables</h2>
   </hgroup>
@@ -276,7 +225,7 @@ countable number of possibilities.
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-12" style="background:;">
+      <slide class="" id="slide-9" style="background:;">
   <hgroup>
     <h2>PMF</h2>
   </hgroup>
@@ -296,7 +245,7 @@ pmf a function, \(p\), must satisfy</p>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-13" style="background:;">
+      <slide class="" id="slide-10" style="background:;">
   <hgroup>
     <h2>Example</h2>
   </hgroup>
@@ -317,28 +266,7 @@ p(x) = \theta^{x} (1 - \theta)^{1-x} ~~\mbox{ for }~~x = 0,1
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-14" style="background:;">
-  <hgroup>
-    <h2>Example</h2>
-  </hgroup>
-  <article>
-    <p>For the unfair coin</p>
-
-<p>\(p(0) = 1 - \theta\) and \(p(1) = \theta\)</p>
-
-<p>so</p>
-
-<p>\(p(x) > 0\) for \(x=0,1\)</p>
-
-<p>and</p>
-
-<p>\(p(0) + p(1) = \theta + (1 - \theta) = 1\)</p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-15" style="background:;">
+      <slide class="" id="slide-11" style="background:;">
   <hgroup>
     <h2>PDF</h2>
   </hgroup>
@@ -352,83 +280,84 @@ a continuous random variable </p>
 
 <ol>
 <li><p>\(f(x) \geq 0\) for all \(x\)</p></li>
-<li><p>\(\int_{-\infty}^{\infty} f(x)dx = 1\)</p></li>
+<li><p>The area under \(f(x)\) is one.</p></li>
 </ol>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-16" style="background:;">
+      <slide class="" id="slide-12" style="background:;">
   <hgroup>
     <h2>Example</h2>
   </hgroup>
   <article>
-    <p>Assume that the time in years from diagnosis until death of persons
-with a specific kind of cancer follows a density like
+    <p>Suppose that the proportion of help calls that get addressed in
+a random day by a help line is given by
 \[
 f(x) = \left\{\begin{array}{ll}
-    \frac{e^{-x/5}}{5} & \mbox{ for } x > 0 \\
+    2 x & \mbox{ for } 1 > x > 0 \\
     0                 & \mbox{ otherwise} 
 \end{array} \right. 
-\]
-More compactly written: \(f(x) = \frac{1}{5}e^{-x/5}\) for \(x>0\).</p>
-
-<p>Is this a valid density?</p>
-
-<ol>
-<li>\(e\) raised to any power is always positive</li>
-<li>\[
-\int_{0}^\infty f(x) dx = \int_{0}^\infty e^{-x/5} / 5 dx = \left. -e^{-x/5} \right|^{\infty}_0 = 1
-\]</li>
-</ol>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-17" style="background:;">
-  <hgroup>
-    <h2>Example continued</h2>
-  </hgroup>
-  <article>
-    <p>What’s the probability that a randomly selected person from this distribution survives more than 6 years?</p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-18" style="background:;">
-  <hgroup>
-    <h2>Example continued</h2>
-  </hgroup>
-  <article>
-    <p>What&#39;s the probability that a randomly selected person from this distribution survives more than 6 years?
-\[
-P(X \geq 6) = \int_6^\infty  \frac{e^{-t/5}}{5}dt =  \left. -e^{-t/5} \right|_{6}^\infty = e^{-6/5} \approx .301.
 \]</p>
 
-<p>Approximation in R </p>
+<p>Is this a mathematically valid density?</p>
 
-<pre><code class="r">pexp(6, 1/5, lower.tail = FALSE)
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    
+  </hgroup>
+  <article>
+    <pre><code class="r">x &lt;- c(-0.5, 0, 1, 1, 1.5)
+y &lt;- c(0, 0, 2, 0, 0)
+plot(x, y, lwd = 3, frame = FALSE, type = &quot;l&quot;)
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-1.png" alt="plot of chunk unnamed-chunk-1"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h2>Example continued</h2>
+  </hgroup>
+  <article>
+    <p>What is the probability that 75% or less of calls get addressed?</p>
+
+<p><img src="figure/unnamed-chunk-2.png" alt="plot of chunk unnamed-chunk-2"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    
+  </hgroup>
+  <article>
+    <pre><code class="r">1.5 * 0.75/2
+</code></pre>
+
+<pre><code>## [1] 0.5625
+</code></pre>
+
+<pre><code class="r">pbeta(0.75, 2, 1)
+</code></pre>
+
+<pre><code>## [1] 0.5625
 </code></pre>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-19" style="background:;">
-  <hgroup>
-    <h2>Example continued</h2>
-  </hgroup>
-  <article>
-    <p><img src="../assets/graph1.png" height=400></p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-20" style="background:;">
+      <slide class="" id="slide-16" style="background:;">
   <hgroup>
     <h2>CDF and survival function</h2>
   </hgroup>
@@ -451,51 +380,33 @@ S(x) = P(X > x)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-21" style="background:;">
-  <hgroup>
-    <h2>Example continued</h2>
-  </hgroup>
-  <article>
-    <p><img src="../assets/graph1.png" height=400></p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-22" style="background:;">
+      <slide class="" id="slide-17" style="background:;">
   <hgroup>
     <h2>Example</h2>
   </hgroup>
   <article>
     <p>What are the survival function and CDF from the exponential density considered before?</p>
 
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-23" style="background:;">
-  <hgroup>
-    <h2>Example</h2>
-  </hgroup>
-  <article>
-    <p>What are the survival function and CDF from the exponential density considered before?
+<p>For \(1 \geq x \geq 0\)
 \[
-S(x) = \int_x^\infty  \frac{e^{-t/5}}{5}dt =  \left. -e^{-t/5} \right|_{x}^\infty = e^{-x/5}
-\]
-hence we know that
-\[
-F(x) = 1 - S(x) = 1 - e^{-x/5}
-\]
-Notice that we can recover the PDF by
-\[
-f(x) = F'(x) = \frac{d}{dx} (1 -  e^{-x/5}) = e^{-x/5}/5
+F(x) = P(X \leq x) = \frac{1}{2} Base \times Height = \frac{1}{2} (x) \times (2 x) = x^2
 \]</p>
 
+<p>\[
+S(x) = 1 - x^2
+\]</p>
+
+<pre><code class="r">pbeta(c(0.4, 0.5, 0.6), 2, 1)
+</code></pre>
+
+<pre><code>## [1] 0.16 0.25 0.36
+</code></pre>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-24" style="background:;">
+      <slide class="" id="slide-18" style="background:;">
   <hgroup>
     <h2>Quantiles</h2>
   </hgroup>
@@ -513,55 +424,38 @@ F(x_\alpha) = \alpha
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-25" style="background:;">
-  <hgroup>
-    <h2>Example continued</h2>
-  </hgroup>
-  <article>
-    <p><img src="../assets/graph1.png" height=400></p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-26" style="background:;">
+      <slide class="" id="slide-19" style="background:;">
   <hgroup>
     <h2>Example</h2>
   </hgroup>
   <article>
-    <p>What is the \(25^{th}\) percentile of the exponential survival distribution considered before?</p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-27" style="background:;">
-  <hgroup>
-    
-  </hgroup>
-  <article>
     <ul>
-<li>What is the \(25^{th}\) percentile of the exponential survival distribution considered before?</li>
-<li>We want to solve (for \(x\))
-\[
-\begin{eqnarray*}
-.25 & = & F(x) \\  
-& = & 1 - e^{-x/5}
-\end{eqnarray*}
-\]
-resulting in the solution \(x = -\log(.75) \times 5 \approx 1.44\)</li>
-<li>Therefore, 25\% of the subjects from this population live less than 1.44 years</li>
-<li>R can approximate exponential quantiles for you</li>
+<li>We want to solve \(0.5 = F(x) = x^2\)</li>
+<li>Resulting in the solution </li>
 </ul>
 
-<pre><code class="r">qexp(.25, 1/5)
+<pre><code class="r">sqrt(0.5)
+</code></pre>
+
+<pre><code>## [1] 0.7071
+</code></pre>
+
+<ul>
+<li>Therefore, about 0.7071 of calls being answered on a random day is the median.</li>
+<li>R can approximate quantiles for you for common distributions</li>
+</ul>
+
+<pre><code class="r">qbeta(0.5, 2, 1)
+</code></pre>
+
+<pre><code>## [1] 0.7071
 </code></pre>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-28" style="background:;">
+      <slide class="" id="slide-20" style="background:;">
   <hgroup>
     <h2>Summary</h2>
   </hgroup>

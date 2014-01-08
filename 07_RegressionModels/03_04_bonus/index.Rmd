@@ -1,6 +1,6 @@
 ---
 title       : Bonus content
-subtitle    : 
+subtitle    : Statistical Inference
 author      : Brian Caffo, PhD
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png

@@ -1,7 +1,7 @@
 ---
 title       : Probability
-subtitle    : Mathematical Biostatistics Boot Camp
-author      : Brian Caffo, PhD
+subtitle    : Statistical Inference
+author      : Brian Caffo, Jeff Leek, Roger Peng
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -14,59 +14,56 @@ widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 ---
 
-## Table of contents
+## Notation
 
-1. Probability
-2. Random variables
-3. PMFs and PDFs
-4. CDFs, survival functions and quantiles
-5. Summary
+- The **sample space**, $\Omega$, is the collection of possible outcomes of an experiment
+  - Example: die roll $\Omega = \{1,2,3,4,5,6\}$
+- An **event**, say $E$, is a subset of $\Omega$ 
+  - Example: die roll is even $E = \{2,4,6\}$
+- An **elementary** or **simple** event is a particular result
+  of an experiment
+  - Example: die roll is a four, $\omega = 4$
+- $\emptyset$ is called the **null event** or the **empty set**
 
 ---
 
-## Probability measures
+## Interpretation of set operations
 
-A **probability measure**, $P$, is a real valued function from the collection of possible events so that the following hold
+Normal set operations have particular interpretations in this setting
+
+1. $\omega \in E$ implies that $E$ occurs when $\omega$ occurs
+2. $\omega \not\in E$ implies that $E$ does not occur when $\omega$ occurs
+3. $E \subset F$ implies that the occurrence of $E$ implies the occurrence of $F$
+4. $E \cap F$  implies the event that both $E$ and $F$ occur
+5. $E \cup F$ implies the event that at least one of $E$ or $F$ occur
+6. $E \cap F=\emptyset$ means that $E$ and $F$ are **mutually exclusive**, or cannot both occur
+7. $E^c$ or $\bar E$ is the event that $E$ does not occur
+
+---
+
+## Probability
+
+A **probability measure**, $P$, is a function from the collection of possible events so that the following hold
 
 1. For an event $E\subset \Omega$, $0 \leq P(E) \leq 1$
 2. $P(\Omega) = 1$
 3. If $E_1$ and $E_2$ are mutually exclusive events
   $P(E_1 \cup E_2) = P(E_1) + P(E_2)$.
 
----
-
-## Additivity
-
 Part 3 of the definition implies **finite additivity**
 
 $$
 P(\cup_{i=1}^n A_i) = \sum_{i=1}^n P(A_i)
 $$
-where the $\{A_i\}$ are mutually exclusive.
+where the $\{A_i\}$ are mutually exclusive. (Note a more general version of
+additivity is used in advanced classes.)
 
-This is usually extended to **countable additivity**
-$$
-P(\cup_{i=1}^\infty A_i) = \sum_{i=1}^\infty P(A_i)
-$$
 
 ---
 
-## Note
 
-- $P$ is defined on ${\cal F}$ a collection of subsets of $\Omega$
-- Example $\Omega = \{1, 2, 3\}$ then
-$$
-{\cal F} = \left\{\emptyset, \{1\}, \{2\}, \{3\}, \{1,2\} ,\{1,3\}, \{2,3\}, \{1,2,3\}\right\}.
-$$
-- When $\Omega$ is a continuous set, the definition gets much trickier. In this case we
-  assume that ${\cal F}$ is sufficiently rich so that any set that we're interested in will
-  be in it.
+## Example consequences
 
----
-
-## Consequences
-
-You should be able to prove all of the following:
 - $P(\emptyset) = 0$
 - $P(E) = 1 - P(E^c)$
 - $P(A \cup B) = P(A) + P(B) - P(A \cap B)$
@@ -80,47 +77,7 @@ You should be able to prove all of the following:
 
 ## Example
 
-Proof that $P(E) = 1 - P(E^c)$
-
-$$
-\begin{eqnarray*}
-1 & = & P(\Omega) \\
-  & = & P(E \cup E^c)\\
-  & = & P(E) + P(E^c)
-\end{eqnarray*}
-$$
-
-$\blacksquare$
-
----
-
-## Example
-
-Proof that $P(\cup_{i=1}^n E_i) \leq \sum_{i=1}^n P(E_i)$
-
-$$
-\begin{eqnarray*}
-  P(E_1 \cup E_2) & =   & P(E_1) + P(E_2) - P(E_1 \cap E_2) \\
-                  &\leq & P(E_1) + P(E_2)
-\end{eqnarray*}
-$$
-
-Assume the statement is true for $n-1$ and consider $n$
-
-$$
-\begin{eqnarray*}
-  P(\cup_{i=1}^n E_i) & \leq & P(E_n) + P(\cup_{i=1}^{n-1} E_i) \\
-                      & \leq & P(E_n) + \sum_{i=1}^{n-1} P(E_i) \\
-                      & =    & \sum_{i=1}^n P(E_i)
-\end{eqnarray*}
-$$
-$\blacksquare$
-
----
-
-## Example
-
-The National Sleep Foundation ([www.sleepfoundation.org](http://www.sleepfoundation.org/)) reports that around 3% of the American population has sleep apnea. They also report that around 10% of the North American and European population has restless leg syndrome. Similarly, they report that 58% of adults in the US experience insomnia. Does this imply that 71% of people will have at least one sleep problems of these sorts?
+The National Sleep Foundation ([www.sleepfoundation.org](http://www.sleepfoundation.org/)) reports that around 3% of the American population has sleep apnea. They also report that around 10% of the North American and European population has restless leg syndrome. Does this imply that 13% of people will have at least one sleep problems of these sorts?
 
 ---
 
@@ -131,23 +88,19 @@ Answer: No, the events are not mutually exclusive. To elaborate let:
 $$
 \begin{eqnarray*}
     A_1 & = & \{\mbox{Person has sleep apnea}\} \\
-    A_2 & = & \{\mbox{Person has RLS}\} \\
-    A_3 & = & \{\mbox{Person has insomnia}\}
+    A_2 & = & \{\mbox{Person has RLS}\} 
   \end{eqnarray*}
 $$
 
-Then (work out the details for yourself)
+Then 
 
 $$
 \begin{eqnarray*}
-    P(A_1 \cup A_2 \cup A_3) & = & P(A_1) + P(A_2) + P(A_3) \\
-   & - & P(A_1 \cap A_2) - P(A_1 \cap A_3) - P(A_2 \cap A_3) \\
-   & + & P(A_1 \cap A_2 \cap A_3) \\
-   & = & .71 + \mbox{Other stuff}
+    P(A_1 \cup A_2 ) & = & P(A_1) + P(A_2) - P(A_1 \cap A_2) \\
+   & = & 0.13 - \mbox{Probability of having both}
   \end{eqnarray*}
 $$
-
-where the "Other stuff"" has to be less than $0$
+Likely, some fraction of the population has both.
 
 ---
 
@@ -202,22 +155,6 @@ $$
 
 ---
 
-## Example
-
-For the unfair coin
-
-$p(0) = 1 - \theta$ and $p(1) = \theta$
-
-so
-
-$p(x) > 0$ for $x=0,1$
-
-and
-
-$p(0) + p(1) = \theta + (1 - \theta) = 1$
-
----
-
 ## PDF
 
 A probability density function (pdf), is a function associated with
@@ -229,55 +166,60 @@ To be a valid pdf, a function $f$ must satisfy
 
 1. $f(x) \geq 0$ for all $x$
 
-2. $\int_{-\infty}^{\infty} f(x)dx = 1$
+2. The area under $f(x)$ is one.
 
 ---
-
 ## Example
 
-Assume that the time in years from diagnosis until death of persons
-with a specific kind of cancer follows a density like
+Suppose that the proportion of help calls that get addressed in
+a random day by a help line is given by
 $$
 f(x) = \left\{\begin{array}{ll}
-    \frac{e^{-x/5}}{5} & \mbox{ for } x > 0 \\
+    2 x & \mbox{ for } 1 > x > 0 \\
     0                 & \mbox{ otherwise} 
 \end{array} \right. 
 $$
-More compactly written: $f(x) = \frac{1}{5}e^{-x/5}$ for $x>0$.
 
-Is this a valid density?
-
-1. $e$ raised to any power is always positive
-2. $$
-\int_{0}^\infty f(x) dx = \int_{0}^\infty e^{-x/5} / 5 dx = \left. -e^{-x/5} \right|^{\infty}_0 = 1
-$$
+Is this a mathematically valid density?
 
 ---
 
-## Example continued
-
-What’s the probability that a randomly selected person from this distribution survives more than 6 years?
-
----
-
-## Example continued
-
-What's the probability that a randomly selected person from this distribution survives more than 6 years?
-$$
-P(X \geq 6) = \int_6^\infty  \frac{e^{-t/5}}{5}dt =  \left. -e^{-t/5} \right|_{6}^\infty = e^{-6/5} \approx .301.
-$$
-
-Approximation in R 
 
 ```r
-pexp(6, 1/5, lower.tail = FALSE)
+x <- c(-0.5, 0, 1, 1, 1.5)
+y <- c(0, 0, 2, 0, 0)
+plot(x, y, lwd = 3, frame = FALSE, type = "l")
 ```
+
+![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1.png) 
+
 
 ---
 
 ## Example continued
 
-<img src="../assets/graph1.png" height=400>
+What is the probability that 75% or less of calls get addressed?
+
+![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2.png) 
+
+
+---
+
+```r
+1.5 * 0.75/2
+```
+
+```
+## [1] 0.5625
+```
+
+```r
+pbeta(0.75, 2, 1)
+```
+
+```
+## [1] 0.5625
+```
 
 ---
 
@@ -297,32 +239,28 @@ $$
 
 ---
 
-## Example continued
-
-<img src="../assets/graph1.png" height=400>
-
----
-
 ## Example
 
 What are the survival function and CDF from the exponential density considered before?
 
----
+For $1 \geq x \geq 0$
+$$
+F(x) = P(X \leq x) = \frac{1}{2} Base \times Height = \frac{1}{2} (x) \times (2 x) = x^2
+$$
 
-## Example
+$$
+S(x) = 1 - x^2
+$$
 
-What are the survival function and CDF from the exponential density considered before?
-$$
-S(x) = \int_x^\infty  \frac{e^{-t/5}}{5}dt =  \left. -e^{-t/5} \right|_{x}^\infty = e^{-x/5}
-$$
-hence we know that
-$$
-F(x) = 1 - S(x) = 1 - e^{-x/5}
-$$
-Notice that we can recover the PDF by
-$$
-f(x) = F'(x) = \frac{d}{dx} (1 -  e^{-x/5}) = e^{-x/5}/5
-$$
+
+```r
+pbeta(c(0.4, 0.5, 0.6), 2, 1)
+```
+
+```
+## [1] 0.16 0.25 0.36
+```
+
 
 ---
 
@@ -336,34 +274,30 @@ $$
 - The **median** is the $50^{th}$ percentile
 
 ---
-
-## Example continued
-
-<img src="../assets/graph1.png" height=400>
-
----
-
 ## Example
-
-What is the $25^{th}$ percentile of the exponential survival distribution considered before?
-
----
-
-- What is the $25^{th}$ percentile of the exponential survival distribution considered before?
-- We want to solve (for $x$)
-$$
-\begin{eqnarray*}
-.25 & = & F(x) \\  
-    & = & 1 - e^{-x/5}
-\end{eqnarray*}
-$$
-resulting in the solution $x = -\log(.75) \times 5 \approx 1.44$
-- Therefore, 25\% of the subjects from this population live less than 1.44 years
-- R can approximate exponential quantiles for you
+- We want to solve $0.5 = F(x) = x^2$
+- Resulting in the solution 
 
 ```r
-qexp(.25, 1/5)
+sqrt(0.5)
 ```
+
+```
+## [1] 0.7071
+```
+
+- Therefore, about 0.7071 of calls being answered on a random day is the median.
+- R can approximate quantiles for you for common distributions
+
+
+```r
+qbeta(0.5, 2, 1)
+```
+
+```
+## [1] 0.7071
+```
+
 
 ---
 
