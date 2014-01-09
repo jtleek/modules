@@ -3,6 +3,12 @@ Outdoor Air Quality in the United States
 
 ## Background
 
+Outdoor air pollution in the United States monitored and regulated by
+the [Environmental Protection Agency](http://www.epa.gov) as well as
+many state and local environmental agencies. Since the introduction of
+the Clean Air Act in 1970, a major goal has been to reduce the levels
+of outdoor air pollution so that we can maintain an adequate margin of
+safety with respect to protecting public health.
 
 
 
@@ -21,7 +27,7 @@ set maximum levels at which the pollutants can be found in the
 air. However, in many locations in the U.S. air pollution levels
 exceed the standards and thus those locations are in "non-attainment".
 
-The two pollutants that you will focus on in this project are O3 and NO2.
+The two pollutants that you will focus on in this project are O3 and SO2.
 
 
 ### Data
