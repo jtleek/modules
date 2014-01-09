@@ -1,7 +1,7 @@
 ---
 title       : Structure of a Data Analysis 
 subtitle    : Part 1
-author      : Jeffrey Leek, Assistant Professor of Biostatistics 
+author      : Roger D. Peng, Associate Professor of Biostatistics 
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -66,9 +66,9 @@ knit_hooks$set(plot = knitr:::hook_plot_html)
 
 ## The key challenge in data analysis
 
-<q>Ask yourselves, what problem have you solved, ever, that was worth solving, where you knew knew all of the given information in advance? Where you didn’t have a surplus of information and have to filter it out, or you didn’t have insufficient information and have to go find some?</q>
+"Ask yourselves, what problem have you solved, ever, that was worth solving, where you knew all of the given information in advance? Where you didn’t have a surplus of information and have to filter it out, or you didn’t have insufficient information and have to go find some?"
 
-<img src=../../assets/img/meyer.jpg height='400' /> [Dan Myer, Mathematics Educator](http://www.ted.com/talks/dan_meyer_math_curriculum_makeover.html)
+<img src=../../assets/img/meyer.jpg height='350' /> [Dan Myer, Mathematics Educator](http://www.ted.com/talks/dan_meyer_math_curriculum_makeover.html)
 
 
 
