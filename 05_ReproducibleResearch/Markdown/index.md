@@ -172,17 +172,17 @@ hist(iris$Sepal.Length)
 <br></br>
 
 ```markdown
-    I spend so much time reading [R bloggers][1] and [Simply Statisitcs][2]!  
+    I spend so much time reading [R bloggers][1] and [Simply Statistics][2]!  
     [1]: http://www.r-bloggers.com/   "R bloggers"  
-    [2]: http://simplystatistics.org/ "Simply Statisitcs"  
+    [2]: http://simplystatistics.org/ "Simply Statistics"  
 ```
 
 <br></br>
 
-I spend so much time reading [R bloggers][1] and [Simply Statisitcs][2]!
+I spend so much time reading [R bloggers][1] and [Simply Statistics][2]!
 
 [1]: http://www.r-bloggers.com/   "R bloggers"
-[2]: http://simplystatistics.org/ "Simply Statisitcs"
+[2]: http://simplystatistics.org/ "Simply Statistics"
 
 ---
 
@@ -213,5 +213,9 @@ Second line
 ## Markdown Resources
 
 - [The Offical Markdown Documentation](http://daringfireball.net/projects/markdown/basics)
+
 - [Github's Markdown Guide](https://help.github.com/articles/github-flavored-markdown)
+
 - [Dillinger - Edit, Export, and Share Markdown Documents](http://www.dillinger.io/)
+
+- [This document on Github](https://github.com/seankross/Introduction-to-Markdown)
