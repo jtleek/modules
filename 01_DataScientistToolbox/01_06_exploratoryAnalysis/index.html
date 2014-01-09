@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>R Programming Overview</title>
+  <title>Exploratory Analysis Overview</title>
   <meta charset="utf-8">
-  <meta name="description" content="R Programming Overview">
+  <meta name="description" content="Exploratory Analysis Overview">
   <meta name="author" content="Jeffrey Leek">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -41,7 +41,7 @@
         <img src="../../assets/img/bloomberg_shield.png">
       </aside>
       <hgroup class="auto-fadein">
-        <h1>R Programming Overview</h1>
+        <h1>Exploratory Analysis Overview</h1>
         <h2></h2>
         <p>Jeffrey Leek<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
@@ -50,21 +50,22 @@
     <!-- SLIDES -->
       <slide class="" id="slide-1" style="background:;">
   <hgroup>
-    <h2>R programming content</h2>
+    <h2>Exploratory Analysis Content</h2>
   </hgroup>
   <article>
     <ul>
-<li>Data types</li>
-<li>Subsetting</li>
-<li>Reading and writing data</li>
-<li>Control structures</li>
-<li>Functions</li>
-<li>Scoping</li>
-<li>Vectorized operations</li>
-<li>Dates and times</li>
-<li>Debugging</li>
-<li>Simulation</li>
-<li>Optimization</li>
+<li>Principles of Analytic Graphics</li>
+<li>Exploratory graphs</li>
+<li>Plotting Systems in R
+
+<ul>
+<li>base</li>
+<li>lattice</li>
+<li>ggplot2</li>
+</ul></li>
+<li>Hierarchical clustering</li>
+<li>K-Means clustering</li>
+<li>Dimension reduction</li>
 </ul>
 
   </article>
@@ -73,21 +74,13 @@
 
       <slide class="" id="slide-2" style="background:;">
   <hgroup>
-    <h2>Reading Lines of a Text File</h2>
+    <h2>Adding a geom</h2>
   </hgroup>
   <article>
-    <p><code>readLines</code> can be useful for reading in lines of webpages</p>
-
-<pre><code class="r">## This might take time
-con &lt;- url(&quot;http://www.jhsph.edu&quot;, &quot;r&quot;)
-x &lt;- readLines(con)
-&gt; head(x)
-[1] &quot;&lt;!DOCTYPE HTML PUBLIC \&quot;-//W3C//DTD HTML 4.0 Transitional//EN\&quot;&gt;&quot;
-[2] &quot;&quot;
-[3] &quot;&lt;html&gt;&quot;
-[4] &quot;&lt;head&gt;&quot;
-[5] &quot;\t&lt;meta http-equiv=\&quot;Content-Type\&quot; content=\&quot;text/html;charset=utf-8
+    <pre><code class="r">qplot(displ, hwy, data = mpg, geom = c(&quot;point&quot;, &quot;smooth&quot;))
 </code></pre>
+
+<p><img src="figure/unnamed-chunk-2.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" style="display: block; margin: auto;" /></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -95,18 +88,16 @@ x &lt;- readLines(con)
 
       <slide class="" id="slide-3" style="background:;">
   <hgroup>
-    <h2>Something’s Wrong!</h2>
+    <h2>Principles of Analytic Graphics</h2>
   </hgroup>
   <article>
-    <p>How do you know that something is wrong with your function? </p>
-
-<ul>
-<li>What was your input? How did you call the function?</li>
-<li>What were you expecting? Output, messages, other results? </li>
-<li>What did you get?</li>
-<li>How does what you get differ from what you were expecting? </li>
-<li>Were your expectations correct in the first place?</li>
-<li>Can you reproduce the problem (exactly)?</li>
+    <ul>
+<li>Principle 1: Show comparisons</li>
+<li>Principle 2: Show causality, mechanism, explanation</li>
+<li>Principle 3: Show multivariate data</li>
+<li>Principle 4: Integrate multiple modes of evidence</li>
+<li>Principle 5: Describe and document the evidence</li>
+<li>Principle 6: Content is king</li>
 </ul>
 
   </article>
@@ -115,22 +106,18 @@ x &lt;- readLines(con)
 
       <slide class="" id="slide-4" style="background:;">
   <hgroup>
-    <h2>lapply</h2>
+    <h2>K-means clustering -  example</h2>
   </hgroup>
   <article>
-    <p><code>lapply</code> takes three arguments: a list <code>X</code>, a function (or the name of a function) <code>FUN</code>, and other arguments via its ... argument. If <code>X</code> is not a list, it will be coerced to a list using <code>as.list</code>.</p>
-
-<pre><code class="r">&gt; lapply
-function (X, FUN, ...)
-{
-    FUN &lt;- match.fun(FUN)
-    if (!is.vector(X) || is.object(X))
-        X &lt;- as.list(X)
-    .Internal(lapply(X, FUN))
-}
+    <pre><code class="r">set.seed(1234)
+par(mar = c(0, 0, 0, 0))
+x &lt;- rnorm(12, mean = rep(1:3, each = 4), sd = 0.2)
+y &lt;- rnorm(12, mean = rep(c(1, 2, 1), each = 4), sd = 0.2)
+plot(x, y, col = &quot;blue&quot;, pch = 19, cex = 2)
+text(x + 0.05, y + 0.05, labels = as.character(1:12))
 </code></pre>
 
-<p>The actual looping is done internally in C code.</p>
+<p><img src="figure/createData.png" alt="plot of chunk createData"> </p>
 
   </article>
   <!-- Presenter Notes -->
