@@ -16,15 +16,8 @@ scientists, state and local regulators) may have different levels of
 interest in specific questions.
 
 
-```{r,echo=FALSE}
-pollutantList <- c("PM10", "PM2.5", "O3", "NO2", "SO2")
-pollnames <- c("coarse particulate matter", "fine particulate matter", "ozone", "nitrogen dioxide", "sulphur dioxide")
-idx <- sample(length(pollutantList), 2, replace = FALSE)
-poll1 <- pollutantList[idx[1]]
-poll2 <- pollutantList[idx[2]]
-name1 <- pollnames[idx[1]]
-name2 <- pollnames[idx[2]]
-```
+
+
 
 The goal of this project is to take the EPA's comprehensive database
 of air pollution monitoring information and to tell a coherent story
@@ -33,7 +26,7 @@ United States. In this project you will examine a pair of "criteria
 pollutants", which are air pollutants for which national ambient air
 quality standards have been developed. 
 
-The two pollutants that you will focus on in this project are `r poll1` (`r name1`) and `r poll2` (`r name2`).
+The two pollutants that you will focus on in this project are O3 (ozone) and PM10 (coarse particulate matter).
 
 
 ### Data

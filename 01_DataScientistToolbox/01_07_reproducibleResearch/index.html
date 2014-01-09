@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>R Programming Overview</title>
+  <title>Reproducible Research Overview</title>
   <meta charset="utf-8">
-  <meta name="description" content="R Programming Overview">
+  <meta name="description" content="Reproducible Research Overview">
   <meta name="author" content="Jeffrey Leek">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -41,7 +41,7 @@
         <img src="../../assets/img/bloomberg_shield.png">
       </aside>
       <hgroup class="auto-fadein">
-        <h1>R Programming Overview</h1>
+        <h1>Reproducible Research Overview</h1>
         <h2></h2>
         <p>Jeffrey Leek<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
@@ -50,21 +50,17 @@
     <!-- SLIDES -->
       <slide class="" id="slide-1" style="background:;">
   <hgroup>
-    <h2>R programming content</h2>
+    <h2>Reproducible Research Overview</h2>
   </hgroup>
   <article>
     <ul>
-<li>Data types</li>
-<li>Subsetting</li>
-<li>Reading and writing data</li>
-<li>Control structures</li>
-<li>Functions</li>
-<li>Scoping</li>
-<li>Vectorized operations</li>
-<li>Dates and times</li>
-<li>Debugging</li>
-<li>Simulation</li>
-<li>Optimization</li>
+<li>Structure of a Data Analysis</li>
+<li>Organizing a Data Analysis</li>
+<li>Markdown</li>
+<li>LaTeX</li>
+<li>R Markdown</li>
+<li>Evidence-based data analysis</li>
+<li>RPubs</li>
 </ul>
 
   </article>
@@ -73,21 +69,22 @@
 
       <slide class="" id="slide-2" style="background:;">
   <hgroup>
-    <h2>Reading Lines of a Text File</h2>
+    <h2>Steps in a data analysis</h2>
   </hgroup>
   <article>
-    <p><code>readLines</code> can be useful for reading in lines of webpages</p>
-
-<pre><code class="r">## This might take time
-con &lt;- url(&quot;http://www.jhsph.edu&quot;, &quot;r&quot;)
-x &lt;- readLines(con)
-&gt; head(x)
-[1] &quot;&lt;!DOCTYPE HTML PUBLIC \&quot;-//W3C//DTD HTML 4.0 Transitional//EN\&quot;&gt;&quot;
-[2] &quot;&quot;
-[3] &quot;&lt;html&gt;&quot;
-[4] &quot;&lt;head&gt;&quot;
-[5] &quot;\t&lt;meta http-equiv=\&quot;Content-Type\&quot; content=\&quot;text/html;charset=utf-8
-</code></pre>
+    <ul>
+<li>Define the question</li>
+<li>Define the ideal data set</li>
+<li>Determine what data you can access</li>
+<li>Obtain the data</li>
+<li>Clean the data</li>
+<li>Exploratory data analysis</li>
+<li>Statistical prediction/modeling</li>
+<li>Interpret results</li>
+<li>Challenge results</li>
+<li>Synthesize/write up results</li>
+<li>Create reproducible code</li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
@@ -95,42 +92,53 @@ x &lt;- readLines(con)
 
       <slide class="" id="slide-3" style="background:;">
   <hgroup>
-    <h2>Something’s Wrong!</h2>
+    <h2>Data analysis files</h2>
   </hgroup>
   <article>
-    <p>How do you know that something is wrong with your function? </p>
+    <ul>
+<li>Data
 
 <ul>
-<li>What was your input? How did you call the function?</li>
-<li>What were you expecting? Output, messages, other results? </li>
-<li>What did you get?</li>
-<li>How does what you get differ from what you were expecting? </li>
-<li>Were your expectations correct in the first place?</li>
-<li>Can you reproduce the problem (exactly)?</li>
+<li>Raw data</li>
+<li>Processed data</li>
+</ul></li>
+<li>Figures
+
+<ul>
+<li>Exploratory figures</li>
+<li>Final figures</li>
+</ul></li>
+<li>R code
+
+<ul>
+<li>Raw scripts</li>
+<li>Final scripts</li>
+<li>R Markdown files (optional)</li>
+</ul></li>
+<li>Text
+
+<ul>
+<li>Readme files</li>
+<li>Text of analysis</li>
+</ul></li>
 </ul>
 
-  </article>
-  <!-- Presenter Notes -->
-</slide>
+<hr>
 
-      <slide class="" id="slide-4" style="background:;">
-  <hgroup>
-    <h2>lapply</h2>
-  </hgroup>
-  <article>
-    <p><code>lapply</code> takes three arguments: a list <code>X</code>, a function (or the name of a function) <code>FUN</code>, and other arguments via its ... argument. If <code>X</code> is not a list, it will be coerced to a list using <code>as.list</code>.</p>
+<h2>Define the ideal data set</h2>
 
-<pre><code class="r">&gt; lapply
-function (X, FUN, ...)
-{
-    FUN &lt;- match.fun(FUN)
-    if (!is.vector(X) || is.object(X))
-        X &lt;- as.list(X)
-    .Internal(lapply(X, FUN))
-}
-</code></pre>
+<ul>
+<li>The data set may depend on your goal
 
-<p>The actual looping is done internally in C code.</p>
+<ul>
+<li>Descriptive - a whole population</li>
+<li>Exploratory - a random sample with many variables measured</li>
+<li>Inferential - the right population, randomly sampled</li>
+<li>Predictive - a training and test data set from the same population</li>
+<li>Causal - data from a randomized study</li>
+<li>Mechanistic - data about all components of the system</li>
+</ul></li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>Predicting Stock Market Returns with Twitter</title>
+
+
+
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<h2>Predicting Stock Market Returns with Twitter</h2>
+
+<p>It has been claimed that Twitter can be used to predict movement in the stock market</p>
+
+<ul>
+<li><a href="http://arxiv.org/pdf/1010.3003&amp;">http://arxiv.org/pdf/1010.3003&amp;</a></li>
+<li><a href="http://www.bloomberg.com/news/2010-12-22/hedge-fund-will-track-twitter-to-predict-stockmarket-movements.html">http://www.bloomberg.com/news/2010-12-22/hedge-fund-will-track-twitter-to-predict-stockmarket-movements.html</a></li>
+<li><a href="http://aclweb.org/anthology//P/P13/P13-2005.pdf">http://aclweb.org/anthology//P/P13/P13-2005.pdf</a></li>
+</ul>
+
+<p>In this final project you will search for social media discussion of specific stocks using the <a href="http://cran.r-project.org/web/packages/twitteR/index.html">twitteR package</a> and the searchTwitter function. You will collect stock data for the S &amp; P 500 (or some other subset) using the <a href="http://cran.r-project.org/web/packages/quantmod/index.html">quantmod</a> package. You may find the text mining package <a href="http://cran.r-project.org/web/packages/tm/index.html">tm</a>, <a href="http://cran.r-project.org/web/packages/tm/vignettes/tm.pdf">tutorial</a></p>
+
+<p>Here is an analysis that may be useful trying to analyze sentiment related to airlines <a href="http://jeffreybreen.wordpress.com/2011/07/04/twitter-text-mining-r-slides/">http://jeffreybreen.wordpress.com/2011/07/04/twitter-text-mining-r-slides/</a>.</p>
+
+<h3>You must submit</h3>
+
+<ul>
+<li>An R package that runs your code and produces predictions</li>
+<li>A vector of predictions for the returns of the first busines day after the course ends</li>
+<li>A write up of what you did</li>
+</ul>
+
+<h3>You will be graded on:</h3>
+
+<ul>
+<li>50\% prediction RMSE</li>
+<li>25\% does your R package compile </li>
+<li>25\% peer evaluation of project
+
+<ul>
+<li>Is the write up clear?</li>
+<li>Is the code neatly documented/do what they say</li>
+<li>Do the claims match the analysis</li>
+<li>The rest of the rubric</li>
+</ul></li>
+</ul>
+
+<h3>Optionally</h3>
+
+<ul>
+<li>You can use any other data you want in your prediction
+
+<ul>
+<li>Your &ldquo;other data&rdquo; must be social media data</li>
+<li>An example is the stocktwits api <a href="http://stocktwits.com/developers/docs/api#streams-symbol-docs">http://stocktwits.com/developers/docs/api#streams-symbol-docs</a></li>
+<li>You must use twitter data and comment on the relative strength of this data</li>
+</ul></li>
+</ul>
+
+<h2>Digit recognizer</h2>
+
+<p>Have them write a digit recognizer with this:</p>
+
+<p><a href="http://www.kaggle.com/c/digit-recognizer">http://www.kaggle.com/c/digit-recognizer</a></p>
+
+<p>Or we could generate simulated digits. Have them submit an R package, a prediction, and a write-up. </p>
+
+<h2>Breast cancer prognosis</h2>
+
+<p>Have people predict breast cancer prognosis with publicly available gene expression data (data won&#39;t change much but we could rotate a few data sets)</p>
+
+<h2>Predicting crimes/parking tickets in B&#39;more</h2>
+
+<p><a href="https://data.baltimorecity.gov/">https://data.baltimorecity.gov/</a></p>
+
+<h2>Car identification in traffic cams</h2>
+
+<p><a href="http://www.r-bloggers.com/machine-learning-for-identification-of-cars/">http://www.r-bloggers.com/machine-learning-for-identification-of-cars/</a>
+<a href="http://www.trafficland.com/city/BAL/?rsid=weatherbug">http://www.trafficland.com/city/BAL/?rsid=weatherbug</a></p>
+
+</body>
+
+</html>
