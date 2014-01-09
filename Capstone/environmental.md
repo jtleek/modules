@@ -6,12 +6,8 @@ Outdoor Air Quality in the United States
 
 
 
-```{r,echo=FALSE}
-pollutantList <- c("PM10", "PM2.5", "O3", "NO2", "SO2")
-pollutantPair <- sample(pollutantList, 2, replace = FALSE)
-poll1 <- pollutantPair[1]
-poll2 <- pollutantPair[2]
-```
+
+
 
 ## Project
 
@@ -25,7 +21,7 @@ set maximum levels at which the pollutants can be found in the
 air. However, in many locations in the U.S. air pollution levels
 exceed the standards and thus those locations are in "non-attainment".
 
-The two pollutants that you will focus on in this project are `r poll1` and `r poll2`.
+The two pollutants that you will focus on in this project are O3 and NO2.
 
 
 ### Data
