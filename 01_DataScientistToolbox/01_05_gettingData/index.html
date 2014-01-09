@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>R Programming Overview</title>
+  <title>Getting and Cleaning Data Overview</title>
   <meta charset="utf-8">
-  <meta name="description" content="R Programming Overview">
+  <meta name="description" content="Getting and Cleaning Data Overview">
   <meta name="author" content="Jeffrey Leek">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -41,7 +41,7 @@
         <img src="../../assets/img/bloomberg_shield.png">
       </aside>
       <hgroup class="auto-fadein">
-        <h1>R Programming Overview</h1>
+        <h1>Getting and Cleaning Data Overview</h1>
         <h2></h2>
         <p>Jeffrey Leek<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
@@ -50,21 +50,22 @@
     <!-- SLIDES -->
       <slide class="" id="slide-1" style="background:;">
   <hgroup>
-    <h2>R programming content</h2>
+    <h2>Getting and Cleaning Data Content</h2>
   </hgroup>
   <article>
     <ul>
-<li>Data types</li>
-<li>Subsetting</li>
-<li>Reading and writing data</li>
-<li>Control structures</li>
-<li>Functions</li>
-<li>Scoping</li>
-<li>Vectorized operations</li>
-<li>Dates and times</li>
-<li>Debugging</li>
-<li>Simulation</li>
-<li>Optimization</li>
+<li>Raw vs. tidy data</li>
+<li>Downloading files</li>
+<li>Reading data
+
+<ul>
+<li>Excel, XML, JSON, MySQL, HDF5, Web, ...</li>
+</ul></li>
+<li>Merging data</li>
+<li>Reshaping data</li>
+<li>Summarizing data</li>
+<li>Finding and replacing</li>
+<li>Data resources</li>
 </ul>
 
   </article>
@@ -73,20 +74,13 @@
 
       <slide class="" id="slide-2" style="background:;">
   <hgroup>
-    <h2>Reading Lines of a Text File</h2>
+    <h2>Connecting and listing databases</h2>
   </hgroup>
   <article>
-    <p><code>readLines</code> can be useful for reading in lines of webpages</p>
-
-<pre><code class="r">## This might take time
-con &lt;- url(&quot;http://www.jhsph.edu&quot;, &quot;r&quot;)
-x &lt;- readLines(con)
-&gt; head(x)
-[1] &quot;&lt;!DOCTYPE HTML PUBLIC \&quot;-//W3C//DTD HTML 4.0 Transitional//EN\&quot;&gt;&quot;
-[2] &quot;&quot;
-[3] &quot;&lt;html&gt;&quot;
-[4] &quot;&lt;head&gt;&quot;
-[5] &quot;\t&lt;meta http-equiv=\&quot;Content-Type\&quot; content=\&quot;text/html;charset=utf-8
+    <pre><code class="r">ucscDb &lt;- dbConnect(MySQL(), user = &quot;genome&quot;, host = &quot;genome-mysql.cse.ucsc.edu&quot;)
+result &lt;- dbGetQuery(ucscDb, &quot;show databases;&quot;)
+dbDisconnect(ucscDb)
+result
 </code></pre>
 
   </article>
@@ -95,19 +89,14 @@ x &lt;- readLines(con)
 
       <slide class="" id="slide-3" style="background:;">
   <hgroup>
-    <h2>Something’s Wrong!</h2>
+    <h2>Merging data - merge()</h2>
   </hgroup>
   <article>
-    <p>How do you know that something is wrong with your function? </p>
-
-<ul>
-<li>What was your input? How did you call the function?</li>
-<li>What were you expecting? Output, messages, other results? </li>
-<li>What did you get?</li>
-<li>How does what you get differ from what you were expecting? </li>
-<li>Were your expectations correct in the first place?</li>
-<li>Can you reproduce the problem (exactly)?</li>
-</ul>
+    <pre><code class="r">mergedData2 &lt;- merge(reviews, solutions, by.x = &quot;solution_id&quot;, by.y = &quot;id&quot;, 
+    all = TRUE)
+head(mergedData2[, 1:6], 3)
+reviews[1, 1:6]
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
@@ -115,22 +104,30 @@ x &lt;- readLines(con)
 
       <slide class="" id="slide-4" style="background:;">
   <hgroup>
-    <h2>lapply</h2>
+    <h2>Raw versus processed data</h2>
   </hgroup>
   <article>
-    <p><code>lapply</code> takes three arguments: a list <code>X</code>, a function (or the name of a function) <code>FUN</code>, and other arguments via its ... argument. If <code>X</code> is not a list, it will be coerced to a list using <code>as.list</code>.</p>
+    <p><strong>Raw data</strong></p>
 
-<pre><code class="r">&gt; lapply
-function (X, FUN, ...)
-{
-    FUN &lt;- match.fun(FUN)
-    if (!is.vector(X) || is.object(X))
-        X &lt;- as.list(X)
-    .Internal(lapply(X, FUN))
-}
-</code></pre>
+<ul>
+<li>The original source of the data</li>
+<li>Often hard to use for data analyses</li>
+<li>Data analysis <em>includes</em> processing</li>
+<li>Raw data may only need to be processed once</li>
+</ul>
 
-<p>The actual looping is done internally in C code.</p>
+<p><a href="http://en.wikipedia.org/wiki/Raw_data">http://en.wikipedia.org/wiki/Raw_data</a></p>
+
+<p><strong>Processed data</strong></p>
+
+<ul>
+<li>Data that is ready for analysis</li>
+<li>Processing can include merging, subsetting, transforming, etc.</li>
+<li>There may be standards for processing</li>
+<li>All steps should be recorded </li>
+</ul>
+
+<p><a href="http://en.wikipedia.org/wiki/Computer_data_processing">http://en.wikipedia.org/wiki/Computer_data_processing</a></p>
 
   </article>
   <!-- Presenter Notes -->
