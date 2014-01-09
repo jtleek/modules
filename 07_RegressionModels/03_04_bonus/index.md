@@ -13,22 +13,8 @@ url:
 widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 ---
-```{r setup, cache = F, echo = F, message = F, warning = F, tidy = F, results='hide'}
-# make this an external chunk that can be included in any file
-options(width = 100)
-opts_chunk$set(message = F, error = F, warning = F, comment = NA, fig.align = 'center', dpi = 100, tidy = F, cache.path = '.cache/', fig.path = 'fig/')
 
-options(xtable.type = 'html')
-knit_hooks$set(inline = function(x) {
-  if(is.numeric(x)) {
-    round(x, getOption('digits'))
-  } else {
-    paste(as.character(x), collapse = ', ')
-  }
-})
-knit_hooks$set(plot = knitr:::hook_plot_html)
-runif(1)
-```
+
 
 ## How to fit functions using linear models
 * Consider a model $Y_i = f(X_i) + \epsilon$. 
@@ -46,7 +32,8 @@ is continuous at the knot points.
 
 ---
 ## Simulated example
-```{r, fig.height=4, fig.width=4}
+
+```r
 n <- 500; x <- seq(0, 4 * pi, length = n); y <- sin(x) + rnorm(n, sd = .3)
 knots <- seq(0, 8 * pi, length = 20); 
 splineTerms <- sapply(knots, function(knot) (x > knot) * (x - knot))
@@ -55,6 +42,9 @@ yhat <- predict(lm(y ~ xMat - 1))
 plot(x, y, frame = false, pch = 21, bg = "lightblue", cex = 2)
 lines(x, yhat, col = "red", lwd = 2)
 ```
+
+<div class="rimage center"><img src="fig/unnamed-chunk-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div>
+
 
 ---
 ## Adding squared terms
@@ -65,13 +55,17 @@ $$
 $$
 
 ---
-```{r, fig.height=4, fig.width=4}  
+
+```r
 splineTerms <- sapply(knots, function(knot) (x > knot) * (x - knot)^2)
 xMat <- cbind(1, x, x^2, splineTerms)
 yhat <- predict(lm(y ~ xMat - 1))
 plot(x, y, frame = false, pch = 21, bg = "lightblue", cex = 2)
 lines(x, yhat, col = "red", lwd = 2)
 ```
+
+<div class="rimage center"><img src="fig/unnamed-chunk-2.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" class="plot" /></div>
+
 
 ---
 ## Notes
@@ -81,32 +75,12 @@ lines(x, yhat, col = "red", lwd = 2)
 * These bases can be used in GLMs as well.
 * An issue with these approaches is the large number of parameters introduced. 
   * Requires some method of so called regularization.
-
+  
 ---
 ## Harmonics using linear models
-```{r}
-##Chord finder, playing the white keys on a piano from octave c4 - c5
-notes4 <- c(261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25)
-t <- seq(0, 2, by = .001); n <- length(t)
-c4 <- sin(2 * pi * notes4[1] * t); e4 <- sin(2 * pi * notes4[3] * t); 
-g4 <- sin(2 * pi * notes4[5] * t)
-chord <- c4 + e4 + g4 + rnorm(n, 0, 0.3)
-x <- sapply(notes4, function(freq) sin(2 * pi * freq * t))
-fit <- lm(chord ~ x - 1)
-plot(c(0, 9), c(0, 1.5), xlab = "Note", ylab = "Coef^2", axes = FALSE, frame = TRUE, type = "n")
-axis(2)
-axis(1, at = 1 : 8, labels = c("c4", "d4", "e4", "f4", "g4", "a4", "b4", "c5"))
-for (i in 1 : 8) abline(v = i, lwd = 3, col = grey(.8))
-lines(c(0, 1 : 8, 9), c(0, coef(fit)^2, 0), type = "l", lwd = 3, col = "red")
-```
+
 
 ---
-```{r, fig.height=5, fig.wdith=5}
-##(How you would really do it)
-a <- fft(chord); plot(Re(a)^2, type = "l")
-```
-
-
-
+## Propensity scores
 
 
