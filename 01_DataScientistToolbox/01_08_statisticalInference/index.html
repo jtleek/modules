@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Reproducible Research Overview</title>
+  <title>Statistical Inference Overview</title>
   <meta charset="utf-8">
-  <meta name="description" content="Reproducible Research Overview">
+  <meta name="description" content="Statistical Inference Overview">
   <meta name="author" content="Jeffrey Leek">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -41,7 +41,7 @@
         <img src="../../assets/img/bloomberg_shield.png">
       </aside>
       <hgroup class="auto-fadein">
-        <h1>Reproducible Research Overview</h1>
+        <h1>Statistical Inference Overview</h1>
         <h2></h2>
         <p>Jeffrey Leek<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
@@ -50,17 +50,20 @@
     <!-- SLIDES -->
       <slide class="" id="slide-1" style="background:;">
   <hgroup>
-    <h2>Reproducible Research Content</h2>
+    <h2>Statistical Inference Content</h2>
   </hgroup>
   <article>
     <ul>
-<li>Structure of a Data Analysis</li>
-<li>Organizing a Data Analysis</li>
-<li>Markdown</li>
-<li>LaTeX</li>
-<li>R Markdown</li>
-<li>Evidence-based data analysis</li>
-<li>RPubs</li>
+<li>Basic probability</li>
+<li>Likelihood</li>
+<li>Common distributions</li>
+<li>Asymptotics</li>
+<li>Confidence intervals</li>
+<li>Hypothesis tests</li>
+<li>Power</li>
+<li>Bootstrapping</li>
+<li>Non-parametric tests</li>
+<li>Basic bayesian statistics</li>
 </ul>
 
   </article>
@@ -69,22 +72,19 @@
 
       <slide class="" id="slide-2" style="background:;">
   <hgroup>
-    <h2>Steps in a data analysis</h2>
+    <h2>Example</h2>
   </hgroup>
   <article>
-    <ul>
-<li>Define the question</li>
-<li>Define the ideal data set</li>
-<li>Determine what data you can access</li>
-<li>Obtain the data</li>
-<li>Clean the data</li>
-<li>Exploratory data analysis</li>
-<li>Statistical prediction/modeling</li>
-<li>Interpret results</li>
-<li>Challenge results</li>
-<li>Synthesize/write up results</li>
-<li>Create reproducible code</li>
-</ul>
+    <p>Suppose that the proportion of help calls that get addressed in
+a random day by a help line is given by
+\[
+f(x) = \left\{\begin{array}{ll}
+    2 x & \mbox{ for } 1 > x > 0 \\
+    0                 & \mbox{ otherwise} 
+\end{array} \right. 
+\]</p>
+
+<p>Is this a mathematically valid density?</p>
 
   </article>
   <!-- Presenter Notes -->
@@ -92,53 +92,43 @@
 
       <slide class="" id="slide-3" style="background:;">
   <hgroup>
-    <h2>Data analysis files</h2>
+    <h2>The normal distribution</h2>
   </hgroup>
   <article>
     <ul>
-<li>Data
-
-<ul>
-<li>Raw data</li>
-<li>Processed data</li>
-</ul></li>
-<li>Figures
-
-<ul>
-<li>Exploratory figures</li>
-<li>Final figures</li>
-</ul></li>
-<li>R code
-
-<ul>
-<li>Raw scripts</li>
-<li>Final scripts</li>
-<li>R Markdown files (optional)</li>
-</ul></li>
-<li>Text
-
-<ul>
-<li>Readme files</li>
-<li>Text of analysis</li>
-</ul></li>
+<li>A random variable is said to follow a <strong>normal</strong> or <strong>Gaussian</strong> distribution with mean \(\mu\) and variance \(\sigma^2\) if the associated density is
+\[
+(2\pi \sigma^2)^{-1/2}e^{-(x - \mu)^2/2\sigma^2}
+\]
+If \(X\) a RV with this density then \(E[X] = \mu\) and \(Var(X) = \sigma^2\)</li>
+<li>We write \(X\sim \mbox{N}(\mu, \sigma^2)\)</li>
+<li>When \(\mu = 0\) and \(\sigma = 1\) the resulting distribution is called <strong>the standard normal distribution</strong></li>
+<li>The standard normal density function is labeled \(\phi\)</li>
+<li>Standard normal RVs are often labeled \(Z\)</li>
 </ul>
 
-<hr>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
 
-<h2>Define the ideal data set</h2>
-
-<ul>
-<li>The data set may depend on your goal
-
-<ul>
-<li>Descriptive - a whole population</li>
-<li>Exploratory - a random sample with many variables measured</li>
-<li>Inferential - the right population, randomly sampled</li>
-<li>Predictive - a training and test data set from the same population</li>
-<li>Causal - data from a randomized study</li>
-<li>Mechanistic - data about all components of the system</li>
-</ul></li>
-</ul>
+      <slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Example bootstrap code</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">B &lt;- 1000
+n &lt;- length(gmVol)
+resamples &lt;- matrix(sample(gmVol,
+                           n * B,
+                           replace = TRUE),
+                    B, n)
+medians &lt;- apply(resamples, 1, median)
+sd(medians)
+[1] 3.148706
+quantile(medians, c(.025, .975))
+    2.5%    97.5% 
+582.6384 595.3553 
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
