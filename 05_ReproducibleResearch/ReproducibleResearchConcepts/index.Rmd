@@ -1,0 +1,42 @@
+---
+title       : Reproducible Research: Concepts and Ideas
+subtitle    : 
+author      : Roger D. Peng, Associate Professor of Biostatistics 
+job         : Johns Hopkins Bloomberg School of Public Health
+logo        : bloomberg_shield.png
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+url:
+  lib: ../../libraries
+  assets: ../../assets
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+---
+  
+## Replication
+
+* The ultimate standard for strengthening scientific evidence is replication of findings and conducting studies with independent
+  - Investigators	
+  - Data
+  - Analytical methods
+  - Laboratories
+  - Instruments
+
+* Replication is particularly important in studies that can impact
+  broad policy or regulatory decisions
+
+---
+
+## What’s Wrong with Replication?
+
+* Some studies cannot be replicated
+  - No time, opportunistic
+  - No money
+  - Unique
+
+* Reproducible Research: Make analytic data and code available so that
+  others may reproduce findings
+
+---
+
