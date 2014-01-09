@@ -1,0 +1,25 @@
+---
+title       : R programming
+subtitle    : Johns Hopkins Coursera Data Science Series
+author      : Jeffrey Leek 
+job         : Johns Hopkins Bloomberg School of Public Health
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : zenburn   # 
+widgets     : [mathjax,bootstrap]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+---
+
+## R programming content
+
+* Data types
+* Subsetting
+* Reading and writing data
+* Control structures
+* Functions
+* Vectorized operations
+* Dates and times
+* Debugging
+
+
+
