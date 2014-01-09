@@ -85,7 +85,7 @@ Error in cor(airquality) : missing observations in cov/cor
 - Be explicit about your question
 - Do provide the minimum amount of information necessary (volume is not precision)
 - Be courteous (it never hurts)
-- Follow up witht the solution (if found)
+- Follow up with the solution (if found)
 
 ---
 
@@ -107,7 +107,7 @@ Message:
     I'm completely lost. This is probably
     due mostly to the fact that I'm a
     complete R newb, but it's got me stuck
-    in a research project.!
+    in a research project.
 ```
 
 ---
@@ -121,7 +121,7 @@ Yes, you are lost. The R posting guide is
   right list and also the manuals (at
   e.g. http://cran.r-project.org/
   manuals.html, and one of them seems
-  exactly what you need).!
+  exactly what you need).
 ```
 
 ---

@@ -8,8 +8,8 @@ framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : tomorrow      # 
 url:
-  lib: ../libraries
-  assets: ../../../assets
+  lib: ../../libraries
+  assets: ../../assets
 widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 ---
@@ -61,6 +61,4 @@ mode        : selfcontained # {standalone, draft}
 
 * These slides were written in R markdown and converted to slides
   using the [slidify](http://slidify.org) package
-
-
 

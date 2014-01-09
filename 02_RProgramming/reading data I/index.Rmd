@@ -115,8 +115,8 @@ I have a data frame with 1,500,000 rows and 120 columns, all of which are numeri
 
   = 1440000000 bytes
   
-  = 1440000000 / 2^20 bytes/MB  
+  = 1440000000 / $2^{20}$ bytes/MB  
   
-  = 1,373.29MB
+  = 1,373.29 MB
   
   = 1.34 GB                     

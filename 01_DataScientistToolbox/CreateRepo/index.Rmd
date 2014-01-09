@@ -61,7 +61,7 @@ __...OR...__
 
 * Congratulations! You've created a GitHub repository.
 
-<img class=center src=../../assets/img/CreateRepo/CreateRepo2.png height='350'/>
+<img class=center src=../../assets/img/CreateRepo/CreateRepo2.png height='450'/>
 
 ---
 
