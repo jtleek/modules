@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Reproducible Research Overview</title>
+  <title>Regression Models Overview</title>
   <meta charset="utf-8">
-  <meta name="description" content="Reproducible Research Overview">
+  <meta name="description" content="Regression Models Overview">
   <meta name="author" content="Jeffrey Leek">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -41,7 +41,7 @@
         <img src="../../assets/img/bloomberg_shield.png">
       </aside>
       <hgroup class="auto-fadein">
-        <h1>Reproducible Research Overview</h1>
+        <h1>Regression Models Overview</h1>
         <h2></h2>
         <p>Jeffrey Leek<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
@@ -50,17 +50,21 @@
     <!-- SLIDES -->
       <slide class="" id="slide-1" style="background:;">
   <hgroup>
-    <h2>Reproducible Research Content</h2>
+    <h2>Regression Models Content</h2>
   </hgroup>
   <article>
     <ul>
-<li>Structure of a Data Analysis</li>
-<li>Organizing a Data Analysis</li>
-<li>Markdown</li>
-<li>LaTeX</li>
-<li>R Markdown</li>
-<li>Evidence-based data analysis</li>
-<li>RPubs</li>
+<li>Linear regression</li>
+<li>Multiple Regression</li>
+<li>Confounding</li>
+<li>Residuals and diagnostics</li>
+<li>Prediction using linear models</li>
+<li>Model misspecification</li>
+<li>Scatterplot smoothing/splines</li>
+<li>Machine learning via regression</li>
+<li>Resampling inference in regression, bootstrapping, permutation tests</li>
+<li>Weighted regression</li>
+<li>Mixed models (random intercepts)</li>
 </ul>
 
   </article>
@@ -69,21 +73,14 @@
 
       <slide class="" id="slide-2" style="background:;">
   <hgroup>
-    <h2>Steps in a data analysis</h2>
+    <h2>A historically famous idea, Regression to the Mean</h2>
   </hgroup>
   <article>
     <ul>
-<li>Define the question</li>
-<li>Define the ideal data set</li>
-<li>Determine what data you can access</li>
-<li>Obtain the data</li>
-<li>Clean the data</li>
-<li>Exploratory data analysis</li>
-<li>Statistical prediction/modeling</li>
-<li>Interpret results</li>
-<li>Challenge results</li>
-<li>Synthesize/write up results</li>
-<li>Create reproducible code</li>
+<li>Why is it that the children of tall parents tend to be tall, but not as tall as their parents? </li>
+<li>Why do children of short parents tend to be short, but not as short as their parents?</li>
+<li>Why do parents of very short children, tend to be short, but not a short as their child? And the same with parents of very tall children?</li>
+<li>Why do the best performing athletes this year tend to do a little worse the following?</li>
 </ul>
 
   </article>
@@ -92,51 +89,43 @@
 
       <slide class="" id="slide-3" style="background:;">
   <hgroup>
-    <h2>Data analysis files</h2>
+    <h2>Basic regression model with additive Gaussian errors</h2>
   </hgroup>
   <article>
     <ul>
-<li>Data
-
-<ul>
-<li>Raw data</li>
-<li>Processed data</li>
-</ul></li>
-<li>Figures
-
-<ul>
-<li>Exploratory figures</li>
-<li>Final figures</li>
-</ul></li>
-<li>R code
-
-<ul>
-<li>Raw scripts</li>
-<li>Final scripts</li>
-<li>R Markdown files (optional)</li>
-</ul></li>
-<li>Text
-
-<ul>
-<li>Readme files</li>
-<li>Text of analysis</li>
-</ul></li>
+<li>Least squares is an estimation tool, how do we do inference?</li>
+<li>Consider developing a probabilistic model for linear regression
+\[
+Y_i = \beta_0 + \beta_1 X_i + \epsilon_{i}
+\]</li>
+<li>Here the \(\epsilon_{i}\) are assumed iid \(N(0, \sigma^2)\). </li>
+<li>Note, \(E[Y_i ~|~ X_i = x_i] = \mu_i = \beta_0 + \beta_1 x_i\)</li>
+<li>Note, \(Var(Y_i ~|~ X_i = x_i) = \sigma^2\).</li>
+<li>Likelihood equivalent model specification is that the \(Y_i\) are independent \(N(\mu_i, \sigma^2)\).</li>
 </ul>
 
-<hr>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
 
-<h2>Define the ideal data set</h2>
+      <slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Multivariable regression analyses</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>An insurance company is interested in how last year&#39;s claims can predict a person&#39;s time in the hospital this year. 
 
 <ul>
-<li>The data set may depend on your goal
+<li>They want to use an enormous amount of data contained in claims to predict a single number. Simple linear regression is not equipped to handle more than one predictor.</li>
+</ul></li>
+<li>How can one generalize SLR to incoporate lots of regressors for
+the purpose of prediction?</li>
+<li>What are the consequences of adding lots of regressors? 
 
 <ul>
-<li>Descriptive - a whole population</li>
-<li>Exploratory - a random sample with many variables measured</li>
-<li>Inferential - the right population, randomly sampled</li>
-<li>Predictive - a training and test data set from the same population</li>
-<li>Causal - data from a randomized study</li>
-<li>Mechanistic - data about all components of the system</li>
+<li>Surely there must be consequences to throwing variables in that aren&#39;t related to Y?</li>
+<li>Surely there must be consequences to omitting variables that are?</li>
 </ul></li>
 </ul>
 
