@@ -13,7 +13,7 @@ widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 ---
 
-## Reproducible Research Overview
+## Reproducible Research Content
 
 * Structure of a Data Analysis
 * Organizing a Data Analysis
