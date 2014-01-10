@@ -111,42 +111,6 @@ mode        : selfcontained # {standalone, draft}
 
 ## Markdown Syntax
 
-### Code blocks
-
-    ```r
-    library(datasets)
-    mean(iris$Sepal.Length)
-    median(iris$Sepal.Length)
-    hist(iris$Sepal.Length)
-    ```
-    
-```r
-library(datasets)
-mean(iris$Sepal.Length)
-median(iris$Sepal.Length)
-hist(iris$Sepal.Length)
-```
-
----
-
-## Markdown Syntax
-
-### Inline Code
-
-<br></br>
-
-```markdown
-`plot(beaver1$time, beaver1$temp, main="Body Temperature Series of a Beaver")`
-```
-
-<br></br>
-
-`plot(beaver1$time, beaver1$temp, main="Body Temperature Series of a Beaver")`
-
----
-
-## Markdown Syntax
-
 ### Links
 
 <br></br>
@@ -216,6 +180,3 @@ Second line
 
 - [Github's Markdown Guide](https://help.github.com/articles/github-flavored-markdown)
 
-- [Dillinger - Edit, Export, and Share Markdown Documents](http://www.dillinger.io/)
-
-- [This document on Github](https://github.com/seankross/Introduction-to-Markdown)
