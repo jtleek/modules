@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Random Vectors</title>
+  <title>Independence</title>
   <meta charset="utf-8">
-  <meta name="description" content="Random Vectors">
-  <meta name="author" content="Brian Caffo, PhD">
+  <meta name="description" content="Independence">
+  <meta name="author" content="Brian Caffo, Jeff Leek, Roger Peng">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -19,6 +19,11 @@
   </script>
   
     <link rel="stylesheet" href = "../../assets/css/custom.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BACKUP.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BASE.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.LOCAL.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.orig">
+<link rel="stylesheet" href = "../../assets/css/custom.css.REMOTE.546.css">
 <link rel="stylesheet" href = "../../assets/css/ribbons.css">
 
 </head>
@@ -36,66 +41,20 @@
         <img src="../../assets/img/bloomberg_shield.png">
       </aside>
       <hgroup class="auto-fadein">
-        <h1>Random Vectors</h1>
-        <h2>Mathematical Biostatistics Boot Camp</h2>
-        <p>Brian Caffo, PhD<br/>Johns Hopkins Bloomberg School of Public Health</p>
+        <h1>Independence</h1>
+        <h2>Statistical Inference</h2>
+        <p>Brian Caffo, Jeff Leek, Roger Peng<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
           </slide>
 
     <!-- SLIDES -->
       <slide class="" id="slide-1" style="background:;">
   <hgroup>
-    <h2>Table of contents</h2>
-  </hgroup>
-  <article>
-    <ol>
-<li>Table of contents</li>
-<li>Random vectors</li>
-<li>Independence
-
-<ul>
-<li>Independent events</li>
-<li>Independent random variables </li>
-<li>IID random variables</li>
-</ul></li>
-<li>Correlation</li>
-<li>Variance and correlation properties</li>
-<li>Variances properties of sample means</li>
-<li>The sample variance</li>
-<li>Some discussion</li>
-</ol>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-2" style="background:;">
-  <hgroup>
-    <h2>Random vectors</h2>
-  </hgroup>
-  <article>
-    <ul>
-<li><p>Random vectors are simply random variables collected into a vector</p>
-
-<ul>
-<li>For example if \(X\) and \(Y\) are random variables \((X, Y)\) is a random vector</li>
-</ul></li>
-<li><p>Joint density \(f(x, y)\) satisfies \(f > 0\) and \(\int \int f(x, y) dx dy = 1\)</p></li>
-<li><p>For discrete random variables \(\sum \sum f(x, y) = 1\)</p></li>
-<li><p>In this lecture we focus on <strong>independent</strong> random variables where \(f(x, y) = f(x)g(y)\)</p></li>
-</ul>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-3" style="background:;">
-  <hgroup>
     <h2>Independent events</h2>
   </hgroup>
   <article>
     <ul>
-<li>Two events \(A\) and \(B\) are {\bf independent} if \[P(A \cap B) = P(A)P(B)\]</li>
+<li>Two events \(A\) and \(B\) are <strong>independent</strong> if \[P(A \cap B) = P(A)P(B)\]</li>
 <li>Two random variables, \(X\) and \(Y\) are independent if for any two sets \(A\) and \(B\) \[P([X \in A] \cap [Y \in B]) = P(X\in A)P(Y\in B)\]</li>
 <li><p>If \(A\) is independent of \(B\) then </p>
 
@@ -110,7 +69,7 @@
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-4" style="background:;">
+      <slide class="" id="slide-2" style="background:;">
   <hgroup>
     <h2>Example</h2>
   </hgroup>
@@ -127,23 +86,22 @@
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-5" style="background:;">
+      <slide class="" id="slide-3" style="background:;">
   <hgroup>
     <h2>Example</h2>
   </hgroup>
   <article>
     <ul>
-<li>Volume 309 of {\em Science} reports on a physician who was on trial for expert testimony in a criminal trial</li>
+<li>Volume 309 of Science reports on a physician who was on trial for expert testimony in a criminal trial</li>
 <li>Based on an estimated prevalence of sudden infant death syndrome of \(1\) out of \(8,543\), Dr Meadow testified that that the probability of a mother having two children with SIDS was \(\left(\frac{1}{8,543}\right)^2\)</li>
 <li>The mother on trial was convicted of murder</li>
-<li>What was Dr Meadow&#39;s mistake(s)?</li>
 </ul>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-6" style="background:;">
+      <slide class="" id="slide-4" style="background:;">
   <hgroup>
     <h2>Example: continued</h2>
   </hgroup>
@@ -152,21 +110,19 @@
 <li>For the purposes of this class, the principal mistake was to <em>assume</em> that the probabilities of having SIDs within a family are independent</li>
 <li>That is, \(P(A_1 \cap A_2)\) is not necessarily equal to \(P(A_1)P(A_2)\)</li>
 <li>Biological processes that have a believed genetic or familiar environmental component, of course, tend to be dependent within families</li>
-<li>In addition, the estimated prevalence was obtained from an <em>unpublished</em> report on single cases; hence having no information about recurrence of SIDs within families</li>
+<li>(There are many other statistical points of discussion for this case.)</li>
 </ul>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-7" style="background:;">
+      <slide class="" id="slide-5" style="background:;">
   <hgroup>
     <h2>Useful fact</h2>
   </hgroup>
   <article>
-    <ul>
-<li>We will use the following fact extensively in this class:</li>
-</ul>
+    <p>We will use the following fact extensively in this class:</p>
 
 <p><em>If a collection of random variables \(X_1, X_2, \ldots, X_n\) are independent, then their joint distribution is the product of their individual densities or mass functions</em></p>
 
@@ -179,13 +135,13 @@ f(x_1,\ldots, x_n) = \prod_{i=1}^n f_i(x_i)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-8" style="background:;">
+      <slide class="" id="slide-6" style="background:;">
   <hgroup>
     <h2>IID random variables</h2>
   </hgroup>
   <article>
     <ul>
-<li>In the instance where \(f_1 = f_2 = \ldots = f_n\) we say that the \(X_i\) are <strong>iid</strong> for <em>independent</em> and <em>identically distributed</em></li>
+<li>Random variables are said to be iid if they are independent and identically distributed</li>
 <li>iid random variables are the default model for random samples</li>
 <li>Many of the important theories of statistics are founded on assuming that variables are iid</li>
 </ul>
@@ -194,7 +150,7 @@ f(x_1,\ldots, x_n) = \prod_{i=1}^n f_i(x_i)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-9" style="background:;">
+      <slide class="" id="slide-7" style="background:;">
   <hgroup>
     <h2>Example</h2>
   </hgroup>
@@ -212,7 +168,7 @@ f(x_1,\ldots,x_n) = \prod_{i=1}^n p^{x_i} (1 - p)^{1-x_i} = p^{\sum x_i} (1 - p)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-10" style="background:;">
+      <slide class="" id="slide-8" style="background:;">
   <hgroup>
     <h2>Correlation</h2>
   </hgroup>
@@ -235,7 +191,7 @@ Cov(X, Y) = E[(X - \mu_x)(Y - \mu_y)] = E[X Y] - E[X]E[Y]
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-11" style="background:;">
+      <slide class="" id="slide-9" style="background:;">
   <hgroup>
     <h2>Correlation</h2>
   </hgroup>
@@ -260,71 +216,29 @@ Cor(X, Y) = Cov(X, Y) / \sqrt{Var(X) Var(y)}
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-12" style="background:;">
+      <slide class="" id="slide-10" style="background:;">
   <hgroup>
     <h2>Some useful results</h2>
   </hgroup>
   <article>
     <ul>
-<li>Let \(\{X_i\}_{i=1}^n\) be a collection of random variables
+<li><p>Let \(\{X_i\}_{i=1}^n\) be a collection of random variables</p>
 
 <ul>
 <li>When the \(\{X_i\}\) are uncorrelated \[Var\left(\sum_{i=1}^n a_i X_i + b\right) = \sum_{i=1}^n a_i^2 Var(X_i)\]<br></li>
-<li>Otherwise
-\[
-\begin{eqnarray*}
-&   &  Var\left(\sum_{i=1}^n a_i X_i + b\right)\\
-& = &\sum_{i=1}^n a_i^2 Var(X_i) + 2 \sum_{i=1}^{n-1} \sum_{j=i}^n a_i a_j Cov(X_i, X_j)
-\end{eqnarray*}
-\]</li>
-<li>If the \(X_i\) are iid with variance \(\sigma^2\) then \(Var(\bar X) = \sigma^2/n\) and \(E[S^2] = \sigma^2\)</li>
 </ul></li>
-</ul>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-13" style="background:;">
-  <hgroup>
-    <h2>Example proof</h2>
-  </hgroup>
-  <article>
-    <p>Prove that \(Var(X+Y) = Var(X) + Var(Y) + 2 Cov(X, Y)\)</p>
-
-<p>\[
-\hspace{-1in}  \begin{eqnarray*}
-    &   & Var(X + Y) \\ \\
-    & = & E[(X + Y)(X + Y)] - E[X + Y]^2 \\ \\
-    & = & E[X^2 + 2XY + Y^2] - (\mu_x + \mu_y)^2 \\ \\
-    & = & E[X^2 + 2XY + Y^2] - \mu_x^2 - 2\mu_x\mu_y -\mu_y^2 \\ \\
-    & = & (E[X^2]-\mu_x^2) + (E[Y^2] - \mu_y^2) + 2(E[XY] - \mu_x\mu_y)\\ \\
-    & = & Var(X) + Var(Y) + 2 Cov(X, Y)
-  \end{eqnarray*}
-\]</p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-14" style="background:;">
-  <hgroup>
-    <h2>Result</h2>
-  </hgroup>
-  <article>
-    <ul>
-<li>A commonly used subcase from these properties is that {\em if a collection of random variables \(\{X_i\}\) are uncorrelated}, then the variance of the sum is the sum of the variances
+<li><p>A commonly used subcase from these properties is that <em>if a collection of random variables \(\{X_i\}\) are uncorrelated</em>, then the variance of the sum is the sum of the variances
 \[
 Var\left(\sum_{i=1}^n X_i \right) = \sum_{i=1}^n Var(X_i)
-\]</li>
-<li>Therefore, it is sums of variances that tend to be useful, not sums of standard deviations; that is, the standard deviation of the sum of bunch of independent random variables is the square root of the sum of the variances, not the sum of the standard deviations</li>
+\]</p></li>
+<li><p>Therefore, it is sums of variances that tend to be useful, not sums of standard deviations; that is, the standard deviation of the sum of bunch of independent random variables is the square root of the sum of the variances, not the sum of the standard deviations</p></li>
 </ul>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-15" style="background:;">
+      <slide class="" id="slide-11" style="background:;">
   <hgroup>
     <h2>The sample mean</h2>
   </hgroup>
@@ -345,14 +259,14 @@ Var\left(\sum_{i=1}^n X_i \right) = \sum_{i=1}^n Var(X_i)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-16" style="background:;">
+      <slide class="" id="slide-12" style="background:;">
   <hgroup>
     <h2>Some comments</h2>
   </hgroup>
   <article>
     <ul>
 <li>When \(X_i\) are independent with a common variance \(Var(\bar X) = \frac{\sigma^2}{n}\)</li>
-<li>\(\sigma/\sqrt{n}\) is called {\bf the standard error} of the sample mean</li>
+<li>\(\sigma/\sqrt{n}\) is called <em>the standard error</em> of the sample mean</li>
 <li>The standard error of the sample mean is the standard deviation of the distribution of the sample mean</li>
 <li>\(\sigma\) is the standard deviation of the distribution of a single observation</li>
 <li>Easy way to remember, the sample mean has to be less variable than a single observation, therefore its standard deviation is divided by a \(\sqrt{n}\)</li>
@@ -362,13 +276,13 @@ Var\left(\sum_{i=1}^n X_i \right) = \sum_{i=1}^n Var(X_i)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-17" style="background:;">
+      <slide class="" id="slide-13" style="background:;">
   <hgroup>
     <h2>The sample variance</h2>
   </hgroup>
   <article>
     <ul>
-<li>The {\bf sample variance} is defined as 
+<li>The <strong>sample variance</strong> is defined as 
 \[
 S^2 =   \frac{\sum_{i=1}^n (X_i - \bar X)^2}{n-1} 
 \]</li>
@@ -384,7 +298,7 @@ S^2 =   \frac{\sum_{i=1}^n (X_i - \bar X)^2}{n-1}
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-18" style="background:;">
+      <slide class="" id="slide-14" style="background:;">
   <hgroup>
     <h2>The sample variance is unbiased</h2>
   </hgroup>
@@ -403,7 +317,7 @@ S^2 =   \frac{\sum_{i=1}^n (X_i - \bar X)^2}{n-1}
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-19" style="background:;">
+      <slide class="" id="slide-15" style="background:;">
   <hgroup>
     <h2>Hoping to avoid some confusion</h2>
   </hgroup>
@@ -420,18 +334,20 @@ S^2 =   \frac{\sum_{i=1}^n (X_i - \bar X)^2}{n-1}
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-20" style="background:;">
+      <slide class="" id="slide-16" style="background:;">
   <hgroup>
     <h2>Example</h2>
   </hgroup>
   <article>
-    <ul>
-<li>In a study of 495 organo-lead workers, the following summaries were obtained for TBV in \(cm^3\)</li>
-<li>mean = \(1151.281\)</li>
-<li>sum of squared observations = \(662361978\)</li>
-<li>sample sd = \(\sqrt{(662361978 - 495 \times 1151.281^2)/494} = 112.6215\)</li>
-<li>estimated se of the mean = \(112.6215 / \sqrt{495} = 5.062\)</li>
-</ul>
+    <pre><code class="r">data(father.son)
+hist(father.son$sheight, col = &quot;lightblue&quot;, border = &quot;black&quot;)
+x &lt;- father.son$sheight
+n &lt;- length(x)
+c(sum((x - mean(x))^2)/(n - 1), var(x), var(x)/n, sd(x), sd(x)/sqrt(n))
+</code></pre>
+
+<pre><code>## [1] 7.922545 7.922545 0.007349 2.814702 0.085728
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
