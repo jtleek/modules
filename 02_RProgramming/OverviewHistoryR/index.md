@@ -1,7 +1,7 @@
 ---
 title       : Overview and History of R
 subtitle    : 
-author      : Roger Peng, Associate Professor
+author      : Roger D. Peng, Associate Professor of Biostatistics
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -87,6 +87,9 @@ http://www.stat.bell-labs.com/S/history.html
 
 ---
 
+
+
+
 ## Back to R
 
 - 1991: Created in New Zealand by Ross Ihaka and Robert Gentleman. Their
@@ -104,7 +107,7 @@ S-PLUS). The core group controls the source code for R.
 
 - 2000: R version 1.0.0 is released.
 
-- 2012: R version 2.15.1 is released on June 22, 2012.
+- 2013: R version 3.0.2 is released on December 2013.
 
 --- 
 
