@@ -4,7 +4,7 @@
   <title>Some Common Distributions</title>
   <meta charset="utf-8">
   <meta name="description" content="Some Common Distributions">
-  <meta name="author" content="Brian Caffo, PhD">
+  <meta name="author" content="Brian Caffo, Jeff Leek, Roger Peng">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -19,6 +19,11 @@
   </script>
   
     <link rel="stylesheet" href = "../../assets/css/custom.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BACKUP.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BASE.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.LOCAL.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.orig">
+<link rel="stylesheet" href = "../../assets/css/custom.css.REMOTE.546.css">
 <link rel="stylesheet" href = "../../assets/css/ribbons.css">
 
 </head>
@@ -37,8 +42,8 @@
       </aside>
       <hgroup class="auto-fadein">
         <h1>Some Common Distributions</h1>
-        <h2>Mathematical Biostatistics Boot Camp</h2>
-        <p>Brian Caffo, PhD<br/>Johns Hopkins Bloomberg School of Public Health</p>
+        <h2>Statistical Inference</h2>
+        <p>Brian Caffo, Jeff Leek, Roger Peng<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
           </slide>
 
@@ -82,16 +87,39 @@ likelihood is
 
       <slide class="" id="slide-3" style="background:;">
   <hgroup>
-    
+    <h2>Plotting all possible likelihoods for a small n</h2>
   </hgroup>
   <article>
-    <p><img src="../assets/bernoulliLikelihood.png" height=500></p>
+    <pre><code>n &lt;- 5
+pvals &lt;- seq(0, 1, length = 1000)
+plot(c(0, 1), c(0, 1.2), type = &quot;n&quot;, frame = FALSE, xlab = &quot;p&quot;, ylab = &quot;likelihood&quot;)
+text((0 : n) /n, 1.1, as.character(0 : n))
+sapply(0 : n, function(x) {
+  phat &lt;- x / n
+  if (x == 0) lines(pvals,  ( (1 - pvals) / (1 - phat) )^(n-x), lwd = 3)
+  else if (x == n) lines(pvals, (pvals / phat) ^ x, lwd = 3)
+  else lines(pvals, (pvals / phat ) ^ x * ( (1 - pvals) / (1 - phat) ) ^ (n-x), lwd = 3) 
+  }
+)
+title(paste(&quot;Likelihoods for n = &quot;, n))
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
       <slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    
+  </hgroup>
+  <article>
+    <div class="rimage center"><img src="fig/unnamed-chunk-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-5" style="background:;">
   <hgroup>
     <h2>Binomial trials</h2>
   </hgroup>
@@ -116,7 +144,7 @@ for \(x=0,\ldots,n\)</li>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-5" style="background:;">
+      <slide class="" id="slide-6" style="background:;">
   <hgroup>
     
   </hgroup>
@@ -148,7 +176,7 @@ without replacement disregarding the order of the items</li>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-6" style="background:;">
+      <slide class="" id="slide-7" style="background:;">
   <hgroup>
     <h2>Example justification of the binomial likelihood</h2>
   </hgroup>
@@ -173,14 +201,14 @@ possible orders of \(6\) heads and \(4\) tails</li>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-7" style="background:;">
+      <slide class="" id="slide-8" style="background:;">
   <hgroup>
     <h2>Example</h2>
   </hgroup>
   <article>
     <ul>
-<li>Suppose a friend has \(8\) children, \(7\) of which are girls and none are twins</li>
-<li>If each gender has an independent \(50\)\% probability for each birth, what&#39;s the probability of getting \(7\) or more girls out of \(8\) births?
+<li>Suppose a friend has \(8\) children (oh my!), \(7\) of which are girls and none are twins</li>
+<li>If each gender has an independent \(50\)% probability for each birth, what&#39;s the probability of getting \(7\) or more girls out of \(8\) births?
 \[\left(
 \begin{array}{c}
 8 \\ 7
@@ -193,25 +221,40 @@ possible orders of \(6\) heads and \(4\) tails</li>
 \end{array}
 \right) .5^{8}(1-.5)^{0} \approx 0.04
 \]</li>
-<li>This calculation is an example of a Pvalue - the probability under a null hypothesis of getting a result as extreme or more extreme than the one actually obtained</li>
 </ul>
 
-  </article>
-  <!-- Presenter Notes -->
-</slide>
+<pre><code class="r">choose(8, 7) * .5 ^ 8 + choose(8, 8) * .5 ^ 8 
+</code></pre>
 
-      <slide class="" id="slide-8" style="background:;">
-  <hgroup>
-    
-  </hgroup>
-  <article>
-    <p><img src="../assets/birthLikelihood.png" height=500></p>
+<pre><code>[1] 0.03516
+</code></pre>
+
+<pre><code class="r">pbinom(6, size = 8, prob = .5, lower.tail = FALSE)
+</code></pre>
+
+<pre><code>[1] 0.03516
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
       <slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    
+  </hgroup>
+  <article>
+    <pre><code class="r">plot(pvals, dbinom(7, 8, pvals) / dbinom(7, 8, 7/8) , 
+     lwd = 3, frame = FALSE, type = &quot;l&quot;, xlab = &quot;p&quot;, ylab = &quot;likelihood&quot;)
+</code></pre>
+
+<div class="rimage center"><img src="fig/unnamed-chunk-3.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" class="plot" /></div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-10" style="background:;">
   <hgroup>
     <h2>The normal distribution</h2>
   </hgroup>
@@ -232,18 +275,46 @@ If \(X\) a RV with this density then \(E[X] = \mu\) and \(Var(X) = \sigma^2\)</l
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-10" style="background:;">
+      <slide class="" id="slide-11" style="background:;">
   <hgroup>
     
   </hgroup>
   <article>
-    <p><img src="../assets/stdNormal.png" height=500></p>
+    <pre><code class="r">zvals &lt;- seq(-3, 3, length = 1000)
+plot(zvals, dnorm(zvals), 
+     type = &quot;l&quot;, lwd = 3, frame = FALSE, xlab = &quot;z&quot;, ylab = &quot;Density&quot;)
+sapply(-3 : 3, function(k) abline(v = k))
+</code></pre>
+
+<div class="rimage center"><img src="fig/unnamed-chunk-4.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" class="plot" /></div>
+
+<pre><code>[[1]]
+NULL
+
+[[2]]
+NULL
+
+[[3]]
+NULL
+
+[[4]]
+NULL
+
+[[5]]
+NULL
+
+[[6]]
+NULL
+
+[[7]]
+NULL
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-11" style="background:;">
+      <slide class="" id="slide-12" style="background:;">
   <hgroup>
     <h2>Facts about the normal density</h2>
   </hgroup>
@@ -258,7 +329,7 @@ If \(X\) a RV with this density then \(E[X] = \mu\) and \(Var(X) = \sigma^2\)</l
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-12" style="background:;">
+      <slide class="" id="slide-13" style="background:;">
   <hgroup>
     <h2>More facts about the normal density</h2>
   </hgroup>
@@ -273,13 +344,17 @@ If \(X\) a RV with this density then \(E[X] = \mu\) and \(Var(X) = \sigma^2\)</l
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-13" style="background:;">
+      <slide class="" id="slide-14" style="background:;">
   <hgroup>
     <h2>Question</h2>
   </hgroup>
   <article>
     <ul>
-<li>What is the \(95^{th}\) percentile of a \(N(\mu, \sigma^2)\) distribution?</li>
+<li>What is the \(95^{th}\) percentile of a \(N(\mu, \sigma^2)\) distribution? 
+
+<ul>
+<li>Quick answer in R <code>qnorm(.95, mean = mu, sd = sd)</code></li>
+</ul></li>
 <li>We want the point \(x_0\) so that \(P(X \leq x_0) = .95\)
 \[
 \begin{eqnarray*}
@@ -297,7 +372,7 @@ or \(x_0 = \mu + \sigma 1.645\)</li>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-14" style="background:;">
+      <slide class="" id="slide-15" style="background:;">
   <hgroup>
     <h2>Question</h2>
   </hgroup>
@@ -319,7 +394,7 @@ P\left(\frac{X -\mu}{\sigma} > \frac{\mu + 2\sigma - \mu}{\sigma}\right)    \\ \
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-15" style="background:;">
+      <slide class="" id="slide-16" style="background:;">
   <hgroup>
     <h2>Other properties</h2>
   </hgroup>
@@ -338,44 +413,20 @@ P\left(\frac{X -\mu}{\sigma} > \frac{\mu + 2\sigma - \mu}{\sigma}\right)    \\ \
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-16" style="background:;">
-  <hgroup>
-    <h2>Question</h2>
-  </hgroup>
-  <article>
-    <p>If \(X_i\) are iid \(\mbox{N}(\mu, \sigma^2)\) with a known variance, what is the likelihood for \(\mu\)?
-\[
-\begin{eqnarray*}
-{\cal L}(\mu) & =    &  \prod_{i=1}^n  (2\pi \sigma^2)^{-1/2}\
-exp\left\{-(x_i - \mu)^2/2\sigma^2\right\} \\ \\
-              &\propto &  \exp\left\{-\sum_{i=1}^n (x_i - \mu)^2/2\sigma^2\right\} \\ \\
-              & =    &  \exp\left\{-\sum_{i=1}^n x_i^2/2\sigma^2 + \mu \sum_{i=1}^n X_i / \sigma^2 - n \mu^2/2\sigma^2\right\}\\
-              &\propto & \exp\left\{\mu n \bar x / \sigma^2 - n \mu^2/2\sigma^2\right\}
-\end{eqnarray*}
-\]
-Later we will discuss methods for handling the unknown variance</p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
       <slide class="" id="slide-17" style="background:;">
   <hgroup>
-    <h2>Question</h2>
+    <h2>Final thoughts on normal likelihoods</h2>
   </hgroup>
   <article>
     <ul>
-<li>If \(X_i\) are iid \(\mbox{N}(\mu, \sigma^2)\), with known  variance what&#39;s the ML estimate of \(\mu\)?</li>
-<li>We calculated the likelihood for \(\mu\) on the previous page, the log likelihood is
+<li>The MLE for \(\mu\) is \(\bar X\).</li>
+<li>The MLE for \(\sigma^2\) is
 \[
-\mu n \bar x / \sigma^2 - n \mu^2/2\sigma^2
-\]</li>
-<li>The derivative with respect to \(\mu\) is 
-\[
-n \bar x / \sigma^2 - n \mu / \sigma ^ 2 = 0
-\]</li>
-<li>This yields that \(\bar x\) is the ml estimate of \(\mu\)</li>
-<li>Since this doesn&#39;t depend on \(\sigma\) it is also the ML estimate with \(\sigma\) unknown</li>
+\frac{\sum_{i=1}^n (X_i - \bar X)^2}{n}
+\]
+(Which is the biased version of the sample variance.)</li>
+<li>The MLE of \(\sigma\) is simply the square root of this
+estimate</li>
 </ul>
 
   </article>
@@ -384,22 +435,150 @@ n \bar x / \sigma^2 - n \mu / \sigma ^ 2 = 0
 
       <slide class="" id="slide-18" style="background:;">
   <hgroup>
-    <h2>Final thoughts on normal likelihoods</h2>
+    <h2>The Poisson distribution</h2>
   </hgroup>
   <article>
     <ul>
-<li>The maximum likelihood estimate for \(\sigma^2\) is
+<li>Used to model counts</li>
+<li>The Poisson mass function is
 \[
-\frac{\sum_{i=1}^n (X_i - \bar X)^2}{n}
+P(X = x; \lambda) = \frac{\lambda^x e^{-\lambda}}{x!}
 \]
-Which is the biased version of the sample variance</li>
-<li>The ML estimate of \(\sigma\) is simply the square root of this
-estimate</li>
-<li>To do likelihood inference, the bivariate likelihood of 
-\((\mu, \sigma)\) is difficult to visualize</li>
-<li>Later, we will discuss methods for constructing likelihoods for
-one parameter at a time</li>
+for \(x=0,1,\ldots\)</li>
+<li>The mean of this distribution is \(\lambda\)</li>
+<li>The variance of this distribution is \(\lambda\)</li>
+<li>Notice that \(x\) ranges from \(0\) to \(\infty\)</li>
 </ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>Some uses for the Poisson distribution</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Modeling event/time data</li>
+<li>Modeling radioactive decay</li>
+<li>Modeling survival data</li>
+<li>Modeling unbounded count data </li>
+<li>Modeling contingency tables</li>
+<li>Approximating binomials when \(n\) is large and \(p\) is small</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h2>Poisson derivation</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>\(\lambda\) is the mean number of events per unit time</li>
+<li>Let \(h\) be very small </li>
+<li>Suppose we assume that 
+
+<ul>
+<li>Prob. of an event in an interval of length \(h\) is \(\lambda h\)
+while the prob. of more than one event is negligible</li>
+<li>Whether or not an event occurs in one small interval
+does not impact whether or not an event occurs in another
+small interval
+then, the number of events per unit time is Poisson with mean \(\lambda\) </li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-21" style="background:;">
+  <hgroup>
+    <h2>Rates and Poisson random variables</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Poisson random variables are used to model rates</li>
+<li>\(X \sim Poisson(\lambda t)\) where 
+
+<ul>
+<li>\(\lambda = E[X / t]\) is the expected count per unit of time</li>
+<li>\(t\) is the total monitoring time</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-22" style="background:;">
+  <hgroup>
+    <h2>Poisson approximation to the binomial</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>When \(n\) is large and \(p\) is small the Poisson distribution
+is an accurate approximation to the binomial distribution</li>
+<li>Notation
+
+<ul>
+<li>\(\lambda = n p\)</li>
+<li>\(X \sim \mbox{Binomial}(n, p)\), \(\lambda = n p\) and</li>
+<li>\(n\) gets large </li>
+<li>\(p\) gets small</li>
+<li>\(\lambda\) stays constant</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-23" style="background:;">
+  <hgroup>
+    <h2>Example</h2>
+  </hgroup>
+  <article>
+    <p>The number of people that show up at a bus stop is Poisson with
+a mean of \(2.5\) per hour.</p>
+
+<p>If watching the bus stop for 4 hours, what is the probability that \(3\)
+or fewer people show up for the whole time?</p>
+
+<pre><code class="r">ppois(3, lambda = 2.5 * 4)
+</code></pre>
+
+<pre><code>[1] 0.01034
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-24" style="background:;">
+  <hgroup>
+    <h2>Example, Poisson approximation to the binomial</h2>
+  </hgroup>
+  <article>
+    <p>We flip a coin with success probablity \(0.01\) five hundred times. </p>
+
+<p>What&#39;s the probability of 2 or fewer successes?</p>
+
+<pre><code class="r">pbinom(2, size = 500, prob = .01)
+</code></pre>
+
+<pre><code>[1] 0.1234
+</code></pre>
+
+<pre><code class="r">ppois(2, lambda=500 * .01)
+</code></pre>
+
+<pre><code>[1] 0.1247
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->

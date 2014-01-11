@@ -4,7 +4,7 @@
   <title>Conditional Probability</title>
   <meta charset="utf-8">
   <meta name="description" content="Conditional Probability">
-  <meta name="author" content="Brian Caffo, PhD">
+  <meta name="author" content="Brian Caffo, Jeff Leek, Roger Peng">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -19,6 +19,11 @@
   </script>
   
     <link rel="stylesheet" href = "../../assets/css/custom.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BACKUP.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BASE.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.LOCAL.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.orig">
+<link rel="stylesheet" href = "../../assets/css/custom.css.REMOTE.546.css">
 <link rel="stylesheet" href = "../../assets/css/ribbons.css">
 
 </head>
@@ -37,8 +42,8 @@
       </aside>
       <hgroup class="auto-fadein">
         <h1>Conditional Probability</h1>
-        <h2>Mathematical Biostatistics Boot Camp</h2>
-        <p>Brian Caffo, PhD<br/>Johns Hopkins Bloomberg School of Public Health</p>
+        <h2>Statistical Inference</h2>
+        <p>Brian Caffo, Jeff Leek, Roger Peng<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
           </slide>
 
@@ -107,197 +112,18 @@ P(\mbox{one given that roll is odd})  & = & P(A ~|~ B) \\ \\
 
       <slide class="" id="slide-4" style="background:;">
   <hgroup>
-    <h2>Conditional densities and mass functions</h2>
+    <h2>Bayes&#39; rule</h2>
   </hgroup>
   <article>
-    <ul>
-<li>Conditional densities or mass functions of one variable conditional on the value of another</li>
-<li>Let \(f(x,y)\) be a bivariate density or mass function for random variables \(X\) and \(Y\)</li>
-<li>Let \(f(x)\) and \(f(y)\) be the associated marginal mass function or densities disregarding the other variables
-\[
-f(y) = \int f(x, y)dx ~~~~\mbox{or}~~~~ f(y) = \sum_x f(x, y) dx.
-\]</li>
-<li>Then the <strong>conditional</strong> density or mass function {\em given that \(Y = y\)} is given by
-\[
-f(x ~|~ y) = f(x, y) / f(y)
-\]</li>
-</ul>
+    <p>\[
+P(B ~|~ A) = \frac{P(A ~|~ B) P(B)}{P(A ~|~ B) P(B) + P(A ~|~ B^c)P(B^c)}.
+\]</p>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
       <slide class="" id="slide-5" style="background:;">
-  <hgroup>
-    <h2>Notes</h2>
-  </hgroup>
-  <article>
-    <ul>
-<li>It is easy to see that, in the discrete case, the definition of
-conditional probability is exactly as in the definition for
-conditional events where $A = $ the event that \(X = x\) and $B = $
-the event that \(Y = y\)</li>
-<li>The continuous definition is a little harder to motivate, since
-the events \(X = x\) and \(Y = y\) each have probability 0</li>
-<li>However, a useful motivation can be performed by taking the
-appropriate limits as follows</li>
-<li>Define \(A = \{X \leq x\}\) while \(B = \{Y \in [y, y + \epsilon]\}\)</li>
-</ul>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-6" style="background:;">
-  <hgroup>
-    <h2>Continued</h2>
-  </hgroup>
-  <article>
-    <p>\[
-\begin{eqnarray*} 
-P(X \leq x ~|~ Y \in [y, y + \epsilon]) & = & P(A ~|~ B) = \frac{P(A \cap B)}{P(B)} \\ \\  \\
-& = & \frac{P(X \leq x, Y \in [y, y + \epsilon])}{P(Y \in [y, y + \epsilon])} \\ \\ \\
-& = & \frac{\int_{y}^{y+\epsilon}\int_{-\infty}^{x}f(x,y)dxdy}
-           {\int_{y}^{y+\epsilon} f(y) dy} \\ \\ \\
-& = &  \frac{\epsilon\int_{y}^{y+\epsilon}\int_{-\infty}^{x}f(x,y)dxdy}
-           {\epsilon\int_{y}^{y+\epsilon} f(y) dy} 
-\end{eqnarray*}
-\]</p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-7" style="background:;">
-  <hgroup>
-    <h2>Continued</h2>
-  </hgroup>
-  <article>
-    <p>\[
-\begin{eqnarray*}
-& = & \frac{\frac{\int_{-\infty}^{y+\epsilon}\int_{\infty}^{x}f(x,y)dxdy - 
-                  \int_{-\infty}^{y}\int_{-\infty}^{x}f(x,y)dxdy}{\epsilon}}
-{\frac{\int_{-\infty}^{y+\epsilon} f(y) dy - \int_{-\infty}^{y} f(y) dy}{\epsilon}}\\ \\ \\
-& = & \frac{\frac{g_1(y + \epsilon) - g_1(y)}{\epsilon}}{\frac{g_2(y + \epsilon) - g_2(y)}{\epsilon}}
-\end{eqnarray*}
-\]
-where
-\[
-g_1(y) = \int_{-\infty}^{y}\int_{-\infty}^{x}f(x,y)dxdy ~~\mbox{and}~~ 
-g_2(y) = \int_{-\infty}^{y} f(y) dy.
-\]</p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-8" style="background:;">
-  <hgroup>
-    
-  </hgroup>
-  <article>
-    <ul>
-<li>Notice that the limit of the numerator and denominator tends to
-\(g_1'\) and \(g_2'\) as \(\epsilon\) gets smaller and smaller</li>
-<li>Hence we have that the conditional distribution function is
-\[
-P(X \leq x ~|~ Y = y) = \frac{\int_{-\infty}^x f(x, y)dx}{f(y)}.
-\]</li>
-<li>Now, taking the derivative with respect to \(x\) yields the
-conditional density
-\[
-f(x ~|~ y) = \frac{f(x, y)}{f(y)}
-\]</li>
-</ul>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-9" style="background:;">
-  <hgroup>
-    <h2>Geometrically</h2>
-  </hgroup>
-  <article>
-    <ul>
-<li>Geometrically, the conditional density is obtained by taking the relevant slice of the joint density and appropriately renormalizing it</li>
-<li>This idea extends to any other line, or even non-linear functions</li>
-</ul>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-10" style="background:;">
-  <hgroup>
-    <h2>Example</h2>
-  </hgroup>
-  <article>
-    <ul>
-<li>Let \(f(x, y) = ye^{-xy - y}\) for \(0 \leq x\) and \(0 \leq y\)</li>
-<li>Then note
-\[
-f(y) = \int_{0}^\infty f(x, y)dx = e^{-y}\int_{0}^\infty ye^{-xy}dx = e^{-y}
-\]</li>
-<li>Therefore
-\[
-f(x~|~ y) = f(x, y) / f(y) = \frac{ ye^{-xy - y}}{e^{-y}} = ye^{-xy}
-\]</li>
-</ul>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-11" style="background:;">
-  <hgroup>
-    <h2>Bayes&#39; rule</h2>
-  </hgroup>
-  <article>
-    <ul>
-<li>Let \(f(x ~|~ y)\) be the conditional density or mass function for \(X\) given
-that \(Y = y\)</li>
-<li>Let \(f(y)\) be the marginal distribution for \(y\)</li>
-<li>Then if \(y\) is continuous
-\[
-f(y ~|~ x) = \frac{f(x ~|~ y) f(y)}{\int f(x ~|~ t) f(t) dt}
-\]</li>
-<li>If \(y\) is discrete
-\[
-f(y ~|~ x) = \frac{f(x ~|~ y) f(y)}{\sum_t f(x ~|~ t) f(t)}  
-\]</li>
-</ul>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-12" style="background:;">
-  <hgroup>
-    <h2>Notes</h2>
-  </hgroup>
-  <article>
-    <ul>
-<li>Bayes&#39; rule relates the conditional density of \(f(y ~|~ x)\) to the \(f(x ~|~ y)\) and \(f(y)\)</li>
-<li>A special case of this kind relationship is for two sets \(A\) and \(B\), which yields that
-\[
-P(B ~|~ A) = \frac{P(A ~|~ B) P(B)}{P(A ~|~ B) P(B) + P(A ~|~ B^c)P(B^c)}.
-\]</li>
-</ul>
-
-<p>Proof:</p>
-
-<ul>
-<li>Let \(X\) be an indicator that event \(A\) has occurred</li>
-<li>Let \(Y\) be an indicator that event \(B\) has occurred</li>
-<li>Plug into the discrete version of Bayes&#39; rule</li>
-</ul>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-13" style="background:;">
   <hgroup>
     <h2>Diagnostic tests</h2>
   </hgroup>
@@ -313,7 +139,7 @@ P(B ~|~ A) = \frac{P(A ~|~ B) P(B)}{P(A ~|~ B) P(B) + P(A ~|~ B^c)P(B^c)}.
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-14" style="background:;">
+      <slide class="" id="slide-6" style="background:;">
   <hgroup>
     <h2>More definitions</h2>
   </hgroup>
@@ -328,7 +154,7 @@ P(B ~|~ A) = \frac{P(A ~|~ B) P(B)}{P(A ~|~ B) P(B) + P(A ~|~ B^c)P(B^c)}.
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-15" style="background:;">
+      <slide class="" id="slide-7" style="background:;">
   <hgroup>
     <h2>More definitions</h2>
   </hgroup>
@@ -342,7 +168,7 @@ P(B ~|~ A) = \frac{P(A ~|~ B) P(B)}{P(A ~|~ B) P(B) + P(A ~|~ B^c)P(B^c)}.
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-16" style="background:;">
+      <slide class="" id="slide-8" style="background:;">
   <hgroup>
     <h2>Example</h2>
   </hgroup>
@@ -357,7 +183,7 @@ P(B ~|~ A) = \frac{P(A ~|~ B) P(B)}{P(A ~|~ B) P(B) + P(A ~|~ B^c)P(B^c)}.
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-17" style="background:;">
+      <slide class="" id="slide-9" style="background:;">
   <hgroup>
     <h2>Using Bayes&#39; formula</h2>
   </hgroup>
@@ -380,7 +206,7 @@ P(B ~|~ A) = \frac{P(A ~|~ B) P(B)}{P(A ~|~ B) P(B) + P(A ~|~ B^c)P(B^c)}.
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-18" style="background:;">
+      <slide class="" id="slide-10" style="background:;">
   <hgroup>
     <h2>More on this example</h2>
   </hgroup>
@@ -395,7 +221,7 @@ P(B ~|~ A) = \frac{P(A ~|~ B) P(B)}{P(A ~|~ B) P(B) + P(A ~|~ B^c)P(B^c)}.
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-19" style="background:;">
+      <slide class="" id="slide-11" style="background:;">
   <hgroup>
     <h2>Likelihood ratios</h2>
   </hgroup>
@@ -415,7 +241,7 @@ P(D^c ~|~ +) = \frac{P(+~|~D^c)P(D^c)}{P(+~|~D)P(D) + P(+~|~D^c)P(D^c)}.
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-20" style="background:;">
+      <slide class="" id="slide-12" style="background:;">
   <hgroup>
     <h2>Likelihood ratios</h2>
   </hgroup>
@@ -438,7 +264,7 @@ the test.</li>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-21" style="background:;">
+      <slide class="" id="slide-13" style="background:;">
   <hgroup>
     <h2>HIV example revisited</h2>
   </hgroup>
@@ -454,7 +280,7 @@ the test.</li>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-22" style="background:;">
+      <slide class="" id="slide-14" style="background:;">
   <hgroup>
     <h2>HIV example revisited</h2>
   </hgroup>

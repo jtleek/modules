@@ -1,7 +1,7 @@
 ---
 title       : Conditional Probability
-subtitle    : Mathematical Biostatistics Boot Camp
-author      : Brian Caffo, PhD
+subtitle    : Statistical Inference
+author      : Brian Caffo, Jeff Leek, Roger Peng
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -53,134 +53,16 @@ P(\mbox{one given that roll is odd})  & = & P(A ~|~ B) \\ \\
   \end{eqnarray*}
 $$
 
----
 
-## Conditional densities and mass functions
-
-- Conditional densities or mass functions of one variable conditional on the value of another
-- Let $f(x,y)$ be a bivariate density or mass function for random variables $X$ and $Y$
-- Let $f(x)$ and $f(y)$ be the associated marginal mass function or densities disregarding the other variables
-$$
-f(y) = \int f(x, y)dx ~~~~\mbox{or}~~~~ f(y) = \sum_x f(x, y) dx.
-$$
-- Then the **conditional** density or mass function {\em given that $Y = y$} is given by
-$$
-f(x ~|~ y) = f(x, y) / f(y)
-$$
-
----
-
-## Notes
-
-- It is easy to see that, in the discrete case, the definition of
-  conditional probability is exactly as in the definition for
-  conditional events where $A = $ the event that $X = x$ and $B = $
-  the event that $Y = y$
-- The continuous definition is a little harder to motivate, since
-  the events $X = x$ and $Y = y$ each have probability 0
-- However, a useful motivation can be performed by taking the
-  appropriate limits as follows
-- Define $A = \{X \leq x\}$ while $B = \{Y \in [y, y + \epsilon]\}$
-
----
-
-## Continued
-
-$$
-\begin{eqnarray*} 
-P(X \leq x ~|~ Y \in [y, y + \epsilon]) & = & P(A ~|~ B) = \frac{P(A \cap B)}{P(B)} \\ \\  \\
-& = & \frac{P(X \leq x, Y \in [y, y + \epsilon])}{P(Y \in [y, y + \epsilon])} \\ \\ \\
-& = & \frac{\int_{y}^{y+\epsilon}\int_{-\infty}^{x}f(x,y)dxdy}
-           {\int_{y}^{y+\epsilon} f(y) dy} \\ \\ \\
-& = &  \frac{\epsilon\int_{y}^{y+\epsilon}\int_{-\infty}^{x}f(x,y)dxdy}
-           {\epsilon\int_{y}^{y+\epsilon} f(y) dy} 
-\end{eqnarray*}
-$$
-
----
-
-## Continued
-
-$$
-\begin{eqnarray*}
-& = & \frac{\frac{\int_{-\infty}^{y+\epsilon}\int_{\infty}^{x}f(x,y)dxdy - 
-                  \int_{-\infty}^{y}\int_{-\infty}^{x}f(x,y)dxdy}{\epsilon}}
-{\frac{\int_{-\infty}^{y+\epsilon} f(y) dy - \int_{-\infty}^{y} f(y) dy}{\epsilon}}\\ \\ \\
-& = & \frac{\frac{g_1(y + \epsilon) - g_1(y)}{\epsilon}}{\frac{g_2(y + \epsilon) - g_2(y)}{\epsilon}}
-\end{eqnarray*}
-$$
-where
-$$
-g_1(y) = \int_{-\infty}^{y}\int_{-\infty}^{x}f(x,y)dxdy ~~\mbox{and}~~ 
-g_2(y) = \int_{-\infty}^{y} f(y) dy.
-$$
-
----
-
-- Notice that the limit of the numerator and denominator tends to
-  $g_1'$ and $g_2'$ as $\epsilon$ gets smaller and smaller
-- Hence we have that the conditional distribution function is
-$$
-P(X \leq x ~|~ Y = y) = \frac{\int_{-\infty}^x f(x, y)dx}{f(y)}.
-$$
-- Now, taking the derivative with respect to $x$ yields the
-  conditional density
-$$
-f(x ~|~ y) = \frac{f(x, y)}{f(y)}
-$$
-
----
-
-## Geometrically
-
-- Geometrically, the conditional density is obtained by taking the relevant slice of the joint density and appropriately renormalizing it
-- This idea extends to any other line, or even non-linear functions
-
----
-
-## Example
-
-- Let $f(x, y) = ye^{-xy - y}$ for $0 \leq x$ and $0 \leq y$
-- Then note
-$$
-f(y) = \int_{0}^\infty f(x, y)dx = e^{-y}\int_{0}^\infty ye^{-xy}dx = e^{-y}
-$$
-- Therefore
-$$
-f(x~|~ y) = f(x, y) / f(y) = \frac{ ye^{-xy - y}}{e^{-y}} = ye^{-xy}
-$$
 
 ---
 
 ## Bayes' rule
 
-- Let $f(x ~|~ y)$ be the conditional density or mass function for $X$ given
-  that $Y = y$
-- Let $f(y)$ be the marginal distribution for $y$
-- Then if $y$ is continuous
-  $$
-  f(y ~|~ x) = \frac{f(x ~|~ y) f(y)}{\int f(x ~|~ t) f(t) dt}
-  $$
-- If $y$ is discrete
-  $$
-  f(y ~|~ x) = \frac{f(x ~|~ y) f(y)}{\sum_t f(x ~|~ t) f(t)}  
-  $$
-
----
-
-## Notes
-
-- Bayes' rule relates the conditional density of $f(y ~|~ x)$ to the $f(x ~|~ y)$ and $f(y)$
-- A special case of this kind relationship is for two sets $A$ and $B$, which yields that
-  $$
-  P(B ~|~ A) = \frac{P(A ~|~ B) P(B)}{P(A ~|~ B) P(B) + P(A ~|~ B^c)P(B^c)}.
-  $$
+$$
+P(B ~|~ A) = \frac{P(A ~|~ B) P(B)}{P(A ~|~ B) P(B) + P(A ~|~ B^c)P(B^c)}.
+$$
   
-Proof:
-
-  - Let $X$ be an indicator that event $A$ has occurred
-  - Let $Y$ be an indicator that event $B$ has occurred
-  - Plug into the discrete version of Bayes' rule
 
 ---
 
