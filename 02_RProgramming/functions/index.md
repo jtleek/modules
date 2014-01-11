@@ -1,7 +1,7 @@
 ---
 title       : Functions
-subtitle    : Computing for Data Analysis
-author      : Roger Peng, Associate Professor
+subtitle    : 
+author      : Roger D. Peng, Associate Professor of Biostatistics
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -43,7 +43,8 @@ Functions have _named arguments_ which potentially have _default values_.
 
 ## Argument Matching
 
-R functions arguments can be matched positionally or by name. So the following calls to sd are all equivalent
+R functions arguments can be matched positionally or by name. So the
+following calls to `sd` are all equivalent
 
 ```r
 > mydata <- rnorm(100)
@@ -54,7 +55,8 @@ R functions arguments can be matched positionally or by name. So the following c
 > sd(na.rm = FALSE, mydata)
 ```
 
-Even though it’s legal, I don’t recommend messing around with the order of the arguments too much, since it can lead to some confusion.
+Even though it’s legal, I don’t recommend messing around with the
+order of the arguments too much, since it can lead to some confusion.
 
 ---
 
@@ -112,12 +114,18 @@ In addition to not specifying a default value, you can also set an argument valu
 
 Arguments to functions are evaluated _lazily_, so they are evaluated only as needed.
 
+
 ```r
 f <- function(a, b) {
-        a^2
-} 
+    a^2
+}
 f(2)
 ```
+
+```
+## [1] 4
+```
+
 
 This function never actually uses the argument `b`, so calling `f(2)` will not produce an error because the 2 gets positionally matched to `a`.
 
@@ -125,16 +133,23 @@ This function never actually uses the argument `b`, so calling `f(2)` will not p
 
 ## Lazy Evaluation
 
+
 ```r
 f <- function(a, b) {
-        print(a)
-        print(b)
+    print(a)
+    print(b)
 }
-> f(45)
-[1] 45
-Error in print(b) : argument "b" is missing, with no default
->
+f(45)
 ```
+
+```
+## [1] 45
+```
+
+```
+## Error: argument "b" is missing, with no default
+```
+
 
 Notice that “45” got printed first before the error was triggered. This is because `b` did not have to be evaluated until after `print(a)`. Once the function tried to evaluate `print(b)` it had to throw an error.
 
