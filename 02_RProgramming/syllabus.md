@@ -1,10 +1,4 @@
-## Course Title
-
-R Programming
-
----
-
-## Course Instructor(s)
+# R Programming
 
 [Roger D. Peng](http://www.biostat.jhsph.edu/~rpeng/) 
 

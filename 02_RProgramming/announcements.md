@@ -70,7 +70,7 @@ A couple of other notes:
 
 * The course will begin again immediately starting in a couple of days. If you are still interested in keeping in touch with your fellow learners, please enroll in the new course and keep the conversation going. You may also be an invaluable resource for new course takers!
 
-* Keep your eye on Hopkins offerings from Coursera. All announcements about future offerings will be posted at: https://twitter.com/jhubiostat and http://simplystatistics.org/, http://twitter.com/simplystats.
+* Keep your eye on Hopkins offerings from Coursera. All announcements about future offerings will be posted at: <a href ="https://twitter.com/jhubiostat">https://twitter.com/jhubiostat</a> and <a href="http://simplystatistics.org/">http://simplystatistics.org/</a>, <a href="http://twitter.com/simplystats">http://twitter.com/simplystats</a>.
 
 * If you liked this course, please consider taking some of the other course offerings through the Data Science Track. If you have completed all the course work in this track you now have the tools you will need to take on the challenges in the rest of our courses or in other Statistics, Data Science, or Machine Learning courses you may encounter.
 
