@@ -1,7 +1,7 @@
 ---
 title       : Likelihood
-subtitle    : Mathematical Biostatistics Boot Camp
-author      : Brian Caffo, PhD
+subtitle    : Statistical Inference
+author      : Brian Caffo, Roger Peng, Jeff Leek
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -13,6 +13,22 @@ url:
 widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 ---
+```{r setup, cache = F, echo = F, message = F, warning = F, tidy = F, results='hide'}
+# make this an external chunk that can be included in any file
+options(width = 100)
+opts_chunk$set(message = F, error = F, warning = F, comment = NA, fig.align = 'center', dpi = 100, tidy = F, cache.path = '.cache/', fig.path = 'fig/')
+
+options(xtable.type = 'html')
+knit_hooks$set(inline = function(x) {
+  if(is.numeric(x)) {
+    round(x, getOption('digits'))
+  } else {
+    paste(as.character(x), collapse = ', ')
+  }
+})
+knit_hooks$set(plot = knitr:::hook_plot_html)
+runif(1)
+```
 
 ## Likelihood
 
@@ -82,8 +98,11 @@ $$
 - Because the likelihood measures *relative evidence*, dividing the curve by its maximum value (or any other value for that matter) does not change its interpretation
 
 ---
+```{r, fig.heigh=4.5, fig.width=6}
+pvals <- seq(0, 1, length = 1000)
+plot(pvals, dbinom(3, 4, pvals) / dbinom(3, 4, 3/4), type = "l", frame = FALSE, lwd = 3, xlab = "p", ylab = "likelihood / max likelihood")
+```
 
-<img src="../assets/likelihood.png" height=500>
 
 ---
 
@@ -98,60 +117,26 @@ $$
 - Another interpretation of the MLE is that it is the value of $\theta$ that would make the data that we observed most probable
 
 ---
-
-## Maximum likelihood, coin example
-
-- The maximum likelihood estimate for $\theta$ is always the proportion of heads
-- Proof: Let $x$ be the number of heads and $n$ be the number of trials
-- Recall 
-$$
-{\cal L}(\theta, x) = \theta^x(1-\theta)^{n-x}
-$$
-- It's easier to maximize the **log-likelihood**
-$$
-l(\theta, x) = x \log(\theta) + (n - x)\log(1 - \theta)
-$$
+## Some results
+* $X_1, \ldots, X_n \stackrel{iid}{\sim} N(\mu, \sigma^2)$ the MLE of $\mu$ is $\bar X$ and the ML of $\sigma^2$ is the biased sample variance estimate.
+* If $X_1,\ldots, X_n \stackrel{iid}{\sim} Bernoulli(p)$ then the MLE of $p$ is $\bar X$ (the sample proportion of 1s).
+* If $X_i \stackrel{iid}{\sim} Binomial(n_i, p)$ then the MLE of $p$ is $\frac{\sum_{i=1}^n X_i}{\sum_{i=1}^n n_i}$ (the sample proportion of 1s).
+* If $X \stackrel{iid}{\sim} Poisson(\lambda t)$ then the MLE of $\lambda$ is $X/t$.
+* If $X_i \stackrel{iid}{\sim} Poisson(\lambda t_i)$ then the MLE of $\lambda$ is
+  $\frac{\sum_{i=1}^n X_i}{\sum_{i=1}^n t_i}$
 
 ---
-
-## Continued
-
-- Taking the derivative we get
-$$
-\frac{d}{d\theta} l(\theta, x) = \frac{x}{\theta} - \frac{n-x}{1 - \theta}
-$$
-- Setting equal to zero implies
-$$
-(1 - \frac{x}{n})\theta = (1 - \theta) \frac{x}{n}
-$$
-- Which is clearly solved at $\theta = \frac{x}{n}$
-- Notice that the second derivative
-$$
-\frac{d^2}{d\theta^2} l(\theta, x) = -\frac{x}{\theta^2} - \frac{n-x}{(1 - \theta)^2} < 0
-$$
-provided that $x$ is not $0$ or $n$ (do these cases on your own)
+## Example
+* You saw 5 failure events per 94 days of monitoring a nuclear pump. 
+* Assuming Poisson, plot the likelihood
 
 ---
+```{r, fig.height=4, fig.width=4, echo= TRUE}
+lambda <- seq(0, .2, length = 1000)
+likelihood <- dpois(5, 94 * lambda) / dpois(5, 5)
+plot(lambda, likelihood, frame = FALSE, lwd = 3, type = "l", xlab = expression(lambda))
+lines(rep(5/94, 2), 0 : 1, col = "red", lwd = 3)
+lines(range(lambda[likelihood > 1/16]), rep(1/16, 2), lwd = 2)
+lines(range(lambda[likelihood > 1/8]), rep(1/8, 2), lwd = 2)
+```
 
-## What constitutes strong evidence?
-
-- Again imagine an experiment where a person repeatedly flips a coin
-- Consider the possibility that we are entertaining three hypotheses: $H_1:\theta = 0$, $H_2:\theta=.5$, and $H_3:\theta = 1$
-
----
-
-<img src="../assets/table.png">
-
----
-
-## Benchmarks
-
-- Using this example as a guide, researchers tend to think of a likelihood ratio
-
-  - of $8$ as being moderate evidence 
-  - of $16$ as being moderately strong evidence 
-  - of $32$ as being strong evidence 
-
-of one hypothesis over another
-- Because of this, it is common to draw reference lines at these values on likelihood plots
-- Parameter values above the $1/8$ reference line, for example, are such that no other point is more than 8 times better supported given the data
