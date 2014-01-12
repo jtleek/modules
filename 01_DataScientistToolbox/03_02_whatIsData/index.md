@@ -58,47 +58,10 @@ __Qualitative__: Country of origin, sex, treatment
 
 __Quantitative__: Height, weight, blood pressure
 
----
-
-## Raw versus processed data
-
-__Raw data__
-* The original source of the data
-* Often hard to use for data analyses
-* Data analysis _includes_ processing
-* Raw data may only need to be processed once
-
-[http://en.wikipedia.org/wiki/Raw_data](http://en.wikipedia.org/wiki/Raw_data)
-
-__Processed data__
-* Data that is ready for analysis
-* Processing can include merging, subsetting, transforming, etc.
-* There may be standards for processing
-* All steps should be recorded 
-
-[http://en.wikipedia.org/wiki/Computer_data_processing](http://en.wikipedia.org/wiki/Computer_data_processing)
 
 ---
 
-## An example of a processing pipeline
-
-<img class=center src="../../assets/img/01_DataScientistToolbox/hiseq.jpg" height=400 />
-
-
-[http://www.illumina.com.cn/support/sequencing/sequencing_instruments/hiseq_1000.asp](http://www.illumina.com.cn/support/sequencing/sequencing_instruments/hiseq_1000.asp)
-
----
-
-## An example of a processing pipeline
-
-<img class=center src="../../assets/img/01_DataScientistToolbox/processing.png" height=400 />
-
-[http://www.cbcb.umd.edu/~hcorrada/CMSC858B/lectures/lect22_seqIntro/seqIntro.pdf](http://www.cbcb.umd.edu/~hcorrada/CMSC858B/lectures/lect22_seqIntro/seqIntro.pdf)
-
----
-
-
-## What do raw data look like? 
+## What do data look like? 
 
 <img class=center src="../../assets/img/01_DataScientistToolbox/fastq.png" height=400 />
 
@@ -106,7 +69,7 @@ __Processed data__
 
 ---
 
-## What do raw data look like? 
+## What do data look like? 
 
 <img class=center src="../../assets/img/01_DataScientistToolbox/twitter.png" height=400 />
 
@@ -114,7 +77,7 @@ __Processed data__
 
 ---
 
-## What do raw data look like? 
+## What do data look like? 
 
 <img class=center src="../../assets/img/01_DataScientistToolbox/medicalrecord.png" height=400 />
 
@@ -123,16 +86,46 @@ __Processed data__
 
 ---
 
-## What do processed data look like?
+## What do data look like?
 
-<img class=center src="../../assets/img/01_DataScientistToolbox/excel.png" height=350 />
+<img class=center src="../../assets/img/01_DataScientistToolbox/deepcat.jpg" height=400 />
 
-1. Each variable forms a column
-2. Each observation forms a row
-3. Each table/file stores data about one kind of observation (e.g. people/hospitals).
+[http://www.nytimes.com/2012/06/26/technology/in-a-big-network-of-computers-evidence-of-machine-learning.html?pagewanted=all&_r=0](http://www.nytimes.com/2012/06/26/technology/in-a-big-network-of-computers-evidence-of-machine-learning.html?pagewanted=all&_r=0)
 
 
-[http://vita.had.co.nz/papers/tidy-data.pdf](http://vita.had.co.nz/papers/tidy-data.pdf)
+---
 
-[Leek, Taub, and Pineda 2011 PLoS One](http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0026895)
+## What do data look like?
 
+<img class=center src="../../assets/img/01_DataScientistToolbox/darwintunes.png" height=400 />
+
+
+[http://www.pnas.org/content/109/30/12081.full](http://www.pnas.org/content/109/30/12081.full)
+[https://soundcloud.com/uncoolbob/sets/darwintunes](https://soundcloud.com/uncoolbob/sets/darwintunes)
+
+---
+
+## What do data look like? 
+
+<img class=center src="../../assets/img/01_DataScientistToolbox/darwintunes.png" height=400 />
+
+
+[http://www.data.gov/](http://www.data.gov/)
+
+-------
+
+## What do data look like? Rarely
+
+<img class=center src="../../assets/img/01_DataScientistToolbox/excel.png" height=400 />
+
+
+
+
+-------
+
+## The data is the second most important thing
+
+* The most important thing in data science is the question
+* The second most important is the data
+* Often the data will limit or enable the questions
+* But having data can't save you if you don't have a question
