@@ -21,6 +21,8 @@ mode        : selfcontained # {standalone, draft}
 
 [http://gitready.com/beginner/2009/01/21/pushing-and-pulling.html](http://gitready.com/beginner/2009/01/21/pushing-and-pulling.html)
 
+---
+
 ## Adding
 
 * Suppose you add new files to a local repository under version control

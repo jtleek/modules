@@ -1,5 +1,5 @@
 ---
-title       : Reading mySQL
+title       : Creating new variables
 subtitle    : 
 author      : Jeffrey Leek 
 job         : Johns Hopkins Bloomberg School of Public Health
@@ -32,129 +32,138 @@ knit_hooks$set(plot = knitr:::hook_plot_html)
 ```
 
 
-## mySQL
+## Why create new variables?
 
-* Free and widely used open source database software
-* Widely used in internet based applications
-* Data are structured in 
-  * Databases
-  * Tables within databases
-  * Fields within tables
-* Each row is called a record
-
-[http://en.wikipedia.org/wiki/MySQL](http://en.wikipedia.org/wiki/MySQL)
-[http://www.mysql.com/](http://www.mysql.com/)
-
----
-
-## Step 1 - Install MySQL
-
-<img class=center src=../../assets/img/03_ObtainingData/installmysql.png height=450>
-
-[http://dev.mysql.com/doc/refman/5.7/en/installing.html](http://dev.mysql.com/doc/refman/5.7/en/installing.html)
-
----
-
-## Step 2 - Install RMySQL
-
-* On a Mac: ```install.packages("RMySQL")```
-* On Windows: 
-  * Official instructions - [http://biostat.mc.vanderbilt.edu/wiki/Main/RMySQL](http://biostat.mc.vanderbilt.edu/wiki/Main/RMySQL) (may be useful for Mac/UNIX users as well)
-  * Potentially useful guide - [http://www.ahschulz.de/2013/07/23/installing-rmysql-under-windows/](http://www.ahschulz.de/2013/07/23/installing-rmysql-under-windows/)  
+* Often the raw data won't have a value you are looking for
+* You will need to transform the data to get the values you would like
+* Usually you will add those values to the data frames you are working with
+* Common variables to create
+  * Missingness indicators
+  * Factors from numbers
+  * "Cutting up" quantitative variables
 
 
 ---
 
-## Example - UCSC database
+## Example data set 
+
+<img class=center src="../../assets/img/03_ObtainingData/restaurants.png" height=500 />
 
 
-<img class=center src=../../assets/img/03_ObtainingData/ucsc.png height=450>
-
-[http://genome.ucsc.edu/](http://genome.ucsc.edu/)
-
-
+[https://data.baltimorecity.gov/Community/Restaurants/k5ry-ef3g](https://data.baltimorecity.gov/Community/Restaurants/k5ry-ef3g)
 
 ---
 
-## UCSC MySQL
+## Getting the data from the web
 
-
-<img class=center src=../../assets/img/03_ObtainingData/ucscmysql.png height=450>
-
-[http://genome.ucsc.edu/goldenPath/help/mysql.html](http://genome.ucsc.edu/goldenPath/help/mysql.html)
-
+```{r getData}
+if(!file.exists("./data")){dir.create("./data")}
+fileUrl <- "https://data.baltimorecity.gov/api/views/k5ry-ef3g/rows.csv?accessType=DOWNLOAD"
+download.file(fileUrl,destfile="./data/restaurants.csv",method="curl")
+restData <- read.csv("./data/restaurants.csv")
+```
 
 ---
 
-## Connecting and listing databases
+## Creating sequences
 
-```{r databases}
-ucscDb <- dbConnect(MySQL(),user="genome", 
-                    host="genome-mysql.cse.ucsc.edu")
-result <- dbGetQuery(ucscDb,"show databases;"); dbDisconnect(ucscDb);
-result
+_Sometimes you need an index for your data set_
+
+```{r}
+s1 <- seq(1,10,by=2)
+s2 <- seq(1,10,length=3)
+x <- c(1,3,8,25,100); seq(along = x)
 ```
 
 
 ---
 
-## Connecting to hg19 and listing tables
+## Subsetting variables
 
-```{r tables}
-hg19 <- dbConnect(MySQL(),user="genome", db="hg19",
-                    host="genome-mysql.cse.ucsc.edu")
-allTables <- dbListTables(hg19)
-length(allTables)
-allTables[1:5]
+```{r,dependson="getData"}
+restData$nearMe = restData$neighborhood %in% c("Roland Park", "Homeland")
+table(restData$nearMe)
+```
+
+---
+
+## Creating binary variables
+
+```{r,dependson="getData"}
+restData$zipWrong = ifelse(restData$zipCode < 0, TRUE, FALSE)
+table(restData$zipWrong,restData$zipCode < 0)
 ```
 
 
 ---
 
-## Get dimensions of a specific table
+## Creating categorical variables
 
-```{r dimensions,dependson="tables"}
-dbListFields(hg19,"affyU133Plus2")
-dbGetQuery(hg19, "select count(*) from affyU133Plus2")
+```{r,dependson="getData"}
+restData$zipGroups = cut(restData$zipCode,breaks=quantile(restData$zipCode))
+table(restData$zipGroups)
+table(restData$zipGroups,restData$zipCode)
 ```
 
 
 ---
 
-## Read from the table
+## Easier cutting
 
-```{r readdata ,dependson="tables"}
-affyData <- dbReadTable(hg19, "affyU133Plus2")
-head(affyData)
+```{r,dependson="getData"}
+library(Hmisc)
+restData$zipGroups = cut2(restData$zipCode,g=4)
+table(restData$zipGroups)
+```
+
+---
+
+## Creating factor variables
+
+```{r}
+restData$zcf <- factor(restData$zipCode)
+restData$zcf[1:10]
+class(restData$zcf)
 ```
 
 
 ---
 
-## Select a specific subset
+## Levels of factor variables
 
-```{r, dependson="tables"}
-query <- dbSendQuery(hg19, "select * from affyU133Plus2 where misMatches between 1 and 3")
-affyMis <- fetch(query); quantile(affyMis$misMatches)
-affyMisSmall <- fetch(query,n=10); dbClearResult(query);
-dim(affyMisSmall)
+```{r}
+yesno <- sample(c("yes","no"),size=10,replace=TRUE)
+yesnofac = factor(yesno,levels=c("yes","no"))
+relevel(yesnofac,ref="yes")
+as.numeric(yesnofac)
 ```
 
 ---
 
-## Don't forget to close the connection!
+## Cutting produces factor variables
 
-```{r, dependson="tables"}
-dbDisconnect(hg19)
+
+```{r,dependson="getData"}
+library(Hmisc)
+restData$zipGroups = cut2(restData$zipCode,g=4)
+table(restData$zipGroups)
+```
+
+
+---
+
+## Using the mutate function
+
+```{r,dependson="getData"}
+library(Hmisc); library(plyr)
+restData2 = mutate(restData,zipGroups=cut2(zipCode,g=4))
+table(restData2$zipGroups)
 ```
 
 ---
 
-## Further resources
+## Notes and further reading
 
-* RMySQL vignette [http://cran.r-project.org/web/packages/RMySQL/RMySQL.pdf](http://cran.r-project.org/web/packages/RMySQL/RMySQL.pdf)
-* List of commands [http://www.pantz.org/software/mysql/mysqlcommands.html](http://www.pantz.org/software/mysql/mysqlcommands.html)
-  * __Do not, do not, delete, add or join things from ensembl. Only select.__
-  * In general be careful with mysql commands
-* A nice blog post summarizing some other commands [http://www.r-bloggers.com/mysql-and-r/](http://www.r-bloggers.com/mysql-and-r/)
-  
+* A tutorial from the developer of plyr - [http://plyr.had.co.nz/09-user/](http://plyr.had.co.nz/09-user/)
+* Andrew Jaffe's R notes [http://www.biostat.jhsph.edu/~ajaffe/lec_winterR/Lecture%202.pdf](http://www.biostat.jhsph.edu/~ajaffe/lec_winterR/Lecture%202.pdf)
+* 

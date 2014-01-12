@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Basic Git Commands</title>
+  <title>Reading from other sources</title>
   <meta charset="utf-8">
-  <meta name="description" content="Basic Git Commands">
-  <meta name="author" content="Jeffrey Leek, Assistant Professor of Biostatistics">
+  <meta name="description" content="Reading from other sources">
+  <meta name="author" content="Jeffrey Leek">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -41,21 +41,31 @@
         <img src="../../assets/img/bloomberg_shield.png">
       </aside>
       <hgroup class="auto-fadein">
-        <h1>Basic Git Commands</h1>
+        <h1>Reading from other sources</h1>
         <h2></h2>
-        <p>Jeffrey Leek, Assistant Professor of Biostatistics<br/>Johns Hopkins Bloomberg School of Public Health</p>
+        <p>Jeffrey Leek<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
           </slide>
 
     <!-- SLIDES -->
       <slide class="" id="slide-1" style="background:;">
   <hgroup>
-    <h2>Pushing and pulling</h2>
+    <h2>Subsetting - quick review</h2>
   </hgroup>
   <article>
-    <p><img class=center src=../../assets/img/01_DataScientistToolbox/gghuboverview.png height='500'/></p>
+    <pre><code class="r">set.seed(13435)
+X &lt;- data.frame(&quot;var1&quot;=sample(1:5),&quot;var2&quot;=sample(6:10),&quot;var3&quot;=sample(11:15))
+X &lt;- X[sample(1:5),]; X$var2[c(1,3)] = NA
+X
+</code></pre>
 
-<p><a href="http://gitready.com/beginner/2009/01/21/pushing-and-pulling.html">http://gitready.com/beginner/2009/01/21/pushing-and-pulling.html</a></p>
+<pre><code>  var1 var2 var3
+1    2   NA   15
+4    1   10   11
+2    3   NA   12
+3    5    6   14
+5    4    9   13
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
@@ -63,20 +73,26 @@
 
       <slide class="" id="slide-2" style="background:;">
   <hgroup>
-    <h2>Adding</h2>
+    <h2>Subsetting - quick review</h2>
   </hgroup>
   <article>
-    <ul>
-<li>Suppose you add new files to a local repository under version control</li>
-<li>You need to let Git know that they need to be tracked 
+    <pre><code class="r">X[,1]
+</code></pre>
 
-<ul>
-<li><code>git add .</code> adds all new files</li>
-<li><code>git add -u</code> updates tracking for files that changed names or were deleted</li>
-<li><code>git add -A</code> does both of the previous </li>
-</ul></li>
-<li>You should do this before committing</li>
-</ul>
+<pre><code>[1] 2 1 3 5 4
+</code></pre>
+
+<pre><code class="r">X[,&quot;var1&quot;]
+</code></pre>
+
+<pre><code>[1] 2 1 3 5 4
+</code></pre>
+
+<pre><code class="r">X[1:2,&quot;var2&quot;]
+</code></pre>
+
+<pre><code>[1] NA 10
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
@@ -84,18 +100,33 @@
 
       <slide class="" id="slide-3" style="background:;">
   <hgroup>
-    <h2>Committing</h2>
+    <h2>Subsetting - quick review</h2>
   </hgroup>
   <article>
-    <ul>
-<li>You have changes you want to commit to be saved as an intermediate version</li>
-<li>You type the command
+    <pre><code class="r">X[(X$var1 &lt;= 3 &amp; X$var3 &gt; 11),]
+</code></pre>
 
-<ul>
-<li><code>git commit -m &quot;message&quot;</code> where message is a useful description of what you did</li>
-</ul></li>
-<li>This only updates your local repo, not the remote repo on Github</li>
-</ul>
+<pre><code>  var1 var2 var3
+1    2   NA   15
+2    3   NA   12
+</code></pre>
+
+<pre><code class="r">X[(X$var1 &lt;= 3 | X$var3 &gt; 15),]
+</code></pre>
+
+<pre><code>  var1 var2 var3
+1    2   NA   15
+4    1   10   11
+2    3   NA   12
+</code></pre>
+
+<pre><code class="r">X[which(X$var2 &gt; 8),]
+</code></pre>
+
+<pre><code>  var1 var2 var3
+4    1   10   11
+5    4    9   13
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
@@ -103,17 +134,26 @@
 
       <slide class="" id="slide-4" style="background:;">
   <hgroup>
-    <h2>Pushing</h2>
+    <h2>Sorting</h2>
   </hgroup>
   <article>
-    <ul>
-<li>You have saved local commits you would like to update on the remote (Github)</li>
-<li>You type the command
+    <pre><code class="r">sort(X$var1)
+</code></pre>
 
-<ul>
-<li><code>git push</code></li>
-</ul></li>
-</ul>
+<pre><code>[1] 1 2 3 4 5
+</code></pre>
+
+<pre><code class="r">sort(X$var1,decreasing=TRUE)
+</code></pre>
+
+<pre><code>[1] 5 4 3 2 1
+</code></pre>
+
+<pre><code class="r">sort(X$var2,na.last=TRUE)
+</code></pre>
+
+<pre><code>[1]  6  9 10 NA NA
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
@@ -121,28 +161,19 @@
 
       <slide class="" id="slide-5" style="background:;">
   <hgroup>
-    <h2>Branches</h2>
+    <h2>Ordering</h2>
   </hgroup>
   <article>
-    <ul>
-<li>Sometimes you are working on a project with a version being used by many people</li>
-<li>You may not want to edit that version</li>
-<li>So you can create a branch with the command
+    <pre><code class="r">X[order(X$var1),]
+</code></pre>
 
-<ul>
-<li><code>git checkout -b branchname</code></li>
-</ul></li>
-<li>To see what branch you are on type:
-
-<ul>
-<li><code>git branch</code></li>
-</ul></li>
-<li>To switch back to the master branch type
-
-<ul>
-<li><code>git checkout master</code></li>
-</ul></li>
-</ul>
+<pre><code>  var1 var2 var3
+4    1   10   11
+1    2   NA   15
+2    3   NA   12
+5    4    9   13
+3    5    6   14
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
@@ -150,17 +181,19 @@
 
       <slide class="" id="slide-6" style="background:;">
   <hgroup>
-    <h2>Pull requests</h2>
+    <h2>Ordering</h2>
   </hgroup>
   <article>
-    <ul>
-<li>If you fork someone&#39;s repo or have multiple branches you will both be working seperately</li>
-<li>Sometimes you want to merge in your changes into the other branch/repo</li>
-<li>To do so you need to send a pull request. </li>
-<li>This is a feature of Github.</li>
-</ul>
+    <pre><code class="r">X[order(X$var1,X$var3),]
+</code></pre>
 
-<p><img class=center src=../../assets/img/01_DataScientistToolbox/pullrequest.png height='350'/></p>
+<pre><code>  var1 var2 var3
+4    1   10   11
+1    2   NA   15
+2    3   NA   12
+5    4    9   13
+3    5    6   14
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
@@ -168,13 +201,54 @@
 
       <slide class="" id="slide-7" style="background:;">
   <hgroup>
-    <h2>Time to be a hacker!</h2>
+    <h2>Adding rows and columns</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">X$var4 &lt;- rnorm(5)
+X
+</code></pre>
+
+<pre><code>  var1 var2 var3     var4
+1    2   NA   15  0.18760
+4    1   10   11  1.78698
+2    3   NA   12  0.49669
+3    5    6   14  0.06318
+5    4    9   13 -0.53613
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>Adding rows and columns</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">Y &lt;- cbind(X,rnorm(5))
+Y
+</code></pre>
+
+<pre><code>  var1 var2 var3     var4 rnorm(5)
+1    2   NA   15  0.18760  0.62578
+4    1   10   11  1.78698 -2.45084
+2    3   NA   12  0.49669  0.08909
+3    5    6   14  0.06318  0.47839
+5    4    9   13 -0.53613  1.00053
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>Notes and further resources</h2>
   </hgroup>
   <article>
     <ul>
-<li>Git documentation <a href="http://git-scm.com/doc">http://git-scm.com/doc</a></li>
-<li>Github help <a href="https://help.github.com/">https://help.github.com/</a></li>
-<li>Google/Stack Overflow are great for Github</li>
+<li>R programming in the Data Science Track</li>
+<li>Andrew Jaffe&#39;s lecture notes <a href="http://www.biostat.jhsph.edu/%7Eajaffe/lec_winterR/Lecture%202.pdf">http://www.biostat.jhsph.edu/~ajaffe/lec_winterR/Lecture%202.pdf</a></li>
 </ul>
 
   </article>

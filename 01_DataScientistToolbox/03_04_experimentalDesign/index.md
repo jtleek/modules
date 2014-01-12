@@ -18,20 +18,6 @@ mode        : selfcontained # {standalone, draft}
 
 
 
-## Take homes
-
-* Why experimental design is important
-* Have an analysis and data sharing plan
-* Formulate your question before you get data
-* Replication
-* Watch out for confounding
-* Blocking and randomization
-* Watch out for data dredging
-* The difference between inference and prediction
-* Prediction quantities of interest
-
----
-
 ## Why you should care - an exciting result!
 
 
@@ -152,12 +138,6 @@ __Experiment__:
 
 <img class=center src=../../assets/img/01_DataScientistToolbox/shoelit.png height=500>
 
-
----
-
-## Confounding
-
-<img class=center src=../../assets/img/01_DataScientistToolbox/shoelit2.png height=500>
 
 ---
 

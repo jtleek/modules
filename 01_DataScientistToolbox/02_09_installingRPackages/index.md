@@ -1,14 +1,14 @@
 ---
-title       : Installing and Loading Packages in R
+title       : Installing R Packages
 subtitle    : 
 author      : Jeffrey Leek
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
-hitheme     : tomorrow      # 
+hitheme     : tomorrow   # 
 url:
-  lib: ../libraries
+  lib: ../../libraries
   assets: ../../assets
 widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
@@ -102,13 +102,13 @@ install.packages(c("slidify", "ggplot2", "devtools"))
 
 ## Installing an R Package in RStudio
 
-<img src="../../assets/img/InstallLoadRPkgs/InstallPackageRStudio1crop.png" alt="Open the 'Tools' Menu" height=481 width=734>
+<img src="../../assets/img/01_DataScientistToolbox/InstallPackageRStudio1crop.png" height=500>
 
 --- 
 
 ## Installing an R Package in RStudio
 
-<img src="../../assets/img/InstallLoadRPkgs/InstallPackageRStudio2.png" alt="Enter Package Name" height=456 width=586>
+<img src="../../assets/img/01_DataScientistToolbox/InstallPackageRStudio2.png" height=500>
 
 
 --- 
@@ -172,10 +172,12 @@ search()
 ```
 
 ```
-##  [1] ".GlobalEnv"        "package:ggplot2"   "package:slidify"  
-##  [4] "tools:rstudio"     "package:stats"     "package:graphics" 
-##  [7] "package:grDevices" "package:utils"     "package:datasets" 
-## [10] "package:methods"   "Autoloads"         "package:base"
+##  [1] ".GlobalEnv"         "package:kernlab"    "package:caret"     
+##  [4] "package:lattice"    "package:ggplot2"    "package:makeslides"
+##  [7] "package:knitr"      "package:slidify"    "tools:rstudio"     
+## [10] "package:stats"      "package:graphics"   "package:grDevices" 
+## [13] "package:utils"      "package:datasets"   "package:methods"   
+## [16] "Autoloads"          "package:base"
 ```
 
 
