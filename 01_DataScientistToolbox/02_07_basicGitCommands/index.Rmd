@@ -60,7 +60,8 @@ mode        : selfcontained # {standalone, draft}
   * `git branch`
 * To switch back to the master branch type
   * `git checkout master`
-  
+
+
 ---
 
 ## Pull requests
@@ -70,6 +71,13 @@ mode        : selfcontained # {standalone, draft}
 * To do so you need to send a pull request. 
 * This is a feature of Github.
 
+<img class=center src=../../assets/img/01_DataScientistToolbox/pullrequest.png height='350'/>
 
+---
 
+## Time to be a hacker!
+
+* Git documentation [http://git-scm.com/doc](http://git-scm.com/doc)
+* Github help [https://help.github.com/](https://help.github.com/)
+* Google/Stack Overflow are great for Github
 

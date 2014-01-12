@@ -1,5 +1,5 @@
 ---
-title       : Creating a GitHub Repository
+title       : Basic Git Commands
 subtitle    : 
 author      : Jeffrey Leek, Assistant Professor of Biostatistics 
 job         : Johns Hopkins Bloomberg School of Public Health
@@ -15,129 +15,69 @@ mode        : selfcontained # {standalone, draft}
 
 ---
 
-## Recap: Git vs. GitHub
+## Pushing and pulling 
 
-* You don't need GitHub to use Git
-* Git = Local (on your computer); GitHub = Remote (on the web)
-* GitHub allows you to:
-  1. Share your repositories with others
-  2. Access other users' repositories
-  3. Store remote copies of your repositories (on GitHub's server) in case something happens to your local copies (on your computer)
+<img class=center src=../../assets/img/01_DataScientistToolbox/gghuboverview.png height='500'/>
 
----
+[http://gitready.com/beginner/2009/01/21/pushing-and-pulling.html](http://gitready.com/beginner/2009/01/21/pushing-and-pulling.html)
 
-## Creating a GitHub Repository
+## Adding
 
-* Two methods of creating a GitHub repository:
-  1. Start a repository from scratch
-  2. "Fork" another user's repository
-* We'll start with the first method
-* _NOTE: A repository is often referred to as a "repo"_
+* Suppose you add new files to a local repository under version control
+* You need to let Git know that they need to be tracked 
+  * `git add .` adds all new files
+  * `git add -u` updates tracking for files that changed names or were deleted
+  * `git add -A` does both of the previous 
+* You should do this before committing
 
 ---
 
-## Start a Repository From Scratch
+## Committing
 
-* Either go to your profile page (https://github.com/yourUserNameHere/) and click on "Create a new repo" in the upper righthand corner of the page
-
-__...OR...__
-
-* Go directly to [https://github.com/new](https://github.com/new) (you'll need to log into your GitHub account if you haven't already done so)
-
----
-
-## Start a Repository From Scratch
-
-* Create a name for your repo and type a brief description of it
-* Select "Public" (Private repos require a paid [or education] account)
-* Check the box next to "Initialize this repository with a README"
-* Click the "Create repository" button
-
-<img class=center src=../../assets/img/CreateRepo/CreateRepo1.png height='350'/>
+* You have changes you want to commit to be saved as an intermediate version
+* You type the command
+  * `git commit -m "message"` where message is a useful description of what you did
+* This only updates your local repo, not the remote repo on Github
 
 ---
 
-## Start a Repository From Scratch
+## Pushing
 
-* Congratulations! You've created a GitHub repository.
-
-<img class=center src=../../assets/img/CreateRepo/CreateRepo2.png height='450'/>
-
----
-
-## Creating a Local Copy
-
-* Now you need to create a copy of this repo on your computer so that you can make changes to it
-
-* Open Git Bash
-* Create a directory on your computer where you will store your copy of the repo:
-
-```
-$ mkdir ~/test-repo
-```
-
-* Navigate to this new directory using the following command:
-
-```
-$ cd ~/test-repo
-```
+* You have saved local commits you would like to update on the remote (Github)
+* You type the command
+  * `git push`
+  
 
 ---
 
-## Creating a Local Copy
+## Branches
 
-* Initialize a local Git repository in this directory
+* Sometimes you are working on a project with a version being used by many people
+* You may not want to edit that version
+* So you can create a branch with the command
+  * `git checkout -b branchname`
+* To see what branch you are on type:
+  * `git branch`
+* To switch back to the master branch type
+  * `git checkout master`
 
-```
-$ git init
-```
-
-* Point your local repository at the remote repository you just created on the GitHub server
-
-```
-$ git remote add origin https://github.com/yourUserNameHere/test-repo.git
-```
 
 ---
 
-## Creating a Local Copy
+## Pull requests
 
-* Here's what this process looks like in action:
+* If you fork someone's repo or have multiple branches you will both be working seperately
+* Sometimes you want to merge in your changes into the other branch/repo
+* To do so you need to send a pull request. 
+* This is a feature of Github.
 
-<img class=center src=../../assets/img/CreateRepo/CreateRepo3.png height='350'/>
-
----
-
-## Fork a Another User's Repository
-
-* The second method of creating a respository is to make a copy of someone else's
-* This process is called "forking" and is an important aspect of open-source software development
-* Begin by navigating to the desired repository on the GitHub website and click the "Fork" button shown below
-
-<img class=center src=../../assets/img/CreateRepo/Bootcamp-Fork.png width='750'/>
-
-[https://help.github.com/articles/fork-a-repo](https://help.github.com/articles/fork-a-repo)
+<img class=center src=../../assets/img/01_DataScientistToolbox/pullrequest.png height='350'/>
 
 ---
 
-## Clone the Repo
+## Time to be a hacker!
 
-* You now have a copy of the desired respository on your GitHub account
-* Need to make a local copy of the repo on your computer
-* This process is called "cloning" and can be done using the following command:
+* Git documentation [http://git-scm.com/doc](http://git-scm.com/doc)
+* Github help [https://help.github.com/](https://help.github.com/)
+* Google/Stack Overflow are great for Github
 
-```
-$ git clone https://github.com/yourUserNameHere/repoNameHere.git
-```
-
-* _NOTE: This will clone the repository into your current directory._
-
----
-
-## What Else?
-
-* If you make changes to your local copy of the repo, you'll probably want to push your changes to GitHub at some point
-* You also may be interested in staying current with any changes made to the original repository from which you forked your copy
-* We will cover some more Git/GitHub basics in coming lectures, but in the meantime, here are some great resources:
-  * [https://help.github.com/articles/fork-a-repo](https://help.github.com/articles/fork-a-repo)
-  * [http://git-scm.com/book/en/Git-Basics-Getting-a-Git-Repository](http://git-scm.com/book/en/Git-Basics-Getting-a-Git-Repository)

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Creating a GitHub Repository</title>
+  <title>Basic Git Commands</title>
   <meta charset="utf-8">
-  <meta name="description" content="Creating a GitHub Repository">
+  <meta name="description" content="Basic Git Commands">
   <meta name="author" content="Jeffrey Leek, Assistant Professor of Biostatistics">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -41,7 +41,7 @@
         <img src="../../assets/img/bloomberg_shield.png">
       </aside>
       <hgroup class="auto-fadein">
-        <h1>Creating a GitHub Repository</h1>
+        <h1>Basic Git Commands</h1>
         <h2></h2>
         <p>Jeffrey Leek, Assistant Professor of Biostatistics<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
@@ -50,19 +50,25 @@
     <!-- SLIDES -->
       <slide class="" id="slide-1" style="background:;">
   <hgroup>
-    <h2>Recap: Git vs. GitHub</h2>
+    <h2>Pushing and pulling</h2>
   </hgroup>
   <article>
-    <ul>
-<li>You don&#39;t need GitHub to use Git</li>
-<li>Git = Local (on your computer); GitHub = Remote (on the web)</li>
-<li>GitHub allows you to:
+    <p><img class=center src=../../assets/img/01_DataScientistToolbox/gghuboverview.png height='500'/></p>
 
-<ol>
-<li>Share your repositories with others</li>
-<li>Access other users&#39; repositories</li>
-<li>Store remote copies of your repositories (on GitHub&#39;s server) in case something happens to your local copies (on your computer)</li>
-</ol></li>
+<p><a href="http://gitready.com/beginner/2009/01/21/pushing-and-pulling.html">http://gitready.com/beginner/2009/01/21/pushing-and-pulling.html</a></p>
+
+<h2>Adding</h2>
+
+<ul>
+<li>Suppose you add new files to a local repository under version control</li>
+<li>You need to let Git know that they need to be tracked 
+
+<ul>
+<li><code>git add .</code> adds all new files</li>
+<li><code>git add -u</code> updates tracking for files that changed names or were deleted</li>
+<li><code>git add -A</code> does both of the previous </li>
+</ul></li>
+<li>You should do this before committing</li>
 </ul>
 
   </article>
@@ -71,18 +77,17 @@
 
       <slide class="" id="slide-2" style="background:;">
   <hgroup>
-    <h2>Creating a GitHub Repository</h2>
+    <h2>Committing</h2>
   </hgroup>
   <article>
     <ul>
-<li>Two methods of creating a GitHub repository:
+<li>You have changes you want to commit to be saved as an intermediate version</li>
+<li>You type the command
 
-<ol>
-<li>Start a repository from scratch</li>
-<li>&quot;Fork&quot; another user&#39;s repository</li>
-</ol></li>
-<li>We&#39;ll start with the first method</li>
-<li><em>NOTE: A repository is often referred to as a &quot;repo&quot;</em></li>
+<ul>
+<li><code>git commit -m &quot;message&quot;</code> where message is a useful description of what you did</li>
+</ul></li>
+<li>This only updates your local repo, not the remote repo on Github</li>
 </ul>
 
   </article>
@@ -91,17 +96,16 @@
 
       <slide class="" id="slide-3" style="background:;">
   <hgroup>
-    <h2>Start a Repository From Scratch</h2>
+    <h2>Pushing</h2>
   </hgroup>
   <article>
     <ul>
-<li>Either go to your profile page (<a href="https://github.com/yourUserNameHere/">https://github.com/yourUserNameHere/</a>) and click on &quot;Create a new repo&quot; in the upper righthand corner of the page</li>
-</ul>
-
-<p><strong>...OR...</strong></p>
+<li>You have saved local commits you would like to update on the remote (Github)</li>
+<li>You type the command
 
 <ul>
-<li>Go directly to <a href="https://github.com/new">https://github.com/new</a> (you&#39;ll need to log into your GitHub account if you haven&#39;t already done so)</li>
+<li><code>git push</code></li>
+</ul></li>
 </ul>
 
   </article>
@@ -110,17 +114,28 @@
 
       <slide class="" id="slide-4" style="background:;">
   <hgroup>
-    <h2>Start a Repository From Scratch</h2>
+    <h2>Branches</h2>
   </hgroup>
   <article>
     <ul>
-<li>Create a name for your repo and type a brief description of it</li>
-<li>Select &quot;Public&quot; (Private repos require a paid [or education] account)</li>
-<li>Check the box next to &quot;Initialize this repository with a README&quot;</li>
-<li>Click the &quot;Create repository&quot; button</li>
-</ul>
+<li>Sometimes you are working on a project with a version being used by many people</li>
+<li>You may not want to edit that version</li>
+<li>So you can create a branch with the command
 
-<p><img class=center src=../../assets/img/CreateRepo/CreateRepo1.png height='350'/></p>
+<ul>
+<li><code>git checkout -b branchname</code></li>
+</ul></li>
+<li>To see what branch you are on type:
+
+<ul>
+<li><code>git branch</code></li>
+</ul></li>
+<li>To switch back to the master branch type
+
+<ul>
+<li><code>git checkout master</code></li>
+</ul></li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
@@ -128,14 +143,17 @@
 
       <slide class="" id="slide-5" style="background:;">
   <hgroup>
-    <h2>Start a Repository From Scratch</h2>
+    <h2>Pull requests</h2>
   </hgroup>
   <article>
     <ul>
-<li>Congratulations! You&#39;ve created a GitHub repository.</li>
+<li>If you fork someone&#39;s repo or have multiple branches you will both be working seperately</li>
+<li>Sometimes you want to merge in your changes into the other branch/repo</li>
+<li>To do so you need to send a pull request. </li>
+<li>This is a feature of Github.</li>
 </ul>
 
-<p><img class=center src=../../assets/img/CreateRepo/CreateRepo2.png height='450'/></p>
+<p><img class=center src=../../assets/img/01_DataScientistToolbox/pullrequest.png height='350'/></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -143,122 +161,13 @@
 
       <slide class="" id="slide-6" style="background:;">
   <hgroup>
-    <h2>Creating a Local Copy</h2>
+    <h2>Time to be a hacker!</h2>
   </hgroup>
   <article>
     <ul>
-<li><p>Now you need to create a copy of this repo on your computer so that you can make changes to it</p></li>
-<li><p>Open Git Bash</p></li>
-<li><p>Create a directory on your computer where you will store your copy of the repo:</p></li>
-</ul>
-
-<pre><code>$ mkdir ~/test-repo
-</code></pre>
-
-<ul>
-<li>Navigate to this new directory using the following command:</li>
-</ul>
-
-<pre><code>$ cd ~/test-repo
-</code></pre>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-7" style="background:;">
-  <hgroup>
-    <h2>Creating a Local Copy</h2>
-  </hgroup>
-  <article>
-    <ul>
-<li>Initialize a local Git repository in this directory</li>
-</ul>
-
-<pre><code>$ git init
-</code></pre>
-
-<ul>
-<li>Point your local repository at the remote repository you just created on the GitHub server</li>
-</ul>
-
-<pre><code>$ git remote add origin https://github.com/yourUserNameHere/test-repo.git
-</code></pre>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-8" style="background:;">
-  <hgroup>
-    <h2>Creating a Local Copy</h2>
-  </hgroup>
-  <article>
-    <ul>
-<li>Here&#39;s what this process looks like in action:</li>
-</ul>
-
-<p><img class=center src=../../assets/img/CreateRepo/CreateRepo3.png height='350'/></p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-9" style="background:;">
-  <hgroup>
-    <h2>Fork a Another User&#39;s Repository</h2>
-  </hgroup>
-  <article>
-    <ul>
-<li>The second method of creating a respository is to make a copy of someone else&#39;s</li>
-<li>This process is called &quot;forking&quot; and is an important aspect of open-source software development</li>
-<li>Begin by navigating to the desired repository on the GitHub website and click the &quot;Fork&quot; button shown below</li>
-</ul>
-
-<p><img class=center src=../../assets/img/CreateRepo/Bootcamp-Fork.png width='750'/></p>
-
-<p><a href="https://help.github.com/articles/fork-a-repo">https://help.github.com/articles/fork-a-repo</a></p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-10" style="background:;">
-  <hgroup>
-    <h2>Clone the Repo</h2>
-  </hgroup>
-  <article>
-    <ul>
-<li>You now have a copy of the desired respository on your GitHub account</li>
-<li>Need to make a local copy of the repo on your computer</li>
-<li>This process is called &quot;cloning&quot; and can be done using the following command:</li>
-</ul>
-
-<pre><code>$ git clone https://github.com/yourUserNameHere/repoNameHere.git
-</code></pre>
-
-<ul>
-<li><em>NOTE: This will clone the repository into your current directory.</em></li>
-</ul>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-11" style="background:;">
-  <hgroup>
-    <h2>What Else?</h2>
-  </hgroup>
-  <article>
-    <ul>
-<li>If you make changes to your local copy of the repo, you&#39;ll probably want to push your changes to GitHub at some point</li>
-<li>You also may be interested in staying current with any changes made to the original repository from which you forked your copy</li>
-<li>We will cover some more Git/GitHub basics in coming lectures, but in the meantime, here are some great resources:
-
-<ul>
-<li><a href="https://help.github.com/articles/fork-a-repo">https://help.github.com/articles/fork-a-repo</a></li>
-<li><a href="http://git-scm.com/book/en/Git-Basics-Getting-a-Git-Repository">http://git-scm.com/book/en/Git-Basics-Getting-a-Git-Repository</a></li>
-</ul></li>
+<li>Git documentation <a href="http://git-scm.com/doc">http://git-scm.com/doc</a></li>
+<li>Github help <a href="https://help.github.com/">https://help.github.com/</a></li>
+<li>Google/Stack Overflow are great for Github</li>
 </ul>
 
   </article>
