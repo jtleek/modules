@@ -1,7 +1,13 @@
 base
+caret
 datasets
+ggplot2
 graphics
 grDevices
+kernlab
+knitr
+lattice
+makeslides
 methods
 slidify
 stats
