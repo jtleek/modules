@@ -1,5 +1,5 @@
 ---
-title       : Prediction and Machine Learning Overview
+title       : Practical Machine Learning Overview
 author      : Jeffrey Leek
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
@@ -13,19 +13,20 @@ widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 ---
 
-## Prediction and Machine Learning Content
+## Practical Machine Learning Content
 
-* Linear regression
-* Multiple Regression
-* Confounding
-* Residuals and diagnostics
-* Prediction using linear models
-* Model misspecification
-* Scatterplot smoothing/splines
-* Machine learning via regression
-* Resampling inference in regression, bootstrapping, permutation tests
-* Weighted regression
-* Mixed models (random intercepts)
+* Prediction study design
+* Types of Errors
+* Cross validation
+* The caret package
+* Plotting for prediction
+* Preprocessing
+* Predicting with regression
+* Predicting with trees
+* Boosting
+* Bagging
+* Model blending 
+* Forecasting 
 
 ---
 
@@ -51,17 +52,28 @@ _Medical testing example_:
 
 ## Correlated predictors
 
-```{r loadPackage,fig.height=3.5,fig.width=3.5, message=FALSE}
-library(caret); library(kernlab); data(spam)
-inTrain <- createDataPartition(y=spam$type,
-                              p=0.75, list=FALSE)
-training <- spam[inTrain,]
-testing <- spam[-inTrain,]
 
-M <- abs(cor(training[,-58]))
+```r
+library(caret)
+library(kernlab)
+data(spam)
+inTrain <- createDataPartition(y = spam$type, p = 0.75, list = FALSE)
+training <- spam[inTrain, ]
+testing <- spam[-inTrain, ]
+
+M <- abs(cor(training[, -58]))
 diag(M) <- 0
-which(M > 0.8,arr.ind=T)
+which(M > 0.8, arr.ind = T)
 ```
+
+```
+##        row col
+## num415  34  32
+## direct  40  32
+## num857  32  34
+## num857  32  40
+```
+
 
 ---
 

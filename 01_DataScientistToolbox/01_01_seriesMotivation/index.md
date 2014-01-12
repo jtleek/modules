@@ -177,3 +177,12 @@ mode        : selfcontained # {standalone, draft}
 <img class=center height=400 src=../../assets/img/01_DataScientistToolbox/datajobs.png />
 
 [http://radar.oreilly.com/2011/09/building-data-science-teams.html](http://radar.oreilly.com/2011/09/building-data-science-teams.html)
+
+---
+
+## This course
+
+* Introducing you to the track
+* Getting tools set up
+* Giving you basic background
+

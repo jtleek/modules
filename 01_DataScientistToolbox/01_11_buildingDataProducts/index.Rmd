@@ -16,13 +16,13 @@ mode        : selfcontained # {standalone, draft}
 ## Building Data Products Content
 
 * R packages
+  * devtools
+  * roxygen
+  * testthat
 * rCharts
-* devtools
-* roxygens
-* testthat
-* Shiny
-* yhat
 * Slidify
+* Shiny
+
 
 ---
 

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Introduction to Git</title>
+  <title>Creating a GitHub Repository</title>
   <meta charset="utf-8">
-  <meta name="description" content="Introduction to Git">
-  <meta name="author" content="Jeffrey Leek">
+  <meta name="description" content="Creating a GitHub Repository">
+  <meta name="author" content="Jeffrey Leek, Assistant Professor of Biostatistics">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -41,21 +41,29 @@
         <img src="../../assets/img/bloomberg_shield.png">
       </aside>
       <hgroup class="auto-fadein">
-        <h1>Introduction to Git</h1>
+        <h1>Creating a GitHub Repository</h1>
         <h2></h2>
-        <p>Jeffrey Leek<br/>Johns Hopkins Bloomberg School of Public Health</p>
+        <p>Jeffrey Leek, Assistant Professor of Biostatistics<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
           </slide>
 
     <!-- SLIDES -->
       <slide class="" id="slide-1" style="background:;">
   <hgroup>
-    <h2>What is Version Control?</h2>
+    <h2>Recap: Git vs. GitHub</h2>
   </hgroup>
   <article>
-    <p><q>Version control is a system that records changes to a file or set of files over time so that you can recall specific versions later.</q></p>
+    <ul>
+<li>You don&#39;t need GitHub to use Git</li>
+<li>Git = Local (on your computer); GitHub = Remote (on the web)</li>
+<li>GitHub allows you to:
 
-<p><a href="http://git-scm.com/book/en/Getting-Started-About-Version-Control">http://git-scm.com/book/en/Getting-Started-About-Version-Control</a></p>
+<ol>
+<li>Share your repositories with others</li>
+<li>Access other users&#39; repositories</li>
+<li>Store remote copies of your repositories (on GitHub&#39;s server) in case something happens to your local copies (on your computer)</li>
+</ol></li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
@@ -63,16 +71,19 @@
 
       <slide class="" id="slide-2" style="background:;">
   <hgroup>
-    <h2>What is Version Control?</h2>
+    <h2>Creating a GitHub Repository</h2>
   </hgroup>
   <article>
     <ul>
-<li>Many of us constantly create something, save it, change it, then save it again</li>
-<li>Version (or revision) control is a means of managing this process in a reliable and efficient way</li>
-<li>Especially important when collaborating with others</li>
-</ul>
+<li>Two methods of creating a GitHub repository:
 
-<p><a href="http://en.wikipedia.org/wiki/Revision_control">http://en.wikipedia.org/wiki/Revision_control</a></p>
+<ol>
+<li>Start a repository from scratch</li>
+<li>&quot;Fork&quot; another user&#39;s repository</li>
+</ol></li>
+<li>We&#39;ll start with the first method</li>
+<li><em>NOTE: A repository is often referred to as a &quot;repo&quot;</em></li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
@@ -80,12 +91,18 @@
 
       <slide class="" id="slide-3" style="background:;">
   <hgroup>
-    <h2>What is Git?</h2>
+    <h2>Start a Repository From Scratch</h2>
   </hgroup>
   <article>
-    <p><q>Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.</q></p>
+    <ul>
+<li>Either go to your profile page (<a href="https://github.com/yourUserNameHere/">https://github.com/yourUserNameHere/</a>) and click on &quot;Create a new repo&quot; in the upper righthand corner of the page</li>
+</ul>
 
-<p><a href="http://git-scm.com/">http://git-scm.com/</a></p>
+<p><strong>...OR...</strong></p>
+
+<ul>
+<li>Go directly to <a href="https://github.com/new">https://github.com/new</a> (you&#39;ll need to log into your GitHub account if you haven&#39;t already done so)</li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
@@ -93,17 +110,17 @@
 
       <slide class="" id="slide-4" style="background:;">
   <hgroup>
-    <h2>What is Git?</h2>
+    <h2>Start a Repository From Scratch</h2>
   </hgroup>
   <article>
     <ul>
-<li>Created by the same people who developed Linux</li>
-<li>The most popular implementation of version control today</li>
-<li>Everything is stored in local repositories on your computer</li>
-<li>Operated from the command line</li>
+<li>Create a name for your repo and type a brief description of it</li>
+<li>Select &quot;Public&quot; (Private repos require a paid [or education] account)</li>
+<li>Check the box next to &quot;Initialize this repository with a README&quot;</li>
+<li>Click the &quot;Create repository&quot; button</li>
 </ul>
 
-<p><a href="http://git-scm.com/book/en/Getting-Started-A-Short-History-of-Git">http://git-scm.com/book/en/Getting-Started-A-Short-History-of-Git</a></p>
+<p><img class=center src=../../assets/img/CreateRepo/CreateRepo1.png height='350'/></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -111,16 +128,14 @@
 
       <slide class="" id="slide-5" style="background:;">
   <hgroup>
-    <h2>Download Git</h2>
+    <h2>Start a Repository From Scratch</h2>
   </hgroup>
   <article>
     <ul>
-<li>Go to the following website and click on the download link for your operating system (Mac, Windows, Linux, etc):</li>
+<li>Congratulations! You&#39;ve created a GitHub repository.</li>
 </ul>
 
-<p><a href="http://git-scm.com/downloads">http://git-scm.com/downloads</a></p>
-
-<p><img class=center src=../../assets/img/IntroToGit/gitDownload1.png height='350'/></p>
+<p><img class=center src=../../assets/img/CreateRepo/CreateRepo2.png height='450'/></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -128,14 +143,24 @@
 
       <slide class="" id="slide-6" style="background:;">
   <hgroup>
-    <h2>Install Git</h2>
+    <h2>Creating a Local Copy</h2>
   </hgroup>
   <article>
     <ul>
-<li>Once the file is done downloading, open it up to begin the Git installation</li>
+<li><p>Now you need to create a copy of this repo on your computer so that you can make changes to it</p></li>
+<li><p>Open Git Bash</p></li>
+<li><p>Create a directory on your computer where you will store your copy of the repo:</p></li>
 </ul>
 
-<p><img class=center src=../../assets/img/IntroToGit/gitInstall1.png height='350'/></p>
+<pre><code>$ mkdir ~/test-repo
+</code></pre>
+
+<ul>
+<li>Navigate to this new directory using the following command:</li>
+</ul>
+
+<pre><code>$ cd ~/test-repo
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
@@ -143,15 +168,22 @@
 
       <slide class="" id="slide-7" style="background:;">
   <hgroup>
-    <h2>Install Git</h2>
+    <h2>Creating a Local Copy</h2>
   </hgroup>
   <article>
     <ul>
-<li><p>Unless you really know what you are doing, just go with the default options at each step of the installation</p></li>
-<li><p>Once the install is complete, hit the &quot;Finish&quot; button (you may want to uncheck the box next to &quot;Review ReleaseNotes.rtf&quot;)</p></li>
+<li>Initialize a local Git repository in this directory</li>
 </ul>
 
-<p><img class=center src=../../assets/img/IntroToGit/gitInstall9.png height='350'/></p>
+<pre><code>$ git init
+</code></pre>
+
+<ul>
+<li>Point your local repository at the remote repository you just created on the GitHub server</li>
+</ul>
+
+<pre><code>$ git remote add origin https://github.com/yourUserNameHere/test-repo.git
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
@@ -159,15 +191,14 @@
 
       <slide class="" id="slide-8" style="background:;">
   <hgroup>
-    <h2>Open Git Bash</h2>
+    <h2>Creating a Local Copy</h2>
   </hgroup>
   <article>
     <ul>
-<li>Find a program called Git Bash, which is the command line environment for interacting with Git</li>
-<li>It should be located in the directory into which Git was installed (or, for Windows users, in the Start Menu)</li>
+<li>Here&#39;s what this process looks like in action:</li>
 </ul>
 
-<p><img class=center src=../../assets/img/IntroToGit/gitConfig1a.png height='350'/></p>
+<p><img class=center src=../../assets/img/CreateRepo/CreateRepo3.png height='350'/></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -175,15 +206,18 @@
 
       <slide class="" id="slide-9" style="background:;">
   <hgroup>
-    <h2>Open Git Bash</h2>
+    <h2>Fork a Another User&#39;s Repository</h2>
   </hgroup>
   <article>
     <ul>
-<li>Once Git Bash opens, you&#39;ll see a short welcome message followed by the name of your computer and a dollar sign on the next line</li>
-<li>The dollar sign means that it&#39;s your turn to type a command</li>
+<li>The second method of creating a respository is to make a copy of someone else&#39;s</li>
+<li>This process is called &quot;forking&quot; and is an important aspect of open-source software development</li>
+<li>Begin by navigating to the desired repository on the GitHub website and click the &quot;Fork&quot; button shown below</li>
 </ul>
 
-<p><img class=center src=../../assets/img/IntroToGit/gitOpen1.png width='750'/></p>
+<p><img class=center src=../../assets/img/CreateRepo/Bootcamp-Fork.png width='750'/></p>
+
+<p><a href="https://help.github.com/articles/fork-a-repo">https://help.github.com/articles/fork-a-repo</a></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -191,20 +225,20 @@
 
       <slide class="" id="slide-10" style="background:;">
   <hgroup>
-    <h2>Configure Username and Email</h2>
+    <h2>Clone the Repo</h2>
   </hgroup>
   <article>
     <ul>
-<li>Each commit to a Git repository will be &quot;tagged&quot; with the username of the person who made the commit</li>
-<li>Enter the following commands in Git Bash, one at a time, to set your username and email:</li>
+<li>You now have a copy of the desired respository on your GitHub account</li>
+<li>Need to make a local copy of the repo on your computer</li>
+<li>This process is called &quot;cloning&quot; and can be done using the following command:</li>
 </ul>
 
-<pre><code>$ git config --global user.name &quot;Your Name Here&quot;
-$ git config --global user.email &quot;your_email@example.com&quot;
+<pre><code>$ git clone https://github.com/yourUserNameHere/repoNameHere.git
 </code></pre>
 
 <ul>
-<li>You&#39;ll only have to do this once, but you can always change these down the road using the same commands</li>
+<li><em>NOTE: This will clone the repository into your current directory.</em></li>
 </ul>
 
   </article>
@@ -213,37 +247,18 @@ $ git config --global user.email &quot;your_email@example.com&quot;
 
       <slide class="" id="slide-11" style="background:;">
   <hgroup>
-    <h2>Configure Username and Email</h2>
+    <h2>What Else?</h2>
   </hgroup>
   <article>
     <ul>
-<li>Now type the following to confirm your changes (they may be listed toward the bottom):</li>
-</ul>
-
-<pre><code>$ git config --list
-</code></pre>
-
-<p><img class=center src=../../assets/img/IntroToGit/gitConfig2.png height='350'/></p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-12" style="background:;">
-  <hgroup>
-    <h2>What&#39;s Next?</h2>
-  </hgroup>
-  <article>
-    <ul>
-<li>Go ahead and close Git Bash with following command:</li>
-</ul>
-
-<pre><code>$ exit
-</code></pre>
+<li>If you make changes to your local copy of the repo, you&#39;ll probably want to push your changes to GitHub at some point</li>
+<li>You also may be interested in staying current with any changes made to the original repository from which you forked your copy</li>
+<li>We will cover some more Git/GitHub basics in coming lectures, but in the meantime, here are some great resources:
 
 <ul>
-<li>Now that Git is set up on your computer, we&#39;re ready to move on to GitHub, which is a web-based platform that lets you do some pretty cool stuff</li>
-<li>Once GitHub is up and running, we&#39;ll show you how to start using these tools to your benefit</li>
+<li><a href="https://help.github.com/articles/fork-a-repo">https://help.github.com/articles/fork-a-repo</a></li>
+<li><a href="http://git-scm.com/book/en/Git-Basics-Getting-a-Git-Repository">http://git-scm.com/book/en/Git-Basics-Getting-a-Git-Repository</a></li>
+</ul></li>
 </ul>
 
   </article>
