@@ -191,3 +191,73 @@ $$
     2  \sqrt{\frac{p(1 - p)}{n}} \leq 2 \sqrt{\frac{1}{4n}} = \frac{1}{\sqrt{n}} 
 $$
 - Therefore $\hat p \pm \frac{1}{\sqrt{n}}$ is a quick CI estimate for $p$
+
+---
+## Example
+* Your campaign advisor told you that in a random sample of 100 likely voters,
+  56 intent to vote for you. 
+  * Can you relax? Do you have this race in the bag?
+  * Without access to a computer or calculator, how precise is this estimate?
+* `1/sqrt(100)=.1` so a back of the envelope calculation gives an approximate 95% interval of `(0.46, 0.66)`
+  * Not enough for you to relax, better go do more campaigning!
+* Rough guidelines, 100 for 1 decimal place, 10,000 for 2, 1,000,000 for 3.
+
+```r
+round(1 / sqrt(10 ^ (1 : 6)), 3)
+```
+
+```
+[1] 0.316 0.100 0.032 0.010 0.003 0.001
+```
+
+---
+## Poisson interval
+* A nuclear pump failed 5 times out of 94.32 days, give a 95% confidence interval for the failure rate per day?
+* $X \sim Poisson(\lambda t)$.
+* Estimate $\hat \lambda = X/t$
+* $Var(\hat \lambda) = \lambda / t$ 
+$$
+\frac{\hat \lambda - \lambda}{\sqrt{\hat \lambda / t}} 
+= 
+\frac{X - t \lambda}{\sqrt{X}} 
+\rightarrow N(0,1)
+$$
+* This isn't the best interval.
+  * There are better asymptotic intervals.
+  * You can get an exact CI in this case.
+
+---
+### R code
+
+```r
+x <- 5; t <- 94.32; lambda <- x / t
+round(lambda + c(-1, 1) * qnorm(.975) * sqrt(lambda / t), 3)
+```
+
+```
+[1] 0.007 0.099
+```
+
+```r
+poisson.test(x, T = 94.32)$conf
+```
+
+```
+[1] 0.01721 0.12371
+attr(,"conf.level")
+[1] 0.95
+```
+
+
+---
+## In the regression class
+
+```r
+exp(confint(glm(x ~ 1 + offset(log(t)), family = poisson(link = log))))
+```
+
+```
+  2.5 %  97.5 % 
+0.01901 0.11393 
+```
+

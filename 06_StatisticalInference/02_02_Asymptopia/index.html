@@ -349,6 +349,105 @@ P\left( \frac{\bar X_n - \mu}{\sigma / \sqrt{n}} \leq z \right) \approx \Phi(z).
   <!-- Presenter Notes -->
 </slide>
 
+      <slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>Example</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Your campaign advisor told you that in a random sample of 100 likely voters,
+56 intent to vote for you. 
+
+<ul>
+<li>Can you relax? Do you have this race in the bag?</li>
+<li>Without access to a computer or calculator, how precise is this estimate?</li>
+</ul></li>
+<li><code>1/sqrt(100)=.1</code> so a back of the envelope calculation gives an approximate 95% interval of <code>(0.46, 0.66)</code>
+
+<ul>
+<li>Not enough for you to relax, better go do more campaigning!</li>
+</ul></li>
+<li>Rough guidelines, 100 for 1 decimal place, 10,000 for 2, 1,000,000 for 3.</li>
+</ul>
+
+<pre><code class="r">round(1 / sqrt(10 ^ (1 : 6)), 3)
+</code></pre>
+
+<pre><code>[1] 0.316 0.100 0.032 0.010 0.003 0.001
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>Poisson interval</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>A nuclear pump failed 5 times out of 94.32 days, give a 95% confidence interval for the failure rate per day?</li>
+<li>\(X \sim Poisson(\lambda t)\).</li>
+<li>Estimate \(\hat \lambda = X/t\)</li>
+<li>\(Var(\hat \lambda) = \lambda / t\) 
+\[
+\frac{\hat \lambda - \lambda}{\sqrt{\hat \lambda / t}} 
+= 
+\frac{X - t \lambda}{\sqrt{X}} 
+\rightarrow N(0,1)
+\]</li>
+<li>This isn&#39;t the best interval.
+
+<ul>
+<li>There are better asymptotic intervals.</li>
+<li>You can get an exact CI in this case.</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h3>R code</h3>
+  </hgroup>
+  <article>
+    <pre><code class="r">x &lt;- 5; t &lt;- 94.32; lambda &lt;- x / t
+round(lambda + c(-1, 1) * qnorm(.975) * sqrt(lambda / t), 3)
+</code></pre>
+
+<pre><code>[1] 0.007 0.099
+</code></pre>
+
+<pre><code class="r">poisson.test(x, T = 94.32)$conf
+</code></pre>
+
+<pre><code>[1] 0.01721 0.12371
+attr(,&quot;conf.level&quot;)
+[1] 0.95
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h2>In the regression class</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">exp(confint(glm(x ~ 1 + offset(log(t)), family = poisson(link = log))))
+</code></pre>
+
+<pre><code>  2.5 %  97.5 % 
+0.01901 0.11393 
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
     <slide class="backdrop"></slide>
   </slides>
 
