@@ -27,7 +27,7 @@ f <- function(<arguments>) {
 Functions in R are “first class objects”, which means that they can be treated much like any other R object. Importantly,
 - Functions can be passed as arguments to other functions
 - Functions can be nested, so that you can define a function inside of another function
-The return value of a function is the last expression in the function body to be evaluated.
+- The return value of a function is the last expression in the function body to be evaluated.
 
 ---
 
