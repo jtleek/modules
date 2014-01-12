@@ -1,7 +1,7 @@
 ---
 title       : Getting Help
-subtitle    : Computing for Data Analysis
-author      : Roger Peng, Associate Professor
+subtitle    : 
+author      : Roger D. Peng, Associate Professor of Biostatistics
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -17,7 +17,7 @@ mode        : selfcontained # {standalone, draft}
 ## Asking Questions
 
 - Asking questions via email is different from asking questions in person
-- People o nthe other side do not have the background information you have
+- People on the other side do not have the background information you have
   - they also don’t know you personally (usually)
 -  Other people are busy; their time is limited
 - The instructor (me) is here to help in all circumstances but may not be able to answer all questions!
@@ -75,8 +75,8 @@ Error in cor(airquality) : missing observations in cov/cor
 ## Subject Headers
 
 - Stupid: "Help! Can't fit linear model!"
-- Smart: "R 2.15.0 lm() function produces seg fault with large data frame, Mac OS X 10.6.3"
-- Smarter: R 2.15.0 lm() function on Mac OS X 10.6.3 -- seg fault on large data frame
+- Smart: "R 3.0.2 lm() function produces seg fault with large data frame, Mac OS X 10.9.1"
+- Smarter: "R 3.0.2 lm() function on Mac OS X 10.9.1 -- seg fault on large data frame"
 
 ---
 
@@ -131,7 +131,7 @@ Yes, you are lost. The R posting guide is
 - Question was sent to the wrong mailing list (R-devel instead of R-help)
 - Email subject was very vague
 - Question was very vague
-- Problem was not reproducable
+- Problem was not reproducible
 - No evidence of any effort made to solve the problem
 - RESULT: Recipe for disaster!
 

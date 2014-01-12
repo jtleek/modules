@@ -4,7 +4,7 @@
   <title>Debugging</title>
   <meta charset="utf-8">
   <meta name="description" content="Debugging">
-  <meta name="author" content="Roger Peng, Associate Professor">
+  <meta name="author" content="Roger D. Peng, Associate Professor of Biostatistics">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -19,6 +19,11 @@
   </script>
   
     <link rel="stylesheet" href = "../../assets/css/custom.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BACKUP.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BASE.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.LOCAL.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.orig">
+<link rel="stylesheet" href = "../../assets/css/custom.css.REMOTE.546.css">
 <link rel="stylesheet" href = "../../assets/css/ribbons.css">
 
 </head>
@@ -37,8 +42,8 @@
       </aside>
       <hgroup class="auto-fadein">
         <h1>Debugging</h1>
-        <h2>Computing for Data Analysis</h2>
-        <p>Roger Peng, Associate Professor<br/>Johns Hopkins Bloomberg School of Public Health</p>
+        <h2></h2>
+        <p>Roger D. Peng, Associate Professor of Biostatistics<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
           </slide>
 
@@ -68,10 +73,13 @@
   <article>
     <p>Warning</p>
 
-<pre><code class="r">&gt; log(-1)
-[1] NaN
-Warning message:
-In log(-1) : NaNs produced
+<pre><code class="r">log(-1)
+</code></pre>
+
+<pre><code>## Warning: NaNs produced
+</code></pre>
+
+<pre><code>## [1] NaN
 </code></pre>
 
   </article>
@@ -102,16 +110,20 @@ In log(-1) : NaNs produced
   </hgroup>
   <article>
     <pre><code class="r">printmessage &lt;- function(x) {
-          if(x &gt; 0)
-                print(&quot;x is greater than zero&quot;)
-          else
-                print(&quot;x is less than or equal to zero&quot;)
-          invisible(x)
+    if (x &gt; 0) 
+        print(&quot;x is greater than zero&quot;) else print(&quot;x is less than or equal to zero&quot;)
+    invisible(x)
 }
-&gt; printmessage(1)
-[1] &quot;x is greater than zero&quot;
-&gt; printmessage(NA)
-Error in if (x &gt; 0) { : missing value where TRUE/FALSE needed
+printmessage(1)
+</code></pre>
+
+<pre><code>## [1] &quot;x is greater than zero&quot;
+</code></pre>
+
+<pre><code class="r">printmessage(NA)
+</code></pre>
+
+<pre><code>## Error: missing value where TRUE/FALSE needed
 </code></pre>
 
   </article>
@@ -144,19 +156,21 @@ Error in if (x &gt; 0) { : missing value where TRUE/FALSE needed
   </hgroup>
   <article>
     <pre><code class="r">printmessage2 &lt;- function(x) {
-        if(is.na(x))
-                print(&quot;x is a missing value!&quot;)
-        else if(x &gt; 0)
-                print(&quot;x is greater than zero&quot;)
-        else
-                print(&quot;x is less than or equal to zero&quot;)
-        invisible(x)
+    if (is.na(x)) 
+        print(&quot;x is a missing value!&quot;) else if (x &gt; 0) 
+        print(&quot;x is greater than zero&quot;) else print(&quot;x is less than or equal to zero&quot;)
+    invisible(x)
 }
-&gt; x &lt;- log(-1)
-Warning message:
-In log(-1) : NaNs produced
-&gt; printmessage2(x)
-[1] &quot;x is a missing value!&quot;
+x &lt;- log(-1)
+</code></pre>
+
+<pre><code>## Warning: NaNs produced
+</code></pre>
+
+<pre><code class="r">printmessage2(x)
+</code></pre>
+
+<pre><code>## [1] &quot;x is a missing value!&quot;
 </code></pre>
 
   </article>
@@ -210,10 +224,10 @@ In log(-1) : NaNs produced
   </hgroup>
   <article>
     <pre><code class="r">&gt; mean(x)
-Error in mean(x) : object ’x’ not found
+Error in mean(x) : object &#39;x&#39; not found
 &gt; traceback()
 1: mean(x)
-&gt;
+&gt; 
 </code></pre>
 
   </article>
@@ -320,7 +334,11 @@ Selection:
     <p>Summary</p>
 
 <ul>
-<li>There are three main indications of a problem/condition: message, warning, error; only an error is fatal</li>
+<li>There are three main indications of a problem/condition: <code>message</code>, <code>warning</code>, <code>error</code>
+
+<ul>
+<li>only an <code>error</code> is fatal</li>
+</ul></li>
 <li>When analyzing a function with a problem, make sure you can reproduce the problem, clearly state your expectations and how the output differs from your expectation</li>
 <li>Interactive debugging tools <code>traceback</code>, <code>debug</code>, <code>browser</code>, <code>trace</code>, and <code>recover</code> can be used to find problematic code in functions</li>
 <li>Debugging tools are not a substitute for thinking!</li>
