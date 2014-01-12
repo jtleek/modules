@@ -1,7 +1,7 @@
 ---
-title       : T Confidence Intervals
-subtitle    : Mathematical Biostatistics Boot Camp
-author      : Brian Caffo, PhD
+title       : Two group intervals
+subtitle    : Statistical Infernce
+author      : Brian Caffo, Jeff Leek, Roger Peng
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -14,13 +14,7 @@ widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 ---
 
-## Table of contents
 
-1. Independent group *t* intervals
-2. Likelihood method
-3. Unequal variances
-
----
 
 ## Independent group $t$ confidence intervals
 
@@ -94,49 +88,74 @@ $$
 
 ---
 
-## Likelihood method
-
-- Exactly as before, 
-$$
-    \frac{\bar Y - \bar X}{S_p \left(\frac{1}{n_x} + \frac{1}{n_y}\right)^{1/2}}
-$$
-follows a non-central $t$ distribution with non-centrality parameter $\frac{\mu_y - \mu_x}{\sigma  \left(\frac{1}{n_x} + \frac{1}{n_y}\right)^{1/2}}$
-- Therefore, we can use this statistic to create a likelihood for $(\mu_y - \mu_x) / \sigma$, a standardized measure of the change in group means
-
----
 
 ## Example
+### Based on Rosner, Fundamentals of Biostatistics
 
 - Comparing SBP for 8 oral contraceptive users versus 21 controls
 - $\bar X_{OC} = 132.86$ mmHg with $s_{OC} = 15.34$ mmHg
 - $\bar X_{C} = 127.44$ mmHg with $s_{C} = 18.23$ mmHg
 - Pooled variance estimate
-$$
-s_p^2 = \frac{7 (15.34)^2 + 20 (18.23)^2}{8 + 21 - 2} = 307.8
-$$ 
-- $t_{27,.975} = 2.052$ (in R, `qt(.975, df = 27)`)
-- Interval
-$$
-132.86 - 127.44 \pm 2.052 \left\{307.8 \left( \frac{1}{8} + \frac{1}{21}\right)^{1/2} \right\}
-= [-9.52, 20.36]
-$$
+
+```r
+sp <- sqrt((7 * 15.34^2 + 20 * 18.23^2) / (8 + 21 - 2))
+132.86 - 127.44 + c(-1, 1) * qt(.975, 27) * sp * (1 / 8 + 1 / 21)^.5
+```
+
+```
+[1] -9.521 20.361
+```
+
 
 ---
 
-## Likelihood plot for the effect size
+```r
+data(sleep)
+x1 <- sleep$extra[sleep$group == 1]
+x2 <- sleep$extra[sleep$group == 2]
+n1 <- length(x1)
+n2 <- length(x2)
+sp <- sqrt( ((n1 - 1) * sd(x1)^2 + (n2-1) * sd(x2)^2) / (n1 + n2-2))
+md <- mean(x1) - mean(x2)
+semd <- sp * sqrt(1 / n1 + 1/n2)
+md + c(-1, 1) * qt(.975, n1 + n2 - 2) * semd
+```
 
-Reasonable values for the effect size from the confidence interval
-$$
-[-9.52, 20.36] / sp = [-.54, 1.16]
-$$
+```
+[1] -3.3639  0.2039
+```
 
-<img class="center" src="../assets/lec10.png" height=350>
+```r
+t.test(x1, x2, paired = FALSE, var.equal = TRUE)$conf
+```
+
+```
+[1] -3.3639  0.2039
+attr(,"conf.level")
+[1] 0.95
+```
+
+```r
+t.test(x1, x2, paired = TRUE)$conf
+```
+
+```
+[1] -2.4599 -0.7001
+attr(,"conf.level")
+[1] 0.95
+```
+
+
+---
+## Ignoring pairing
+<div class="rimage center"><img src="fig/unnamed-chunk-3.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" class="plot" /></div>
+
 
 ---
 
 ## Unequal variances
 
-- Note that under unequal variances
+- Under unequal variances
 $$
     \bar Y - \bar X \sim N\left(\mu_y - \mu_x, \frac{\sigma_x^2}{n_x} + \frac{\sigma_y^2}{n_y}\right)
 $$
@@ -164,3 +183,15 @@ $$
 132.86 - 127.44 \pm 2.13 \left(\frac{15.34^2}{8} + \frac{18.23^2}{21} \right)^{1/2}
 = [-8.91, 19.75]
 $$
+- In R, `t.test(..., var.equal = FALSE)`
+
+---
+## Comparing other kinds of data
+* For binomial data, there's lots of ways to compare two groups
+  * Relative risk, risk difference, odds ratio.
+  * Chi-squared tests, normal approximations, exact tests.
+* For count data, there's also Chi-squared tests and exact tests.
+* We'll leave the discussions for comparing groups of data for binary
+  and count data until covering glms in the regression class.
+* In addition, Mathematical Biostatistics Boot Camp 2 covers many special
+  cases relevant to biostatistics.
