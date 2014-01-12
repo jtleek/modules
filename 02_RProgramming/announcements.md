@@ -37,7 +37,7 @@ Roger Peng and the Data Science Track Team
 
 We have now entered the third week of R Programming which also marks the halfway point. The lectures this week cover loop functions and the debugging tools in R. These aspects of R make R useful for both interactive work and writing longer code, and so they are commonly used in practice.
 
-The Programming Assignment is challenging and so I encourage you to start early if you have the chance. It uses data on hospital mortality rates in the United States. The Programming Assignment this week uses a submit script that you have to download from the Coursera web site. The submit script should submit your solutions for you so you don't have to upload text files like you did for the second assignment.
+The Programming Assignment is challenging and so I encourage you to start early if you have the chance. It uses data on hospital mortality rates in the United States. The Programming Assignment this week uses a submit script that you have to download from the Coursera web site. The submit script should submit your solutions for you so you don't have to upload text files.
 
 Roger Peng and the Data Science Track Team
 
