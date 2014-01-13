@@ -82,7 +82,7 @@ rnorm
 ```
 function (n, mean = 0, sd = 1) 
 .External(C_rnorm, n, mean, sd)
-<bytecode: 0x7fcb8f5f0aa0>
+<bytecode: 0x7f9173a9f630>
 <environment: namespace:stats>
 ```
 

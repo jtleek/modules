@@ -31,20 +31,6 @@ knit_hooks$set(plot = knitr:::hook_plot_html)
 ```
 
 
-## Take homes
-
-* Why experimental design is important
-* Have an analysis and data sharing plan
-* Formulate your question before you get data
-* Replication
-* Watch out for confounding
-* Blocking and randomization
-* Watch out for data dredging
-* The difference between inference and prediction
-* Prediction quantities of interest
-
----
-
 ## Why you should care - an exciting result!
 
 
@@ -183,12 +169,6 @@ axis(1,at=c(1.05,1.95),labels=c("Sign-up","Donate"))
 
 <img class=center src=../../assets/img/01_DataScientistToolbox/shoelit.png height=500>
 
-
----
-
-## Confounding
-
-<img class=center src=../../assets/img/01_DataScientistToolbox/shoelit2.png height=500>
 
 ---
 
