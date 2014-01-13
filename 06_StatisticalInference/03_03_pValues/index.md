@@ -1,7 +1,7 @@
 ---
 title       : P-values
-subtitle    : 
-author      : Jeffrey Leek, Assistant Professor of Biostatistics 
+subtitle    : Statistical inference
+author      : Brian Caffo, Jeffrey Leek, Roger Peng 
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -16,24 +16,19 @@ mode        : selfcontained # {standalone, draft}
 
 
 
-
-
 ## P-values
 
 * Most common measure of "statistical significance"
-* Commonly reported in papers
-* Used for decision making (e.g. FDA)
-* Controversial among statisticians
+* Their ubiquity, along with concern over their interpretation and use
+  makes them controversial among statisticians
   * [http://warnercnr.colostate.edu/~anderson/thompson1.html](http://warnercnr.colostate.edu/~anderson/thompson1.html)
-
----
-
-## Not everyone thinks P-values are awful
-
-<img class=center src=../../assets/img/pvals.png height=450>
-
-
-[http://simplystatistics.org/2012/01/06/p-values-and-hypothesis-testing-get-a-bad-rap-but-we/](http://simplystatistics.org/2012/01/06/p-values-and-hypothesis-testing-get-a-bad-rap-but-we/)
+  * Also see *Statistical Evidence: A Likelihood Paradigm* by Richard Royall 
+  * *Toward Evidence-Based Medical Statistics. 1: The P Value Fallacy* by Steve Goodman
+  * The hilariously titled: *The Earth is Round (p < .05)* by Cohen.
+* Some positive comments
+  * [simply statistics](http://simplystatistics.org/2012/01/06/p-values-and-hypothesis-testing-get-a-bad-rap-but-we/)
+  * [normal deviate](http://normaldeviate.wordpress.com/2013/03/14/double-misunderstandings-about-p-values/)
+  * [Error statistics](http://errorstatistics.com/2013/06/14/p-values-cant-be-trusted-except-when-used-to-argue-that-p-values-cant-be-trusted/)
 
 ---
 
@@ -48,256 +43,78 @@ __Approach__:
 2. Calculate the summary/statistic with the data we have (_test statistic_)
 3. Compare what we calculated to our hypothetical distribution and see if the value is "extreme" (_p-value_)
 
+---
+## P-values
+* The P-value is the probability under the null hypothesis of obtaining evidence as extreme or more extreme than would be observed by chance alone
+* If the P-value is small, then either $H_0$ is true and we have observed a rare event or $H_0$ is false
+*  In our example the $T$ statistic was $0.8$. 
+  * What's the probability of getting a $T$ statistic as large as $0.8$?
+
+```r
+pt(0.8, 15, lower.tail = FALSE) 
+```
+
+```
+[1] 0.2181
+```
+
+* Therefore, the probability of seeing evidence as extreme or more extreme than that actually obtained under $H_0$ is 0.2181
 
 ---
+## The attained significance level
+* Our test statistic was $2$ for $H_0 : \mu_0  = 30$ versus $H_a:\mu > 30$.
+* Notice that we rejected the one sided test when $\alpha = 0.05$, would we reject if $\alpha = 0.01$, how about $0.001$?
+* The smallest value for alpha that you still reject the null hypothesis is called the {\bf attained significance level}
+* This is equivalent, but philosophically a little different from, the *P-value*
 
-## Galton data
+---
+## Notes
+* By reporting a P-value the reader can perform the hypothesis
+  test at whatever $\alpha$ level he or she choses
+* If the P-value is less than $\alpha$ you reject the null hypothesis 
+* For two sided hypothesis test, double the smaller of the two one
+  sided hypothesis test Pvalues
+
+---
+## Revisiting an earlier example
+- Suppose a friend has $8$ children, $7$ of which are girls and none are twins
+- If each gender has an independent $50$% probability for each birth, what's the probability of getting $7$ or more girls out of $8$ births?
+
+```r
+choose(8, 7) * .5 ^ 8 + choose(8, 8) * .5 ^ 8 
+```
+
+```
+[1] 0.03516
+```
+
+```r
+pbinom(6, size = 8, prob = .5, lower.tail = FALSE)
+```
+
+```
+[1] 0.03516
+```
+
+
+---
+## Poisson example
+- Suppose that a hospital has an infection rate of 10 infections per 100 person/days at risk (rate of 0.1) during the last monitoring period.
+- Assume that an infection rate of 0.05 is an important benchmark. 
+- Given the model, could the observed rate being larger than 0.05 be attributed to chance?
+- Under $H_0: \lambda = 0.05$ so that $\lambda_0 100 = 5$
+- Consider $H_a: \lambda > 0.05$.
 
 
 ```r
-library(UsingR); data(galton)
-plot(galton$parent,galton$child,pch=19,col="blue")
-lm1 <- lm(galton$child ~ galton$parent)
-abline(lm1,col="red",lwd=3)
-```
-
-<div class="rimage center"><img src="fig/loadGalton.png" title="plot of chunk loadGalton" alt="plot of chunk loadGalton" class="plot" /></div>
-
-
-If there was no relation between mid-parent/child height would we be surprised to see a line that looks like this?
-
----
-
-## Null hypothesis/distribution
-
-<br><br>
-$$\frac{\hat{b}_1 - b_1}{S.E.(\hat{b}_1)} \sim t_{n-2}$$
-<br><br>
-__$H_0$__: That there is no relationship between parent and child height ($b_1=0$). Under the null hypothesis the distribution is:
-
-<br><br>
-$$\frac{\hat{b}_1}{S.E.(\hat{b}_1)} \sim t_{n-2}$$
-
-
----
-
-## Null distribution
-
-
-```r
-x <- seq(-20,20,length=100)
-plot(x,dt(x,df=(928-2)),col="blue",lwd=3,type="l")
-```
-
-<div class="rimage center"><img src="fig/unnamed-chunk-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div>
-
-
----
-
-## Null distribution + observed statistic
-
-
-```r
-x <- seq(-20,20,length=100)
-plot(x,dt(x,df=(928-2)),col="blue",lwd=3,type="l")
-arrows(summary(lm1)$coeff[2,3],0.25,summary(lm1)$coeff[2,3],0,col="red",lwd=4)
-```
-
-<div class="rimage center"><img src="fig/unnamed-chunk-2.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" class="plot" /></div>
-
-
----
-
-## Calculating p-values
-
-
-```r
-summary(lm1)
+ppois(9, 5, lower.tail = FALSE)
 ```
 
 ```
-
-Call:
-lm(formula = galton$child ~ galton$parent)
-
-Residuals:
-   Min     1Q Median     3Q    Max 
--7.805 -1.366  0.049  1.634  5.926 
-
-Coefficients:
-              Estimate Std. Error t value Pr(>|t|)    
-(Intercept)    23.9415     2.8109    8.52   <2e-16 ***
-galton$parent   0.6463     0.0411   15.71   <2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 2.24 on 926 degrees of freedom
-Multiple R-squared:  0.21,	Adjusted R-squared:  0.21 
-F-statistic:  247 on 1 and 926 DF,  p-value: <2e-16
+[1] 0.03183
 ```
 
 
 
----
 
-## A quick simulated example 
 
-
-```r
-set.seed(9898324)
-yValues <- rnorm(10); xValues <- rnorm(10)
-lm2 <- lm(yValues ~ xValues)
-summary(lm2)
-```
-
-```
-
-Call:
-lm(formula = yValues ~ xValues)
-
-Residuals:
-   Min     1Q Median     3Q    Max 
--1.546 -0.570  0.136  0.771  1.052 
-
-Coefficients:
-            Estimate Std. Error t value Pr(>|t|)
-(Intercept)    0.310      0.351    0.88     0.40
-xValues        0.289      0.389    0.74     0.48
-
-Residual standard error: 0.989 on 8 degrees of freedom
-Multiple R-squared:  0.0644,	Adjusted R-squared:  -0.0525 
-F-statistic: 0.551 on 1 and 8 DF,  p-value: 0.479
-```
-
-
-
----
-
-## A quick simulated example 
-
-
-```r
-x <- seq(-5,5,length=100)
-plot(x,dt(x,df=(10-2)),col="blue",lwd=3,type="l")
-arrows(summary(lm2)$coeff[2,3],0.25,summary(lm2)$coeff[2,3],0,col="red",lwd=4)
-```
-
-<div class="rimage center"><img src="fig/unnamed-chunk-4.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" class="plot" /></div>
-
-
----
-
-## A quick simulated example 
-
-
-```r
-xCoords <- seq(-5,5,length=100)
-plot(xCoords,dt(xCoords,df=(10-2)),col="blue",lwd=3,type="l")
-xSequence <- c(seq(summary(lm2)$coeff[2,3],5,length=10),summary(lm2)$coeff[2,3])
-ySequence <- c(dt(seq(summary(lm2)$coeff[2,3],5,length=10),df=8),0)
-polygon(xSequence,ySequence,col="red"); polygon(-xSequence,ySequence,col="red")
-```
-
-<div class="rimage center"><img src="fig/unnamed-chunk-5.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" class="plot" /></div>
-
-
-
----
-
-## Simulate a ton of data sets with no signal
-
-
-```r
-set.seed(8323); pValues <- rep(NA,100)
-for(i in 1:100){
-  xValues <- rnorm(20);yValues <- rnorm(20)
-  pValues[i] <- summary(lm(yValues ~ xValues))$coeff[2,4]
-}
-hist(pValues,col="blue",main="",freq=F)
-abline(h=1,col="red",lwd=3)
-```
-
-<div class="rimage center"><img src="fig/unnamed-chunk-6.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" class="plot" /></div>
-
-
----
-
-## Simulate a ton of data sets with signal
-
-
-```r
-set.seed(8323); pValues <- rep(NA,100)
-for(i in 1:100){
-  xValues <- rnorm(20);yValues <- 0.2 * xValues + rnorm(20)
-  pValues[i] <- summary(lm(yValues ~ xValues))$coeff[2,4]
-}
-hist(pValues,col="blue",main="",freq=F,xlim=c(0,1)); abline(h=1,col="red",lwd=3)
-```
-
-<div class="rimage center"><img src="fig/unnamed-chunk-7.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" class="plot" /></div>
-
-
----
-
-## Simulate a ton of data sets with signal 
-
-
-```r
-set.seed(8323); pValues <- rep(NA,100)
-for(i in 1:100){
-  xValues <- rnorm(100);yValues <- 0.2* xValues + rnorm(100)
-  pValues[i] <- summary(lm(yValues ~ xValues))$coeff[2,4]
-}
-hist(pValues,col="blue",main="",freq=F,xlim=c(0,1)); abline(h=1,col="red",lwd=3)
-```
-
-<div class="rimage center"><img src="fig/unnamed-chunk-8.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" class="plot" /></div>
-
-
-
----
-
-## Some typical values (single test)
-
-* P < 0.05 (significant)
-* P < 0.01 (strongly significant)
-* P < 0.001 (very significant)
-
-In modern analyses, people generally report both the confidence interval and P-value. This is less true if many many hypotheses are tested. 
-
-
-
----
-
-## How you interpret the results
-
-
-```r
-summary(lm(galton$child ~ galton$parent))$coeff
-```
-
-```
-              Estimate Std. Error t value  Pr(>|t|)
-(Intercept)    23.9415    2.81088   8.517 6.537e-17
-galton$parent   0.6463    0.04114  15.711 1.733e-49
-```
-
-
-A one inch increase in parental height is associated with a 0.77 inch increase in child's height (95% CI: 0.42-1.12 inches). This difference was statistically significant ($P < 0.001$). 
-
-
----
-
-## Be careful!
-
-<img class=center src=../../assets/img/mt1.png height=450>
-
-[http://xkcd.com/882/](http://xkcd.com/882/)
-
----
-
-## Be careful!
-
-<img class=center src=../../assets/img/mt2.png height=450>
-
-[http://xkcd.com/882/](http://xkcd.com/882/)

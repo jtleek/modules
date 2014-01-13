@@ -4,7 +4,7 @@
   <title>P-values</title>
   <meta charset="utf-8">
   <meta name="description" content="P-values">
-  <meta name="author" content="Jeffrey Leek, Assistant Professor of Biostatistics">
+  <meta name="author" content="Brian Caffo, Jeffrey Leek, Roger Peng">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -19,6 +19,11 @@
   </script>
   
     <link rel="stylesheet" href = "../../assets/css/custom.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BACKUP.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BASE.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.LOCAL.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.orig">
+<link rel="stylesheet" href = "../../assets/css/custom.css.REMOTE.546.css">
 <link rel="stylesheet" href = "../../assets/css/ribbons.css">
 
 </head>
@@ -37,8 +42,8 @@
       </aside>
       <hgroup class="auto-fadein">
         <h1>P-values</h1>
-        <h2></h2>
-        <p>Jeffrey Leek, Assistant Professor of Biostatistics<br/>Johns Hopkins Bloomberg School of Public Health</p>
+        <h2>Statistical inference</h2>
+        <p>Brian Caffo, Jeffrey Leek, Roger Peng<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
           </slide>
 
@@ -50,12 +55,21 @@
   <article>
     <ul>
 <li>Most common measure of &quot;statistical significance&quot;</li>
-<li>Commonly reported in papers</li>
-<li>Used for decision making (e.g. FDA)</li>
-<li>Controversial among statisticians
+<li>Their ubiquity, along with concern over their interpretation and use
+makes them controversial among statisticians
 
 <ul>
 <li><a href="http://warnercnr.colostate.edu/%7Eanderson/thompson1.html">http://warnercnr.colostate.edu/~anderson/thompson1.html</a></li>
+<li>Also see <em>Statistical Evidence: A Likelihood Paradigm</em> by Richard Royall </li>
+<li><em>Toward Evidence-Based Medical Statistics. 1: The P Value Fallacy</em> by Steve Goodman</li>
+<li>The hilariously titled: <em>The Earth is Round (p &lt; .05)</em> by Cohen.</li>
+</ul></li>
+<li>Some positive comments
+
+<ul>
+<li><a href="http://simplystatistics.org/2012/01/06/p-values-and-hypothesis-testing-get-a-bad-rap-but-we/">simply statistics</a></li>
+<li><a href="http://normaldeviate.wordpress.com/2013/03/14/double-misunderstandings-about-p-values/">normal deviate</a></li>
+<li><a href="http://errorstatistics.com/2013/06/14/p-values-cant-be-trusted-except-when-used-to-argue-that-p-values-cant-be-trusted/">Error statistics</a></li>
 </ul></li>
 </ul>
 
@@ -64,19 +78,6 @@
 </slide>
 
       <slide class="" id="slide-2" style="background:;">
-  <hgroup>
-    <h2>Not everyone thinks P-values are awful</h2>
-  </hgroup>
-  <article>
-    <p><img class=center src=../../assets/img/pvals.png height=450></p>
-
-<p><a href="http://simplystatistics.org/2012/01/06/p-values-and-hypothesis-testing-get-a-bad-rap-but-we/">http://simplystatistics.org/2012/01/06/p-values-and-hypothesis-testing-get-a-bad-rap-but-we/</a></p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-3" style="background:;">
   <hgroup>
     <h2>What is a P-value?</h2>
   </hgroup>
@@ -95,20 +96,46 @@
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-4" style="background:;">
+      <slide class="" id="slide-3" style="background:;">
   <hgroup>
-    <h2>Galton data</h2>
+    <h2>P-values</h2>
   </hgroup>
   <article>
-    <pre><code class="r">library(UsingR); data(galton)
-plot(galton$parent,galton$child,pch=19,col=&quot;blue&quot;)
-lm1 &lt;- lm(galton$child ~ galton$parent)
-abline(lm1,col=&quot;red&quot;,lwd=3)
+    <ul>
+<li>The P-value is the probability under the null hypothesis of obtaining evidence as extreme or more extreme than would be observed by chance alone</li>
+<li>If the P-value is small, then either \(H_0\) is true and we have observed a rare event or \(H_0\) is false</li>
+<li> In our example the \(T\) statistic was \(0.8\). 
+
+<ul>
+<li>What&#39;s the probability of getting a \(T\) statistic as large as \(0.8\)?</li>
+</ul></li>
+</ul>
+
+<pre><code class="r">pt(0.8, 15, lower.tail = FALSE) 
 </code></pre>
 
-<div class="rimage center"><img src="fig/loadGalton.png" title="plot of chunk loadGalton" alt="plot of chunk loadGalton" class="plot" /></div>
+<pre><code>[1] 0.2181
+</code></pre>
 
-<p>If there was no relation between mid-parent/child height would we be surprised to see a line that looks like this?</p>
+<ul>
+<li>Therefore, the probability of seeing evidence as extreme or more extreme than that actually obtained under \(H_0\) is 0.2181</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>The attained significance level</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Our test statistic was \(2\) for \(H_0 : \mu_0  = 30\) versus \(H_a:\mu > 30\).</li>
+<li>Notice that we rejected the one sided test when \(\alpha = 0.05\), would we reject if \(\alpha = 0.01\), how about \(0.001\)?</li>
+<li>The smallest value for alpha that you still reject the null hypothesis is called the {\bf attained significance level}</li>
+<li>This is equivalent, but philosophically a little different from, the <em>P-value</em></li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
@@ -116,16 +143,16 @@ abline(lm1,col=&quot;red&quot;,lwd=3)
 
       <slide class="" id="slide-5" style="background:;">
   <hgroup>
-    <h2>Null hypothesis/distribution</h2>
+    <h2>Notes</h2>
   </hgroup>
   <article>
-    <p><br><br>
-\[\frac{\hat{b}_1 - b_1}{S.E.(\hat{b}_1)} \sim t_{n-2}\]
-<br><br>
-<strong>\(H_0\)</strong>: That there is no relationship between parent and child height (\(b_1=0\)). Under the null hypothesis the distribution is:</p>
-
-<p><br><br>
-\[\frac{\hat{b}_1}{S.E.(\hat{b}_1)} \sim t_{n-2}\]</p>
+    <ul>
+<li>By reporting a P-value the reader can perform the hypothesis
+test at whatever \(\alpha\) level he or she choses</li>
+<li>If the P-value is less than \(\alpha\) you reject the null hypothesis </li>
+<li>For two sided hypothesis test, double the smaller of the two one
+sided hypothesis test Pvalues</li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
@@ -133,14 +160,25 @@ abline(lm1,col=&quot;red&quot;,lwd=3)
 
       <slide class="" id="slide-6" style="background:;">
   <hgroup>
-    <h2>Null distribution</h2>
+    <h2>Revisiting an earlier example</h2>
   </hgroup>
   <article>
-    <pre><code class="r">x &lt;- seq(-20,20,length=100)
-plot(x,dt(x,df=(928-2)),col=&quot;blue&quot;,lwd=3,type=&quot;l&quot;)
+    <ul>
+<li>Suppose a friend has \(8\) children, \(7\) of which are girls and none are twins</li>
+<li>If each gender has an independent \(50\)% probability for each birth, what&#39;s the probability of getting \(7\) or more girls out of \(8\) births?</li>
+</ul>
+
+<pre><code class="r">choose(8, 7) * .5 ^ 8 + choose(8, 8) * .5 ^ 8 
 </code></pre>
 
-<div class="rimage center"><img src="fig/unnamed-chunk-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div>
+<pre><code>[1] 0.03516
+</code></pre>
+
+<pre><code class="r">pbinom(6, size = 8, prob = .5, lower.tail = FALSE)
+</code></pre>
+
+<pre><code>[1] 0.03516
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
@@ -148,234 +186,22 @@ plot(x,dt(x,df=(928-2)),col=&quot;blue&quot;,lwd=3,type=&quot;l&quot;)
 
       <slide class="" id="slide-7" style="background:;">
   <hgroup>
-    <h2>Null distribution + observed statistic</h2>
-  </hgroup>
-  <article>
-    <pre><code class="r">x &lt;- seq(-20,20,length=100)
-plot(x,dt(x,df=(928-2)),col=&quot;blue&quot;,lwd=3,type=&quot;l&quot;)
-arrows(summary(lm1)$coeff[2,3],0.25,summary(lm1)$coeff[2,3],0,col=&quot;red&quot;,lwd=4)
-</code></pre>
-
-<div class="rimage center"><img src="fig/unnamed-chunk-2.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" class="plot" /></div>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-8" style="background:;">
-  <hgroup>
-    <h2>Calculating p-values</h2>
-  </hgroup>
-  <article>
-    <pre><code class="r">summary(lm1)
-</code></pre>
-
-<pre><code>
-Call:
-lm(formula = galton$child ~ galton$parent)
-
-Residuals:
-   Min     1Q Median     3Q    Max 
--7.805 -1.366  0.049  1.634  5.926 
-
-Coefficients:
-              Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)    23.9415     2.8109    8.52   &lt;2e-16 ***
-galton$parent   0.6463     0.0411   15.71   &lt;2e-16 ***
----
-Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-
-Residual standard error: 2.24 on 926 degrees of freedom
-Multiple R-squared:  0.21,  Adjusted R-squared:  0.21 
-F-statistic:  247 on 1 and 926 DF,  p-value: &lt;2e-16
-</code></pre>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-9" style="background:;">
-  <hgroup>
-    <h2>A quick simulated example</h2>
-  </hgroup>
-  <article>
-    <pre><code class="r">set.seed(9898324)
-yValues &lt;- rnorm(10); xValues &lt;- rnorm(10)
-lm2 &lt;- lm(yValues ~ xValues)
-summary(lm2)
-</code></pre>
-
-<pre><code>
-Call:
-lm(formula = yValues ~ xValues)
-
-Residuals:
-   Min     1Q Median     3Q    Max 
--1.546 -0.570  0.136  0.771  1.052 
-
-Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)
-(Intercept)    0.310      0.351    0.88     0.40
-xValues        0.289      0.389    0.74     0.48
-
-Residual standard error: 0.989 on 8 degrees of freedom
-Multiple R-squared:  0.0644,    Adjusted R-squared:  -0.0525 
-F-statistic: 0.551 on 1 and 8 DF,  p-value: 0.479
-</code></pre>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-10" style="background:;">
-  <hgroup>
-    <h2>A quick simulated example</h2>
-  </hgroup>
-  <article>
-    <pre><code class="r">x &lt;- seq(-5,5,length=100)
-plot(x,dt(x,df=(10-2)),col=&quot;blue&quot;,lwd=3,type=&quot;l&quot;)
-arrows(summary(lm2)$coeff[2,3],0.25,summary(lm2)$coeff[2,3],0,col=&quot;red&quot;,lwd=4)
-</code></pre>
-
-<div class="rimage center"><img src="fig/unnamed-chunk-4.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" class="plot" /></div>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-11" style="background:;">
-  <hgroup>
-    <h2>A quick simulated example</h2>
-  </hgroup>
-  <article>
-    <pre><code class="r">xCoords &lt;- seq(-5,5,length=100)
-plot(xCoords,dt(xCoords,df=(10-2)),col=&quot;blue&quot;,lwd=3,type=&quot;l&quot;)
-xSequence &lt;- c(seq(summary(lm2)$coeff[2,3],5,length=10),summary(lm2)$coeff[2,3])
-ySequence &lt;- c(dt(seq(summary(lm2)$coeff[2,3],5,length=10),df=8),0)
-polygon(xSequence,ySequence,col=&quot;red&quot;); polygon(-xSequence,ySequence,col=&quot;red&quot;)
-</code></pre>
-
-<div class="rimage center"><img src="fig/unnamed-chunk-5.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" class="plot" /></div>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-12" style="background:;">
-  <hgroup>
-    <h2>Simulate a ton of data sets with no signal</h2>
-  </hgroup>
-  <article>
-    <pre><code class="r">set.seed(8323); pValues &lt;- rep(NA,100)
-for(i in 1:100){
-  xValues &lt;- rnorm(20);yValues &lt;- rnorm(20)
-  pValues[i] &lt;- summary(lm(yValues ~ xValues))$coeff[2,4]
-}
-hist(pValues,col=&quot;blue&quot;,main=&quot;&quot;,freq=F)
-abline(h=1,col=&quot;red&quot;,lwd=3)
-</code></pre>
-
-<div class="rimage center"><img src="fig/unnamed-chunk-6.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" class="plot" /></div>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-13" style="background:;">
-  <hgroup>
-    <h2>Simulate a ton of data sets with signal</h2>
-  </hgroup>
-  <article>
-    <pre><code class="r">set.seed(8323); pValues &lt;- rep(NA,100)
-for(i in 1:100){
-  xValues &lt;- rnorm(20);yValues &lt;- 0.2 * xValues + rnorm(20)
-  pValues[i] &lt;- summary(lm(yValues ~ xValues))$coeff[2,4]
-}
-hist(pValues,col=&quot;blue&quot;,main=&quot;&quot;,freq=F,xlim=c(0,1)); abline(h=1,col=&quot;red&quot;,lwd=3)
-</code></pre>
-
-<div class="rimage center"><img src="fig/unnamed-chunk-7.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" class="plot" /></div>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-14" style="background:;">
-  <hgroup>
-    <h2>Simulate a ton of data sets with signal</h2>
-  </hgroup>
-  <article>
-    <pre><code class="r">set.seed(8323); pValues &lt;- rep(NA,100)
-for(i in 1:100){
-  xValues &lt;- rnorm(100);yValues &lt;- 0.2* xValues + rnorm(100)
-  pValues[i] &lt;- summary(lm(yValues ~ xValues))$coeff[2,4]
-}
-hist(pValues,col=&quot;blue&quot;,main=&quot;&quot;,freq=F,xlim=c(0,1)); abline(h=1,col=&quot;red&quot;,lwd=3)
-</code></pre>
-
-<div class="rimage center"><img src="fig/unnamed-chunk-8.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" class="plot" /></div>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-15" style="background:;">
-  <hgroup>
-    <h2>Some typical values (single test)</h2>
+    <h2>Poisson example</h2>
   </hgroup>
   <article>
     <ul>
-<li>P &lt; 0.05 (significant)</li>
-<li>P &lt; 0.01 (strongly significant)</li>
-<li>P &lt; 0.001 (very significant)</li>
+<li>Suppose that a hospital has an infection rate of 10 infections per 100 person/days at risk (rate of 0.1) during the last monitoring period.</li>
+<li>Assume that an infection rate of 0.05 is an important benchmark. </li>
+<li>Given the model, could the observed rate being larger than 0.05 be attributed to chance?</li>
+<li>Under \(H_0: \lambda = 0.05\) so that \(\lambda_0 100 = 5\)</li>
+<li>Consider \(H_a: \lambda > 0.05\).</li>
 </ul>
 
-<p>In modern analyses, people generally report both the confidence interval and P-value. This is less true if many many hypotheses are tested. </p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-16" style="background:;">
-  <hgroup>
-    <h2>How you interpret the results</h2>
-  </hgroup>
-  <article>
-    <pre><code class="r">summary(lm(galton$child ~ galton$parent))$coeff
+<pre><code class="r">ppois(9, 5, lower.tail = FALSE)
 </code></pre>
 
-<pre><code>              Estimate Std. Error t value  Pr(&gt;|t|)
-(Intercept)    23.9415    2.81088   8.517 6.537e-17
-galton$parent   0.6463    0.04114  15.711 1.733e-49
+<pre><code>[1] 0.03183
 </code></pre>
-
-<p>A one inch increase in parental height is associated with a 0.77 inch increase in child&#39;s height (95% CI: 0.42-1.12 inches). This difference was statistically significant (\(P < 0.001\)). </p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-17" style="background:;">
-  <hgroup>
-    <h2>Be careful!</h2>
-  </hgroup>
-  <article>
-    <p><img class=center src=../../assets/img/mt1.png height=450></p>
-
-<p><a href="http://xkcd.com/882/">http://xkcd.com/882/</a></p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-18" style="background:;">
-  <hgroup>
-    <h2>Be careful!</h2>
-  </hgroup>
-  <article>
-    <p><img class=center src=../../assets/img/mt2.png height=450></p>
-
-<p><a href="http://xkcd.com/882/">http://xkcd.com/882/</a></p>
 
   </article>
   <!-- Presenter Notes -->
