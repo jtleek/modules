@@ -1,6 +1,6 @@
 ---
 title       : Two group intervals
-subtitle    : Statistical Infernce
+subtitle    : Statistical Inference
 author      : Brian Caffo, Jeff Leek, Roger Peng
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
