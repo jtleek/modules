@@ -23,7 +23,7 @@ mode        : selfcontained # {standalone, draft}
 
 * This course covers the basic ideas behind getting data ready for analysis
   * Finding and extracting raw data
-  * Tidy data principles and how to make data tiny
+  * Tidy data principles and how to make data tidy
   * Practical implementation through a range of R packages
 * What this course depends on
   * The Data Scientist's Toolbox

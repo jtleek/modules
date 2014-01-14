@@ -95,7 +95,7 @@ mode        : selfcontained # {standalone, draft}
 
 ## Why are you lucky?
 
-<img class=center src=../../assets/img/01_DataScientistToolbox/heritage.png height='80%' />
+<img class=center src=../../assets/img/01_DataScientistToolbox/heritage.png height=400 />
 
 [Heritage Health Prize](http://www.heritagehealthprize.com/c/hhp)
 
