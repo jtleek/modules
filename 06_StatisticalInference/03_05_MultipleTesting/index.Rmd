@@ -1,7 +1,7 @@
 ---
 title       : Multiple testing
-subtitle    : 
-author      : Jeffrey Leek, Assistant Professor of Biostatistics 
+subtitle    : Statistical Inference 
+author      : Brian Caffo, Jeffrey Leek, Roger Peng
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}

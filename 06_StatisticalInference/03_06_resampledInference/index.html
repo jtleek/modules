@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Bootstrapping</title>
+  <title>Resampled inference</title>
   <meta charset="utf-8">
-  <meta name="description" content="Bootstrapping">
-  <meta name="author" content="Brian Caffo, PhD">
+  <meta name="description" content="Resampled inference">
+  <meta name="author" content="Brian Caffo, Jeff Leek, Roger Peng">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -19,6 +19,11 @@
   </script>
   
     <link rel="stylesheet" href = "../../assets/css/custom.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BACKUP.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BASE.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.LOCAL.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.orig">
+<link rel="stylesheet" href = "../../assets/css/custom.css.REMOTE.546.css">
 <link rel="stylesheet" href = "../../assets/css/ribbons.css">
 
 </head>
@@ -36,29 +41,14 @@
         <img src="../../assets/img/bloomberg_shield.png">
       </aside>
       <hgroup class="auto-fadein">
-        <h1>Bootstrapping</h1>
-        <h2>Mathematical Biostatistics Boot Camp</h2>
-        <p>Brian Caffo, PhD<br/>Johns Hopkins Bloomberg School of Public Health</p>
+        <h1>Resampled inference</h1>
+        <h2>Statistical Inference</h2>
+        <p>Brian Caffo, Jeff Leek, Roger Peng<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
           </slide>
 
     <!-- SLIDES -->
       <slide class="" id="slide-1" style="background:;">
-  <hgroup>
-    <h2>Table of contents</h2>
-  </hgroup>
-  <article>
-    <ol>
-<li>The jackknife</li>
-<li>The bootstrap principle</li>
-<li>The bootstrap</li>
-</ol>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-2" style="background:;">
   <hgroup>
     <h2>The jackknife</h2>
   </hgroup>
@@ -73,7 +63,7 @@
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-3" style="background:;">
+      <slide class="" id="slide-2" style="background:;">
   <hgroup>
     <h2>The jackknife</h2>
   </hgroup>
@@ -88,7 +78,7 @@
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-4" style="background:;">
+      <slide class="" id="slide-3" style="background:;">
   <hgroup>
     <h2>The jackknife</h2>
   </hgroup>
@@ -105,7 +95,7 @@
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-5" style="background:;">
+      <slide class="" id="slide-4" style="background:;">
   <hgroup>
     <h2>Continued</h2>
   </hgroup>
@@ -127,32 +117,20 @@
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-6" style="background:;">
+      <slide class="" id="slide-5" style="background:;">
   <hgroup>
     <h2>Example</h2>
   </hgroup>
   <article>
-    <ul>
-<li>Consider the data set of \(630\) measurements of gray matter volume for workers from a lead manufacturing plant</li>
-<li>The median gray matter volume is around 589 cubic centimeters</li>
-<li>We want to estimate the bias and standard error of the median</li>
-</ul>
+    <h3>We want to estimate the bias and standard error of the median</h3>
 
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-7" style="background:;">
-  <hgroup>
-    <h2>Example</h2>
-  </hgroup>
-  <article>
-    <p>The gist of the code</p>
-
-<pre><code class="r">n &lt;- length(gmVol)
-theta &lt;- median(gmVol)
+<pre><code class="r">library(UsingR)
+data(father.son)
+x &lt;- father.son$sheight
+n &lt;- length(x)
+theta &lt;- median(x)
 jk &lt;- sapply(1 : n,
-             function(i) median(gmVol[-i])
+             function(i) median(x[-i])
              )
 thetaBar &lt;- mean(jk)
 biasEst &lt;- (n - 1) * (thetaBar - theta) 
@@ -163,30 +141,36 @@ seEst &lt;- sqrt((n - 1) * mean((jk - thetaBar)^2))
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-8" style="background:;">
+      <slide class="" id="slide-6" style="background:;">
   <hgroup>
     <h2>Example</h2>
   </hgroup>
   <article>
-    <p>Or, using the <code>bootstrap</code> package</p>
+    <pre><code class="r">c(biasEst, seEst)
+</code></pre>
+
+<pre><code>[1] 0.0000 0.1014
+</code></pre>
 
 <pre><code class="r">library(bootstrap)
-out &lt;- jackknife(gmVol, median)
-out$jack.se
-out$jack.bias
+out &lt;- jackknife(x, median)
+c(out$jack.bias, out$jack.se)
+</code></pre>
+
+<pre><code>[1] 0.0000 0.1014
 </code></pre>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-9" style="background:;">
+      <slide class="" id="slide-7" style="background:;">
   <hgroup>
     <h2>Example</h2>
   </hgroup>
   <article>
     <ul>
-<li>Both methods (of course) yield an estimated bias of \(0\) and a se of \(9.94\)</li>
+<li>Both methods (of course) yield an estimated bias of 0 and a se of 0.1014</li>
 <li>Odd little fact: the jackknife estimate of the bias for the median is always \(0\) when the number of observations is even</li>
 <li>It has been shown that the jackknife is a linear approximation to the bootstrap</li>
 <li>Generally do not use the jackknife for sample quantiles like the median; as it has been shown to have some poor properties</li>
@@ -196,7 +180,7 @@ out$jack.bias
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-10" style="background:;">
+      <slide class="" id="slide-8" style="background:;">
   <hgroup>
     <h2>Pseudo observations</h2>
   </hgroup>
@@ -217,7 +201,7 @@ out$jack.bias
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-11" style="background:;">
+      <slide class="" id="slide-9" style="background:;">
   <hgroup>
     <h2>The bootstrap</h2>
   </hgroup>
@@ -232,7 +216,7 @@ out$jack.bias
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-12" style="background:;">
+      <slide class="" id="slide-10" style="background:;">
   <hgroup>
     <h2>The bootstrap principle</h2>
   </hgroup>
@@ -246,7 +230,7 @@ out$jack.bias
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-13" style="background:;">
+      <slide class="" id="slide-11" style="background:;">
   <hgroup>
     <h2>The bootstrap in practice</h2>
   </hgroup>
@@ -267,24 +251,9 @@ out$jack.bias
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-14" style="background:;">
+      <slide class="" id="slide-12" style="background:;">
   <hgroup>
-    <h2>Example</h2>
-  </hgroup>
-  <article>
-    <ul>
-<li>Consider again, the data set of \(630\) measurements of gray matter volume for workers from a lead manufacturing plant</li>
-<li>The median gray matter volume is around 589 cubic centimeters</li>
-<li>We want a confidence interval for the median of these measurements</li>
-</ul>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-15" style="background:;">
-  <hgroup>
-    
+    <h2>Nonparametric bootstrap algorithm example</h2>
   </hgroup>
   <article>
     <ul>
@@ -309,41 +278,49 @@ out$jack.bias
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-16" style="background:;">
+      <slide class="" id="slide-13" style="background:;">
   <hgroup>
     <h2>Example code</h2>
   </hgroup>
   <article>
     <pre><code class="r">B &lt;- 1000
-n &lt;- length(gmVol)
-resamples &lt;- matrix(sample(gmVol,
+resamples &lt;- matrix(sample(x,
                            n * B,
                            replace = TRUE),
                     B, n)
 medians &lt;- apply(resamples, 1, median)
 sd(medians)
-[1] 3.148706
-quantile(medians, c(.025, .975))
-    2.5%    97.5% 
-582.6384 595.3553 
+</code></pre>
+
+<pre><code>[1] 0.08366
+</code></pre>
+
+<pre><code class="r">quantile(medians, c(.025, .975))
+</code></pre>
+
+<pre><code> 2.5% 97.5% 
+68.44 68.82 
 </code></pre>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-17" style="background:;">
+      <slide class="" id="slide-14" style="background:;">
   <hgroup>
-    
+    <h2>Histogram of bootstrap resamples</h2>
   </hgroup>
   <article>
-    <p><img class="center" src="../assets/bootstrap.png" height=500></p>
+    <pre><code class="r">hist(medians)
+</code></pre>
+
+<div class="rimage center"><img src="fig/unnamed-chunk-4.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" class="plot" /></div>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-18" style="background:;">
+      <slide class="" id="slide-15" style="background:;">
   <hgroup>
     <h2>Notes on the bootstrap</h2>
   </hgroup>
@@ -359,20 +336,129 @@ quantile(medians, c(.025, .975))
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-19" style="background:;">
+      <slide class="" id="slide-16" style="background:;">
   <hgroup>
-    
+    <h2>Group comparisons</h2>
   </hgroup>
   <article>
-    <pre><code class="r">library(boot)
-stat &lt;- function(x, i) {median(x[i])}  
-boot.out &lt;- boot(data = gmVol,
-                 statistic = stat,
-                 R = 1000)
-boot.ci(boot.out)
-Level     Percentile            BCa          
-95%   (583.1, 595.2 )   (583.2, 595.3 ) 
+    <ul>
+<li>Consider comparing two independent groups.</li>
+<li>Example, comparing sprays B and C</li>
+</ul>
+
+<pre><code class="r">data(InsectSprays)
+boxplot(count ~ spray, data = InsectSprays)
 </code></pre>
+
+<div class="rimage center"><img src="fig/unnamed-chunk-5.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" class="plot" /></div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>Permutation tests</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li> Consider the null hypothesis that the distribution of the observations from each group is the same</li>
+<li> Then, the group labels are irrelevant</li>
+<li> We then discard the group levels and permute the combined data</li>
+<li> Split the permuted data into two groups with \(n_A\) and \(n_B\)
+observations (say by always treating the first \(n_A\) observations as
+the first group)</li>
+<li> Evaluate the probability of getting a statistic as large or
+large than the one observed</li>
+<li> An example statistic would be the difference in the averages between the two groups;
+one could also use a t-statistic </li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>Variations on permutation testing</h2>
+  </hgroup>
+  <article>
+    <table><thead>
+<tr>
+<th>Data type</th>
+<th>Statistic</th>
+<th>Test name</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Ranks</td>
+<td>rank sum</td>
+<td>rank sum test</td>
+</tr>
+<tr>
+<td>Binary</td>
+<td>hypergeometric prob</td>
+<td>Fisher&#39;s exact test</td>
+</tr>
+<tr>
+<td>Raw data</td>
+<td></td>
+<td>ordinary permutation test</td>
+</tr>
+</tbody></table>
+
+<ul>
+<li>Also, so-called <em>randomization tests</em> are exactly permutation tests, with a different motivation.</li>
+<li>For matched data, one can randomize the signs
+
+<ul>
+<li>For ranks, this results in the signed rank test</li>
+</ul></li>
+<li>Permutation strategies work for regression as well
+
+<ul>
+<li>Permuting a regressor of interest</li>
+</ul></li>
+<li>Permutation tests work very well in multivariate settings</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>Permutation test for pesticide data</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">subdata &lt;- InsectSprays[InsectSprays$spray %in% c(&quot;B&quot;, &quot;C&quot;),]
+y &lt;- subdata$count
+group &lt;- as.character(subdata$spray)
+testStat &lt;- function(w, g) mean(w[g == &quot;B&quot;]) - mean(w[g == &quot;C&quot;])
+observedStat &lt;- testStat(y, group)
+permutations &lt;- sapply(1 : 10000, function(i) testStat(y, sample(group)))
+observedStat
+</code></pre>
+
+<pre><code>[1] 13.25
+</code></pre>
+
+<pre><code class="r">mean(permutations &gt; observedStat)
+</code></pre>
+
+<pre><code>[1] 0
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h2>Histogram of permutations</h2>
+  </hgroup>
+  <article>
+    <div class="rimage center"><img src="fig/unnamed-chunk-7.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" class="plot" /></div>
 
   </article>
   <!-- Presenter Notes -->

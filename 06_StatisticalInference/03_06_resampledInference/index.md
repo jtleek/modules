@@ -1,7 +1,7 @@
 ---
-title       : Bootstrapping
-subtitle    : Mathematical Biostatistics Boot Camp
-author      : Brian Caffo, PhD
+title       : Resampled inference
+subtitle    : Statistical Inference
+author      : Brian Caffo, Jeff Leek, Roger Peng
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -12,15 +12,10 @@ url:
   assets: ../../assets
 widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
----
-
-## Table of contents
-
-1. The jackknife
-2. The bootstrap principle
-3. The bootstrap
 
 ---
+
+
 
 ## The jackknife
 
@@ -64,46 +59,53 @@ mode        : selfcontained # {standalone, draft}
 ---
 
 ## Example
+### We want to estimate the bias and standard error of the median
 
-- Consider the data set of $630$ measurements of gray matter volume for workers from a lead manufacturing plant
-- The median gray matter volume is around 589 cubic centimeters
-- We want to estimate the bias and standard error of the median
-
----
-
-## Example
-
-The gist of the code
 
 ```r
-n <- length(gmVol)
-theta <- median(gmVol)
+library(UsingR)
+data(father.son)
+x <- father.son$sheight
+n <- length(x)
+theta <- median(x)
 jk <- sapply(1 : n,
-             function(i) median(gmVol[-i])
+             function(i) median(x[-i])
              )
 thetaBar <- mean(jk)
 biasEst <- (n - 1) * (thetaBar - theta) 
 seEst <- sqrt((n - 1) * mean((jk - thetaBar)^2))
 ```
 
+
 ---
 
 ## Example
 
-Or, using the `bootstrap` package
+
+```r
+c(biasEst, seEst)
+```
+
+```
+[1] 0.0000 0.1014
+```
 
 ```r
 library(bootstrap)
-out <- jackknife(gmVol, median)
-out$jack.se
-out$jack.bias
+out <- jackknife(x, median)
+c(out$jack.bias, out$jack.se)
 ```
+
+```
+[1] 0.0000 0.1014
+```
+
 
 ---
 
 ## Example
 
-- Both methods (of course) yield an estimated bias of $0$ and a se of $9.94$
+- Both methods (of course) yield an estimated bias of 0 and a se of 0.1014
 - Odd little fact: the jackknife estimate of the bias for the median is always $0$ when the number of observations is even
 - It has been shown that the jackknife is a linear approximation to the bootstrap
 - Generally do not use the jackknife for sample quantiles like the median; as it has been shown to have some poor properties
@@ -151,14 +153,7 @@ $$
 - Use the simulated statistics to either define a confidence interval or take the standard deviation to calculate a standard error
 
 ---
-
-## Example
-
-- Consider again, the data set of $630$ measurements of gray matter volume for workers from a lead manufacturing plant
-- The median gray matter volume is around 589 cubic centimeters
-- We want a confidence interval for the median of these measurements
-
----
+## Nonparametric bootstrap algorithm example
 
 - Bootstrap procedure for calculating confidence interval for the median from a data set of $n$ observations
 
@@ -178,24 +173,41 @@ $$
 
 ## Example code
 
+
 ```r
 B <- 1000
-n <- length(gmVol)
-resamples <- matrix(sample(gmVol,
+resamples <- matrix(sample(x,
                            n * B,
                            replace = TRUE),
                     B, n)
 medians <- apply(resamples, 1, median)
 sd(medians)
-[1] 3.148706
-quantile(medians, c(.025, .975))
-    2.5%    97.5% 
-582.6384 595.3553 
 ```
 
----
+```
+[1] 0.08366
+```
 
-<img class="center" src="../assets/bootstrap.png" height=500>
+```r
+quantile(medians, c(.025, .975))
+```
+
+```
+ 2.5% 97.5% 
+68.44 68.82 
+```
+
+
+---
+## Histogram of bootstrap resamples
+
+
+```r
+hist(medians)
+```
+
+<div class="rimage center"><img src="fig/unnamed-chunk-4.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" class="plot" /></div>
+
 
 ---
 
@@ -206,15 +218,76 @@ quantile(medians, c(.025, .975))
 - Better percentile bootstrap confidence intervals correct for bias
 - There are lots of variations on bootstrap procedures; the book "An Introduction to the Bootstrap"" by Efron and Tibshirani is a great place to start for both bootstrap and jackknife information
 
+
 ---
+## Group comparisons
+- Consider comparing two independent groups.
+- Example, comparing sprays B and C
+
 
 ```r
-library(boot)
-stat <- function(x, i) {median(x[i])}  
-boot.out <- boot(data = gmVol,
-                 statistic = stat,
-                 R = 1000)
-boot.ci(boot.out)
-Level     Percentile            BCa          
-95%   (583.1, 595.2 )   (583.2, 595.3 ) 
+data(InsectSprays)
+boxplot(count ~ spray, data = InsectSprays)
 ```
+
+<div class="rimage center"><img src="fig/unnamed-chunk-5.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" class="plot" /></div>
+
+
+---
+## Permutation tests
+-  Consider the null hypothesis that the distribution of the observations from each group is the same
+-  Then, the group labels are irrelevant
+-  We then discard the group levels and permute the combined data
+-  Split the permuted data into two groups with $n_A$ and $n_B$
+  observations (say by always treating the first $n_A$ observations as
+  the first group)
+-  Evaluate the probability of getting a statistic as large or
+  large than the one observed
+-  An example statistic would be the difference in the averages between the two groups;
+  one could also use a t-statistic 
+
+---
+## Variations on permutation testing
+Data type | Statistic | Test name 
+---|---|---|
+Ranks | rank sum | rank sum test
+Binary | hypergeometric prob | Fisher's exact test
+Raw data | | ordinary permutation test
+
+- Also, so-called *randomization tests* are exactly permutation tests, with a different motivation.
+- For matched data, one can randomize the signs
+  - For ranks, this results in the signed rank test
+- Permutation strategies work for regression as well
+  - Permuting a regressor of interest
+- Permutation tests work very well in multivariate settings
+
+---
+## Permutation test for pesticide data
+
+```r
+subdata <- InsectSprays[InsectSprays$spray %in% c("B", "C"),]
+y <- subdata$count
+group <- as.character(subdata$spray)
+testStat <- function(w, g) mean(w[g == "B"]) - mean(w[g == "C"])
+observedStat <- testStat(y, group)
+permutations <- sapply(1 : 10000, function(i) testStat(y, sample(group)))
+observedStat
+```
+
+```
+[1] 13.25
+```
+
+```r
+mean(permutations > observedStat)
+```
+
+```
+[1] 0
+```
+
+
+---
+## Histogram of permutations
+<div class="rimage center"><img src="fig/unnamed-chunk-7.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" class="plot" /></div>
+
