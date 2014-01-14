@@ -1,7 +1,7 @@
 ---
-title       : Asymptotics
-subtitle    : Mathematical Biostatistics Boot Camp
-author      : Brian Caffo, PhD
+title       : A trip to Asymptopia
+subtitle    : Statistical Inference
+author      : Brian Caffo, Jeff Leek, Roger Peng
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -14,6 +14,21 @@ widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 ---
 
+
+---
+## Asymptotics
+* Asymptotics is the term for the behavior of statistics as the sample size (or some other relevant quantity) limits to infinity (or some other relevant number)
+* (Asymptopia is my name for the land of asymptotics, where everything works out well and there's no messes. The land of infinite data is nice that way.)
+* Asymptotics are incredibly useful for simple statistical inference and approximations 
+* (Not covered in this class) Asymptotics often lead to nice understanding of procedures
+* Asymptotics generally give no assurances about finite sample performance
+  * The kinds of asymptotics that do are orders of magnitude more difficult to work with
+* Asymptotics form the basis for frequency interpretation of probabilities 
+  (the long run proportion of times an event occurs)
+* To understand asymptotics, we need a very basic understanding of limits.
+
+
+---
 ## Numerical limits
 
 - Imagine a sequence
@@ -24,7 +39,6 @@ mode        : selfcontained # {standalone, draft}
 
 - Clearly this sequence converges to $1$
 - Definition of a limit: For any fixed distance we can find a point in the sequence so that the sequence is closer to the limit than that distance from that point on
-- $|a_n - 1| = 10^{-n}$
 
 ---
 
@@ -36,7 +50,6 @@ mode        : selfcontained # {standalone, draft}
   - Example $\bar X_n$ could be the average of the result of $n$ coin flips (i.e. the sample proportion of heads)
 
 - We say that $\bar X_n$ {\bf converges in probability} to a limit if for any fixed distance the {\em probability} of $\bar X_n$ being closer (further away) than that distance from the limit converges to one (zero)
-- $P(|\bar X_n - \mbox{limit}| < \epsilon) \rightarrow 1$
 
 ---
 
@@ -46,60 +59,27 @@ mode        : selfcontained # {standalone, draft}
 - Fortunately, we have a theorem that does all the work for us, called
     the **Law of Large Numbers**
 - The law of large numbers states that if $X_1,\ldots X_n$ are iid from a population with mean $\mu$ and variance $\sigma^2$ then $\bar X_n$ converges in probability to $\mu$
-- (There are many variations on the LLN; we are using a particularly lazy one)
+- (There are many variations on the LLN; we are using a particularly lazy version, my favorite kind of version)
 
 ---
+## Law of large numbers in action
 
-## Proof using Chebyshev's inequality
+```r
+n <- 10000; means <- cumsum(rnorm(n)) / (1  : n)
+plot(1 : n, means, type = "l", lwd = 2, 
+     frame = FALSE, ylab = "cumulative means", xlab = "sample size")
+abline(h = 0)
+```
 
-- Recall Chebyshev's inequality states that the probability that a random variable variable is more than $k$ standard deviations from its mean is less than $1/k^2$
-- Therefore for the sample mean
-$$
-    P\left\{|\bar X_n - \mu| \geq k ~\mbox{sd}(\bar X_n)\right\} \leq 1 / k ^ 2
-$$
-- Pick a distance $\epsilon$ and let $k = \epsilon / \mbox{sd}(\bar X_n)$
-$$
-    P(|\bar X_n - \mu| \geq \epsilon) \leq \frac{\mbox{sd}(\bar X_n)^2}{\epsilon^2}
-    = \frac{\sigma^2}{n\epsilon^2}
-$$
+<div class="rimage center"><img src="fig/unnamed-chunk-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div>
 
 ---
-
-<img src="../assets/lln.png" height=500>
-
----
-
-## Useful facts
-
-- Functions of convergent random sequences converge to the function evaluated at the limit
-- This includes sums, products, differences, ...
-- Example $(\bar X_n) ^2$ converges to $\mu^2$
-- Notice that this is different than $(\sum X_i^2) / n$ which converge to $E[X_i^2] = \sigma^2 + \mu^2$
-- We can use this to prove that the sample variance converges to $\sigma^2$
-
----
-
-## Continued
-
-$$
-  \begin{eqnarray*}
-    \sum (X_i - \bar X_n)^2 / (n - 1) & =  & \frac{\sum X_i^2}{n - 1}  - \frac{n (\bar X_n)^2}{n - 1}  \\ \\
-    & = & \frac{n}{n-1}\times \frac{\sum X_i^2}{n} - \frac{n}{n-1} \times (\bar X_n)^ 2\\ \\
-    & \stackrel{p}{\rightarrow} & 1 \times (\sigma^2 + \mu^2) - 1 \times \mu^2 \\ \\
-    & = & \sigma^2 
-  \end{eqnarray*}
-$$
-
-Hence we also know that the sample standard deviation converges to
-$\sigma$
-
----
-
 ## Discussion
-
 - An estimator is **consistent** if it converges to what you want to estimate
+  - Consistency is neither necessary nor sufficient for one estimator to be better than another
+  - Typically, good estimators are consistent; it's not too much to ask that if we go to the trouble of collecting an infinite amount of data that we get the right answer
 - The LLN basically states that the sample mean is consistent
-- We just showed that the sample variance and the sample standard deviation are consistent as well
+- The sample variance and the sample standard deviation are consistent as well
 - Recall also that the sample mean and the sample variance are unbiased as well
 - (The sample standard deviation is biased, by the way)
 
@@ -110,24 +90,14 @@ $\sigma$
 - The **Central Limit Theorem** (CLT) is one of the most important theorems in statistics
 - For our purposes, the CLT states that the distribution of averages of iid variables, properly normalized, becomes that of a standard normal as the sample size increases
 - The CLT applies in an endless variety of settings
-
----
-
-## The CLT
-
 - Let $X_1,\ldots,X_n$ be a collection of iid random variables with mean $\mu$ and variance $\sigma^2$
 - Let $\bar X_n$ be their sample average
-- Then
-$$
-    \begin{equation*}
-      P\left( \frac{\bar X_n - \mu}{\sigma / \sqrt{n}} \leq z \right) \rightarrow \Phi(z)
-    \end{equation*}
-$$
-- Notice the form of the normalized quantity
-$$
-    \frac{\bar X_n - \mu}{\sigma / \sqrt{n}} = 
+- Then $\frac{\bar X_n - \mu}{\sigma / \sqrt{n}}$ has a distribution like that of a standard normal for large $n$.
+- Remember the form
+$$\frac{\bar X_n - \mu}{\sigma / \sqrt{n}} = 
     \frac{\mbox{Estimate} - \mbox{Mean of estimate}}{\mbox{Std. Err. of estimate}}.
 $$
+- Usually, replacing the standard error by its estimated value doesn't change the CLT
 
 ---
 
@@ -144,8 +114,8 @@ $$
 $$ 
 
 ---
-
-<img src="../assets/die.png" height=500>
+## Simulation of mean of $n$ dice
+<div class="rimage center"><img src="fig/unnamed-chunk-2.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" class="plot" /></div>
 
 ---
 
@@ -163,7 +133,8 @@ will be approximately normally distributed
 
 ---
 
-<img src="../assets/coin.png" height=500>
+<div class="rimage center"><img src="fig/unnamed-chunk-3.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" class="plot" /></div>
+
 
 ---
 
@@ -187,8 +158,22 @@ $$
 ## Confidence intervals
 
 - Therefore, according to the CLT, the probability that the random interval $$\bar X_n \pm z_{1-\alpha/2}\sigma / \sqrt{n}$$ contains $\mu$ is approximately 95%, where $z_{1-\alpha/2}$ is the $1-\alpha/2$ quantile of the standard normal distribution
-- This is called a 95% {\bf confidence interval} for $\mu$
-- **Slutsky's theorem**, allows us to replace the unknown $\sigma$ with $s$
+- This is called a 95% **confidence interval** for $\mu$
+- We can replace the unknown $\sigma$ with $s$
+
+---
+## Give a confidence interval for the average height of sons
+in Galton's data
+
+```r
+library(UsingR);data(father.son); x <- father.son$sheight
+(mean(x) + c(-1, 1) * qnorm(.975) * sd(x) / sqrt(length(x))) / 12
+```
+
+```
+[1] 5.710 5.738
+```
+
 
 ---
 
@@ -206,3 +191,73 @@ $$
     2  \sqrt{\frac{p(1 - p)}{n}} \leq 2 \sqrt{\frac{1}{4n}} = \frac{1}{\sqrt{n}} 
 $$
 - Therefore $\hat p \pm \frac{1}{\sqrt{n}}$ is a quick CI estimate for $p$
+
+---
+## Example
+* Your campaign advisor told you that in a random sample of 100 likely voters,
+  56 intent to vote for you. 
+  * Can you relax? Do you have this race in the bag?
+  * Without access to a computer or calculator, how precise is this estimate?
+* `1/sqrt(100)=.1` so a back of the envelope calculation gives an approximate 95% interval of `(0.46, 0.66)`
+  * Not enough for you to relax, better go do more campaigning!
+* Rough guidelines, 100 for 1 decimal place, 10,000 for 2, 1,000,000 for 3.
+
+```r
+round(1 / sqrt(10 ^ (1 : 6)), 3)
+```
+
+```
+[1] 0.316 0.100 0.032 0.010 0.003 0.001
+```
+
+---
+## Poisson interval
+* A nuclear pump failed 5 times out of 94.32 days, give a 95% confidence interval for the failure rate per day?
+* $X \sim Poisson(\lambda t)$.
+* Estimate $\hat \lambda = X/t$
+* $Var(\hat \lambda) = \lambda / t$ 
+$$
+\frac{\hat \lambda - \lambda}{\sqrt{\hat \lambda / t}} 
+= 
+\frac{X - t \lambda}{\sqrt{X}} 
+\rightarrow N(0,1)
+$$
+* This isn't the best interval.
+  * There are better asymptotic intervals.
+  * You can get an exact CI in this case.
+
+---
+### R code
+
+```r
+x <- 5; t <- 94.32; lambda <- x / t
+round(lambda + c(-1, 1) * qnorm(.975) * sqrt(lambda / t), 3)
+```
+
+```
+[1] 0.007 0.099
+```
+
+```r
+poisson.test(x, T = 94.32)$conf
+```
+
+```
+[1] 0.01721 0.12371
+attr(,"conf.level")
+[1] 0.95
+```
+
+
+---
+## In the regression class
+
+```r
+exp(confint(glm(x ~ 1 + offset(log(t)), family = poisson(link = log))))
+```
+
+```
+  2.5 %  97.5 % 
+0.01901 0.11393 
+```
+

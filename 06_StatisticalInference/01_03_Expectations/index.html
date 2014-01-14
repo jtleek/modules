@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Expectations</title>
+  <title>Expected values</title>
   <meta charset="utf-8">
-  <meta name="description" content="Expectations">
-  <meta name="author" content="Brian Caffo, PhD">
+  <meta name="description" content="Expected values">
+  <meta name="author" content="Brian Caffo, Jeff Leek, Roger Peng">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -19,6 +19,11 @@
   </script>
   
     <link rel="stylesheet" href = "../../assets/css/custom.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BACKUP.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BASE.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.LOCAL.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.orig">
+<link rel="stylesheet" href = "../../assets/css/custom.css.REMOTE.546.css">
 <link rel="stylesheet" href = "../../assets/css/ribbons.css">
 
 </head>
@@ -36,41 +41,20 @@
         <img src="../../assets/img/bloomberg_shield.png">
       </aside>
       <hgroup class="auto-fadein">
-        <h1>Expectations</h1>
-        <h2>Mathematical Biostatistics Boot Camp</h2>
-        <p>Brian Caffo, PhD<br/>Johns Hopkins Bloomberg School of Public Health</p>
+        <h1>Expected values</h1>
+        <h2>Statistical Inference</h2>
+        <p>Brian Caffo, Jeff Leek, Roger Peng<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
           </slide>
 
     <!-- SLIDES -->
       <slide class="" id="slide-1" style="background:;">
   <hgroup>
-    <h2>Table of contents</h2>
-  </hgroup>
-  <article>
-    <ol>
-<li>Expected values
-
-<ul>
-<li>Discrete random variables</li>
-<li>Continuous random variables</li>
-</ul></li>
-<li>Rules about expected values</li>
-<li>Variances</li>
-<li>Chebyshev’s inequality</li>
-</ol>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-2" style="background:;">
-  <hgroup>
     <h2>Expected values</h2>
   </hgroup>
   <article>
     <ul>
-<li>The {\bf expected value} or {\bf mean} of a random variable is the center of its distribution</li>
+<li>The <strong>expected value</strong> or <strong>mean</strong> of a random variable is the center of its distribution</li>
 <li>For discrete random variable \(X\) with PMF \(p(x)\), it is defined as follows
 \[
 E[X] = \sum_x xp(x).
@@ -83,18 +67,63 @@ where the sum is taken over the possible values of \(x\)</li>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-3" style="background:;">
+      <slide class="" id="slide-2" style="background:;">
   <hgroup>
     <h2>Example</h2>
   </hgroup>
   <article>
-    <p><img src="../assets/mean.png" height=400></p>
+    <h3>Find the center of mass of the bars</h3>
+
+<pre><code class="r">library(UsingR)
+data(galton)
+par(mfrow = c(1, 2))
+hist(galton$child, col = &quot;blue&quot;, breaks = 100)
+hist(galton$parent, col = &quot;blue&quot;, breaks = 100)
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-1.png" alt="plot of chunk unnamed-chunk-1"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Using manipulate</h2>
+  </hgroup>
+  <article>
+    <pre><code>library(manipulate)
+myHist &lt;- function(mu){
+  hist(galton$child,col=&quot;blue&quot;,breaks=100)
+  lines(c(mu, mu), c(0, 150),col=&quot;red&quot;,lwd=5)
+  mse &lt;- mean((galton$child - mu)^2)
+  text(63, 150, paste(&quot;mu = &quot;, mu))
+  text(63, 140, paste(&quot;Imbalance = &quot;, round(mse, 2)))
+}
+manipulate(myHist(mu), mu = slider(62, 74, step = 0.5))
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
       <slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>The center of mass is the empirical mean</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">hist(galton$child, col = &quot;blue&quot;, breaks = 100)
+meanChild &lt;- mean(galton$child)
+lines(rep(meanChild, 100), seq(0, 150, length = 100), col = &quot;red&quot;, lwd = 5)
+</code></pre>
+
+<p><img src="figure/lsm.png" alt="plot of chunk lsm"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-5" style="background:;">
   <hgroup>
     <h2>Example</h2>
   </hgroup>
@@ -108,11 +137,13 @@ E[X] = .5 \times 0 + .5 \times 1 = .5
 <li>Note, if thought about geometrically, this answer is obvious; if two equal weights are spaced at 0 and 1, the center of mass will be \(.5\)</li>
 </ul>
 
+<p><img src="figure/unnamed-chunk-2.png" alt="plot of chunk unnamed-chunk-2"> </p>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-5" style="background:;">
+      <slide class="" id="slide-6" style="background:;">
   <hgroup>
     <h2>Example</h2>
   </hgroup>
@@ -132,7 +163,7 @@ E[X] = 1 \times \frac{1}{6} + 2 \times \frac{1}{6} +
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-6" style="background:;">
+      <slide class="" id="slide-7" style="background:;">
   <hgroup>
     <h2>Continuous random variables</h2>
   </hgroup>
@@ -141,7 +172,7 @@ E[X] = 1 \times \frac{1}{6} + 2 \times \frac{1}{6} +
 <li>For a continuous random variable, \(X\), with density, \(f\), the expected
 value is defined as follows
 \[
-E[X] = \int_{-\infty}^\infty t f(t)dt
+E[X] = \mbox{the area under the function}~~~ t f(t)
 \]</li>
 <li>This definition borrows from the definition of center of mass for a continuous body</li>
 </ul>
@@ -150,7 +181,7 @@ E[X] = \int_{-\infty}^\infty t f(t)dt
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-7" style="background:;">
+      <slide class="" id="slide-8" style="background:;">
   <hgroup>
     <h2>Example</h2>
   </hgroup>
@@ -158,34 +189,8 @@ E[X] = \int_{-\infty}^\infty t f(t)dt
     <ul>
 <li>Consider a density where \(f(x) = 1\) for \(x\) between zero and one</li>
 <li>(Is this a valid density?)</li>
-<li>Suppose that \(X\) follows this density; what is its expected value? 
-\[
-E[X] = \int_{0}^{1} x dx = \left. \frac{x^2}{2} ~\right|_{0}^{1} = 1/2
-\]</li>
-</ul>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-8" style="background:;">
-  <hgroup>
-    <h2>Rules about expected values</h2>
-  </hgroup>
-  <article>
-    <ul>
-<li>The expected value is a linear operator </li>
-<li><p>If \(a\) and \(b\) are not random and \(X\) and \(Y\) are two random variables then</p>
-
-<ul>
-<li>\(E[aX + b] = a E[X] + b\)</li>
-<li>\(E[X + Y] = E[X] + E[Y]\)</li>
-</ul></li>
-<li><p><em>In general</em> if \(g\) is a function that is not linear,
-\[
-E[g(X)] \neq g(E[X])
-\]</p></li>
-<li><p>For example, in general, \(E[X^2] \neq E[X]^2\) </p></li>
+<li>Suppose that \(X\) follows this density; what is its expected value?<br>
+<img src="figure/unnamed-chunk-3.png" alt="plot of chunk unnamed-chunk-3"> </li>
 </ul>
 
   </article>
@@ -193,6 +198,25 @@ E[g(X)] \neq g(E[X])
 </slide>
 
       <slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>Rules about expected values</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>The expected value is a linear operator </li>
+<li>If \(a\) and \(b\) are not random and \(X\) and \(Y\) are two random variables then
+
+<ul>
+<li>\(E[aX + b] = a E[X] + b\)</li>
+<li>\(E[X + Y] = E[X] + E[Y]\)</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-10" style="background:;">
   <hgroup>
     <h2>Example</h2>
   </hgroup>
@@ -214,7 +238,7 @@ E[(X_1 + X_2) / 2] = \frac{1}{2}(E[X_1] + E[X_2])
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-10" style="background:;">
+      <slide class="" id="slide-11" style="background:;">
   <hgroup>
     <h2>Example</h2>
   </hgroup>
@@ -236,7 +260,7 @@ E\left[ \frac{1}{n}\sum_{i=1}^n X_i\right]
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-11" style="background:;">
+      <slide class="" id="slide-12" style="background:;">
   <hgroup>
     <h2>Remark</h2>
   </hgroup>
@@ -250,7 +274,7 @@ E\left[ \frac{1}{n}\sum_{i=1}^n X_i\right]
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-12" style="background:;">
+      <slide class="" id="slide-13" style="background:;">
   <hgroup>
     <h2>The variance</h2>
   </hgroup>
@@ -274,7 +298,7 @@ Var(X) = E[(X - \mu)^2]
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-13" style="background:;">
+      <slide class="" id="slide-14" style="background:;">
   <hgroup>
     
   </hgroup>
@@ -293,7 +317,7 @@ Var(X) = E[X^2] - E[X]^2
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-14" style="background:;">
+      <slide class="" id="slide-15" style="background:;">
   <hgroup>
     <h2>Example</h2>
   </hgroup>
@@ -312,7 +336,7 @@ Var(X) = E[X^2] - E[X]^2
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-15" style="background:;">
+      <slide class="" id="slide-16" style="background:;">
   <hgroup>
     <h2>Example</h2>
   </hgroup>
@@ -325,22 +349,6 @@ Var(X) = E[X^2] - E[X]^2
 <li>\(E[X^2] = E[X] = p\) </li>
 </ul></li>
 <li><p>\(Var(X) = E[X^2] - E[X]^2 = p - p^2 = p(1 - p)\)</p></li>
-</ul>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-16" style="background:;">
-  <hgroup>
-    <h2>Example</h2>
-  </hgroup>
-  <article>
-    <ul>
-<li>Suppose that a random variable is such that \(0 \leq X \leq 1\) and \(E[X] = p\)</li>
-<li>Note \(X^2 \leq X\) so that \(E[X^2] \leq E[X] = p\)</li>
-<li>\(Var(X) = E[X^2] - E[X]^2 \leq E[X] - E[X]^2 = p(1-p)\)</li>
-<li>Therefore the Bernoulli variance is the largest possible for random variables bounded between \(0\) and \(1\)</li>
 </ul>
 
   </article>
@@ -375,24 +383,6 @@ P(|X - \mu| \geq k\sigma) \leq \frac{1}{k^2}
 
       <slide class="" id="slide-18" style="background:;">
   <hgroup>
-    <h2>Proof of Chebyshev&#39;s inequality</h2>
-  </hgroup>
-  <article>
-    <p>\[
-\begin{eqnarray*}
-    P(|X - \mu| > k\sigma) & = & \int_{\{x: |x-\mu| > k\sigma\}} f(x) dx \\
-& \leq & \int_{\{x:|x -\mu| > k\sigma\}}\frac{(x - \mu)^2}{k^2\sigma^2} f(x) dx \\
-& \leq & \int_{-\infty}^{\infty} \frac{(x - \mu)^2}{k^2\sigma^2} f(x) dx \\
-& = & \frac{1}{k^2}
-  \end{eqnarray*}
-\]</p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-19" style="background:;">
-  <hgroup>
     <h2>Example</h2>
   </hgroup>
   <article>
@@ -409,15 +399,15 @@ P(|X - \mu| \geq k\sigma) \leq \frac{1}{k^2}
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-20" style="background:;">
+      <slide class="" id="slide-19" style="background:;">
   <hgroup>
     <h2>Example</h2>
   </hgroup>
   <article>
     <ul>
-<li>A popular buzz phrase in industrial quality control is Motorola&#39;s``Six Sigma&#39;&#39; whereby businesses are suggested to control extreme events or rare defective parts</li>
-<li>Chebyshev&#39;s inequality states that the probability of a ``Six Sigma&#39;&#39; event is less than \(1/6^2 \approx 3\%\)</li>
-<li>If a bell curve is assumed, the probability of a ``six sigma&#39;&#39; event is on the order of \(10^{-9}\) (one ten millionth of a percent)</li>
+<li>A former buzz phrase in industrial quality control is Motorola&#39;s &quot;Six Sigma&quot; whereby businesses are suggested to control extreme events or rare defective parts</li>
+<li>Chebyshev&#39;s inequality states that the probability of a &quot;Six Sigma&quot; event is less than \(1/6^2 \approx 3\%\)</li>
+<li>If a bell curve is assumed, the probability of a &quot;six sigma&quot; event is on the order of \(10^{-9}\) (one ten millionth of a percent)</li>
 </ul>
 
   </article>
