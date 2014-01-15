@@ -8,8 +8,8 @@ framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : tomorrow      # 
 url:
-  lib: ../../libraries
-  assets: ../../assets
+#    lib: ../../libraries
+    assets: ../../assets
 widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 ---
@@ -46,7 +46,7 @@ mode        : selfcontained # {standalone, draft}
   - (link for a real prediction score)[http://www.ncbi.nlm.nih.gov/pubmed/12610029]
 
 ```r
-diabetesRisk <- function(age, bmi, ahtm, glucose) {
+diabetesRisk <- function(glucose) {
     runif(1)
 }
 ```
@@ -55,20 +55,55 @@ diabetesRisk <- function(age, bmi, ahtm, glucose) {
 
 ---
 ## Getting started
+- Make sure you have the latest release of R installed
+- If on windows, make sure that you have Rtools installed
+- `install.packages("shiny")`
+- `libray(shiny)`
 - Great tutorial at 
-(http://rstudio.github.io/shiny/tutorial/)[http://rstudio.github.io/shiny/tutorial/]
+[http://rstudio.github.io/shiny/tutorial/](http://rstudio.github.io/shiny/tutorial/)
 - Basically, this lecture is walking through that tutorial offering some of our insights
+- Note, some of the proposed interactive plotting uses of Shiny could be handled by the very simple `manipulate` function [rstudio manipulate](http://www.rstudio.com/ide/docs/advanced/manipulate)
+- Also, `rCharts` is will be covered in a different lecture.
 
+---
+## A Shiny project
+- A shiny project is a directory containing at least two parts
+  - One named ui.R (for user interface) controls how it looks.
+  - One named server.R that controls what it does.
+
+---
+## ui.R
 ```
-install.packages("shiny")
-```
-
-
-```r
 library(shiny)
+shinyUI(pageWithSidebar(
+  headerPanel("Data science FTW!"),
+  sidebarPanel(
+    h3('Sidebar text')
+  ),
+  mainPanel(
+      h3('Main Panel text')
+  )
+))
 ```
 
+---
+## server.r
+```
+library(shiny)
+shinyServer(
+  function(input, output) {
+  }
+)
+```
 
+---
+## To run it
+- In R, change to the directories with these files and type `runApp()`
+- or put the path to the directory as an argument
+- It should open an browser window with the app running
+
+---
+![simplestApp](fig/simplestApp.png "First Shiny app")
 
 
 

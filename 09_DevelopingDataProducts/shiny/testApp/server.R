@@ -1,14 +1,10 @@
 library(shiny)
 
-#diabetesRisk <- function(glucose) runif(1)
+diabetesRisk <- function(glucose) glucose / 200
 
-shinyServer(function(input, output) {
-  
-})
-
-#shinyServer(function(input, output) {
-#  output$prediction <- renderPrint({    
-    #cat(diabetesRisk(input$glucose))
-#    cat(1)
-#  })
-#})
+shinyServer(
+  function(input, output) {
+    output$inputValue <- renderPrint({input$glucose})
+    output$prediction <- renderPrint({diabetesRisk(input$glucose)})
+  }
+)
