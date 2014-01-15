@@ -17,7 +17,7 @@ mode        : selfcontained # {standalone, draft}
 ## What is Shiny?
 
 - Shiny is a platform for creating interactive R programs embeded into a web page.
-- Suppose that you create a prediction algorith, with shiny you can *very easily* create web input form that calls R and thus your prediction algorithm and displays the results.
+- Suppose that you create a prediction algorithm, with shiny you can *very easily* create web input form that calls R and thus your prediction algorithm and displays the results.
 - Using Shiny, the time to create simple, yet powerful, web-based interactive data products in R is minimized.
   - However, it lacks the flexibility of full featured (and more complex) solutions.
 - Shiny is made by the fine folks at R Studio.
@@ -35,3 +35,28 @@ mode        : selfcontained # {standalone, draft}
 ## What else is out there?
 - Full solutions requiring real knowledge of web client/server programming
 - OpenCPU, a really neat project providing an API to call 
+
+---
+## Installation
+- Just run `install.packages("shiny")` in your R console
+- Then use `library("shiny")` to load your new Shiny package
+
+---
+## Shiny App Structure
+- Shiny apps are structured as directories with two R files
+- `ui.R` determines the look and user interface of your Shiny app
+- `server.R` is where you'll write the R code to produce 
+
+---
+## ui.R
+
+---
+## server.R
+
+---
+## UI Elements
+
+---
+## More Shiny Resources
+- [RStudio's Shiny Homepage](http://www.rstudio.com/shiny/)
+- [RStudio's Shiny Tutorial](http://rstudio.github.io/shiny/tutorial/)
