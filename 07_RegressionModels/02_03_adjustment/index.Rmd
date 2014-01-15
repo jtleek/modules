@@ -229,7 +229,7 @@ abline(lm(I(resid(lm(x1 ~ x2))) ~ I(resid(lm(y ~ x2)))), lwd = 2)
 * Modeling multivariate relationships is difficult.
 * Play around with simulations to see how the
   inclusion or exclustion of another variable can
-  change analyse.
+  change analyses.
 * The results of these analyses deal with the
 impact of variables on associations.
   * Ascertaining mechanisms or cause are difficult subjects 
