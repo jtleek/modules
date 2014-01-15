@@ -1,15 +1,15 @@
 ---
 title       : Multivariable regression
 subtitle    : 
-author      : Brian Caffo, PhD
+author      : Brian Caffo, Jeff Leek, Roger Peng
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : tomorrow      # 
-url:
-  lib: ../../libraries
-  assets: ../../assets
+# url:
+#  lib: ../../libraries
+#  assets: ../../assets
 widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 ---
@@ -150,3 +150,4 @@ plot3d(x1, x2, y)
 impact of variables on associations.
   * Ascertaining mechanisms or cause are difficult subjects 
     to be added on top of difficulty in understanding multivariate associations.
+
