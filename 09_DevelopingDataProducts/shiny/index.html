@@ -70,19 +70,19 @@
 
       <slide class="" id="slide-2" style="background:;">
   <hgroup>
-    <h2>Some prerequisites</h2>
+    <h2>Some mild prerequisites</h2>
   </hgroup>
   <article>
     <ul>
 <li>Shiny doesn&#39;t really require it, but as with all web programming, a little knowledge of html, css and js is very helpful
 
 <ul>
-<li>html gives the structure and sectioning as well as markup instructions</li>
+<li>html gives a web page structure and sectioning as well as markup instructions</li>
 <li>css gives the style</li>
 <li>js for interactivity</li>
 </ul></li>
 <li>There are too many tutorials online to count for getting basic proficiency in these topics to count. </li>
-<li>Shiny uses twitter bootstrap style, which (to me) seems to look nice and renders well on mobile platforms</li>
+<li>Shiny uses <a href="http://getbootstrap.com/">bootstrap</a> (no relation to the statistics bootstrap) style, which (to me) seems to look nice and renders well on mobile platforms</li>
 </ul>
 
   </article>
@@ -96,8 +96,58 @@
   <article>
     <ul>
 <li>Full solutions requiring real knowledge of web client/server programming</li>
-<li>OpenCPU, a really neat project providing an API to call </li>
+<li><a href="https://public.opencpu.org/">OpenCPU</a> by Jerome Ooms, a really neat project providing an API to call </li>
 </ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Context</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>You created a novel prediction algorithm to predict risk for developing
+diabetes.
+
+<ul>
+<li>You&#39;re hoping patients and caregivers will be able to enter their data and, if needed, take preventative measures.</li>
+</ul></li>
+<li>You want to create a web site so that users can input the relevant predictors and obtain their prediction.</li>
+<li>Your prediction algorithm (ok, so you&#39;re not going to be saving the world with this one)
+
+<ul>
+<li>(link for a real prediction score)[<a href="http://www.ncbi.nlm.nih.gov/pubmed/12610029">http://www.ncbi.nlm.nih.gov/pubmed/12610029</a>]</li>
+</ul></li>
+</ul>
+
+<pre><code class="r">diabetesRisk &lt;- function(age, bmi, ahtm, glucose) {
+    runif(1)
+}
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Getting started</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Great tutorial at 
+(<a href="http://rstudio.github.io/shiny/tutorial/)%5Bhttp://rstudio.github.io/shiny/tutorial/%5D">http://rstudio.github.io/shiny/tutorial/)[http://rstudio.github.io/shiny/tutorial/]</a></li>
+<li>Basically, this lecture is walking through that tutorial offering some of our insights</li>
+</ul>
+
+<pre><code>install.packages(&quot;shiny&quot;)
+</code></pre>
+
+<pre><code class="r">library(shiny)
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->

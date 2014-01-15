@@ -23,15 +23,81 @@ mode        : selfcontained # {standalone, draft}
 - Shiny is made by the fine folks at R Studio.
 
 ---
-## Some prerequisites 
+## Some mild prerequisites 
 - Shiny doesn't really require it, but as with all web programming, a little knowledge of html, css and js is very helpful
-  - html gives the structure and sectioning as well as markup instructions
+  - html gives a web page structure and sectioning as well as markup instructions
   - css gives the style
   - js for interactivity
 - There are too many tutorials online to count for getting basic proficiency in these topics to count. 
-- Shiny uses twitter bootstrap style, which (to me) seems to look nice and renders well on mobile platforms
+- Shiny uses [bootstrap](http://getbootstrap.com/) (no relation to the statistics bootstrap) style, which (to me) seems to look nice and renders well on mobile platforms
 
 ---
 ## What else is out there?
 - Full solutions requiring real knowledge of web client/server programming
-- OpenCPU, a really neat project providing an API to call 
+- [OpenCPU](https://public.opencpu.org/) by Jerome Ooms, a really neat project providing an API to call 
+
+---
+## Context
+- You created a novel prediction algorithm to predict risk for developing
+  diabetes.
+    - You're hoping patients and caregivers will be able to enter their data and, if needed, take preventative measures.
+- You want to create a web site so that users can input the relevant predictors and obtain their prediction.
+- Your prediction algorithm (ok, so you're not going to be saving the world with this one)
+  - (link for a real prediction score)[http://www.ncbi.nlm.nih.gov/pubmed/12610029]
+```{r}
+diabetesRisk <- function(glucose){
+  runif(1)
+}
+```
+
+
+---
+## Getting started
+- Great tutorial at 
+(http://rstudio.github.io/shiny/tutorial/)[http://rstudio.github.io/shiny/tutorial/]
+- Basically, this lecture is walking through that tutorial offering some of our insights
+- Note, some of the proposed interactive plotting uses of Shiny could be handled by the very simple `manipulate` function (rstudio manipulate)[http://www.rstudio.com/ide/docs/advanced/manipulate]
+- Also, `rCharts` is will be covered in a different lecture.
+
+```
+install.packages("shiny")
+```
+
+```{r}
+library(shiny)
+```
+
+---
+## A Shiny project
+- A shiny project contains two parts
+  - One named ui.R (for user interface) controls how it looks.
+  - One named server.R that controls what it does.
+
+---
+## 
+```
+library(shiny)
+shinyUI(pageWithSidebar(
+  headerPanel("Hello Shiny!"),
+  sidebarPanel(
+    sliderInput("obs", 
+                "Number of observations:", 
+                min = 1,
+                max = 1000, 
+                value = 500)
+  ),
+  mainPanel(
+    plotOutput("distPlot")
+  )
+))
+```
+
+---
+##
+
+
+
+
+
+
+
