@@ -40,64 +40,30 @@ slides and a link to an HTML5 version of the slides.
 
 ---
 
-## Weekly quizzes
-
-### Quiz 1
-
-Assigned: Class open (Day 1)
-
-Due: Day 7, 12:00 UTC
+## Assessments
 
 
-### Quiz 2
+### Quizzes
 
-Assigned: Day 8, 12:01 UTC
+There will be one quiz every week. The quizzes will all open on the
+first day of the course but they will be due weekly. So the Week 1
+Quiz will be due at the end of the first week and the Week 2 Quiz will
+be due at the end of the second week, etc. 
 
-Due: Day 14, 12:00 UTC
-
-
-### Quiz 3
-
-Assigned: Day 15, 12:01 UTC
-
-Due: Day 21, 12:00 UTC
+Please refer to the individual weekly Quiz deadlines to see the exact
+date and time that each Quiz is due.
 
 
-### Quiz 4
+### Programming Assignments
 
-Assigned: Day 22, 12:01 UTC
+There will be three programming assignments. The first programming
+assignment is due at the end of the second week. Subsequent
+programming assignments are due weekly after that.
 
-Due: Day 28, 12:00 UTC
-
-
----
-
-## Programming Assignments
-
-### Programming Assignment 1
-
-Assigned: Day 8, 12:01 UTC
-
-Due: Day 14, 12:00 UTC
-
-### Programming Assignment 2
-
-Assigned: Day 15, 12:01 UTC
-
-Due: Day 21, 12:00 UTC
-
-### Peer Review for Programming Assignment 2
-
-Assigned: Day 22, 12:01 UTC
-
-Due: Day 28, 12:00 UTC
-
-### Programming Assignment 3
-
-Assigned: Day 22, 12:01 UTC
-
-Due: Day 28, 12:00 UTC
-
+Programming Assignments 1 and 3 will be graded via unit tests using a
+submission script that will compare the output of your functions to
+the correct output. Note that Programming Assignment 2 will be graded
+via a peer assessment.
 
 ---
 
