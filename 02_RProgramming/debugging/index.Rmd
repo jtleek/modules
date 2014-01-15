@@ -1,7 +1,7 @@
 ---
 title       : Debugging
-subtitle    : Computing for Data Analysis
-author      : Roger Peng, Associate Professor
+subtitle    : 
+author      : Roger D. Peng, Associate Professor of Biostatistics
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -28,11 +28,8 @@ Indications that something’s not right
 
 Warning
 
-```r
-> log(-1)
-[1] NaN
-Warning message:
-In log(-1) : NaNs produced
+```{r}
+log(-1)
 ```
 
 ---
@@ -52,7 +49,7 @@ printmessage <- function(x) {
 ---
 
 ## Something’s Wrong
-```r
+```{r}
 printmessage <- function(x) {
           if(x > 0)
                 print("x is greater than zero")
@@ -60,10 +57,8 @@ printmessage <- function(x) {
                 print("x is less than or equal to zero")
           invisible(x)
 }
-> printmessage(1)
-[1] "x is greater than zero"
-> printmessage(NA)
-Error in if (x > 0) { : missing value where TRUE/FALSE needed
+printmessage(1)
+printmessage(NA)
 ```
 
 ---
@@ -85,7 +80,7 @@ printmessage2 <- function(x) {
 
 ## Something’s Wrong!
 
-```r
+```{r}
 printmessage2 <- function(x) {
         if(is.na(x))
                 print("x is a missing value!")
@@ -95,11 +90,8 @@ printmessage2 <- function(x) {
                 print("x is less than or equal to zero")
         invisible(x)
 }
-> x <- log(-1)
-Warning message:
-In log(-1) : NaNs produced
-> printmessage2(x)
-[1] "x is a missing value!"
+x <- log(-1)
+printmessage2(x)
 ```
 
 ---
@@ -132,10 +124,10 @@ These are interactive tools specifically designed to allow you to pick through a
 ## traceback
 ```r
 > mean(x)
-Error in mean(x) : object ’x’ not found
+Error in mean(x) : object 'x' not found
 > traceback()
 1: mean(x)
->
+> 
 ```
 
 ---
@@ -216,7 +208,8 @@ Selection:
 ## Debugging
 
 Summary
-- There are three main indications of a problem/condition: message, warning, error; only an error is fatal
+- There are three main indications of a problem/condition: `message`, `warning`, `error`
+  - only an `error` is fatal
 - When analyzing a function with a problem, make sure you can reproduce the problem, clearly state your expectations and how the output differs from your expectation
 - Interactive debugging tools `traceback`, `debug`, `browser`, `trace`, and `recover` can be used to find problematic code in functions
 - Debugging tools are not a substitute for thinking!

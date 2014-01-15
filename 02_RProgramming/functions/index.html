@@ -4,7 +4,7 @@
   <title>Functions</title>
   <meta charset="utf-8">
   <meta name="description" content="Functions">
-  <meta name="author" content="Roger Peng, Associate Professor">
+  <meta name="author" content="Roger D. Peng, Associate Professor of Biostatistics">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -42,8 +42,8 @@
       </aside>
       <hgroup class="auto-fadein">
         <h1>Functions</h1>
-        <h2>Computing for Data Analysis</h2>
-        <p>Roger Peng, Associate Professor<br/>Johns Hopkins Bloomberg School of Public Health</p>
+        <h2></h2>
+        <p>Roger D. Peng, Associate Professor of Biostatistics<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
           </slide>
 
@@ -64,8 +64,8 @@
 
 <ul>
 <li>Functions can be passed as arguments to other functions</li>
-<li>Functions can be nested, so that you can define a function inside of another function
-The return value of a function is the last expression in the function body to be evaluated.</li>
+<li>Functions can be nested, so that you can define a function inside of another function</li>
+<li>The return value of a function is the last expression in the function body to be evaluated.</li>
 </ul>
 
   </article>
@@ -95,7 +95,8 @@ The return value of a function is the last expression in the function body to be
     <h2>Argument Matching</h2>
   </hgroup>
   <article>
-    <p>R functions arguments can be matched positionally or by name. So the following calls to sd are all equivalent</p>
+    <p>R functions arguments can be matched positionally or by name. So the
+following calls to <code>sd</code> are all equivalent</p>
 
 <pre><code class="r">&gt; mydata &lt;- rnorm(100)
 &gt; sd(mydata)
@@ -105,7 +106,8 @@ The return value of a function is the last expression in the function body to be
 &gt; sd(na.rm = FALSE, mydata)
 </code></pre>
 
-<p>Even though it’s legal, I don’t recommend messing around with the order of the arguments too much, since it can lead to some confusion.</p>
+<p>Even though it’s legal, I don’t recommend messing around with the
+order of the arguments too much, since it can lead to some confusion.</p>
 
   </article>
   <!-- Presenter Notes -->
@@ -190,9 +192,12 @@ lm(y ~ x, mydata, 1:100, model = FALSE)
     <p>Arguments to functions are evaluated <em>lazily</em>, so they are evaluated only as needed.</p>
 
 <pre><code class="r">f &lt;- function(a, b) {
-        a^2
-} 
+    a^2
+}
 f(2)
+</code></pre>
+
+<pre><code>## [1] 4
 </code></pre>
 
 <p>This function never actually uses the argument <code>b</code>, so calling <code>f(2)</code> will not produce an error because the 2 gets positionally matched to <code>a</code>.</p>
@@ -207,13 +212,16 @@ f(2)
   </hgroup>
   <article>
     <pre><code class="r">f &lt;- function(a, b) {
-        print(a)
-        print(b)
+    print(a)
+    print(b)
 }
-&gt; f(45)
-[1] 45
-Error in print(b) : argument &quot;b&quot; is missing, with no default
-&gt;
+f(45)
+</code></pre>
+
+<pre><code>## [1] 45
+</code></pre>
+
+<pre><code>## Error: argument &quot;b&quot; is missing, with no default
 </code></pre>
 
 <p>Notice that “45” got printed first before the error was triggered. This is because <code>b</code> did not have to be evaluated until after <code>print(a)</code>. Once the function tried to evaluate <code>print(b)</code> it had to throw an error.</p>

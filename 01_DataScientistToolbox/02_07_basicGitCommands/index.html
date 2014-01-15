@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Basic Git Commands</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Basic Git Commands">
+  <meta name="author" content="Jeffrey Leek, Assistant Professor of Biostatistics">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="../../libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="../../libraries/frameworks/io2012/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="../../libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="../../libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  <script data-main="../../libraries/frameworks/io2012/js/slides" 
+    src="../../libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+    <link rel="stylesheet" href = "../../assets/css/custom.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BACKUP.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BASE.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.LOCAL.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.orig">
+<link rel="stylesheet" href = "../../assets/css/custom.css.REMOTE.546.css">
+<link rel="stylesheet" href = "../../assets/css/ribbons.css">
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+    <!-- END LOGO SLIDE -->
+    
+
+    <!-- TITLE SLIDE -->
+    <!-- Should I move this to a Local Layout File? -->
+    <slide class="title-slide segue nobackground">
+      <aside class="gdbar">
+        <img src="../../assets/img/bloomberg_shield.png">
+      </aside>
+      <hgroup class="auto-fadein">
+        <h1>Basic Git Commands</h1>
+        <h2></h2>
+        <p>Jeffrey Leek, Assistant Professor of Biostatistics<br/>Johns Hopkins Bloomberg School of Public Health</p>
+      </hgroup>
+          </slide>
+
+    <!-- SLIDES -->
+      <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Pushing and pulling</h2>
+  </hgroup>
+  <article>
+    <p><img class=center src=../../assets/img/01_DataScientistToolbox/gghuboverview.png height='500'/></p>
+
+<p><a href="http://gitready.com/beginner/2009/01/21/pushing-and-pulling.html">http://gitready.com/beginner/2009/01/21/pushing-and-pulling.html</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Adding</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Suppose you add new files to a local repository under version control</li>
+<li>You need to let Git know that they need to be tracked 
+
+<ul>
+<li><code>git add .</code> adds all new files</li>
+<li><code>git add -u</code> updates tracking for files that changed names or were deleted</li>
+<li><code>git add -A</code> does both of the previous </li>
+</ul></li>
+<li>You should do this before committing</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Committing</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>You have changes you want to commit to be saved as an intermediate version</li>
+<li>You type the command
+
+<ul>
+<li><code>git commit -m &quot;message&quot;</code> where message is a useful description of what you did</li>
+</ul></li>
+<li>This only updates your local repo, not the remote repo on Github</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Pushing</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>You have saved local commits you would like to update on the remote (Github)</li>
+<li>You type the command
+
+<ul>
+<li><code>git push</code></li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Branches</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Sometimes you are working on a project with a version being used by many people</li>
+<li>You may not want to edit that version</li>
+<li>So you can create a branch with the command
+
+<ul>
+<li><code>git checkout -b branchname</code></li>
+</ul></li>
+<li>To see what branch you are on type:
+
+<ul>
+<li><code>git branch</code></li>
+</ul></li>
+<li>To switch back to the master branch type
+
+<ul>
+<li><code>git checkout master</code></li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Pull requests</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>If you fork someone&#39;s repo or have multiple branches you will both be working seperately</li>
+<li>Sometimes you want to merge in your changes into the other branch/repo</li>
+<li>To do so you need to send a pull request. </li>
+<li>This is a feature of Github.</li>
+</ul>
+
+<p><img class=center src=../../assets/img/01_DataScientistToolbox/pullrequest.png height='350'/></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>Time to be a hacker!</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li>Git documentation <a href="http://git-scm.com/doc">http://git-scm.com/doc</a></li>
+<li>Github help <a href="https://help.github.com/">https://help.github.com/</a></li>
+<li>Google/Stack Overflow are great for Github</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+
+  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+<!-- Grab CDN jQuery, fall back to local if offline -->
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+<script>window.jQuery || document.write('<script src="../../libraries/widgets/quiz/js/jquery-1.7.min.js"><\/script>')</script>
+<!-- Load Javascripts for Widgets -->
+<!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script> -->
+<script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="../../libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+<script src="../../libraries/highlighters/highlight.js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<!-- DONE LOADING HIGHLIGHTER JS FILES -->
+</html>

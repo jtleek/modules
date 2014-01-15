@@ -1,7 +1,7 @@
 ---
 title       : Introduction to the R Language
 subtitle    : Loop Functions
-author      : Roger Peng, Associate Professor
+author      : Roger D. Peng, Associate Professor of Biostatistics
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -34,18 +34,28 @@ An auxiliary function `split` is also useful, particularly in conjunction with `
 
 ## lapply
 
-`lapply` takes three arguments: a list`X`, a function (or the name of a function) `FUN`, and other arguments via its ... argument. If `X` is not a list, it will be coerced to a list using `as.list`.
+`lapply` takes three arguments: (1) a list `X`; (2) a function (or the
+name of a function) `FUN`; (3) other arguments via its
+... argument. If `X` is not a list, it will be coerced to a list using
+`as.list`.
+
 
 ```r
-> lapply
-function (X, FUN, ...)
-{
-    FUN <- match.fun(FUN)
-    if (!is.vector(X) || is.object(X))
-        X <- as.list(X)
-    .Internal(lapply(X, FUN))
-}
+lapply
 ```
+
+```
+## function (X, FUN, ...) 
+## {
+##     FUN <- match.fun(FUN)
+##     if (!is.vector(X) || is.object(X)) 
+##         X <- as.list(X)
+##     .Internal(lapply(X, FUN))
+## }
+## <bytecode: 0x7ff7a1951c00>
+## <environment: namespace:base>
+```
+
 
 The actual looping is done internally in C code.
 
@@ -55,35 +65,45 @@ The actual looping is done internally in C code.
 
 `lapply` always returns a list, regardless of the class of the input.
 
-```r
-> x <- list(a = 1:5, b = rnorm(10))
-> lapply(x, mean)
-$a
-[1] 3
 
-$b
-[1] 0.0296824
+```r
+x <- list(a = 1:5, b = rnorm(10))
+lapply(x, mean)
 ```
+
+```
+## $a
+## [1] 3
+## 
+## $b
+## [1] 0.4671
+```
+
 
 ---
 
 ## lapply
 
+
 ```r
-> x <- list(a = 1:4, b = rnorm(10), c = rnorm(20, 1), d = rnorm(100, 5))
-> lapply(x, mean)
-$a
-[1] 2.5
-
-$b
-[1] 0.06082667
-
-$c
-[1] 1.467083
-
-$d
-[1] 5.074749
+x <- list(a = 1:4, b = rnorm(10), c = rnorm(20, 1), d = rnorm(100, 5))
+lapply(x, mean)
 ```
+
+```
+## $a
+## [1] 2.5
+## 
+## $b
+## [1] 0.5261
+## 
+## $c
+## [1] 1.421
+## 
+## $d
+## [1] 4.927
+```
+
 
 ---
 
