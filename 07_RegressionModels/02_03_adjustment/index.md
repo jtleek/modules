@@ -1,6 +1,6 @@
 ---
 title       : Multivariable regression
-subtitle    : 
+subtitle    : Regression
 author      : Brian Caffo, Jeff Leek, Roger Peng
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
@@ -145,7 +145,7 @@ plot3d(x1, x2, y)
 * Modeling multivariate relationships is difficult.
 * Play around with simulations to see how the
   inclusion or exclustion of another variable can
-  change analyse.
+  change analyses.
 * The results of these analyses deal with the
 impact of variables on associations.
   * Ascertaining mechanisms or cause are difficult subjects 
