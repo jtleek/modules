@@ -8,7 +8,7 @@ framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : tomorrow      # 
 url:
-#    lib: ../../libraries
+    lib: ../../librariesNew
     assets: ../../assets
 widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
@@ -33,8 +33,9 @@ mode        : selfcontained # {standalone, draft}
 
 ---
 ## What else is out there?
-- Full solutions requiring real knowledge of web client/server programming
-- [OpenCPU](https://public.opencpu.org/) by Jerome Ooms, a really neat project providing an API to call 
+- Creating any solution requiring fairly deep knowledge of web client/server programming
+- [OpenCPU](https://public.opencpu.org/) by Jerome Ooms, is a really neat project providing an API for calling R from web documents
+  - And he even hosts an OpenCPU server, but you can create your own
 
 ---
 ## Context
