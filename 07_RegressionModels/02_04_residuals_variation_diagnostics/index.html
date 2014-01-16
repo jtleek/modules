@@ -4,7 +4,7 @@
   <title>Residuals, diagnostics, variation</title>
   <meta charset="utf-8">
   <meta name="description" content="Residuals, diagnostics, variation">
-  <meta name="author" content="Brian Caffo, PhD">
+  <meta name="author" content="Brian Caffo, Jeff Leek, Roger Peng">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -42,8 +42,8 @@
       </aside>
       <hgroup class="auto-fadein">
         <h1>Residuals, diagnostics, variation</h1>
-        <h2></h2>
-        <p>Brian Caffo, PhD<br/>Johns Hopkins Bloomberg School of Public Health</p>
+        <h2>Regression</h2>
+        <p>Brian Caffo, Jeff Leek, Roger Peng<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
           </slide>
 
@@ -54,11 +54,11 @@
   </hgroup>
   <article>
     <ul>
-<li>Specified as \(Y_i =  \sum_{k=1}^p X_{ik} \beta_j + \epsilon_{i}\)</li>
-<li>We&#39;ll also assume here that \(\epsilon_i \stackrel{iid}{\sim} N(0, \sigma^2)\)</li>
+<li>Specified as <div>$Y<em>i =  \sum</em>{k=1}<sup>p</sup> X<em>{ik} \beta_j + \epsilon</em>{i}$</div></li>
+<li>We&#39;ll also assume here that $\epsilon_i \stackrel{iid}{\sim} N(0, \sigma<sup>2)$</sup></li>
 <li>Define the residuals as
-\(e_i = Y_i -  \hat Y_i =  Y_i - \sum_{k=1}^p X_{ik} \hat \beta_j\)</li>
-<li>Our estimate of residual variation is \(\hat \sigma^2 = \frac{\sum_{i=1}^n e_i^2}{n-p}\), the \(n-p\) so that \(E[\hat \sigma^2] = \sigma^2\)</li>
+$e<em>i = Y_i -  \hat Y_i =  Y_i - \sum</em>{k=1}<sup>p</sup> X_{ik} \hat \beta_j$</li>
+<li>Our estimate of residual variation is $\hat \sigma<sup>2</sup> = \frac{\sum_{i=1}<sup>n</sup> e_i<sup>2}{n-p}$,</sup> the $n-p$ so that $E[\hat \sigma<sup>2]</sup> = \sigma<sup>2$</sup></li>
 </ul>
 
   </article>
@@ -127,11 +127,11 @@ fit &lt;- lm(Fertility ~ . , data = swiss); plot(fit)
 <li><code>rstandard</code> - standardized residuals, residuals divided by their standard deviations)</li>
 <li><code>rstudent</code> - standardized residuals, residuals divided by their standard deviations, where the ith data point was deleted in the calculation of the standard deviation for the residual to follow a t distribution</li>
 <li><code>hatvalues</code> - measures of leverage</li>
-<li><code>dffits</code> - change in the predicted response when the \(i^{th}\) point is deleted in fitting the model.</li>
-<li><code>dfbetas</code> - change in individual coefficients when the \(i^{th}\) point is deleted in fitting the model.</li>
-<li><code>cooks.distance</code> - overall change in teh coefficients when the \(i^{th}\) point is deleted.</li>
+<li><code>dffits</code> - change in the predicted response when the $i<sup>{th}$</sup> point is deleted in fitting the model.</li>
+<li><code>dfbetas</code> - change in individual coefficients when the $i<sup>{th}$</sup> point is deleted in fitting the model.</li>
+<li><code>cooks.distance</code> - overall change in teh coefficients when the $i<sup>{th}$</sup> point is deleted.</li>
 <li><code>resid</code> - returns the ordinary residuals</li>
-<li><code>resid(fit) / (1 - hatvalues(fit))</code> where <code>fit</code> is the linear model fit returns the PRESS residuals, i.e. the leave one out cross validation residuals - the difference in the response and the predicted response at data point \(i\), where it was not included in the model fitting.</li>
+<li><code>resid(fit) / (1 - hatvalues(fit))</code> where <code>fit</code> is the linear model fit returns the PRESS residuals, i.e. the leave one out cross validation residuals - the difference in the response and the predicted response at data point $i$, where it was not included in the model fitting.</li>
 </ul></li>
 </ul>
 
@@ -203,14 +203,14 @@ round(dfbetas(fit)[1 : 10, 2], 3)
 </code></pre>
 
 <pre><code>     1      2      3      4      5      6      7      8      9     10 
- 8.309 -0.036 -0.124  0.004 -0.018  0.007 -0.048 -0.015 -0.049 -0.012 
+ 6.325 -0.019  0.038 -0.009  0.011 -0.002  0.019  0.013 -0.015 -0.102 
 </code></pre>
 
 <pre><code class="r">round(hatvalues(fit)[1 : 10], 3)
 </code></pre>
 
 <pre><code>    1     2     3     4     5     6     7     8     9    10 
-0.444 0.015 0.025 0.010 0.011 0.010 0.017 0.021 0.013 0.011 
+0.547 0.011 0.013 0.011 0.011 0.012 0.010 0.011 0.010 0.018 
 </code></pre>
 
   </article>
@@ -224,20 +224,34 @@ round(dfbetas(fit)[1 : 10, 2], 3)
   <article>
     <div class="rimage center"><img src="fig/unnamed-chunk-5.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" class="plot" /></div>
 
-<pre><code>  dfb.1_  dfb.x  dffit cov.r cook.d   hat
-1  0.003  0.013  0.014 1.298  0.000 0.214
-2  0.066 -0.091  0.115 1.038  0.007 0.026
-3 -0.030 -0.013 -0.032 1.031  0.001 0.012
-4  0.122  0.010  0.123 1.000  0.007 0.010
-5 -0.071 -0.050 -0.085 1.026  0.004 0.015
-6 -0.121 -0.056 -0.131 1.004  0.009 0.012
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Looking at some of the diagnostics</h2>
+  </hgroup>
+  <article>
+    <pre><code class="r">round(dfbetas(fit)[1 : 10, 2], 3)
+</code></pre>
+
+<pre><code>     1      2      3      4      5      6      7      8      9     10 
+ 6.325 -0.019  0.038 -0.009  0.011 -0.002  0.019  0.013 -0.015 -0.102 
+</code></pre>
+
+<pre><code class="r">round(hatvalues(fit)[1 : 10], 3)
+</code></pre>
+
+<pre><code>    1     2     3     4     5     6     7     8     9    10 
+0.547 0.011 0.013 0.011 0.011 0.012 0.010 0.011 0.010 0.018 
 </code></pre>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-11" style="background:;">
+      <slide class="" id="slide-12" style="background:;">
   <hgroup>
     <h2>Example described by Stefanski TAS 2007 Vol 61.</h2>
   </hgroup>
@@ -253,7 +267,7 @@ pairs(dat)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-12" style="background:;">
+      <slide class="" id="slide-13" style="background:;">
   <hgroup>
     <h2>Got our P-values, should we bother to do a residual plot?</h2>
   </hgroup>
@@ -272,7 +286,7 @@ V5   0.9267    0.08328  11.127 4.778e-28
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-13" style="background:;">
+      <slide class="" id="slide-14" style="background:;">
   <hgroup>
     <h2>Residual plot</h2>
   </hgroup>
@@ -284,6 +298,16 @@ V5   0.9267    0.08328  11.127 4.778e-28
 
 <div class="rimage center"><img src="fig/unnamed-chunk-9.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" class="plot" /></div>
 
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>Back to the Swiss data</h2>
+  </hgroup>
+  <article>
+    
   </article>
   <!-- Presenter Notes -->
 </slide>
