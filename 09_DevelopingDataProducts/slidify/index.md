@@ -205,3 +205,19 @@ The following frameworks are compatible with Slidify for making your presentatio
 - [dzslides](http://paulrouget.com/dzslides/)
 - [landslide](https://github.com/adamzap/landslide)
 - [Slidy](http://www.w3.org/Talks/Tools/Slidy2/Overview.html#)
+
+---
+## Mathjax
+- You can include $\LaTeX$ math formatting as follows
+- Edit your YAML
+```YAML
+widgets     : [mathjax]
+```
+- Enter inline math code with  `$x^2$` $x^2$
+- Enter centered code with  `$$\frac{-b \pm \sqrt{b^2 - 4 a c}}{2a}$$`
+$$\frac{-b \pm \sqrt{b^2 - 4 a c}}{2a}$$
+
+
+---
+## HTML
+- Just include html in the file and it will get rendered as html
