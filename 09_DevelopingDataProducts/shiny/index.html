@@ -407,6 +407,144 @@ shinyServer(
   <!-- Presenter Notes -->
 </slide>
 
+<slide class="" id="slide-22" style="background:;">
+  <hgroup>
+    <h2>Image example</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Let&#39;s build an example with an image</li>
+<li>How about we create a histogram of data</li>
+<li>Put a slider on so that the user has to guess the mean</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-23" style="background:;">
+  <hgroup>
+    <h2>ui.R</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>shinyUI(pageWithSidebar(
+  headerPanel(&quot;Example plot&quot;),
+  sidebarPanel(
+    sliderInput(&#39;mu&#39;, &#39;Guess at the mean&#39;,value = 70, min = 62, max = 74, step = 0.05,)
+  ),
+  mainPanel(
+    plotOutput(&#39;newHist&#39;)
+  )
+))
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-24" style="background:;">
+  <hgroup>
+    <h2>server.R</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>library(UsingR)
+data(galton)
+
+shinyServer(
+  function(input, output) {
+    output$newHist &lt;- renderPlot({
+      hist(galton$child, xlab=&#39;child height&#39;, col=&#39;lightblue&#39;,main=&#39;Histogram&#39;)
+      mu &lt;- input$mu
+      lines(c(mu, mu), c(0, 200),col=&quot;red&quot;,lwd=5)
+      mse &lt;- mean((galton$child - mu)^2)
+      text(63, 150, paste(&quot;mu = &quot;, mu))
+      text(63, 140, paste(&quot;MSE = &quot;, round(mse, 2)))
+      })
+
+  }
+)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-25" style="background:;">
+  <hgroup>
+    <h2>The output</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="fig/examplePlot.png" style="width: 900px;"/></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-26" style="background:;">
+  <hgroup>
+    <h2>Tighter control over style</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>All of the style elements are handled through ui.R</li>
+<li>Instead, you can create a www directory and then an index.html file in that directory
+
+<ul>
+<li><a href="http://rstudio.github.io/shiny/tutorial/#html-ui">This link</a> goes through the html needed</li>
+<li>You just have to have specific js libraries and appropriately name ids and classes. This is beyond the scope of this class</li>
+<li>For students with a lot of experience in html, js, css it would be a breeze and probably easier and more flexible than the R html controls in ui.R</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-27" style="background:;">
+  <hgroup>
+    <h2>Other things Shiny can do</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Allow users to upload or download files</li>
+<li>Have tabbed main panels</li>
+<li>Have editable data tables</li>
+<li>Have a dynamic UI</li>
+<li>User defined inputs and outputs </li>
+<li>Put a submit button so that Shiny only executes complex code after user hits submit</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-28" style="background:;">
+  <hgroup>
+    <h2>Distributing a Shiny app</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>The quickest way is to send (or put on github or gist or dropbox or whatever) someone the app directory and they can then call <code>runApp</code></li>
+<li>You could create an R package and create a wrapper that calls <code>runApp</code><br>
+
+<ul>
+<li>Of course, these solutions only work if the user knows R</li>
+</ul></li>
+<li>Another option is to run a shiny server
+
+<ul>
+<li>Requires setting up a (Shiny server)[<a href="http://www.rstudio.com/shiny/server/">http://www.rstudio.com/shiny/server/</a>]</li>
+<li>Probably easiest if you use one of the virtual machines where they already have Shiny servers running well (for example, on AWS)</li>
+<li>Setting up a Shiny server is beyond the scope of this class as it involves some amount of linux server administration</li>
+<li>Groups are creating a Shiny hosting services that will presumably eventually be a fee for service or freemium service</li>
+<li>BTW, don&#39;t put system calls in your code (this is one of the first things many of us do for fun, but it introduces security concerns)</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
     <slide class="backdrop"></slide>
   </slides>
   <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
@@ -535,6 +673,48 @@ shinyServer(
       <a href="#" target="_self" rel='tooltip' 
         data-slide=21 title='The result'>
          21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title='Image example'>
+         22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title='ui.R'>
+         23
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=24 title='server.R'>
+         24
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=25 title='The output'>
+         25
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=26 title='Tighter control over style'>
+         26
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=27 title='Other things Shiny can do'>
+         27
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=28 title='Distributing a Shiny app'>
+         28
       </a>
     </li>
   </ul>
