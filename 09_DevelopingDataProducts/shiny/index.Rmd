@@ -8,7 +8,7 @@ framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : tomorrow      # 
 url:
-#    lib: ../../libraries
+    lib: ../../librariesNew
     assets: ../../assets
 widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
@@ -33,8 +33,9 @@ mode        : selfcontained # {standalone, draft}
 
 ---
 ## What else is out there?
-- Full solutions requiring real knowledge of web client/server programming
-- [OpenCPU](https://public.opencpu.org/) by Jerome Ooms, a really neat project providing an API to call 
+- Creating any solution requiring fairly deep knowledge of web client/server programming
+- [OpenCPU](https://public.opencpu.org/) by Jerome Ooms, is a really neat project providing an API for calling R from web documents
+  - And he even hosts an OpenCPU server, but you can create your own
 
 ---
 ## Context
@@ -221,3 +222,79 @@ shinyServer(
 ---
 ## The result
 ![prediction model](fig/predictionApp.png "prediction app")
+
+---
+## Image example
+- Let's build an example with an image
+- How about we create a histogram of data
+- Put a slider on so that the user has to guess the mean
+
+---
+## ui.R
+```
+shinyUI(pageWithSidebar(
+  headerPanel("Example plot"),
+  sidebarPanel(
+    sliderInput('mu', 'Guess at the mean',value = 70, min = 62, max = 74, step = 0.05,)
+  ),
+  mainPanel(
+    plotOutput('newHist')
+  )
+))
+```
+
+---
+## server.R
+```
+library(UsingR)
+data(galton)
+
+shinyServer(
+  function(input, output) {
+    output$newHist <- renderPlot({
+      hist(galton$child, xlab='child height', col='lightblue',main='Histogram')
+      mu <- input$mu
+      lines(c(mu, mu), c(0, 200),col="red",lwd=5)
+      mse <- mean((galton$child - mu)^2)
+      text(63, 150, paste("mu = ", mu))
+      text(63, 140, paste("MSE = ", round(mse, 2)))
+      })
+    
+  }
+)
+```
+
+---
+## The output
+<img src="fig/examplePlot.png" style="width: 900px;"/>
+
+---
+## Tighter control over style
+- All of the style elements are handled through ui.R
+- Instead, you can create a www directory and then an index.html file in that directory
+  - [This link](http://rstudio.github.io/shiny/tutorial/#html-ui) goes through the html needed
+  - You just have to have specific js libraries and appropriately name ids and classes. This is beyond the scope of this class
+  - For students with a lot of experience in html, js, css it would be a breeze and probably easier and more flexible than the R html controls in ui.R
+
+---
+## Other things Shiny can do
+- Allow users to upload or download files
+- Have tabbed main panels
+- Have editable data tables
+- Have a dynamic UI
+- User defined inputs and outputs 
+- Put a submit button so that Shiny only executes complex code after user hits submit
+
+
+---
+## Distributing a Shiny app
+- The quickest way is to send (or put on github or gist or dropbox or whatever) someone the app directory and they can then call `runApp`
+- You could create an R package and create a wrapper that calls `runApp`  
+  - Of course, these solutions only work if the user knows R
+- Another option is to run a shiny server
+  - Requires setting up a (Shiny server)[http://www.rstudio.com/shiny/server/]
+    - Probably easiest if you use one of the virtual machines where they already have Shiny servers running well (for example, on AWS)
+  - Setting up a Shiny server is beyond the scope of this class as it involves some amount of linux server administration
+  - Groups are creating a Shiny hosting services that will presumably eventually be a fee for service or freemium service
+  - BTW, don't put system calls in your code (this is one of the first things many of us do for fun, but it introduces security concerns)
+
