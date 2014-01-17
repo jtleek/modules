@@ -4,7 +4,7 @@
   <title>Likelihood</title>
   <meta charset="utf-8">
   <meta name="description" content="Likelihood">
-  <meta name="author" content="Brian Caffo, PhD">
+  <meta name="author" content="Brian Caffo, Roger Peng, Jeff Leek">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -19,6 +19,11 @@
   </script>
   
     <link rel="stylesheet" href = "../../assets/css/custom.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BACKUP.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BASE.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.LOCAL.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.orig">
+<link rel="stylesheet" href = "../../assets/css/custom.css.REMOTE.546.css">
 <link rel="stylesheet" href = "../../assets/css/ribbons.css">
 
 </head>
@@ -37,8 +42,8 @@
       </aside>
       <hgroup class="auto-fadein">
         <h1>Likelihood</h1>
-        <h2>Mathematical Biostatistics Boot Camp</h2>
-        <p>Brian Caffo, PhD<br/>Johns Hopkins Bloomberg School of Public Health</p>
+        <h2>Statistical Inference</h2>
+        <p>Brian Caffo, Roger Peng, Jeff Leek<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
           </slide>
 
@@ -157,7 +162,11 @@ where \(x\) is either \(0\) (Tails) or \(1\) (Heads) </li>
     
   </hgroup>
   <article>
-    <p><img src="../assets/likelihood.png" height=500></p>
+    <pre><code class="r">pvals &lt;- seq(0, 1, length = 1000)
+plot(pvals, dbinom(3, 4, pvals) / dbinom(3, 4, 3/4), type = &quot;l&quot;, frame = FALSE, lwd = 3, xlab = &quot;p&quot;, ylab = &quot;likelihood / max likelihood&quot;)
+</code></pre>
+
+<div class="rimage center"><img src="fig/unnamed-chunk-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div>
 
   </article>
   <!-- Presenter Notes -->
@@ -184,20 +193,16 @@ MLE = \mathrm{argmax}_\theta {\cal L}(\theta, x).
 
       <slide class="" id="slide-9" style="background:;">
   <hgroup>
-    <h2>Maximum likelihood, coin example</h2>
+    <h2>Some results</h2>
   </hgroup>
   <article>
     <ul>
-<li>The maximum likelihood estimate for \(\theta\) is always the proportion of heads</li>
-<li>Proof: Let \(x\) be the number of heads and \(n\) be the number of trials</li>
-<li>Recall 
-\[
-{\cal L}(\theta, x) = \theta^x(1-\theta)^{n-x}
-\]</li>
-<li>It&#39;s easier to maximize the <strong>log-likelihood</strong>
-\[
-l(\theta, x) = x \log(\theta) + (n - x)\log(1 - \theta)
-\]</li>
+<li>\(X_1, \ldots, X_n \stackrel{iid}{\sim} N(\mu, \sigma^2)\) the MLE of \(\mu\) is \(\bar X\) and the ML of \(\sigma^2\) is the biased sample variance estimate.</li>
+<li>If \(X_1,\ldots, X_n \stackrel{iid}{\sim} Bernoulli(p)\) then the MLE of \(p\) is \(\bar X\) (the sample proportion of 1s).</li>
+<li>If \(X_i \stackrel{iid}{\sim} Binomial(n_i, p)\) then the MLE of \(p\) is \(\frac{\sum_{i=1}^n X_i}{\sum_{i=1}^n n_i}\) (the sample proportion of 1s).</li>
+<li>If \(X \stackrel{iid}{\sim} Poisson(\lambda t)\) then the MLE of \(\lambda\) is \(X/t\).</li>
+<li>If \(X_i \stackrel{iid}{\sim} Poisson(\lambda t_i)\) then the MLE of \(\lambda\) is
+\(\frac{\sum_{i=1}^n X_i}{\sum_{i=1}^n t_i}\)</li>
 </ul>
 
   </article>
@@ -206,24 +211,12 @@ l(\theta, x) = x \log(\theta) + (n - x)\log(1 - \theta)
 
       <slide class="" id="slide-10" style="background:;">
   <hgroup>
-    <h2>Continued</h2>
+    <h2>Example</h2>
   </hgroup>
   <article>
     <ul>
-<li>Taking the derivative we get
-\[
-\frac{d}{d\theta} l(\theta, x) = \frac{x}{\theta} - \frac{n-x}{1 - \theta}
-\]</li>
-<li>Setting equal to zero implies
-\[
-(1 - \frac{x}{n})\theta = (1 - \theta) \frac{x}{n}
-\]</li>
-<li>Which is clearly solved at \(\theta = \frac{x}{n}\)</li>
-<li>Notice that the second derivative
-\[
-\frac{d^2}{d\theta^2} l(\theta, x) = -\frac{x}{\theta^2} - \frac{n-x}{(1 - \theta)^2} < 0
-\]
-provided that \(x\) is not \(0\) or \(n\) (do these cases on your own)</li>
+<li>You saw 5 failure events per 94 days of monitoring a nuclear pump. </li>
+<li>Assuming Poisson, plot the likelihood</li>
 </ul>
 
   </article>
@@ -232,50 +225,18 @@ provided that \(x\) is not \(0\) or \(n\) (do these cases on your own)</li>
 
       <slide class="" id="slide-11" style="background:;">
   <hgroup>
-    <h2>What constitutes strong evidence?</h2>
-  </hgroup>
-  <article>
-    <ul>
-<li>Again imagine an experiment where a person repeatedly flips a coin</li>
-<li>Consider the possibility that we are entertaining three hypotheses: \(H_1:\theta = 0\), \(H_2:\theta=.5\), and \(H_3:\theta = 1\)</li>
-</ul>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-12" style="background:;">
-  <hgroup>
     
   </hgroup>
   <article>
-    <p><img src="../assets/table.png"></p>
+    <pre><code class="r">lambda &lt;- seq(0, .2, length = 1000)
+likelihood &lt;- dpois(5, 94 * lambda) / dpois(5, 5)
+plot(lambda, likelihood, frame = FALSE, lwd = 3, type = &quot;l&quot;, xlab = expression(lambda))
+lines(rep(5/94, 2), 0 : 1, col = &quot;red&quot;, lwd = 3)
+lines(range(lambda[likelihood &gt; 1/16]), rep(1/16, 2), lwd = 2)
+lines(range(lambda[likelihood &gt; 1/8]), rep(1/8, 2), lwd = 2)
+</code></pre>
 
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-13" style="background:;">
-  <hgroup>
-    <h2>Benchmarks</h2>
-  </hgroup>
-  <article>
-    <ul>
-<li><p>Using this example as a guide, researchers tend to think of a likelihood ratio</p>
-
-<ul>
-<li>of \(8\) as being moderate evidence </li>
-<li>of \(16\) as being moderately strong evidence </li>
-<li>of \(32\) as being strong evidence </li>
-</ul></li>
-</ul>
-
-<p>of one hypothesis over another</p>
-
-<ul>
-<li>Because of this, it is common to draw reference lines at these values on likelihood plots</li>
-<li>Parameter values above the \(1/8\) reference line, for example, are such that no other point is more than 8 times better supported given the data</li>
-</ul>
+<div class="rimage center"><img src="fig/unnamed-chunk-2.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" class="plot" /></div>
 
   </article>
   <!-- Presenter Notes -->

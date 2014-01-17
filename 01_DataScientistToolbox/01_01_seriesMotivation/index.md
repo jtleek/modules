@@ -1,5 +1,5 @@
 ---
-title       : Series motivation
+title       : The Data Science Track
 subtitle    : 
 author      : Jeffrey Leek
 job         : Johns Hopkins Bloomberg School of Public Health
@@ -95,9 +95,33 @@ mode        : selfcontained # {standalone, draft}
 
 ## Why are you lucky?
 
-<img class=center src=../../assets/img/01_DataScientistToolbox/heritage.png height='80%' />
+<img class=center src=../../assets/img/01_DataScientistToolbox/heritage.png height=400 />
 
 [Heritage Health Prize](http://www.heritagehealthprize.com/c/hhp)
+
+
+---
+
+## Why R? 
+
+ <img class=center height=400 src=../../assets/img/01_DataScientistToolbox/nytimesr.png />
+
+[http://www.nytimes.com/2009/01/07/technology/business-computing/07program.html?pagewanted=all](http://www.nytimes.com/2009/01/07/technology/business-computing/07program.html?pagewanted=all)
+
+---
+
+## Why R? 
+
+* It is free
+* It has a comprehensive set of packages
+  * Data access
+  * Data cleaning
+  * Analysis
+  * Data reporting
+* It has one of the best development enviroments - Rstudio [http://www.rstudio.com/](http://www.rstudio.com/)
+* It has an amazing ecosystem of developers
+* Packages are easy to install and "play nicely together"
+
 
 
 ---
@@ -137,12 +161,14 @@ mode        : selfcontained # {standalone, draft}
 
 ---
 
-## Another goal
+## Our goal
 
  <img class=center height=400 src=../../assets/img/01_DataScientistToolbox/venn.png />
 
 
+
 [Drew Conway](http://www.drewconway.com/zia/?p=2378)
+
 
 ---
 
@@ -151,3 +177,12 @@ mode        : selfcontained # {standalone, draft}
 <img class=center height=400 src=../../assets/img/01_DataScientistToolbox/datajobs.png />
 
 [http://radar.oreilly.com/2011/09/building-data-science-teams.html](http://radar.oreilly.com/2011/09/building-data-science-teams.html)
+
+---
+
+## This course
+
+* Introducing you to the track
+* Getting tools set up
+* Giving you basic background
+

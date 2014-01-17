@@ -1,7 +1,7 @@
 ---
 title       : Residuals, diagnostics, variation
-subtitle    : 
-author      : Brian Caffo, PhD
+subtitle    : Regression
+author      : Brian Caffo, Jeff Leek, Roger Peng
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -16,7 +16,7 @@ mode        : selfcontained # {standalone, draft}
 
 
 ## The linear model
-* Specified as $Y_i =  \sum_{k=1}^p X_{ik} \beta_j + \epsilon_{i}$
+* Specified as <div>$Y_i =  \sum_{k=1}^p X_{ik} \beta_j + \epsilon_{i}$</div>
 * We'll also assume here that $\epsilon_i \stackrel{iid}{\sim} N(0, \sigma^2)$
 * Define the residuals as
 $e_i = Y_i -  \hat Y_i =  Y_i - \sum_{k=1}^p X_{ik} \hat \beta_j$
@@ -97,7 +97,7 @@ round(dfbetas(fit)[1 : 10, 2], 3)
 
 ```
      1      2      3      4      5      6      7      8      9     10 
- 8.309 -0.036 -0.124  0.004 -0.018  0.007 -0.048 -0.015 -0.049 -0.012 
+ 6.325 -0.019  0.038 -0.009  0.011 -0.002  0.019  0.013 -0.015 -0.102 
 ```
 
 ```r
@@ -106,7 +106,7 @@ round(hatvalues(fit)[1 : 10], 3)
 
 ```
     1     2     3     4     5     6     7     8     9    10 
-0.444 0.015 0.025 0.010 0.011 0.010 0.017 0.021 0.013 0.011 
+0.547 0.011 0.013 0.011 0.011 0.012 0.010 0.011 0.010 0.018 
 ```
 
 
@@ -115,14 +115,25 @@ round(hatvalues(fit)[1 : 10], 3)
 <div class="rimage center"><img src="fig/unnamed-chunk-5.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" class="plot" /></div>
 
 
+---
+## Looking at some of the diagnostics
+
+```r
+round(dfbetas(fit)[1 : 10, 2], 3)
 ```
-  dfb.1_  dfb.x  dffit cov.r cook.d   hat
-1  0.003  0.013  0.014 1.298  0.000 0.214
-2  0.066 -0.091  0.115 1.038  0.007 0.026
-3 -0.030 -0.013 -0.032 1.031  0.001 0.012
-4  0.122  0.010  0.123 1.000  0.007 0.010
-5 -0.071 -0.050 -0.085 1.026  0.004 0.015
-6 -0.121 -0.056 -0.131 1.004  0.009 0.012
+
+```
+     1      2      3      4      5      6      7      8      9     10 
+ 6.325 -0.019  0.038 -0.009  0.011 -0.002  0.019  0.013 -0.015 -0.102 
+```
+
+```r
+round(hatvalues(fit)[1 : 10], 3)
+```
+
+```
+    1     2     3     4     5     6     7     8     9    10 
+0.547 0.011 0.013 0.011 0.011 0.012 0.010 0.011 0.010 0.018 
 ```
 
 
@@ -164,3 +175,6 @@ fit <- lm(V1 ~ . - 1, data = dat); plot(predict(fit), resid(fit), pch = '.')
 
 <div class="rimage center"><img src="fig/unnamed-chunk-9.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" class="plot" /></div>
 
+
+---
+## Back to the Swiss data

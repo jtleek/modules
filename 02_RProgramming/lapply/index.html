@@ -4,7 +4,7 @@
   <title>Introduction to the R Language</title>
   <meta charset="utf-8">
   <meta name="description" content="Introduction to the R Language">
-  <meta name="author" content="Roger Peng, Associate Professor">
+  <meta name="author" content="Roger D. Peng, Associate Professor of Biostatistics">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -19,6 +19,11 @@
   </script>
   
     <link rel="stylesheet" href = "../../assets/css/custom.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BACKUP.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.BASE.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.LOCAL.546.css">
+<link rel="stylesheet" href = "../../assets/css/custom.css.orig">
+<link rel="stylesheet" href = "../../assets/css/custom.css.REMOTE.546.css">
 <link rel="stylesheet" href = "../../assets/css/ribbons.css">
 
 </head>
@@ -38,7 +43,7 @@
       <hgroup class="auto-fadein">
         <h1>Introduction to the R Language</h1>
         <h2>Loop Functions</h2>
-        <p>Roger Peng, Associate Professor<br/>Johns Hopkins Bloomberg School of Public Health</p>
+        <p>Roger D. Peng, Associate Professor of Biostatistics<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
           </slide>
 
@@ -69,16 +74,23 @@
     <h2>lapply</h2>
   </hgroup>
   <article>
-    <p><code>lapply</code> takes three arguments: a list<code>X</code>, a function (or the name of a function) <code>FUN</code>, and other arguments via its ... argument. If <code>X</code> is not a list, it will be coerced to a list using <code>as.list</code>.</p>
+    <p><code>lapply</code> takes three arguments: (1) a list <code>X</code>; (2) a function (or the
+name of a function) <code>FUN</code>; (3) other arguments via its
+... argument. If <code>X</code> is not a list, it will be coerced to a list using
+<code>as.list</code>.</p>
 
-<pre><code class="r">&gt; lapply
-function (X, FUN, ...)
-{
-    FUN &lt;- match.fun(FUN)
-    if (!is.vector(X) || is.object(X))
-        X &lt;- as.list(X)
-    .Internal(lapply(X, FUN))
-}
+<pre><code class="r">lapply
+</code></pre>
+
+<pre><code>## function (X, FUN, ...) 
+## {
+##     FUN &lt;- match.fun(FUN)
+##     if (!is.vector(X) || is.object(X)) 
+##         X &lt;- as.list(X)
+##     .Internal(lapply(X, FUN))
+## }
+## &lt;bytecode: 0x7ff7a1951c00&gt;
+## &lt;environment: namespace:base&gt;
 </code></pre>
 
 <p>The actual looping is done internally in C code.</p>
@@ -94,13 +106,15 @@ function (X, FUN, ...)
   <article>
     <p><code>lapply</code> always returns a list, regardless of the class of the input.</p>
 
-<pre><code class="r">&gt; x &lt;- list(a = 1:5, b = rnorm(10))
-&gt; lapply(x, mean)
-$a
-[1] 3
+<pre><code class="r">x &lt;- list(a = 1:5, b = rnorm(10))
+lapply(x, mean)
+</code></pre>
 
-$b
-[1] 0.0296824
+<pre><code>## $a
+## [1] 3
+## 
+## $b
+## [1] 0.4671
 </code></pre>
 
   </article>
@@ -112,19 +126,21 @@ $b
     <h2>lapply</h2>
   </hgroup>
   <article>
-    <pre><code class="r">&gt; x &lt;- list(a = 1:4, b = rnorm(10), c = rnorm(20, 1), d = rnorm(100, 5))
-&gt; lapply(x, mean)
-$a
-[1] 2.5
+    <pre><code class="r">x &lt;- list(a = 1:4, b = rnorm(10), c = rnorm(20, 1), d = rnorm(100, 5))
+lapply(x, mean)
+</code></pre>
 
-$b
-[1] 0.06082667
-
-$c
-[1] 1.467083
-
-$d
-[1] 5.074749
+<pre><code>## $a
+## [1] 2.5
+## 
+## $b
+## [1] 0.5261
+## 
+## $c
+## [1] 1.421
+## 
+## $d
+## [1] 4.927
 </code></pre>
 
   </article>

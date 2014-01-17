@@ -16,24 +16,39 @@ mode        : selfcontained # {standalone, draft}
 ## Building Data Products Content
 
 * R packages
+  * devtools
+  * roxygen
+  * testthat
 * rCharts
-* devtools
-* roxygens
-* testthat
-* Shiny
-* yhat
 * Slidify
+* Shiny
+
 
 ---
 
-## What is Slidify?
+## R packages - for the engineers
 
-- Slidify was created by [Ramnath Vaidyanathan](https://github.com/ramnathv) in order to streamline the process of creating and publishing `R` driven presentations.
+<img class=center src=../../assets/img/01_DataScientistToolbox/rpackages.png height=450>
 
-- Slidify is an almagamation of other technologies including knitr, Markdown, and several javascript libaries for HTML5 presentations.
+[http://cran.r-project.org/web/packages/](http://cran.r-project.org/web/packages/)
+[http://www.rstudio.com/ide/docs/packages/overview](http://www.rstudio.com/ide/docs/packages/overview)
 
-- Slidify is infinitely extendable and customizable, yet it is easy to use!
+---
 
-- Slidify allows embedded code chunks and mathematical formulas which keeps your presentation reproducable.
+## rCharts - for marketing
 
-- Slidify presentations are just HTML files, so you can view them with any web browser and share them easily on Github, Dropbox, or your own website.
+<img class=center src=../../assets/img/01_DataScientistToolbox/rcharts.png height=450>
+
+[http://rcharts.io/](http://rcharts.io/)
+[http://ramnathv.github.io/rChartsNYT/](http://ramnathv.github.io/rChartsNYT/)
+
+---
+
+## Shiny - for your users
+
+<img class=center src=../../assets/img/01_DataScientistToolbox/shiny.png height=450>
+
+[http://www.rstudio.com/shiny/](http://www.rstudio.com/shiny/)
+[http://www.rstudio.com/shiny/showcase/](http://www.rstudio.com/shiny/showcase/)
+
+
