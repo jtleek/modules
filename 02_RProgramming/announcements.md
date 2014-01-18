@@ -6,12 +6,12 @@ watching lecture videos, take the quizzes, and look at the first
 programming assignment.
 
 As you browse the course web site, please make sure to read through
-the **syllabus** which contains important information about the
+the <b>syllabus</b> which contains important information about the
 grading policy for quizzes and programming assignments as well as the
 course schedule.
 
 The primary way to interact with me in this course is through the
-**discussion forums**. Here, you can start new threads by asking
+<b>discussion forums</b>. Here, you can start new threads by asking
 questions or you can respond to other people's questions. If you have
 a question about any aspect of the course, I strongly suggest that you
 search through the discussion boards first to see if anyone as already
