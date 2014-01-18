@@ -143,7 +143,7 @@ fit3 <- update(fit, Fertility ~ Agriculture + Examination + Education)
 ---
 ## Swiss data VIFs, 
 ```{r}
-library(car) 
+library(car)
 fit <- lm(Fertility ~ . , data = swiss)
 vif(fit)
 sqrt(vif(fit)) #I prefer sd 

@@ -252,10 +252,20 @@ fit3 &lt;- update(fit, Fertility ~ Agriculture + Examination + Education)
     <h2>Swiss data VIFs,</h2>
   </hgroup>
   <article data-timings="">
-    <pre><code class="r">library(car) 
+    <pre><code class="r">library(car)
 fit &lt;- lm(Fertility ~ . , data = swiss)
 vif(fit)
-sqrt(vif(fit)) #I prefer sd 
+</code></pre>
+
+<pre><code>     Agriculture      Examination        Education         Catholic Infant.Mortality 
+           2.284            3.675            2.775            1.937            1.108 
+</code></pre>
+
+<pre><code class="r">sqrt(vif(fit)) #I prefer sd 
+</code></pre>
+
+<pre><code>     Agriculture      Examination        Education         Catholic Infant.Mortality 
+           1.511            1.917            1.666            1.392            1.052 
 </code></pre>
 
   </article>

@@ -1,6 +1,6 @@
 ---
 title       : Generalized linear models, binary data
-subtitle    : 
+subtitle    : Regression models
 author      : Brian Caffo, Jeff Leek and Roger Peng
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
@@ -8,7 +8,7 @@ framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : tomorrow      # 
 url:
-  lib: ../../libraries
+  lib: ../../librariesNew
   assets: ../../assets
 widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
@@ -137,44 +137,17 @@ $b_1$ - Log odds ratio of win probability for each point scored (compared to zer
 $\exp(b_1)$ - Odds ratio of win probability for each point scored (compared to zero points)
 
 ---
+## Odds
+- Imagine that you are playing a game where you flip a coin with success probability $p$.
+- If it comes up heads, you win $X$. If it comes up tails, you lose $Y$.
+- What should we set $X$ and $Y$ for the game to be fair?
 
-## Explaining Odds
-
-<img class=center src=../../assets/img/odds1.png height=450>
-
-[via Ken Rice](http://faculty.washington.edu/kenrice/teaching.html)
-
----
-
-## Probability of Death
-
-<img class=center src=../../assets/img/odds2.png height=450>
-
-[via Ken Rice](http://faculty.washington.edu/kenrice/teaching.html)
-
----
-
-## Odds of Death
-
-<img class=center src=../../assets/img/odds3.png height=450>
-
-[via Ken Rice](http://faculty.washington.edu/kenrice/teaching.html)
-
----
-
-## Odds Ratio = 1, Continuous Covariate
-
-<img class=center src=../../assets/img/odds4.png height=450>
-
-[via Ken Rice](http://faculty.washington.edu/kenrice/teaching.html)
-
----
-
-## Different odds ratios
-
-<img class=center src=../../assets/img/odds5.png height=350>
-
-[via Ken Rice](http://faculty.washington.edu/kenrice/teaching.html)
+    $$E[earnings]= X p - Y (1 - p) = 0$$
+- Implies
+    $$\frac{Y}{X} = \frac{p}{1 - p}$$    
+- The odds can be said as "How much should you be willing to pay for a $p$ probability of winning a dollar?"
+    - (If $p > 0.5$ you have to pay more if you lose than you get if you win.)
+    - (If $p < 0.5$ you have to pay less if you lose than you get if you win.)
 
 ---
 
@@ -273,7 +246,7 @@ Terms added sequentially (first to last)
 NULL                                     19       24.4           
 ravensData$ravenScore  1     3.54        18       20.9     0.06 .
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 
 
