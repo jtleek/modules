@@ -30,7 +30,7 @@ types in R, and describe the functions for reading and writing data. I
 recommend that you watch the videos in the order that they are listed
 on the web page, but watching the videos out of order isn't going to
 ruin the story. For each lecture video you can download a separate PDF
-document of the slides (the demonstrationg videos don't have slides
+document of the slides (the demonstration videos don't have slides
 associated with them).
 
 Watching the videos on the Coursera web site is the best way to watch
