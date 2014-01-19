@@ -8,7 +8,7 @@ framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : tomorrow      # 
 url:
-  lib: ../../libraries
+  lib: ../../librariesNew
   assets: ../../assets
 widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
@@ -122,14 +122,15 @@ round(hatvalues(fit)[1 : 10], 3)
 x <- rnorm(n); y <- x + rnorm(n, sd = .3)
 x <- c(5, x); y <- c(5, y)
 plot(x, y, frame = FALSE, cex = 2, pch = 21, bg = "lightblue", col = "black")
-abline(lm(y ~ x))            
+fit2 <- lm(y ~ x)
+abline(fit2)            
 ```
 
 ---
 ## Looking at some of the diagnostics
 ```{r, echo = TRUE}
-round(dfbetas(fit)[1 : 10, 2], 3)
-round(hatvalues(fit)[1 : 10], 3)
+round(dfbetas(fit2)[1 : 10, 2], 3)
+round(hatvalues(fit2)[1 : 10], 3)
 ```
 
 ---
@@ -155,3 +156,8 @@ fit <- lm(V1 ~ . - 1, data = dat); plot(predict(fit), resid(fit), pch = '.')
 
 ---
 ## Back to the Swiss data
+```{r, fig.height = 5, fig.width = 5, echo=FALSE}
+data(swiss); par(mfrow = c(2, 2))
+fit <- lm(Fertility ~ . , data = swiss); plot(fit)
+```
+

@@ -1,5 +1,5 @@
 ---
-title       : Bonus content
+title       : Hodgepodge
 subtitle    : Regression models
 author      : Brian Caffo, PhD
 job         : Johns Hopkins Bloomberg School of Public Health
@@ -8,7 +8,7 @@ framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : tomorrow      # 
 url:
-  lib: ../../libraries
+  lib: ../../librariesNew
   assets: ../../assets
 widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
@@ -39,7 +39,7 @@ knots <- seq(0, 8 * pi, length = 20);
 splineTerms <- sapply(knots, function(knot) (x > knot) * (x - knot))
 xMat <- cbind(1, x, splineTerms)
 yhat <- predict(lm(y ~ xMat - 1))
-plot(x, y, frame = false, pch = 21, bg = "lightblue", cex = 2)
+plot(x, y, frame = FALSE, pch = 21, bg = "lightblue", cex = 2)
 lines(x, yhat, col = "red", lwd = 2)
 ```
 
@@ -60,7 +60,7 @@ $$
 splineTerms <- sapply(knots, function(knot) (x > knot) * (x - knot)^2)
 xMat <- cbind(1, x, x^2, splineTerms)
 yhat <- predict(lm(y ~ xMat - 1))
-plot(x, y, frame = false, pch = 21, bg = "lightblue", cex = 2)
+plot(x, y, frame = FALSE, pch = 21, bg = "lightblue", cex = 2)
 lines(x, yhat, col = "red", lwd = 2)
 ```
 
@@ -75,12 +75,37 @@ lines(x, yhat, col = "red", lwd = 2)
 * These bases can be used in GLMs as well.
 * An issue with these approaches is the large number of parameters introduced. 
   * Requires some method of so called regularization.
-  
+
 ---
 ## Harmonics using linear models
 
+```r
+##Chord finder, playing the white keys on a piano from octave c4 - c5
+notes4 <- c(261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25)
+t <- seq(0, 2, by = .001); n <- length(t)
+c4 <- sin(2 * pi * notes4[1] * t); e4 <- sin(2 * pi * notes4[3] * t); 
+g4 <- sin(2 * pi * notes4[5] * t)
+chord <- c4 + e4 + g4 + rnorm(n, 0, 0.3)
+x <- sapply(notes4, function(freq) sin(2 * pi * freq * t))
+fit <- lm(chord ~ x - 1)
+```
+
 
 ---
-## Propensity scores
+<div class="rimage center"><img src="fig/unnamed-chunk-4.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" class="plot" /></div>
+
+
+---
+
+```r
+##(How you would really do it)
+a <- fft(chord); plot(Re(a)^2, type = "l")
+```
+
+<div class="rimage center"><img src="fig/unnamed-chunk-5.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" class="plot" /></div>
+
+
+
+
 
 
