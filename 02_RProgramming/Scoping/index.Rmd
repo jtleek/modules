@@ -58,7 +58,7 @@ The search list can be found by using the `search` function.
 
 ## Scoping Rules
 
-The scoping rules for R are the main feature that make it di↵erent from the original S language.
+The scoping rules for R are the main feature that make it different from the original S language.
 
 - The scoping rules determine how a value is associated with a free variable in a function
 - R uses _lexical scoping_ or _static scoping_. A common alternative is _dynamic scoping_. 
