@@ -8,9 +8,10 @@ framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : tomorrow      # 
 url:
-  lib: ../../libraries
+#  lib: ../../libraries
+  lib: ../../librariesNew
   assets: ../../assets
-widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+widgets     : [mathjax, quiz, bootstrap]
 mode        : selfcontained # {standalone, draft}
 ---
 
@@ -205,3 +206,72 @@ The following frameworks are compatible with Slidify for making your presentatio
 - [dzslides](http://paulrouget.com/dzslides/)
 - [landslide](https://github.com/adamzap/landslide)
 - [Slidy](http://www.w3.org/Talks/Tools/Slidy2/Overview.html#)
+
+---
+## Mathjax
+- You can include $\LaTeX$ math formatting as follows
+- Edit your YAML
+```YAML
+widgets     : [mathjax]
+```
+- Enter inline math code with  `$x^2$` $x^2$
+- Enter centered code with  `$$\frac{-b \pm \sqrt{b^2 - 4 a c}}{2a}$$`
+$$\frac{-b \pm \sqrt{b^2 - 4 a c}}{2a}$$
+
+
+---
+## HTML
+- Just include html in the Rmd file and it will get kept as html when it's slidified
+- Especially useful for stuff like images or tables where you need finer control of the html options
+- Also, remember you can edit the final html slide
+  - This isn't the best solution (since why do mostly slidify, a reproducible format if you're going to break that reproducibility at the last step?)
+  - But, sometimes useful in a pinch (like if you're frantically preparing course slides at the last minute)
+- Similarly, you can incorporate JS, or anything else you can do in a web page
+
+---
+## Adding interactive elements to slidify
+- You can add interactive elements to slidify
+  - Quiz questions
+  - interactive Rcharts plots
+  - Shiny apps
+- Of course, you could do this directly with html/js
+- More easily, the dev version of slidify has this built in
+- See [http://slidify.github.io/dcmeetup/demos/interactive/](http://slidify.github.io/dcmeetup/demos/interactive/)
+  - The following example was taken from there
+
+---
+## Rmd syntax 
+
+\#\# Question 1
+
+What is 1 + 1?
+
+1. 1
+2. \_2\_
+3. 3
+4. 4
+
+\*\*\* .hint
+This is a hint
+
+\*\*\* .explanation
+This is an explanation
+
+
+
+--- &radio
+## Question 1
+
+What is 1 + 1?
+
+1. 1
+2. _2_
+3. 3
+4. 4
+
+*** .hint
+This is a hint
+
+*** .explanation
+This is an explanation
+

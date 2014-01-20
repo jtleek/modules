@@ -40,31 +40,30 @@ slides and a link to an HTML5 version of the slides.
 
 ---
 
-## Weekly quizzes
-
-### Quiz 1
-
-Assigned: Class open (1st of Month)
-Due: 7th of the Month 12:00 AM UTC
+## Assessments
 
 
-### Quiz 2
+### Quizzes
 
-Assigned: 8th of the Month 12:01 AM UTC
-Due: 14th of the Month 12:00 AM UTC
+There will be one quiz every week. The quizzes will all open on the
+first day of the course but they will be due weekly. So the Week 1
+Quiz will be due at the end of the first week and the Week 2 Quiz will
+be due at the end of the second week, etc. 
+
+Please refer to the individual weekly Quiz deadlines to see the exact
+date and time that each Quiz is due.
 
 
-### Quiz 3
+### Programming Assignments
 
-Assigned: 15th of the Month 12:01 AM UTC
-Due: 21st of the Month 12:00 AM UTC
+There will be three programming assignments. The first programming
+assignment is due at the end of the second week. Subsequent
+programming assignments are due weekly after that.
 
-
-### Quiz 4
-
-Assigned: 22nd of the Month 12:01 AM UTC
-Due: 28th of the Month 12:00 AM UTC
-
+Programming Assignments 1 and 3 will be graded via unit tests using a
+submission script that will compare the output of your functions to
+the correct output. Note that Programming Assignment 2 will be graded
+via a peer assessment.
 
 ---
 
@@ -73,7 +72,8 @@ Due: 28th of the Month 12:00 AM UTC
 Background lectures about the content of the course with respect to
 other quantitative courses, course logistics, and the R programming
 language are provided as reference material. It is not necessary to
-watch the videos to complete the course, however you may find them useful.
+watch the videos to complete the course, however you may find them
+useful.
 
 
 ---
@@ -89,7 +89,7 @@ final attempt will count toward your grade.
 
 The reported due date is the soft deadline for each quiz. You may turn
 in quizzes up to two days after the soft deadline. The hard deadline
-is the Tuesday after the Quiz is due at 23:30 UTC-5:00\. Each day late
+is **two days** after the Quiz is due at 23:30 UTC. Each day late
 will incur a 10% penalty, but if you use a late day, the penalty will
 not be applied to that day.
 
@@ -101,19 +101,6 @@ You are permitted 5 late days for quizzes in the course. If you use a late day, 
 
 ---
 
-## Dates for the project
-
-### Submission
-
-Assigned: Class open (1st of Month)
-Due: 21st of the Month 12:00 AM UTC
-
-### Review
-
-Assigned: 22nd of the Month 12:01 AM UTC
-Due: 28th of the Month 12:00 AM UTC
-
----
 
 ## Typos
 
@@ -146,10 +133,11 @@ the feedback from peer assessment adds value above simple multiple choice assess
 
 * We have tried to make the criteria as objective as possible,
 do your best to apply them to the best of your abilities. 
-* If you have questions or suggestions about the rubrics, please
-report them in the forum, "Rubric Issues".
-* If you disagree with the scores you received through peer review, you may report those issues in the "Grading Issues" forum. Please note that it will be impossible for us to revise peer-grades, but we will attempt to use reports to improve future
-versions of the rubric. 
+
+* If you disagree with the scores you received through peer review,
+you may report those issues in the "Grading Issues" forum. Please note
+that it will be impossible for us to revise peer-grades, but we will
+attempt to use reports to improve future versions of the rubric.
 
 
 ---
@@ -210,7 +198,11 @@ to address critical issues with the current system.
 
 ## Technical Information
 
-Regardless of your platform (Windows or Mac) you will need a high-speed Internet connection in order to watch the videos on the Coursera web site. It is possible to download the video files and watch them on your computer rather than stream them from Coursera and this may be preferable for some of you.
+Regardless of your platform (Windows or Mac) you will need a
+high-speed Internet connection in order to watch the videos on the
+Coursera web site. It is possible to download the video files and
+watch them on your computer rather than stream them from Coursera and
+this may be preferable for some of you.
 
 ### Here is some platform-specific information:
 
@@ -227,4 +219,5 @@ downloaded from:
 
 _Mac_
 
-The Coursera site appears to work well with Safari, Chrome, or Firefox, so any of these browsers should be fine.
+The Coursera site appears to work well with Safari, Chrome, or
+Firefox, so any of these browsers should be fine.

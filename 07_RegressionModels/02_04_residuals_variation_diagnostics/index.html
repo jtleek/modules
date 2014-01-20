@@ -4,55 +4,50 @@
   <title>Residuals, diagnostics, variation</title>
   <meta charset="utf-8">
   <meta name="description" content="Residuals, diagnostics, variation">
-  <meta name="author" content="Brian Caffo, PhD">
+  <meta name="author" content="Brian Caffo, Jeff Leek, Roger Peng">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <link rel="stylesheet" href="../../libraries/frameworks/io2012/css/default.css" media="all" >
-  <link rel="stylesheet" href="../../libraries/frameworks/io2012/phone.css" 
+  <link rel="stylesheet" href="../../librariesNew/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="../../librariesNew/frameworks/io2012/css/phone.css" 
     media="only screen and (max-device-width: 480px)" >
-  <link rel="stylesheet" href="../../libraries/frameworks/io2012/css/slidify.css" >
-  <link rel="stylesheet" href="../../libraries/highlighters/highlight.js/css/tomorrow.css" />
-  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
-  <script data-main="../../libraries/frameworks/io2012/js/slides" 
-    src="../../libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  <link rel="stylesheet" href="../../librariesNew/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="../../librariesNew/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="../../librariesNew/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="../../librariesNew/frameworks/io2012/js/slides" 
+    src="../../librariesNew/frameworks/io2012/js/require-1.0.8.min.js">
   </script>
   
-    <link rel="stylesheet" href = "../../assets/css/custom.css">
-<link rel="stylesheet" href = "../../assets/css/custom.css.BACKUP.546.css">
-<link rel="stylesheet" href = "../../assets/css/custom.css.BASE.546.css">
-<link rel="stylesheet" href = "../../assets/css/custom.css.LOCAL.546.css">
-<link rel="stylesheet" href = "../../assets/css/custom.css.orig">
-<link rel="stylesheet" href = "../../assets/css/custom.css.REMOTE.546.css">
-<link rel="stylesheet" href = "../../assets/css/ribbons.css">
+  
 
 </head>
 <body style="opacity: 0">
   <slides class="layout-widescreen">
     
     <!-- LOGO SLIDE -->
-    <!-- END LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <aside class="gdbar">
+    <img src="../../assets/img/bloomberg_shield.png">
+  </aside>
+  <hgroup class="auto-fadein">
+    <h1>Residuals, diagnostics, variation</h1>
+    <h2>Regression</h2>
+    <p>Brian Caffo, Jeff Leek, Roger Peng<br/>Johns Hopkins Bloomberg School of Public Health</p>
+  </hgroup>
+  <article></article>  
+</slide>
     
 
-    <!-- TITLE SLIDE -->
-    <!-- Should I move this to a Local Layout File? -->
-    <slide class="title-slide segue nobackground">
-      <aside class="gdbar">
-        <img src="../../assets/img/bloomberg_shield.png">
-      </aside>
-      <hgroup class="auto-fadein">
-        <h1>Residuals, diagnostics, variation</h1>
-        <h2></h2>
-        <p>Brian Caffo, PhD<br/>Johns Hopkins Bloomberg School of Public Health</p>
-      </hgroup>
-          </slide>
-
     <!-- SLIDES -->
-      <slide class="" id="slide-1" style="background:;">
+    <slide class="" id="slide-1" style="background:;">
   <hgroup>
     <h2>The linear model</h2>
   </hgroup>
-  <article>
+  <article data-timings="">
     <ul>
 <li>Specified as \(Y_i =  \sum_{k=1}^p X_{ik} \beta_j + \epsilon_{i}\)</li>
 <li>We&#39;ll also assume here that \(\epsilon_i \stackrel{iid}{\sim} N(0, \sigma^2)\)</li>
@@ -65,11 +60,8 @@
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-2" style="background:;">
-  <hgroup>
-    
-  </hgroup>
-  <article>
+<slide class="" id="slide-2" style="background:;">
+  <article data-timings="">
     <pre><code class="r">data(swiss); par(mfrow = c(2, 2))
 fit &lt;- lm(Fertility ~ . , data = swiss); plot(fit)
 </code></pre>
@@ -80,22 +72,22 @@ fit &lt;- lm(Fertility ~ . , data = swiss); plot(fit)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-3" style="background:;">
+<slide class="" id="slide-3" style="background:;">
   <hgroup>
     <h2>Influential, high leverage and outlying points</h2>
   </hgroup>
-  <article>
+  <article data-timings="">
     <div class="rimage center"><img src="fig/unnamed-chunk-2.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" class="plot" /></div>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-4" style="background:;">
+<slide class="" id="slide-4" style="background:;">
   <hgroup>
     <h2>Summary of the plot</h2>
   </hgroup>
-  <article>
+  <article data-timings="">
     <p>Calling a point an outlier is vague. </p>
 
 <ul>
@@ -115,11 +107,11 @@ fit &lt;- lm(Fertility ~ . , data = swiss); plot(fit)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-5" style="background:;">
+<slide class="" id="slide-5" style="background:;">
   <hgroup>
     <h2>Influence measures</h2>
   </hgroup>
-  <article>
+  <article data-timings="">
     <ul>
 <li>Do <code>?influence.measures</code> to see the full suite of influence measures in stats. The measures include
 
@@ -139,11 +131,11 @@ fit &lt;- lm(Fertility ~ . , data = swiss); plot(fit)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-6" style="background:;">
+<slide class="" id="slide-6" style="background:;">
   <hgroup>
     <h2>How do I use all of these things?</h2>
   </hgroup>
-  <article>
+  <article data-timings="">
     <ul>
 <li>Be wary of simplistic rules for diagnostic plots and measures. The use of these tools is context specific. It&#39;s better to understand what they are trying to accomplish and use them judiciously.</li>
 <li>Not all of the measures have meaningful absolute scales. You can look at them relative to the values across the data.</li>
@@ -164,22 +156,22 @@ fit &lt;- lm(Fertility ~ . , data = swiss); plot(fit)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-7" style="background:;">
+<slide class="" id="slide-7" style="background:;">
   <hgroup>
     <h2>Case 1</h2>
   </hgroup>
-  <article>
+  <article data-timings="">
     <div class="rimage center"><img src="fig/unnamed-chunk-3.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" class="plot" /></div>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-8" style="background:;">
+<slide class="" id="slide-8" style="background:;">
   <hgroup>
     <h2>The code</h2>
   </hgroup>
-  <article>
+  <article data-timings="">
     <pre><code>n &lt;- 100; x &lt;- c(10, rnorm(n)); y &lt;- c(10, c(rnorm(n)))
 plot(x, y, frame = FALSE, cex = 2, pch = 21, bg = &quot;lightblue&quot;, col = &quot;black&quot;)
 abline(lm(y ~ x))            
@@ -193,55 +185,69 @@ abline(lm(y ~ x))
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-9" style="background:;">
+<slide class="" id="slide-9" style="background:;">
   <hgroup>
     <h2>Showing a couple of the diagnostic values</h2>
   </hgroup>
-  <article>
+  <article data-timings="">
     <pre><code class="r">fit &lt;- lm(y ~ x)
 round(dfbetas(fit)[1 : 10, 2], 3)
 </code></pre>
 
 <pre><code>     1      2      3      4      5      6      7      8      9     10 
- 8.309 -0.036 -0.124  0.004 -0.018  0.007 -0.048 -0.015 -0.049 -0.012 
+ 6.007 -0.019 -0.007  0.014 -0.002 -0.083 -0.034 -0.045 -0.112 -0.008 
 </code></pre>
 
 <pre><code class="r">round(hatvalues(fit)[1 : 10], 3)
 </code></pre>
 
 <pre><code>    1     2     3     4     5     6     7     8     9    10 
-0.444 0.015 0.025 0.010 0.011 0.010 0.017 0.021 0.013 0.011 
+0.445 0.010 0.011 0.011 0.030 0.017 0.012 0.033 0.021 0.010 
 </code></pre>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-10" style="background:;">
+<slide class="" id="slide-10" style="background:;">
   <hgroup>
     <h2>Case 2</h2>
   </hgroup>
-  <article>
+  <article data-timings="">
     <div class="rimage center"><img src="fig/unnamed-chunk-5.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" class="plot" /></div>
 
-<pre><code>  dfb.1_  dfb.x  dffit cov.r cook.d   hat
-1  0.003  0.013  0.014 1.298  0.000 0.214
-2  0.066 -0.091  0.115 1.038  0.007 0.026
-3 -0.030 -0.013 -0.032 1.031  0.001 0.012
-4  0.122  0.010  0.123 1.000  0.007 0.010
-5 -0.071 -0.050 -0.085 1.026  0.004 0.015
-6 -0.121 -0.056 -0.131 1.004  0.009 0.012
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Looking at some of the diagnostics</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">round(dfbetas(fit2)[1 : 10, 2], 3)
+</code></pre>
+
+<pre><code>     1      2      3      4      5      6      7      8      9     10 
+-0.072 -0.041 -0.007  0.012  0.008 -0.187  0.017  0.100 -0.059  0.035 
+</code></pre>
+
+<pre><code class="r">round(hatvalues(fit2)[1 : 10], 3)
+</code></pre>
+
+<pre><code>    1     2     3     4     5     6     7     8     9    10 
+0.164 0.011 0.014 0.012 0.010 0.030 0.017 0.017 0.013 0.021 
 </code></pre>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-11" style="background:;">
+<slide class="" id="slide-12" style="background:;">
   <hgroup>
     <h2>Example described by Stefanski TAS 2007 Vol 61.</h2>
   </hgroup>
-  <article>
+  <article data-timings="">
     <pre><code class="r">## Don&#39;t everyone hit this server at once.  Read the paper first.
 dat &lt;- read.table(&#39;http://www4.stat.ncsu.edu/~stefanski/NSF_Supported/Hidden_Images/orly_owl_files/orly_owl_Lin_4p_5_flat.txt&#39;, header = FALSE)
 pairs(dat)
@@ -253,11 +259,11 @@ pairs(dat)
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-12" style="background:;">
+<slide class="" id="slide-13" style="background:;">
   <hgroup>
     <h2>Got our P-values, should we bother to do a residual plot?</h2>
   </hgroup>
-  <article>
+  <article data-timings="">
     <pre><code class="r">summary(lm(V1 ~ . -1, data = dat))$coef
 </code></pre>
 
@@ -272,11 +278,11 @@ V5   0.9267    0.08328  11.127 4.778e-28
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-13" style="background:;">
+<slide class="" id="slide-14" style="background:;">
   <hgroup>
     <h2>Residual plot</h2>
   </hgroup>
-  <article>
+  <article data-timings="">
     <h3>P-values significant, O RLY?</h3>
 
 <pre><code class="r">fit &lt;- lm(V1 ~ . - 1, data = dat); plot(predict(fit), resid(fit), pch = &#39;.&#39;)
@@ -288,36 +294,138 @@ V5   0.9267    0.08328  11.127 4.778e-28
   <!-- Presenter Notes -->
 </slide>
 
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>Back to the Swiss data</h2>
+  </hgroup>
+  <article data-timings="">
+    <div class="rimage center"><img src="fig/unnamed-chunk-10.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" class="plot" /></div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
     <slide class="backdrop"></slide>
   </slides>
-
-  <!--[if IE]>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='The linear model'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title=''>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Influential, high leverage and outlying points'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Summary of the plot'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Influence measures'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='How do I use all of these things?'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Case 1'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='The code'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Showing a couple of the diagnostic values'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Case 2'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Looking at some of the diagnostics'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Example described by Stefanski TAS 2007 Vol 61.'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='Got our P-values, should we bother to do a residual plot?'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='Residual plot'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='Back to the Swiss data'>
+         15
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
     <script 
       src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
     </script>
     <script>CFInstall.check({mode: 'overlay'});</script>
   <![endif]-->
 </body>
-<!-- Grab CDN jQuery, fall back to local if offline -->
-<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
-<script>window.jQuery || document.write('<script src="../../libraries/widgets/quiz/js/jquery-1.7.min.js"><\/script>')</script>
-<!-- Load Javascripts for Widgets -->
-<!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [['$','$'], ['\\(','\\)']],
-      processEscapes: true
-    }
-  });
-</script>
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script> -->
-<script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="../../libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="../../librariesNew/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
 </script>
 <!-- LOAD HIGHLIGHTER JS FILES -->
-<script src="../../libraries/highlighters/highlight.js/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
-<!-- DONE LOADING HIGHLIGHTER JS FILES -->
-</html>
+  <script src="../../librariesNew/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>

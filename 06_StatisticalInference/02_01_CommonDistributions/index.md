@@ -1,7 +1,7 @@
 ---
 title       : Some Common Distributions
-subtitle    : Mathematical Biostatistics Boot Camp
-author      : Brian Caffo, PhD
+subtitle    : Statistical Inference
+author      : Brian Caffo, Jeff Leek, Roger Peng
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -13,6 +13,8 @@ url:
 widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 ---
+
+
 
 ## The Bernoulli distribution
 
@@ -36,8 +38,25 @@ $$
 - We can maximize the Bernoulli likelihood over $p$ to obtain that $\hat p = \sum_i x_i / n$ is the maximum likelihood estimator for $p$
 
 ---
+## Plotting all possible likelihoods for a small n
+```
+n <- 5
+pvals <- seq(0, 1, length = 1000)
+plot(c(0, 1), c(0, 1.2), type = "n", frame = FALSE, xlab = "p", ylab = "likelihood")
+text((0 : n) /n, 1.1, as.character(0 : n))
+sapply(0 : n, function(x) {
+  phat <- x / n
+  if (x == 0) lines(pvals,  ( (1 - pvals) / (1 - phat) )^(n-x), lwd = 3)
+  else if (x == n) lines(pvals, (pvals / phat) ^ x, lwd = 3)
+  else lines(pvals, (pvals / phat ) ^ x * ( (1 - pvals) / (1 - phat) ) ^ (n-x), lwd = 3) 
+  }
+)
+title(paste("Likelihoods for n = ", n))
+```
 
-<img src="../assets/bernoulliLikelihood.png" height=500>
+---
+<div class="rimage center"><img src="fig/unnamed-chunk-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div>
+
 
 ---
 
@@ -102,8 +121,8 @@ possible orders of $6$ heads and $4$ tails
 
 ## Example
 
-- Suppose a friend has $8$ children, $7$ of which are girls and none are twins
-- If each gender has an independent $50$\% probability for each birth, what's the probability of getting $7$ or more girls out of $8$ births?
+- Suppose a friend has $8$ children (oh my!), $7$ of which are girls and none are twins
+- If each gender has an independent $50$% probability for each birth, what's the probability of getting $7$ or more girls out of $8$ births?
 $$\left(
 \begin{array}{c}
   8 \\ 7
@@ -116,11 +135,33 @@ $$\left(
 \end{array}
 \right) .5^{8}(1-.5)^{0} \approx 0.04
 $$
-- This calculation is an example of a Pvalue - the probability under a null hypothesis of getting a result as extreme or more extreme than the one actually obtained
+
+```r
+choose(8, 7) * .5 ^ 8 + choose(8, 8) * .5 ^ 8 
+```
+
+```
+[1] 0.03516
+```
+
+```r
+pbinom(6, size = 8, prob = .5, lower.tail = FALSE)
+```
+
+```
+[1] 0.03516
+```
+
 
 ---
 
-<img src="../assets/birthLikelihood.png" height=500>
+```r
+plot(pvals, dbinom(7, 8, pvals) / dbinom(7, 8, 7/8) , 
+     lwd = 3, frame = FALSE, type = "l", xlab = "p", ylab = "likelihood")
+```
+
+<div class="rimage center"><img src="fig/unnamed-chunk-3.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" class="plot" /></div>
+
 
 ---
 
@@ -138,7 +179,38 @@ $$
 
 ---
 
-<img src="../assets/stdNormal.png" height=500>
+```r
+zvals <- seq(-3, 3, length = 1000)
+plot(zvals, dnorm(zvals), 
+     type = "l", lwd = 3, frame = FALSE, xlab = "z", ylab = "Density")
+sapply(-3 : 3, function(k) abline(v = k))
+```
+
+<div class="rimage center"><img src="fig/unnamed-chunk-4.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" class="plot" /></div>
+
+```
+[[1]]
+NULL
+
+[[2]]
+NULL
+
+[[3]]
+NULL
+
+[[4]]
+NULL
+
+[[5]]
+NULL
+
+[[6]]
+NULL
+
+[[7]]
+NULL
+```
+
 
 ---
 
@@ -160,7 +232,8 @@ $$
 
 ## Question
 
-- What is the $95^{th}$ percentile of a $N(\mu, \sigma^2)$ distribution?
+- What is the $95^{th}$ percentile of a $N(\mu, \sigma^2)$ distribution? 
+  - Quick answer in R `qnorm(.95, mean = mu, sd = sd)`
 - We want the point $x_0$ so that $P(X \leq x_0) = .95$
 $$
   \begin{eqnarray*}
@@ -202,48 +275,106 @@ $$
 
 ---
 
-## Question
-
-If $X_i$ are iid $\mbox{N}(\mu, \sigma^2)$ with a known variance, what is the likelihood for $\mu$?
-$$
-\begin{eqnarray*}
-{\cal L}(\mu) & =    &  \prod_{i=1}^n  (2\pi \sigma^2)^{-1/2}\
-exp\left\{-(x_i - \mu)^2/2\sigma^2\right\} \\ \\
-              &\propto &  \exp\left\{-\sum_{i=1}^n (x_i - \mu)^2/2\sigma^2\right\} \\ \\
-              & =    &  \exp\left\{-\sum_{i=1}^n x_i^2/2\sigma^2 + \mu \sum_{i=1}^n X_i / \sigma^2 - n \mu^2/2\sigma^2\right\}\\
-              &\propto & \exp\left\{\mu n \bar x / \sigma^2 - n \mu^2/2\sigma^2\right\}
-\end{eqnarray*}
-$$
-Later we will discuss methods for handling the unknown variance
-
----
-
-## Question
-
-- If $X_i$ are iid $\mbox{N}(\mu, \sigma^2)$, with known  variance what's the ML estimate of $\mu$?
-- We calculated the likelihood for $\mu$ on the previous page, the log likelihood is
-  $$
-  \mu n \bar x / \sigma^2 - n \mu^2/2\sigma^2
-  $$
-- The derivative with respect to $\mu$ is 
-  $$
-  n \bar x / \sigma^2 - n \mu / \sigma ^ 2 = 0
-  $$
-- This yields that $\bar x$ is the ml estimate of $\mu$
-- Since this doesn't depend on $\sigma$ it is also the ML estimate with $\sigma$ unknown
-
----
-
 ## Final thoughts on normal likelihoods
-
-- The maximum likelihood estimate for $\sigma^2$ is
+- The MLE for $\mu$ is $\bar X$.
+- The MLE for $\sigma^2$ is
   $$
   \frac{\sum_{i=1}^n (X_i - \bar X)^2}{n}
   $$
-  Which is the biased version of the sample variance
-- The ML estimate of $\sigma$ is simply the square root of this
+  (Which is the biased version of the sample variance.)
+- The MLE of $\sigma$ is simply the square root of this
   estimate
-- To do likelihood inference, the bivariate likelihood of 
-  $(\mu, \sigma)$ is difficult to visualize
-- Later, we will discuss methods for constructing likelihoods for
-  one parameter at a time
+
+---
+## The Poisson distribution
+* Used to model counts
+* The Poisson mass function is
+$$
+P(X = x; \lambda) = \frac{\lambda^x e^{-\lambda}}{x!}
+$$
+for $x=0,1,\ldots$
+* The mean of this distribution is $\lambda$
+* The variance of this distribution is $\lambda$
+* Notice that $x$ ranges from $0$ to $\infty$
+
+---
+## Some uses for the Poisson distribution
+* Modeling event/time data
+* Modeling radioactive decay
+* Modeling survival data
+* Modeling unbounded count data 
+* Modeling contingency tables
+* Approximating binomials when $n$ is large and $p$ is small
+
+---
+## Poisson derivation
+* $\lambda$ is the mean number of events per unit time
+* Let $h$ be very small 
+* Suppose we assume that 
+  * Prob. of an event in an interval of length $h$ is $\lambda h$
+    while the prob. of more than one event is negligible
+  * Whether or not an event occurs in one small interval
+    does not impact whether or not an event occurs in another
+    small interval
+then, the number of events per unit time is Poisson with mean $\lambda$ 
+
+---
+## Rates and Poisson random variables
+* Poisson random variables are used to model rates
+* $X \sim Poisson(\lambda t)$ where 
+  * $\lambda = E[X / t]$ is the expected count per unit of time
+  * $t$ is the total monitoring time
+
+---
+## Poisson approximation to the binomial
+* When $n$ is large and $p$ is small the Poisson distribution
+  is an accurate approximation to the binomial distribution
+* Notation
+  * $\lambda = n p$
+  * $X \sim \mbox{Binomial}(n, p)$, $\lambda = n p$ and
+  * $n$ gets large 
+  * $p$ gets small
+  * $\lambda$ stays constant
+
+---
+## Example
+The number of people that show up at a bus stop is Poisson with
+a mean of $2.5$ per hour.
+
+If watching the bus stop for 4 hours, what is the probability that $3$
+or fewer people show up for the whole time?
+
+
+```r
+ppois(3, lambda = 2.5 * 4)
+```
+
+```
+[1] 0.01034
+```
+
+
+---
+## Example, Poisson approximation to the binomial
+
+We flip a coin with success probablity $0.01$ five hundred times. 
+
+What's the probability of 2 or fewer successes?
+
+
+```r
+pbinom(2, size = 500, prob = .01)
+```
+
+```
+[1] 0.1234
+```
+
+```r
+ppois(2, lambda=500 * .01)
+```
+
+```
+[1] 0.1247
+```
+
