@@ -1,14 +1,14 @@
 ---
 title       : Generalized linear models
-subtitle    : 
-author      : Brian Caffo, PhD
+subtitle    : Regression Models
+author      : Brian Caffo, Jeff Leek, Roger Peng
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : tomorrow      # 
 url:
-  lib: ../../libraries
+  lib: ../../librariesNew
   assets: ../../assets
 widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
@@ -67,7 +67,7 @@ $$
 
 ---
 ## Example, Poisson regression
-* Assume that $Y_i \sim Poisson(\mu_i)$ so that $E[Y_i] = \mu_i$ where $0\leq \mu_i \leq 1$
+* Assume that $Y_i \sim Poisson(\mu_i)$ so that $E[Y_i] = \mu_i$ where $0\leq \mu_i$
 * Linear predictor $\eta_i = \sum_{k=1}^p X_{ik} \beta_k$
 * Link function 
 $g(\mu) = \eta = \log(\mu)$

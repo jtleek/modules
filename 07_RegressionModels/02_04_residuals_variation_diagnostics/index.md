@@ -8,7 +8,7 @@ framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : tomorrow      # 
 url:
-  lib: ../../libraries
+  lib: ../../librariesNew
   assets: ../../assets
 widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
@@ -16,7 +16,7 @@ mode        : selfcontained # {standalone, draft}
 
 
 ## The linear model
-* Specified as <div>$Y_i =  \sum_{k=1}^p X_{ik} \beta_j + \epsilon_{i}$</div>
+* Specified as $Y_i =  \sum_{k=1}^p X_{ik} \beta_j + \epsilon_{i}$
 * We'll also assume here that $\epsilon_i \stackrel{iid}{\sim} N(0, \sigma^2)$
 * Define the residuals as
 $e_i = Y_i -  \hat Y_i =  Y_i - \sum_{k=1}^p X_{ik} \hat \beta_j$
@@ -97,7 +97,7 @@ round(dfbetas(fit)[1 : 10, 2], 3)
 
 ```
      1      2      3      4      5      6      7      8      9     10 
- 6.325 -0.019  0.038 -0.009  0.011 -0.002  0.019  0.013 -0.015 -0.102 
+ 6.007 -0.019 -0.007  0.014 -0.002 -0.083 -0.034 -0.045 -0.112 -0.008 
 ```
 
 ```r
@@ -106,7 +106,7 @@ round(hatvalues(fit)[1 : 10], 3)
 
 ```
     1     2     3     4     5     6     7     8     9    10 
-0.547 0.011 0.013 0.011 0.011 0.012 0.010 0.011 0.010 0.018 
+0.445 0.010 0.011 0.011 0.030 0.017 0.012 0.033 0.021 0.010 
 ```
 
 
@@ -119,21 +119,21 @@ round(hatvalues(fit)[1 : 10], 3)
 ## Looking at some of the diagnostics
 
 ```r
-round(dfbetas(fit)[1 : 10, 2], 3)
+round(dfbetas(fit2)[1 : 10, 2], 3)
 ```
 
 ```
      1      2      3      4      5      6      7      8      9     10 
- 6.325 -0.019  0.038 -0.009  0.011 -0.002  0.019  0.013 -0.015 -0.102 
+-0.072 -0.041 -0.007  0.012  0.008 -0.187  0.017  0.100 -0.059  0.035 
 ```
 
 ```r
-round(hatvalues(fit)[1 : 10], 3)
+round(hatvalues(fit2)[1 : 10], 3)
 ```
 
 ```
     1     2     3     4     5     6     7     8     9    10 
-0.547 0.011 0.013 0.011 0.011 0.012 0.010 0.011 0.010 0.018 
+0.164 0.011 0.014 0.012 0.010 0.030 0.017 0.017 0.013 0.021 
 ```
 
 
@@ -178,3 +178,6 @@ fit <- lm(V1 ~ . - 1, data = dat); plot(predict(fit), resid(fit), pch = '.')
 
 ---
 ## Back to the Swiss data
+<div class="rimage center"><img src="fig/unnamed-chunk-10.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" class="plot" /></div>
+
+

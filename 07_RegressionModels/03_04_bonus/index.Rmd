@@ -1,5 +1,5 @@
 ---
-title       : Bonus content
+title       : Hodgepodge
 subtitle    : Regression models
 author      : Brian Caffo, PhD
 job         : Johns Hopkins Bloomberg School of Public Health
@@ -8,7 +8,7 @@ framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : tomorrow      # 
 url:
-  lib: ../../libraries
+  lib: ../../librariesNew
   assets: ../../assets
 widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
@@ -52,7 +52,7 @@ knots <- seq(0, 8 * pi, length = 20);
 splineTerms <- sapply(knots, function(knot) (x > knot) * (x - knot))
 xMat <- cbind(1, x, splineTerms)
 yhat <- predict(lm(y ~ xMat - 1))
-plot(x, y, frame = false, pch = 21, bg = "lightblue", cex = 2)
+plot(x, y, frame = FALSE, pch = 21, bg = "lightblue", cex = 2)
 lines(x, yhat, col = "red", lwd = 2)
 ```
 
@@ -69,7 +69,7 @@ $$
 splineTerms <- sapply(knots, function(knot) (x > knot) * (x - knot)^2)
 xMat <- cbind(1, x, x^2, splineTerms)
 yhat <- predict(lm(y ~ xMat - 1))
-plot(x, y, frame = false, pch = 21, bg = "lightblue", cex = 2)
+plot(x, y, frame = FALSE, pch = 21, bg = "lightblue", cex = 2)
 lines(x, yhat, col = "red", lwd = 2)
 ```
 
@@ -93,6 +93,10 @@ g4 <- sin(2 * pi * notes4[5] * t)
 chord <- c4 + e4 + g4 + rnorm(n, 0, 0.3)
 x <- sapply(notes4, function(freq) sin(2 * pi * freq * t))
 fit <- lm(chord ~ x - 1)
+```
+
+---
+```{r, fig.height=5,fig.width=5, echo=FALSE}
 plot(c(0, 9), c(0, 1.5), xlab = "Note", ylab = "Coef^2", axes = FALSE, frame = TRUE, type = "n")
 axis(2)
 axis(1, at = 1 : 8, labels = c("c4", "d4", "e4", "f4", "g4", "a4", "b4", "c5"))
