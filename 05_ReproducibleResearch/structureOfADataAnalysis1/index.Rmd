@@ -132,8 +132,6 @@ Can I use quantitative characteristics of the emails to classify them as SPAM/HA
 
 <img class=center src=../../assets/img/security.png height='400' />
 
-[Google data center security](http://www.youtube.com/watch?v=1SCZzgfdTBo)
-
 
 ---
 
@@ -160,7 +158,8 @@ Can I use quantitative characteristics of the emails to classify them as SPAM/HA
 
 <img class=center src=../../assets/img/spamR.png height='400' />
 
-[http://rss.acs.unt.edu/Rdoc/library/kernlab/html/spam.html](http://rss.acs.unt.edu/Rdoc/library/kernlab/html/spam.html)
+[http://search.r-project.org/library/kernlab/html/spam.html](http://search.r-project.org/library/kernlab/html/spam.html)
+
 
 
 ---
@@ -178,27 +177,12 @@ Can I use quantitative characteristics of the emails to classify them as SPAM/HA
 ## Our cleaned data set
 
 ```{r}
-# If it isn't installed, install the kernlab package
+# If it isn't installed, install the kernlab package with install.packages()
 library(kernlab)
 data(spam)
-dim(spam)
+str(spam[, 1:5])
 ```
 
+[http://search.r-project.org/library/kernlab/html/spam.html](http://search.r-project.org/library/kernlab/html/spam.html)
 
-[http://rss.acs.unt.edu/Rdoc/library/kernlab/html/spam.html](http://rss.acs.unt.edu/Rdoc/library/kernlab/html/spam.html)
-
----
-
-## Subsampling our data set
-We need to generate a test and training set (prediction)
-```{r}
-set.seed(3435)
-trainIndicator = rbinom(4601,size=1,prob=0.5)
-table(trainIndicator)
-trainSpam = spam[trainIndicator==1,]
-testSpam = spam[trainIndicator==0,]
-dim(trainSpam)
-
-
-```
 

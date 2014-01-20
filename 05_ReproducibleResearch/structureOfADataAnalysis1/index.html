@@ -198,8 +198,6 @@
   <article>
     <p><img class=center src=../../assets/img/security.png height='400' /></p>
 
-<p><a href="http://www.youtube.com/watch?v=1SCZzgfdTBo">Google data center security</a></p>
-
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -240,7 +238,7 @@
   <article>
     <p><img class=center src=../../assets/img/spamR.png height='400' /></p>
 
-<p><a href="http://rss.acs.unt.edu/Rdoc/library/kernlab/html/spam.html">http://rss.acs.unt.edu/Rdoc/library/kernlab/html/spam.html</a></p>
+<p><a href="http://search.r-project.org/library/kernlab/html/spam.html">http://search.r-project.org/library/kernlab/html/spam.html</a></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -268,48 +266,21 @@
     <h2>Our cleaned data set</h2>
   </hgroup>
   <article>
-    <pre><code class="r"># If it isn&#39;t installed, install the kernlab package
+    <pre><code class="r"># If it isn&#39;t installed, install the kernlab package with install.packages()
 library(kernlab)
 data(spam)
-dim(spam)
+str(spam[, 1:5])
 </code></pre>
 
-<pre><code>[1] 4601   58
+<pre><code>&#39;data.frame&#39;:   4601 obs. of  5 variables:
+ $ make   : num  0 0.21 0.06 0 0 0 0 0 0.15 0.06 ...
+ $ address: num  0.64 0.28 0 0 0 0 0 0 0 0.12 ...
+ $ all    : num  0.64 0.5 0.71 0 0 0 0 0 0.46 0.77 ...
+ $ num3d  : num  0 0 0 0 0 0 0 0 0 0 ...
+ $ our    : num  0.32 0.14 1.23 0.63 0.63 1.85 1.92 1.88 0.61 0.19 ...
 </code></pre>
 
-<p><a href="http://rss.acs.unt.edu/Rdoc/library/kernlab/html/spam.html">http://rss.acs.unt.edu/Rdoc/library/kernlab/html/spam.html</a></p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-15" style="background:;">
-  <hgroup>
-    <h2>Subsampling our data set</h2>
-  </hgroup>
-  <article>
-    <p>We need to generate a test and training set (prediction)</p>
-
-<pre><code class="r">set.seed(3435)
-trainIndicator = rbinom(4601,size=1,prob=0.5)
-table(trainIndicator)
-</code></pre>
-
-<pre><code>trainIndicator
-   0    1 
-2314 2287 
-</code></pre>
-
-<pre><code class="r">trainSpam = spam[trainIndicator==1,]
-testSpam = spam[trainIndicator==0,]
-dim(trainSpam)
-</code></pre>
-
-<pre><code>[1] 2287   58
-</code></pre>
-
-<pre><code class="r">
-</code></pre>
+<p><a href="http://search.r-project.org/library/kernlab/html/spam.html">http://search.r-project.org/library/kernlab/html/spam.html</a></p>
 
   </article>
   <!-- Presenter Notes -->
