@@ -1,5 +1,5 @@
 ---
-title       : Introduction to Git
+title       : Install Git in Windows
 subtitle    : 
 author      : Jeffrey Leek
 job         : Johns Hopkins Bloomberg School of Public Health
@@ -15,46 +15,9 @@ mode        : selfcontained # {standalone, draft}
 
 ---
 
-## What is Version Control?
-
-<q>Version control is a system that records changes to a file or set of files over time so that you can recall specific versions later.</q>
-
-[http://git-scm.com/book/en/Getting-Started-About-Version-Control](http://git-scm.com/book/en/Getting-Started-About-Version-Control)
-
----
-
-## What is Version Control?
-
-* Many of us constantly create something, save it, change it, then save it again
-* Version (or revision) control is a means of managing this process in a reliable and efficient way
-* Especially important when collaborating with others
-
-[http://en.wikipedia.org/wiki/Revision_control](http://en.wikipedia.org/wiki/Revision_control)
-
----
-
-## What is Git?
-
-<q>Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.</q>
-
-[http://git-scm.com/](http://git-scm.com/)
-
----
-
-## What is Git?
-
-* Created by the same people who developed Linux
-* The most popular implementation of version control today
-* Everything is stored in local repositories on your computer
-* Operated from the command line
-
-[http://git-scm.com/book/en/Getting-Started-A-Short-History-of-Git](http://git-scm.com/book/en/Getting-Started-A-Short-History-of-Git)
-
----
-
 ## Download Git
 
-* Go to the following website and click on the download link for your operating system (Mac, Windows, Linux, etc):
+* Go to the following website and click on the Windows download link:
 
 [http://git-scm.com/downloads](http://git-scm.com/downloads)
 
@@ -83,9 +46,9 @@ mode        : selfcontained # {standalone, draft}
 ## Open Git Bash
 
 * Find a program called Git Bash, which is the command line environment for interacting with Git
-* It should be located in the directory into which Git was installed (or, for Windows users, in the Start Menu)
+* It should be located in the Git directory within your Start Menu (or in the directory into which Git was installed)
 
-<img class=center src=../../assets/img/IntroToGit/gitConfig1a.png height='350'/>
+<img class=center src=../../assets/img/IntroToGit/gitConfig1b.png height='350'/>
 
 ---
 
@@ -108,6 +71,7 @@ $ git config --global user.name "Your Name Here"
 $ git config --global user.email "your_email@example.com"
 ```
 
+* Make sure there are 2 dashes side-by-side before the word "global"
 * You'll only have to do this once, but you can always change these down the road using the same commands
 
 ---
@@ -120,13 +84,15 @@ $ git config --global user.email "your_email@example.com"
 $ git config --list
 ```
 
+* Make sure there are 2 separate dashes (side-by-side) before the word "global"
+
 <img class=center src=../../assets/img/IntroToGit/gitConfig2.png height='350'/>
 
 ---
 
 ## What's Next?
 
-* Go ahead and close Git Bash with following command:
+* Go ahead and close Git Bash with the following command:
 
 ```
 $ exit

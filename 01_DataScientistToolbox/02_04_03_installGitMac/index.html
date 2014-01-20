@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Introduction to GitHub</title>
+  <title>Install Git in Mac OS X</title>
   <meta charset="utf-8">
-  <meta name="description" content="Introduction to GitHub">
-  <meta name="author" content="Jeffrey Leek, Assistant Professor of Biostatistics">
+  <meta name="description" content="Install Git in Mac OS X">
+  <meta name="author" content="Jeffrey Leek">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="../../libraries/frameworks/io2012/phone.css" 
     media="only screen and (max-device-width: 480px)" >
   <link rel="stylesheet" href="../../libraries/frameworks/io2012/css/slidify.css" >
-  <link rel="stylesheet" href="../../libraries/highlighters/highlight.js/css/zenburn.css" />
+  <link rel="stylesheet" href="../../libraries/highlighters/highlight.js/css/tomorrow.css" />
   <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
   <script data-main="../../libraries/frameworks/io2012/js/slides" 
     src="../../libraries/frameworks/io2012/js/require-1.0.8.min.js">
@@ -41,21 +41,25 @@
         <img src="../../assets/img/bloomberg_shield.png">
       </aside>
       <hgroup class="auto-fadein">
-        <h1>Introduction to GitHub</h1>
+        <h1>Install Git in Mac OS X</h1>
         <h2></h2>
-        <p>Jeffrey Leek, Assistant Professor of Biostatistics<br/>Johns Hopkins Bloomberg School of Public Health</p>
+        <p>Jeffrey Leek<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
           </slide>
 
     <!-- SLIDES -->
       <slide class="" id="slide-1" style="background:;">
   <hgroup>
-    <h2>What is GitHub?</h2>
+    <h2>Download Git</h2>
   </hgroup>
   <article>
-    <p><q>GitHub is a web-based hosting service for software development projects that use the Git revision control system.</q></p>
+    <ul>
+<li>Go to the following website and click on the Mac download link:</li>
+</ul>
 
-<p><a href="http://en.wikipedia.org/wiki/GitHub">http://en.wikipedia.org/wiki/GitHub</a></p>
+<p><a href="http://git-scm.com/downloads">http://git-scm.com/downloads</a></p>
+
+<p><img class=center src="../../assets/img/IntroToGit/installGitMac/downloadGitMac.png" height='350'/></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -63,15 +67,16 @@
 
       <slide class="" id="slide-2" style="background:;">
   <hgroup>
-    <h2>What is GitHub?</h2>
+    <h2>Install Git</h2>
   </hgroup>
   <article>
     <ul>
-<li>Allows users to &quot;push&quot; and &quot;pull&quot; their local repositories to and from remote repositories on the web</li>
-<li>Provides users with a homepage that displays their public repositories</li>
-<li>Users&#39; repositories are backed up on the GitHub server in case something happens to the local copies</li>
-<li>Social aspect allows users to follow one another and share projects</li>
+<li>Once the download is complete, open it up and select the file ending with <strong>.pkg</strong> to begin the Git installation</li>
+<li>If you get a message saying that the file is from an untrusted source, just ignore it and click the <strong>Open</strong> button</li>
+<li>If there is no option to <strong>Open</strong> anyways, hold down the CTRL key, select the same <strong>.pkg</strong> file, then choose <strong>Open With</strong> -&gt; <strong>Installer.app</strong></li>
 </ul>
+
+<p><img class=center src="../../assets/img/IntroToGit/installGitMac/findGitInstallerMac.png" height='350'/></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -79,16 +84,15 @@
 
       <slide class="" id="slide-3" style="background:;">
   <hgroup>
-    <h2>Set Up a GitHub Account</h2>
+    <h2>Install Git</h2>
   </hgroup>
   <article>
     <ul>
-<li>Go to the GitHub homepage at <a href="https://github.com/">https://github.com/</a></li>
-<li>Enter a username, email, and password and click &quot;Sign up for GitHub&quot;</li>
-<li><strong>IMPORTANT: Use the same email address that you used when setting up Git in the previous lecture!!!</strong></li>
+<li><p>Unless you really know what you are doing, just go with the default options at each step of the installation</p></li>
+<li><p>Once the install is complete, hit the <strong>Close</strong> button</p></li>
 </ul>
 
-<p><img class=center src=../../assets/img/IntroToGitHub/GitHubSignup1.png height='350'/></p>
+<p><img class=center src="../../assets/img/IntroToGit/installGitMac/gitInstaller4.png" height='350'/></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -96,14 +100,15 @@
 
       <slide class="" id="slide-4" style="background:;">
   <hgroup>
-    <h2>Set Up a GitHub Account</h2>
+    <h2>Open Terminal</h2>
   </hgroup>
   <article>
     <ul>
-<li>On the next screen, select the free plan and click &quot;Finish sign up&quot;</li>
+<li>Open the Terminal app on your Mac</li>
+<li>The easiest way to find it is by using Spotlight</li>
 </ul>
 
-<p><img class=center src=../../assets/img/IntroToGitHub/GitHubSignup2.png height='450'/></p>
+<p><img class=center src="../../assets/img/IntroToGit/installGitMac/openTerminal.png" height='200'/></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -111,15 +116,16 @@
 
       <slide class="" id="slide-5" style="background:;">
   <hgroup>
-    <h2>Navigating GitHub</h2>
+    <h2>Open Terminal</h2>
   </hgroup>
   <article>
     <ul>
-<li>After signing up, you will find yourself on this page, which has several helpful resources for learning more about Git and GitHub</li>
-<li>Try clicking on your username in the upper righthand corner of the screen to view your GitHub profile</li>
+<li>Once Terminal opens, you&#39;ll see a prompt with a dollar sign at the end of it</li>
+<li>It may look a little different from the picture below depending on your setup</li>
+<li>The dollar sign means that it&#39;s your turn to type a command</li>
 </ul>
 
-<p><img class=center src=../../assets/img/IntroToGitHub/GitHubSignup3.png height='350'/></p>
+<p><img class=center src="../../assets/img/IntroToGit/installGitMac/openTerminal1.png" width='750'/></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -127,16 +133,22 @@
 
       <slide class="" id="slide-6" style="background:;">
   <hgroup>
-    <h2>Your GitHub Profile</h2>
+    <h2>Configure Username and Email</h2>
   </hgroup>
   <article>
     <ul>
-<li>Your profile is where all of your activity on GitHub is displayed</li>
-<li>Allows you to show other people who you are and what you are working on</li>
-<li>As you work on more and more projects, your profile becomes a portfolio of your work</li>
+<li>Each commit to a Git repository will be &quot;tagged&quot; with the username of the person who made the commit</li>
+<li>Enter the following commands in Terminal, one at a time, to set your username and email:</li>
 </ul>
 
-<p><img class=center src=../../assets/img/IntroToGitHub/GitHubSignup4.png height='350'/></p>
+<pre><code>$ git config --global user.name &quot;Your Name Here&quot;
+$ git config --global user.email &quot;your_email@example.com&quot;
+</code></pre>
+
+<ul>
+<li>Make sure there are 2 dashes side-by-side before the word &quot;global&quot;</li>
+<li>You&#39;ll only have to do this once, but you can always change these down the road using the same commands</li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
@@ -144,14 +156,35 @@
 
       <slide class="" id="slide-7" style="background:;">
   <hgroup>
-    <h2>Your GitHub Profile</h2>
+    <h2>Configure Username and Email</h2>
   </hgroup>
   <article>
     <ul>
-<li>Finally, if you click on &quot;Edit Your Profile&quot; in the top righthand portion of the screen you can add some basic information about yourself to your profile</li>
-<li>This is totally optional, but if you do good work, you ought to take some credit for it!</li>
-<li>In the next lecture, we&#39;ll get you started by walking you through two ways of creating a repository</li>
-<li>In the meantime, feel free to explore the GitHub site for interesting projects that others are working on</li>
+<li>Now type the following to confirm your changes (they may be listed toward the bottom):</li>
+</ul>
+
+<pre><code>$ git config --list
+</code></pre>
+
+<ul>
+<li>Make sure there are 2 separate dashes (side-by-side) before the word &quot;global&quot;</li>
+</ul>
+
+<p><img class=center src="../../assets/img/IntroToGit/installGitMac/gitConfigTerminal.png" height='200'/></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>What&#39;s Next?</h2>
+  </hgroup>
+  <article>
+    <ul>
+<li><p>Go ahead and close Terminal (<strong>command-Q</strong> by default)</p></li>
+<li><p>Now that Git is set up on your computer, we&#39;re ready to move on to GitHub, which is a web-based platform that lets you do some pretty cool stuff</p></li>
+<li><p>Once GitHub is up and running, we&#39;ll show you how to start using these tools to your benefit</p></li>
 </ul>
 
   </article>

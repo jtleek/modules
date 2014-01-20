@@ -36,7 +36,7 @@ mode        : selfcontained # {standalone, draft}
 
 * Go to the GitHub homepage at [https://github.com/](https://github.com/)
 * Enter a username, email, and password and click "Sign up for GitHub"
-* **NOTE: You should use the same email address that you used when setting up Git in the previous lecture**
+* **IMPORTANT: Use the same email address that you used when setting up Git in the previous lecture!!!**
 
 <img class=center src=../../assets/img/IntroToGitHub/GitHubSignup1.png height='350'/>
 
