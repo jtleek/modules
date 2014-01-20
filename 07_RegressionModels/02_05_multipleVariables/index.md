@@ -1,14 +1,14 @@
 ---
 title       : Multiple variables
-subtitle    : 
-author      : Brian Caffo, PhD
+subtitle    : Regression
+author      : Brian Caffo, Jeff Leek, Roger Peng
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : tomorrow      # 
 url:
-  lib: ../../libraries
+  lib: ../../librariesNew
   assets: ../../assets
 widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
@@ -41,7 +41,7 @@ In our context
   * This is why we randomize treatments, it attempts to uncorrelate our treatment indicator with variables that we don't have to put in the model. 
   * (If there's too many unobserved confounding variables, even randomization won't help you.)
 * Including variables that we shouldn't have increases standard errors of the regression variables.
-  * Actually, including any new variables increasese (actual, not estimated) standard errors of other regressors. So we don't want to idly through variables into the model.
+  * Actually, including any new variables increasese (actual, not estimated) standard errors of other regressors. So we don't want to idly throw variables into the model.
 * The model must tend toward perfect fit as the number of non-redundant regressors approaches $n$.
 * $R^2$ increases monotonically as more regressors are included.
 * The SSE decreases monotonically as more regressors are included.
@@ -70,7 +70,7 @@ round(apply(betas, 1, sd), 5)
 
 ```
      x1      x1      x1 
-0.03068 0.03066 0.03061 
+0.02839 0.02872 0.02884 
 ```
 
 
@@ -92,7 +92,7 @@ round(apply(betas, 1, sd), 5)
 
 ```
      x1      x1      x1 
-0.02878 0.04745 0.11096 
+0.03131 0.04270 0.09653 
 ```
 
 
@@ -109,7 +109,7 @@ was highly related to `x1`.
 * Remember, variance inflation is only part of the picture. We want to include certain variables, even if they dramatically inflate our variance. 
 
 ---
-### Revisting our previous simulation
+## Revisting our previous simulation
 
 ```r
 ##doesn't depend on which y you use,
@@ -120,7 +120,7 @@ c(summary(lm(y ~ x1 + x2))$cov.unscaled[2,2],
 ```
 
 ```
-[1]  2.87 13.91
+[1] 1.895 9.948
 ```
 
 ```r
@@ -128,12 +128,12 @@ temp <- apply(betas, 1, var); temp[2 : 3] / temp[1]
 ```
 
 ```
-    x1     x1 
- 2.718 14.862 
+   x1    x1 
+1.860 9.506 
 ```
 
 ---
-### Swiss data
+## Swiss data
 
 ```r
 data(swiss); 
@@ -145,12 +145,16 @@ fit3 <- update(fit, Fertility ~ Agriculture + Examination + Education)
     summary(fit3)$cov.unscaled[2,2]) / a 
 ```
 
+```
+[1] 1.892 2.089
+```
+
 
 ---
 ## Swiss data VIFs, 
 
 ```r
-library(car) 
+library(car)
 fit <- lm(Fertility ~ . , data = swiss)
 vif(fit)
 ```
@@ -183,8 +187,8 @@ sqrt(vif(fit)) #I prefer sd
   * The space of models explodes quickly as you add interactions and polynomial terms. 
 * In the prediction class, we'll cover many modern methods for traversing large model spaces for the purposes of prediction.
 * Principal components or factor analytic models on covariates are often useful for reducing complex covariate spaces.
-* Good design can often eliminate the need for complex model searches at analyses though often control over the design is limited.
-* If the models of interest are nested, it's fairly uncontroversial to use nested likelihood ratio tests. (Example to follow.)
+* Good design can often eliminate the need for complex model searches at analyses; though often control over the design is limited.
+* If the models of interest are nested and without lots of parameters differentiating them, it's fairly uncontroversial to use nested likelihood ratio tests. (Example to follow.)
 * My favoriate approach is as follows. Given a coefficient that I'm interested in, I like to use covariate adjustment and multiple models to probe that effect to evaluate it for robustness and to see what other covariates knock it out.  This isn't a terribly systematic approach, but it tends to teach you a lot about the the data as you get your hands dirty.
 
 ---
@@ -209,6 +213,6 @@ Model 3: Fertility ~ Agriculture + Examination + Education + Catholic +
 2     43 3181  2      3102 30.2 8.6e-09 ***
 3     41 2105  2      1076 10.5 0.00021 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 
