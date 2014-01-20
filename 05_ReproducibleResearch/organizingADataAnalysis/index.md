@@ -1,7 +1,7 @@
 ---
 title       : Organizing a Data Analysis
 subtitle    : 
-author      : Jeffrey Leek, Assistant Professor of Biostatistics 
+author      : Roger D. Peng, Associate Professor of Biostatistics 
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -16,8 +16,6 @@ mode        : selfcontained # {standalone, draft}
 
 
 
-
-
 ## Data analysis files
 
 * Data
@@ -27,12 +25,12 @@ mode        : selfcontained # {standalone, draft}
   * Exploratory figures
   * Final figures
 * R code
-  * Raw scripts
+  * Raw / unused scripts
   * Final scripts
-  * R Markdown files (optional)
+  * R Markdown files
 * Text
-  * Readme files
-  * Text of analysis
+  * README files
+  * Text of analysis / report
 
 
 ---
@@ -76,7 +74,7 @@ mode        : selfcontained # {standalone, draft}
 
 ## Raw scripts
 
-<img class=center src=../../assets/img/raw.png height='400'/>
+<img class=center src=../../assets/img/rawcode.png height='350'/>
 
 * May be less commented (but comments help you!)
 * May be multiple versions
@@ -86,7 +84,7 @@ mode        : selfcontained # {standalone, draft}
 
 ## Final scripts
 
-<img class=center src=../../assets/img/finalscript.png height='400'/>
+<img class=center src=../../assets/img/finalscript2.png height='300'/>
 
 * Clearly commented
   * Small comments liberally - what, when, why, how
@@ -118,7 +116,7 @@ mode        : selfcontained # {standalone, draft}
 
 ## Text of the document
 
-<img class=center src=../../assets/img/swfdr.png height='400'/>
+<img class=center src=../../assets/img/swfdr.png height='350'/>
 
 * It should include a title, introduction (motivation), methods (statistics you used), results (including measures of uncertainty), and conclusions (including potential problems)
 * It should tell a story
