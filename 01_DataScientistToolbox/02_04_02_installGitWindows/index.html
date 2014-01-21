@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Introduction to Git</title>
+  <title>Install Git in Windows</title>
   <meta charset="utf-8">
-  <meta name="description" content="Introduction to Git">
+  <meta name="description" content="Install Git in Windows">
   <meta name="author" content="Jeffrey Leek">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -41,7 +41,7 @@
         <img src="../../assets/img/bloomberg_shield.png">
       </aside>
       <hgroup class="auto-fadein">
-        <h1>Introduction to Git</h1>
+        <h1>Install Git in Windows</h1>
         <h2></h2>
         <p>Jeffrey Leek<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
@@ -50,72 +50,11 @@
     <!-- SLIDES -->
       <slide class="" id="slide-1" style="background:;">
   <hgroup>
-    <h2>What is Version Control?</h2>
-  </hgroup>
-  <article>
-    <p><q>Version control is a system that records changes to a file or set of files over time so that you can recall specific versions later.</q></p>
-
-<p><a href="http://git-scm.com/book/en/Getting-Started-About-Version-Control">http://git-scm.com/book/en/Getting-Started-About-Version-Control</a></p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-2" style="background:;">
-  <hgroup>
-    <h2>What is Version Control?</h2>
-  </hgroup>
-  <article>
-    <ul>
-<li>Many of us constantly create something, save it, change it, then save it again</li>
-<li>Version (or revision) control is a means of managing this process in a reliable and efficient way</li>
-<li>Especially important when collaborating with others</li>
-</ul>
-
-<p><a href="http://en.wikipedia.org/wiki/Revision_control">http://en.wikipedia.org/wiki/Revision_control</a></p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-3" style="background:;">
-  <hgroup>
-    <h2>What is Git?</h2>
-  </hgroup>
-  <article>
-    <p><q>Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.</q></p>
-
-<p><a href="http://git-scm.com/">http://git-scm.com/</a></p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-4" style="background:;">
-  <hgroup>
-    <h2>What is Git?</h2>
-  </hgroup>
-  <article>
-    <ul>
-<li>Created by the same people who developed Linux</li>
-<li>The most popular implementation of version control today</li>
-<li>Everything is stored in local repositories on your computer</li>
-<li>Operated from the command line</li>
-</ul>
-
-<p><a href="http://git-scm.com/book/en/Getting-Started-A-Short-History-of-Git">http://git-scm.com/book/en/Getting-Started-A-Short-History-of-Git</a></p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-      <slide class="" id="slide-5" style="background:;">
-  <hgroup>
     <h2>Download Git</h2>
   </hgroup>
   <article>
     <ul>
-<li>Go to the following website and click on the download link for your operating system (Mac, Windows, Linux, etc):</li>
+<li>Go to the following website and click on the Windows download link:</li>
 </ul>
 
 <p><a href="http://git-scm.com/downloads">http://git-scm.com/downloads</a></p>
@@ -126,7 +65,7 @@
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-6" style="background:;">
+      <slide class="" id="slide-2" style="background:;">
   <hgroup>
     <h2>Install Git</h2>
   </hgroup>
@@ -141,7 +80,7 @@
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-7" style="background:;">
+      <slide class="" id="slide-3" style="background:;">
   <hgroup>
     <h2>Install Git</h2>
   </hgroup>
@@ -157,23 +96,23 @@
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-8" style="background:;">
+      <slide class="" id="slide-4" style="background:;">
   <hgroup>
     <h2>Open Git Bash</h2>
   </hgroup>
   <article>
     <ul>
 <li>Find a program called Git Bash, which is the command line environment for interacting with Git</li>
-<li>It should be located in the directory into which Git was installed (or, for Windows users, in the Start Menu)</li>
+<li>It should be located in the Git directory within your Start Menu (or in the directory into which Git was installed)</li>
 </ul>
 
-<p><img class=center src=../../assets/img/IntroToGit/gitConfig1a.png height='350'/></p>
+<p><img class=center src=../../assets/img/IntroToGit/gitConfig1b.png height='350'/></p>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-9" style="background:;">
+      <slide class="" id="slide-5" style="background:;">
   <hgroup>
     <h2>Open Git Bash</h2>
   </hgroup>
@@ -189,7 +128,7 @@
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-10" style="background:;">
+      <slide class="" id="slide-6" style="background:;">
   <hgroup>
     <h2>Configure Username and Email</h2>
   </hgroup>
@@ -204,6 +143,7 @@ $ git config --global user.email &quot;your_email@example.com&quot;
 </code></pre>
 
 <ul>
+<li>Make sure there are 2 dashes side-by-side before the word &quot;global&quot;</li>
 <li>You&#39;ll only have to do this once, but you can always change these down the road using the same commands</li>
 </ul>
 
@@ -211,7 +151,7 @@ $ git config --global user.email &quot;your_email@example.com&quot;
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-11" style="background:;">
+      <slide class="" id="slide-7" style="background:;">
   <hgroup>
     <h2>Configure Username and Email</h2>
   </hgroup>
@@ -223,19 +163,23 @@ $ git config --global user.email &quot;your_email@example.com&quot;
 <pre><code>$ git config --list
 </code></pre>
 
+<ul>
+<li>Make sure there are 2 separate dashes (side-by-side) before the word &quot;global&quot;</li>
+</ul>
+
 <p><img class=center src=../../assets/img/IntroToGit/gitConfig2.png height='350'/></p>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-      <slide class="" id="slide-12" style="background:;">
+      <slide class="" id="slide-8" style="background:;">
   <hgroup>
     <h2>What&#39;s Next?</h2>
   </hgroup>
   <article>
     <ul>
-<li>Go ahead and close Git Bash with following command:</li>
+<li>Go ahead and close Git Bash with the following command:</li>
 </ul>
 
 <pre><code>$ exit
