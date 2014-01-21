@@ -1,6 +1,6 @@
 ---
-title       : Reproducible Research
-subtitle    : Concepts and Ideas
+title       : Literate Statistical Programming with knitr
+subtitle    : 
 author      : Roger D. Peng, Associate Professor of Biostatistics 
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
@@ -12,4 +12,3 @@ url:
   assets: ../../assets
 widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
-  

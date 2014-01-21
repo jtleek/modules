@@ -1,7 +1,7 @@
 ---
 title       : Organizing a Data Analysis
 subtitle    : 
-author      : Jeffrey Leek, Assistant Professor of Biostatistics 
+author      : Roger D. Peng, Associate Professor of Biostatistics 
 job         : Johns Hopkins Bloomberg School of Public Health
 logo        : bloomberg_shield.png
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -14,21 +14,6 @@ widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 ---
 
-```{r setup, cache = F, echo = F, message = F, warning = F, tidy = F}
-# make this an external chunk that can be included in any file
-options(width = 70)
-opts_chunk$set(message = F, error = F, warning = F, echo = F, comment = NA, fig.align = 'center', dpi = 100, tidy = F, cache = T, cache.path = '.cache/', fig.path = 'fig/')
-
-options(xtable.type = 'html')
-knit_hooks$set(inline = function(x) {
-  if(is.numeric(x)) {
-    round(x, getOption('digits'))
-  } else {
-    paste(as.character(x), collapse = ', ')
-  }
-})
-knit_hooks$set(plot = knitr:::hook_plot_html)
-```
 
 
 ## Data analysis files
@@ -40,12 +25,12 @@ knit_hooks$set(plot = knitr:::hook_plot_html)
   * Exploratory figures
   * Final figures
 * R code
-  * Raw scripts
+  * Raw / unused scripts
   * Final scripts
-  * R Markdown files (optional)
+  * R Markdown files
 * Text
-  * Readme files
-  * Text of analysis
+  * README files
+  * Text of analysis / report
 
 
 ---
@@ -89,7 +74,7 @@ knit_hooks$set(plot = knitr:::hook_plot_html)
 
 ## Raw scripts
 
-<img class=center src=../../assets/img/raw.png height='400'/>
+<img class=center src=../../assets/img/rawcode.png height='350'/>
 
 * May be less commented (but comments help you!)
 * May be multiple versions
@@ -99,7 +84,7 @@ knit_hooks$set(plot = knitr:::hook_plot_html)
 
 ## Final scripts
 
-<img class=center src=../../assets/img/finalscript.png height='400'/>
+<img class=center src=../../assets/img/finalscript2.png height='300'/>
 
 * Clearly commented
   * Small comments liberally - what, when, why, how
@@ -131,7 +116,7 @@ knit_hooks$set(plot = knitr:::hook_plot_html)
 
 ## Text of the document
 
-<img class=center src=../../assets/img/swfdr.png height='400'/>
+<img class=center src=../../assets/img/swfdr.png height='350'/>
 
 * It should include a title, introduction (motivation), methods (statistics you used), results (including measures of uncertainty), and conclusions (including potential problems)
 * It should tell a story

@@ -53,7 +53,7 @@ mode        : selfcontained # {standalone, draft}
 
 ## The key challenge in data analysis
 
-"Ask yourselves, what problem have you solved, ever, that was worth solving, where you knew all of the given information in advance? Where you didn’t have a surplus of information and have to filter it out, or you didn’t have insufficient information and have to go find some?"
+"Ask yourselves, what problem have you solved, ever, that was worth solving, where you knew all of the given information in advance? Where you didn’t have a surplus of information and have to filter it out, or you had insufficient information and have to go find some?"
 
 <img src=../../assets/img/meyer.jpg height='350' /> [Dan Myer, Mathematics Educator](http://www.ted.com/talks/dan_meyer_math_curriculum_makeover.html)
 
@@ -119,8 +119,6 @@ Can I use quantitative characteristics of the emails to classify them as SPAM/HA
 
 <img class=center src=../../assets/img/security.png height='400' />
 
-[Google data center security](http://www.youtube.com/watch?v=1SCZzgfdTBo)
-
 
 ---
 
@@ -147,7 +145,8 @@ Can I use quantitative characteristics of the emails to classify them as SPAM/HA
 
 <img class=center src=../../assets/img/spamR.png height='400' />
 
-[http://rss.acs.unt.edu/Rdoc/library/kernlab/html/spam.html](http://rss.acs.unt.edu/Rdoc/library/kernlab/html/spam.html)
+[http://search.r-project.org/library/kernlab/html/spam.html](http://search.r-project.org/library/kernlab/html/spam.html)
+
 
 
 ---
@@ -166,49 +165,22 @@ Can I use quantitative characteristics of the emails to classify them as SPAM/HA
 
 
 ```r
-# If it isn't installed, install the kernlab package
+# If it isn't installed, install the kernlab package with install.packages()
 library(kernlab)
 data(spam)
-dim(spam)
+str(spam[, 1:5])
 ```
 
 ```
-[1] 4601   58
+'data.frame':	4601 obs. of  5 variables:
+ $ make   : num  0 0.21 0.06 0 0 0 0 0 0.15 0.06 ...
+ $ address: num  0.64 0.28 0 0 0 0 0 0 0 0.12 ...
+ $ all    : num  0.64 0.5 0.71 0 0 0 0 0 0.46 0.77 ...
+ $ num3d  : num  0 0 0 0 0 0 0 0 0 0 ...
+ $ our    : num  0.32 0.14 1.23 0.63 0.63 1.85 1.92 1.88 0.61 0.19 ...
 ```
 
 
-
-[http://rss.acs.unt.edu/Rdoc/library/kernlab/html/spam.html](http://rss.acs.unt.edu/Rdoc/library/kernlab/html/spam.html)
-
----
-
-## Subsampling our data set
-We need to generate a test and training set (prediction)
-
-```r
-set.seed(3435)
-trainIndicator = rbinom(4601,size=1,prob=0.5)
-table(trainIndicator)
-```
-
-```
-trainIndicator
-   0    1 
-2314 2287 
-```
-
-```r
-trainSpam = spam[trainIndicator==1,]
-testSpam = spam[trainIndicator==0,]
-dim(trainSpam)
-```
-
-```
-[1] 2287   58
-```
-
-```r
-
-```
+[http://search.r-project.org/library/kernlab/html/spam.html](http://search.r-project.org/library/kernlab/html/spam.html)
 
 
