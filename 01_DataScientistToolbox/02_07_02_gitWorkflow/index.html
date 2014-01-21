@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Basic Git Commands</title>
+  <title>Git Workflow Example</title>
   <meta charset="utf-8">
-  <meta name="description" content="Basic Git Commands">
+  <meta name="description" content="Git Workflow Example">
   <meta name="author" content="Jeffrey Leek, Assistant Professor of Biostatistics">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -41,7 +41,7 @@
         <img src="../../assets/img/bloomberg_shield.png">
       </aside>
       <hgroup class="auto-fadein">
-        <h1>Basic Git Commands</h1>
+        <h1>Git Workflow Example</h1>
         <h2></h2>
         <p>Jeffrey Leek, Assistant Professor of Biostatistics<br/>Johns Hopkins Bloomberg School of Public Health</p>
       </hgroup>
@@ -50,16 +50,14 @@
     <!-- SLIDES -->
       <slide class="" id="slide-1" style="background:;">
   <hgroup>
-    <h2>So you&#39;ve got a repo.... Now what?</h2>
+    <h2>An example workflow</h2>
   </hgroup>
   <article>
     <ul>
-<li>Once you have a repository, you&#39;ll probably make changes over time</li>
-<li>Often, you&#39;ll want to share these changes with others (users, followers, collaborators, etc.)</li>
-<li><strong>Git</strong> allows you to track your changes locally (on your computer)</li>
-<li><strong>GitHub</strong> allows you to share your changes with the world (or just a few people, depending on whether your repo is public or private)</li>
-<li>But how to communicate between Git and GitHub?</li>
-<li>First we&#39;ll review some basic commands, then we&#39;ll look at a typical workflow</li>
+<li>Feel free to create a test repo of your own (on your GitHub account) and follow along</li>
+<li>This is not meant to be an exhaustive introduction to all Git and GitHub features</li>
+<li>Best way to learn Git and GitHub are by using them</li>
+<li>If you get stuck, use the resources at the end of the last lecture</li>
 </ul>
 
   </article>
@@ -68,12 +66,10 @@
 
       <slide class="" id="slide-2" style="background:;">
   <hgroup>
-    <h2>Pushing and Pulling</h2>
+    <h2>Create a new repo on GitHub</h2>
   </hgroup>
   <article>
-    <p><img class=center src=../../assets/img/01_DataScientistToolbox/gghuboverview.png height='500'/></p>
-
-<p><a href="http://gitready.com/beginner/2009/01/21/pushing-and-pulling.html">http://gitready.com/beginner/2009/01/21/pushing-and-pulling.html</a></p>
+    <p><img class=center src="../../assets/img/01_DataScientistToolbox/gitWorkflow/01createNewRepo.png" height='500'/></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -81,20 +77,10 @@
 
       <slide class="" id="slide-3" style="background:;">
   <hgroup>
-    <h2>Adding</h2>
+    <h2>Copy repo URL to clipboard</h2>
   </hgroup>
   <article>
-    <ul>
-<li>Suppose you add some new files or make changes to a local repository (on your computer)</li>
-<li>You need to let Git know that you want it to pay attention to these files (i.e. &quot;track&quot; these files)</li>
-<li>From the directory where the repo is located on your computer (in Git Bash or Terminal, depending on whether you&#39;re on Windows or Mac, respectively):
-
-<ul>
-<li><code>git add .</code> adds all new files (note the period after <code>add</code>, which represents &quot;all files&quot;)</li>
-<li><code>git add -u</code> updates tracking for files that changed names or were deleted</li>
-<li><code>git add -A</code> or <code>git add --all</code> does both of the previous </li>
-</ul></li>
-</ul>
+    <p><img class=center src="../../assets/img/01_DataScientistToolbox/gitWorkflow/02copyURL.png" height='160'/></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -102,18 +88,10 @@
 
       <slide class="" id="slide-4" style="background:;">
   <hgroup>
-    <h2>Committing</h2>
+    <h2>Create a new local directory</h2>
   </hgroup>
   <article>
-    <ul>
-<li>You want to organize and save &quot;snapshots&quot; of the files you&#39;ve staged for commit</li>
-<li>You type the command
-
-<ul>
-<li><code>git commit -m &quot;your message goes here&quot;</code>, substituting a useful description (between the double quotes) of what changes you made since the last committed changes</li>
-</ul></li>
-<li>This only updates your local repo, not the remote repo on GitHub</li>
-</ul>
+    <p><img class=center src="../../assets/img/01_DataScientistToolbox/gitWorkflow/03makeDirectory.png" height='250'/></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -121,18 +99,13 @@
 
       <slide class="" id="slide-5" style="background:;">
   <hgroup>
-    <h2>Log</h2>
+    <h2>Create a new file in test_repo directory</h2>
   </hgroup>
   <article>
-    <ul>
-<li>To see a log of the commits you&#39;ve made locally, type <code>git log</code>
-
-<ul>
-<li>Spacebar advances page by page</li>
-<li>Return advances line by line</li>
-<li>Typing the letter &quot;Q&quot; exits the log</li>
-</ul></li>
-</ul>
+    <p><img class=center src="../../assets/img/01_DataScientistToolbox/gitWorkflow/04createFile1.png" height='100'/>
+<br>
+<br>
+<img class=center src="../../assets/img/01_DataScientistToolbox/gitWorkflow/05saveFile.png" height='250'/></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -140,13 +113,10 @@
 
       <slide class="" id="slide-6" style="background:;">
   <hgroup>
-    <h2>Pushing</h2>
+    <h2>Create a new repo locally</h2>
   </hgroup>
   <article>
-    <ul>
-<li>Once you are pleased with your local commits, you would like to update the remote repo (on GitHub)</li>
-<li>The command <code>git push</code> sends your most recent commits to GitHub, updating your remote repository for the world to see</li>
-</ul>
+    <p><img class=center src="../../assets/img/01_DataScientistToolbox/gitWorkflow/06newFileStatus.png" height='350'/></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -154,17 +124,10 @@
 
       <slide class="" id="slide-7" style="background:;">
   <hgroup>
-    <h2>Pull Requests</h2>
+    <h2>Add link to remote repo</h2>
   </hgroup>
   <article>
-    <ul>
-<li>If you fork someone else&#39;s repo and make some changes or additions, you may want the original author to merge your changes into their code</li>
-<li>To do so you need to issue a pull request via GitHub</li>
-<li>Don&#39;t need anyone&#39;s permission to fork and make changes, but the original author is not obligated to accept your changes</li>
-<li>Pull requests offer a powerful means of contributing to open source software</li>
-</ul>
-
-<p><img class=center src=../../assets/img/01_DataScientistToolbox/pull_request1.png height='150'/></p>
+    <p><img class=center src="../../assets/img/01_DataScientistToolbox/gitWorkflow/09gitRemoteAdd.png" height='150'/></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -172,14 +135,112 @@
 
       <slide class="" id="slide-8" style="background:;">
   <hgroup>
-    <h2>Time to be a hacker!</h2>
+    <h2>Stage file for commit</h2>
   </hgroup>
   <article>
-    <ul>
-<li>Git documentation <a href="http://git-scm.com/doc">http://git-scm.com/doc</a></li>
-<li>Github help <a href="https://help.github.com/">https://help.github.com/</a></li>
-<li>Google/Stack Overflow are great for Github</li>
-</ul>
+    <p><img class=center src="../../assets/img/01_DataScientistToolbox/gitWorkflow/07gitAdd.png" height='350'/></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>Commit changes</h2>
+  </hgroup>
+  <article>
+    <p><img class=center src="../../assets/img/01_DataScientistToolbox/gitWorkflow/08_01gitCommit.png" height='250'/></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>Check log</h2>
+  </hgroup>
+  <article>
+    <p><img class=center src="../../assets/img/01_DataScientistToolbox/gitWorkflow/08_02gitLog.png" height='250'/></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Push changes to GitHub</h2>
+  </hgroup>
+  <article>
+    <p><img class=center src="../../assets/img/01_DataScientistToolbox/gitWorkflow/10gitPush.png" height='300'/></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>Check status</h2>
+  </hgroup>
+  <article>
+    <p><img class=center src="../../assets/img/01_DataScientistToolbox/gitWorkflow/11gitStatus.png" height='250'/></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>Check GitHub</h2>
+  </hgroup>
+  <article>
+    <p><img class=center src="../../assets/img/01_DataScientistToolbox/gitWorkflow/12checkGitHub.png" height='300'/></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h2>Edit README file from GitHub</h2>
+  </hgroup>
+  <article>
+    <p><img class=center src="../../assets/img/01_DataScientistToolbox/gitWorkflow/13editReadme.png" height='300'/>
+<br>
+<br>
+<img class=center src="../../assets/img/01_DataScientistToolbox/gitWorkflow/14commitNewFile.png" height='100'/></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>Fetch changes from GitHub</h2>
+  </hgroup>
+  <article>
+    <p><img class=center src="../../assets/img/01_DataScientistToolbox/gitWorkflow/15gitFetch.png" height='300'/></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2>Merge changes into local repo</h2>
+  </hgroup>
+  <article>
+    <p><img class=center src="../../assets/img/01_DataScientistToolbox/gitWorkflow/16gitMerge.png" height='350'/></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+      <slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>Check status</h2>
+  </hgroup>
+  <article>
+    <p><img class=center src="../../assets/img/01_DataScientistToolbox/gitWorkflow/17gitStatus.png" height='300'/></p>
 
   </article>
   <!-- Presenter Notes -->
