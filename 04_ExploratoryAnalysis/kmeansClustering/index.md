@@ -43,7 +43,7 @@ mode        : selfcontained # {standalone, draft}
   * Fix a number of clusters
   * Get "centroids" of each cluster
   * Assign things to closest centroid
-  * Reclaculate centroids
+  * Recalculate centroids
 * Requires
   * A defined distance metric
   * A number of clusters
