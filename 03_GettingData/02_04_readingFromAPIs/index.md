@@ -73,7 +73,7 @@ homeTL = GET("https://api.twitter.com/1.1/statuses/home_timeline.json", sig)
 
 ```r
 json1 = content(homeTL)
-json2 = jsonlite::fromJSON(toJSON(json1))
+json2 = jsonlite::fromJSON(jsonlite::toJSON(json1))
 json2[1,1:4]
 ```
 
