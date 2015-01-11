@@ -75,7 +75,7 @@ url <- "http://scholar.google.com/citations?user=HI-I6C0AAAAJ&hl=en"
 html <- htmlTreeParse(url, useInternalNodes=T)
 
 xpathSApply(html, "//title", xmlValue)
-xpathSApply(html, "//td[@id='col-citedby']", xmlValue)
+xpathSApply(html, "//td[@class='gsc_a_c']", xmlValue)
 ```
 
 ---
